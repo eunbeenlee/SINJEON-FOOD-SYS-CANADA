@@ -190,15 +190,17 @@
         .menu-grid.active { display: grid; }
         @keyframes fadeInMenu { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .menu-item { background: var(--bg-light); border-radius: var(--border-radius-md); padding: 40px 25px 30px; border: 1px solid var(--border-color); transition: var(--transition-fast); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; box-shadow: var(--shadow-xs);}
+        .menu-item { background: var(--bg-light); border-radius: var(--border-radius-md); padding: 40px 25px 30px; border: 1px solid var(--border-color); transition: var(--transition-fast); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; box-shadow: var(--shadow-xs); position: relative; overflow: hidden;}
+        .menu-item::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); transition: left 0.7s ease; z-index: 1; pointer-events: none; }
+        .menu-item:hover::after { left: 150%; }
         .menu-item:hover { transform: translateY(-10px); box-shadow: var(--shadow-md); border-color: var(--sj-green); background: var(--bg-white); }
-        .menu-item-img { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; }
+        .menu-item-img { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; position: relative; z-index: 2;}
         .menu-item-img img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 15px 20px rgba(0,0,0,0.1)); transition: transform var(--transition-normal); }
-        .menu-item:hover .menu-item-img img { transform: scale(1.15) rotate(2deg); }
+        .menu-item:hover .menu-item-img img { transform: scale(1.15) rotate(2deg); filter: drop-shadow(0 20px 25px rgba(0,0,0,0.15));}
         
-        .menu-item h3 { font-size: 1.35rem; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; line-height: 1.2;}
-        .menu-item .menu-kor { font-family: 'SinjeonCustom', sans-serif; font-size: 1.2rem; color: var(--sj-red); font-weight: normal; margin-bottom: 10px; }
-        .menu-item .menu-eng { font-size: 0.95rem; color: var(--text-gray); font-weight: 500; line-height: 1.4; }
+        .menu-item h3 { font-size: 1.35rem; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; line-height: 1.2; position: relative; z-index: 2;}
+        .menu-item .menu-kor { font-family: 'SinjeonCustom', sans-serif; font-size: 1.2rem; color: var(--sj-red); font-weight: normal; margin-bottom: 10px; position: relative; z-index: 2;}
+        .menu-item .menu-eng { font-size: 0.95rem; color: var(--text-gray); font-weight: 500; line-height: 1.4; position: relative; z-index: 2;}
 
         /* =========================================
            7. Locations & Maps 
@@ -241,7 +243,7 @@
         [class*="elfsight-app"] a, [class*="eapps-link"] { display: none !important; opacity: 0 !important; pointer-events: none !important; }
 
         /* =========================================
-           9. Franchise Process (No Target Maps)
+           9. Franchise Process (Target Map Removed)
            ========================================= */
         .timeline-section { padding: 130px 5%; background: var(--bg-white); }
         .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
@@ -364,6 +366,10 @@
             .bento-grid { grid-template-columns: 1fr; }
             .spice-grid { grid-template-columns: 1fr; }
             
+            .split-layout { flex-direction: column; height: auto; }
+            .loc-list-wrapper { padding: 20px; max-height: 400px; }
+            .loc-map-wrapper { height: 400px; }
+            
             .mega-footer-container { grid-template-columns: 1fr; gap: 40px; text-align: left; }
             .footer-col h4::after { left: 0; transform: none; }
             .footer-bottom { flex-direction: column; justify-content: center; text-align: center; gap: 15px;}
@@ -399,6 +405,7 @@
         <nav>
             <a href="#about">About</a>
             <a href="#menu">Menu</a>
+            <a href="#locations">Locations</a>
             <a href="#franchise">Franchise</a>
             <a href="#community">Community</a>
         </nav>
@@ -546,9 +553,8 @@
                     <p class="menu-kor">신전 맵닭</p>
                     <p class="menu-eng">Topokki topped with spicy chicken</p>
                 </div>
-                <!-- Moved from Toppings -->
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Topping/신전 로제 맵닭.png" alt="Rose Spicy Chicken" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Rose+Spicy+Chicken'"></div>
+                    <div class="menu-item-img"><img src="menus/Main/신전 로제 맵닭.png" alt="Rose Spicy Chicken" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Rose+Spicy+Chicken'"></div>
                     <h3>Rosé Spicy Chicken</h3>
                     <p class="menu-kor">신전 로제 맵닭</p>
                     <p class="menu-eng">Spicy chicken in rich creamy rosé sauce</p>
@@ -695,6 +701,58 @@
         </div>
     </section>
 
+    <!-- Locations Section (Restored as requested) -->
+    <section class="locations" id="locations">
+        <div class="section-header reveal">
+            <p>Find Us</p>
+            <h2>Our <span>Locations</span></h2>
+        </div>
+        
+        <div class="split-layout reveal delay-100">
+            <div class="loc-list-wrapper">
+                <div class="loc-item active store-card" onclick="changeMap('finch', this)" data-mapurl="https://maps.google.com/maps?q=5+Byng+Ave,+North+York&t=&z=15&ie=UTF8&iwloc=&output=embed" data-timezone="America/Toronto" data-open="11" data-close="22">
+                    <div class="loc-meta"><span class="loc-status">Loading Hours...</span></div>
+                    <h3>Sinjeon Finch</h3>
+                    <p>5 Byng Ave, North York, ON M2N 5R7</p>
+                    <div class="loc-actions">
+                        <a href="http://google.com/maps?q=Sinjeon+Topokki+Finch" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();">Map</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-finch/LMMptGifXsOnJBVSXsoFuQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();">Uber Eats</a>
+                    </div>
+                </div>
+                <div class="loc-item store-card" onclick="changeMap('christie', this)" data-mapurl="https://maps.google.com/maps?q=712+Bloor+St+W,+Toronto&t=&z=15&ie=UTF8&iwloc=&output=embed" data-timezone="America/Toronto" data-open="11" data-close="22">
+                    <div class="loc-meta"><span class="loc-status">Loading Hours...</span></div>
+                    <h3>Sinjeon Christie</h3>
+                    <p>712 Bloor St W, Toronto, ON M6G 1L4</p>
+                    <div class="loc-actions">
+                        <a href="http://google.com/maps?q=Sinjeon+Topokki+Bloor" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();">Map</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-bloor/SXFYVKNMX12RbmYzYsXF5w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();">Uber Eats</a>
+                    </div>
+                </div>
+                <div class="loc-item store-card" onclick="changeMap('lougheed', this)" data-mapurl="https://maps.google.com/maps?q=329+North+Rd+455,+Coquitlam&t=&z=15&ie=UTF8&iwloc=&output=embed" data-timezone="America/Vancouver" data-open="11" data-close="22">
+                    <div class="loc-meta"><span class="loc-status">Loading Hours...</span></div>
+                    <h3>Sinjeon Lougheed</h3>
+                    <p>329 North Rd #455, Coquitlam, BC V3K 6Z8</p>
+                    <div class="loc-actions">
+                        <a href="http://google.com/maps?q=Sinjeon+Topokki+Lougheed" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();">Map</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-lougheed/rEGaT6FoWKuCNfwSGIWy8w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();">Uber Eats</a>
+                    </div>
+                </div>
+                <div class="loc-item store-card" onclick="changeMap('church', this)" data-mapurl="https://maps.google.com/maps?q=377+Church+St,+Toronto&t=&z=15&ie=UTF8&iwloc=&output=embed" data-timezone="America/Toronto" data-open="11" data-close="23">
+                    <div class="loc-meta"><span class="loc-status">Loading Hours...</span></div>
+                    <h3>Sinjeon Church</h3>
+                    <p>377 Church St, Toronto, ON M5B 1H9</p>
+                    <div class="loc-actions">
+                        <a href="http://google.com/maps?q=Sinjeon+Topokki+Church" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();">Map</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-downtown-toronto/fK_ps-eeWiWycUrGuC-TIQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();">Uber Eats</a>
+                    </div>
+                </div>
+            </div>
+            <div class="loc-map-wrapper">
+                <iframe id="main-map" src="https://maps.google.com/maps?q=5+Byng+Ave,+North+York&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
     <!-- 사용자 지정 Elfsight Instagram Widget -->
     <section class="ugc-section" id="community">
         <div class="section-header reveal">
@@ -704,7 +762,6 @@
         </div>
         
         <div class="elfsight-container reveal delay-100">
-            <!-- Elfsight Instagram Feed -->
             <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
             <div class="elfsight-app-a68ca13f-d70c-481f-a65e-fd85666c959d" data-elfsight-app-lazy></div>
             
@@ -856,7 +913,7 @@
                 <ul>
                     <li><a href="#about">Our Story</a></li>
                     <li><a href="#menu">Menu</a></li>
-                    <li><a href="#franchise">Franchise</a></li>
+                    <li><a href="#locations">Locations</a></li>
                 </ul>
             </div>
             
@@ -908,6 +965,48 @@
                 grid.classList.remove('active');
             });
             document.getElementById('cat-' + catId).classList.add('active');
+        }
+
+        // =========================================
+        // Split Map Logic
+        // =========================================
+        function changeMap(locId, element) {
+            document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            
+            const iframe = document.getElementById('main-map');
+            const newUrl = element.getAttribute('data-mapurl');
+            iframe.src = newUrl;
+        }
+
+        // =========================================
+        // 타임존 기반 영업시간 체커
+        // =========================================
+        function updateStoreStatuses() {
+            const storeCards = document.querySelectorAll('.store-card');
+            storeCards.forEach(card => {
+                const tz = card.getAttribute('data-timezone');
+                const openHour = parseInt(card.getAttribute('data-open') || 11);
+                const closeHour = parseInt(card.getAttribute('data-close') || 22);
+                const badge = card.querySelector('.loc-status');
+                
+                try {
+                    const localTimeString = new Date().toLocaleString("en-US", {timeZone: tz, hour12: false, hour: 'numeric'});
+                    const currentHour = parseInt(localTimeString);
+
+                    if (currentHour >= openHour && currentHour < closeHour) {
+                        const formatClose = closeHour > 12 ? closeHour - 12 : closeHour;
+                        badge.innerHTML = `Open Now (Closes ${formatClose} PM)`;
+                        badge.className = "loc-status open";
+                    } else {
+                        const formatOpen = openHour >= 12 ? (openHour === 12 ? "12 PM" : `${openHour - 12} PM`) : `${openHour} AM`;
+                        badge.innerHTML = `Closed (Opens ${formatOpen})`;
+                        badge.className = "loc-status closed";
+                    }
+                } catch(e) {
+                    badge.innerHTML = "Check Hours";
+                }
+            });
         }
 
         // =========================================
@@ -1040,14 +1139,18 @@
             }, observerOptions);
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
             
-            // Check Elfsight widget loading status after 4 seconds
+            // Initialize Store Statuses
+            updateStoreStatuses();
+            setInterval(updateStoreStatuses, 60000);
+
+            // Check Elfsight widget loading status after 3 seconds
             setTimeout(() => {
                 const elfsightContainer = document.querySelector('.elfsight-app-a68ca13f-d70c-481f-a65e-fd85666c959d');
                 if (elfsightContainer && elfsightContainer.innerHTML.trim() === '') {
                     const fallback = document.querySelector('.elfsight-fallback');
                     if (fallback) fallback.style.display = 'block';
                 }
-            }, 4000);
+            }, 3000);
         });
 
         // =========================================
