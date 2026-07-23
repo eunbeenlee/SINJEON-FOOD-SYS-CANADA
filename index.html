@@ -115,17 +115,13 @@
         nav a:hover::after { width: 100%; }
 
         /* =========================================
-           3. Hero Section (모바일 최적화 및 404 해결)
+           3. Hero Section
            ========================================= */
         .hero { 
             padding: 220px 5% 100px; 
             text-align: center; 
             position: relative; 
-            /* [수정 1] 한글 폴더명을 영어로 변경: 배경화면 -> background */
-            background: radial-gradient(circle at center, rgba(255,255,255,0.9) 0%, rgba(249,249,249,0.95) 100%), url('background/base_1.jpg'); 
-            background-size: cover; 
-            background-position: center; 
-            /* 데스크탑에서만 fixed 유지, 모바일은 미디어쿼리에서 풀기 */
+            background: radial-gradient(circle at center, rgba(255,255,255,0.9) 0%, rgba(249,249,249,0.95) 100%), url('background/base_1.jpg') center/cover no-repeat, var(--bg-light); 
             background-attachment: fixed; 
             display: flex; 
             flex-direction: column; 
@@ -217,28 +213,32 @@
         .menu-item .menu-eng { font-size: 0.95rem; color: var(--text-gray); font-weight: 500; line-height: 1.4; position: relative; z-index: 2;}
 
         /* =========================================
-           7. Target Territories & Franchise Process
+           7. Locations & Maps 
            ========================================= */
-        .timeline-section { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
+        .locations { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
+        .split-layout { display: flex; max-width: 1400px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 750px; }
+        .loc-list-wrapper { flex: 0 0 45%; overflow-y: auto; padding: 40px; }
+        .loc-list-wrapper::-webkit-scrollbar { width: 6px; }
+        .loc-list-wrapper::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 10px; }
+        .loc-item { background: var(--bg-light); border-radius: var(--border-radius-md); padding: 30px; margin-bottom: 25px; border: 2px solid transparent; cursor: pointer; transition: all var(--transition-fast); box-shadow: var(--shadow-xs); }
+        .loc-item:hover { transform: translateX(8px); border-color: rgba(210, 75, 65, 0.2); background: var(--bg-white); }
+        .loc-item.active { border-color: var(--sj-red); box-shadow: var(--shadow-md); transform: scale(1.02); background: var(--bg-white); }
         
-        .franchise-target-section { margin-bottom: 100px; text-align: center; }
-        .franchise-target-section h3 { font-size: 2.2rem; font-weight: 800; color: var(--text-dark); margin-bottom: 30px; }
-        .target-box { max-width: 900px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); padding: 50px; box-shadow: var(--shadow-md); border: 1px solid var(--border-color); }
-        .target-box img { width: 100%; height: auto; border-radius: 12px; margin-bottom: 40px; box-shadow: var(--shadow-xs); }
-        .target-regions { display: flex; justify-content: center; gap: 60px; text-align: left; flex-wrap: wrap; }
-        .target-region { min-width: 220px; background: var(--bg-light); padding: 25px 30px; border-radius: 16px; border: 1px solid var(--border-color); }
-        .target-region h4 { color: var(--sj-green); font-size: 1.3rem; border-bottom: 2px solid var(--sj-red); padding-bottom: 8px; margin-bottom: 15px; font-weight: 800;}
-        .target-region ul { list-style: none; color: var(--text-dark); font-weight: 600; font-size: 1.1rem; line-height: 1.8; padding: 0; }
-        .target-region ul li::before { content: '📍'; margin-right: 8px; font-size: 0.9rem;}
+        .loc-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .loc-status { font-weight: 800; font-size: 0.85rem; padding: 6px 14px; border-radius: 20px; text-transform: uppercase;}
+        .loc-status.open { color: var(--uber-green); background: rgba(6,193,103,0.1); }
+        .loc-status.closed { color: var(--sj-red); background: rgba(210, 75, 65, 0.1); }
 
-        .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
-        .timeline-container::before { content: ''; position: absolute; top: 0; left: 45px; width: 4px; height: 100%; background: var(--border-color); border-radius: 4px; }
-        .timeline-step { display: flex; align-items: flex-start; margin-bottom: 60px; position: relative; }
-        .timeline-marker { position: absolute; left: 20px; width: 54px; height: 54px; background: var(--sj-red); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; color: var(--bg-white); font-size: 1.4rem; box-shadow: 0 0 0 8px var(--bg-white); z-index: 2; }
-        .timeline-content { margin-left: 110px; background: var(--bg-white); padding: 40px 45px; border-radius: var(--border-radius-md); transition: var(--transition-fast); width: 100%; border: 1px solid var(--border-color); box-shadow: var(--shadow-xs); }
-        .timeline-content:hover { transform: translateY(-5px); box-shadow: var(--shadow-sm); border-color: var(--sj-red); }
-        .timeline-content h4 { font-size: 1.6rem; color: var(--text-dark); margin-bottom: 10px; font-weight: 800; }
-        .timeline-content p { color: var(--text-gray); font-size: 1.05rem; font-weight: 500; line-height: 1.6;}
+        .loc-item h3 { font-size: 1.7rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
+        .loc-item p { color: var(--text-gray); font-weight: 500; font-size: 1.05rem; margin-bottom: 20px; line-height: 1.5; }
+        .loc-actions { display: flex; gap: 15px; }
+        .btn-sm { padding: 12px 20px; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 0.95rem; flex: 1; text-align: center; transition: var(--transition-fast); }
+        .btn-outline { border: 2px solid var(--border-color); color: var(--text-dark); background: var(--bg-white); }
+        .btn-outline:hover { border-color: var(--sj-green); color: var(--sj-green); }
+        .btn-fill { background: var(--uber-green); color: var(--bg-white); border: 2px solid var(--uber-green); }
+        .btn-fill:hover { background: #05a659; border-color: #05a659;}
+        .loc-map-wrapper { flex: 1; background: #e0e0e0; position: relative; pointer-events: auto; }
+        .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; }
 
         /* =========================================
            8. Elfsight Instagram Widget
@@ -253,16 +253,29 @@
         [class*="elfsight-app"] a, [class*="eapps-link"] { display: none !important; opacity: 0 !important; pointer-events: none !important; }
 
         /* =========================================
-           9. Contact Us & Tabs
+           9. Franchise Process
            ========================================= */
-        .contact-section { padding: 130px 5%; background: var(--bg-white); position: relative; border-top: 1px solid var(--border-color); }
+        .timeline-section { padding: 130px 5%; background: var(--bg-white); }
+        .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
+        .timeline-container::before { content: ''; position: absolute; top: 0; left: 45px; width: 4px; height: 100%; background: var(--border-color); border-radius: 4px; }
+        .timeline-step { display: flex; align-items: flex-start; margin-bottom: 60px; position: relative; }
+        .timeline-marker { position: absolute; left: 20px; width: 54px; height: 54px; background: var(--sj-red); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; color: var(--bg-white); font-size: 1.4rem; box-shadow: 0 0 0 8px var(--bg-white); z-index: 2; }
+        .timeline-content { margin-left: 110px; background: var(--bg-light); padding: 40px 45px; border-radius: var(--border-radius-md); transition: var(--transition-fast); width: 100%; border: 1px solid var(--border-color); }
+        .timeline-content:hover { transform: translateY(-5px); box-shadow: var(--shadow-sm); border-color: var(--sj-red); background: var(--bg-white); }
+        .timeline-content h4 { font-size: 1.6rem; color: var(--text-dark); margin-bottom: 10px; font-weight: 800; }
+        .timeline-content p { color: var(--text-gray); font-size: 1.05rem; font-weight: 500; line-height: 1.6;}
+
+        /* =========================================
+           10. Contact Us & Tabs
+           ========================================= */
+        .contact-section { padding: 130px 5%; background: var(--bg-light); position: relative; border-top: 1px solid var(--border-color); }
         .contact-wrapper { max-width: 860px; margin: 0 auto; position: relative; z-index: 2; }
-        .tab-container { display: flex; justify-content: center; margin: 0 auto 50px; background: var(--bg-light); border-radius: 50px; padding: 8px; box-shadow: var(--shadow-xs); width: max-content; }
+        .tab-container { display: flex; justify-content: center; margin: 0 auto 50px; background: var(--bg-white); border-radius: 50px; padding: 8px; box-shadow: var(--shadow-xs); width: max-content; }
         .tab-btn { padding: 16px 50px; border: none; background: transparent; font-family: inherit; font-size: 1.15rem; font-weight: 800; color: var(--text-gray); border-radius: 40px; cursor: pointer; transition: var(--transition-fast); }
         .tab-btn.active { background: var(--sj-green); color: var(--bg-white); box-shadow: 0 6px 15px rgba(0, 130, 80, 0.25); }
         .tab-btn[data-target="franchise"].active { background: var(--sj-red); box-shadow: 0 6px 15px rgba(210, 75, 65, 0.25); }
         
-        .form-content { display: none; background: var(--bg-light); padding: 60px 70px; border-radius: var(--border-radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+        .form-content { display: none; background: var(--bg-white); padding: 60px 70px; border-radius: var(--border-radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
         .form-content.active { display: block; animation: formFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         @keyframes formFadeIn { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
         
@@ -272,7 +285,7 @@
 
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .input-wrapper { position: relative; margin-bottom: 25px; }
-        .input-wrapper input, .input-wrapper textarea, .input-wrapper select { width: 100%; padding: 24px 20px 12px; border: 2px solid var(--bg-white); border-radius: 16px; font-weight: 600; font-size: 1.05rem; color: var(--text-dark); background: var(--bg-white); box-sizing: border-box; transition: var(--transition-fast); outline: none; box-shadow: 0 2px 10px rgba(0,0,0,0.01); appearance: none;}
+        .input-wrapper input, .input-wrapper textarea, .input-wrapper select { width: 100%; padding: 24px 20px 12px; border: 2px solid var(--bg-light); border-radius: 16px; font-weight: 600; font-size: 1.05rem; color: var(--text-dark); background: var(--bg-light); box-sizing: border-box; transition: var(--transition-fast); outline: none; box-shadow: 0 2px 10px rgba(0,0,0,0.01); appearance: none;}
         .input-wrapper textarea { resize: vertical; min-height: 140px; }
         .input-wrapper label { position: absolute; left: 22px; top: 20px; font-size: 1.05rem; color: var(--text-light); pointer-events: none; transition: var(--transition-fast); font-weight: 500; }
         .input-wrapper input:focus, .input-wrapper textarea:focus, .input-wrapper select:focus { border-color: var(--sj-green); background: var(--bg-white); box-shadow: 0 4px 15px rgba(0,130,80,0.05);}
@@ -299,7 +312,7 @@
         .fab-order:hover { background: #b83e35; color: var(--bg-white); transform: translateY(-5px);}
 
         /* =========================================
-           10. Mega Footer
+           11. Mega Footer
            ========================================= */
         footer { background: #333333; color: rgba(255,255,255,0.8); padding: 80px 5% 40px; font-size: 0.95rem; border-top: 5px solid var(--sj-red); }
         .mega-footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 60px; }
@@ -367,8 +380,6 @@
             .bento-grid { grid-template-columns: 1fr; }
             .spice-grid { grid-template-columns: 1fr; }
             
-            .target-regions { flex-direction: column; gap: 30px; }
-            
             .mega-footer-container { grid-template-columns: 1fr; gap: 40px; text-align: left; }
             .footer-col h4::after { left: 0; transform: none; }
             .footer-bottom { flex-direction: column; justify-content: center; text-align: center; gap: 15px;}
@@ -404,6 +415,7 @@
         <nav>
             <a href="#about">About</a>
             <a href="#menu">Menu</a>
+            <a href="#locations">Locations</a>
             <a href="#franchise">Franchise</a>
             <a href="#community">Community</a>
         </nav>
@@ -552,7 +564,6 @@
                     <p class="menu-eng">Topokki topped with spicy chicken</p>
                 </div>
                 <div class="menu-item">
-                    <!-- [오류 해결 1] 로제 맵닭 경로수정 완료 -->
                     <div class="menu-item-img"><img src="menus/Main/신전 로제 맵닭.png" alt="Rose Spicy Chicken" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Rose+Spicy+Chicken'"></div>
                     <h3>Rosé Spicy Chicken</h3>
                     <p class="menu-kor">신전 로제 맵닭</p>
@@ -700,6 +711,57 @@
         </div>
     </section>
 
+    <section class="locations" id="locations">
+        <div class="section-header reveal">
+            <p>Find Us</p>
+            <h2>Our <span>Locations</span></h2>
+        </div>
+        
+        <div class="split-layout reveal delay-100">
+            <div class="loc-list-wrapper">
+                <div class="loc-item active store-card" onclick="changeMap('finch', this)" data-mapurl="https://maps.google.com/maps?q=5+Byng+Ave,+North+York&t=&z=15&ie=UTF8&iwloc=&output=embed" data-timezone="America/Toronto" data-open="11" data-close="22">
+                    <div class="loc-meta"><span class="loc-status">Loading Hours...</span></div>
+                    <h3>Sinjeon Finch</h3>
+                    <p>5 Byng Ave, North York, ON M2N 5R7</p>
+                    <div class="loc-actions">
+                        <a href="http://google.com/maps?q=Sinjeon+Topokki+Finch" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();">Map</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-finch/LMMptGifXsOnJBVSXsoFuQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();">Uber Eats</a>
+                    </div>
+                </div>
+                <div class="loc-item store-card" onclick="changeMap('christie', this)" data-mapurl="https://maps.google.com/maps?q=712+Bloor+St+W,+Toronto&t=&z=15&ie=UTF8&iwloc=&output=embed" data-timezone="America/Toronto" data-open="11" data-close="22">
+                    <div class="loc-meta"><span class="loc-status">Loading Hours...</span></div>
+                    <h3>Sinjeon Christie</h3>
+                    <p>712 Bloor St W, Toronto, ON M6G 1L4</p>
+                    <div class="loc-actions">
+                        <a href="http://google.com/maps?q=Sinjeon+Topokki+Bloor" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();">Map</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-bloor/SXFYVKNMX12RbmYzYsXF5w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();">Uber Eats</a>
+                    </div>
+                </div>
+                <div class="loc-item store-card" onclick="changeMap('lougheed', this)" data-mapurl="https://maps.google.com/maps?q=329+North+Rd+455,+Coquitlam&t=&z=15&ie=UTF8&iwloc=&output=embed" data-timezone="America/Vancouver" data-open="11" data-close="22">
+                    <div class="loc-meta"><span class="loc-status">Loading Hours...</span></div>
+                    <h3>Sinjeon Lougheed</h3>
+                    <p>329 North Rd #455, Coquitlam, BC V3K 6Z8</p>
+                    <div class="loc-actions">
+                        <a href="http://google.com/maps?q=Sinjeon+Topokki+Lougheed" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();">Map</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-lougheed/rEGaT6FoWKuCNfwSGIWy8w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();">Uber Eats</a>
+                    </div>
+                </div>
+                <div class="loc-item store-card" onclick="changeMap('church', this)" data-mapurl="https://maps.google.com/maps?q=377+Church+St,+Toronto&t=&z=15&ie=UTF8&iwloc=&output=embed" data-timezone="America/Toronto" data-open="11" data-close="23">
+                    <div class="loc-meta"><span class="loc-status">Loading Hours...</span></div>
+                    <h3>Sinjeon Church</h3>
+                    <p>377 Church St, Toronto, ON M5B 1H9</p>
+                    <div class="loc-actions">
+                        <a href="http://google.com/maps?q=Sinjeon+Topokki+Church" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();">Map</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-downtown-toronto/fK_ps-eeWiWycUrGuC-TIQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();">Uber Eats</a>
+                    </div>
+                </div>
+            </div>
+            <div class="loc-map-wrapper">
+                <iframe id="main-map" src="https://maps.google.com/maps?q=5+Byng+Ave,+North+York&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
     <!-- 사용자 지정 Elfsight Instagram Widget -->
     <section class="ugc-section" id="community">
         <div class="section-header reveal">
@@ -709,7 +771,6 @@
         </div>
         
         <div class="elfsight-container reveal delay-100">
-            <!-- Elfsight Instagram Feed -->
             <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
             <div class="elfsight-app-a68ca13f-d70c-481f-a65e-fd85666c959d" data-elfsight-app-lazy></div>
             
@@ -725,31 +786,6 @@
         <div class="section-header reveal">
             <p>Join Us</p>
             <h2>Franchise <span>Process</span></h2>
-        </div>
-        
-        <div class="franchise-target-section reveal delay-100" style="margin-bottom: 80px; text-align: center;">
-            <h3 style="font-size: 2.2rem; font-weight: 800; color: var(--text-dark); margin-bottom: 30px;">Target Territories</h3>
-            <div class="target-box" style="max-width: 900px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); padding: 40px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color);">
-                <img src="target_locations.png" alt="Franchise Target Locations" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 35px; box-shadow: var(--shadow-xs);">
-                
-                <div class="target-regions" style="display: flex; justify-content: center; gap: 60px; text-align: left; flex-wrap: wrap;">
-                    <div class="target-region" style="min-width: 200px;">
-                        <h4 style="color: var(--sj-green); font-size: 1.3rem; border-bottom: 2px solid var(--sj-red); padding-bottom: 5px; margin-bottom: 15px; font-weight:800;">British Columbia</h4>
-                        <ul style="list-style: none; color: var(--text-dark); font-weight: 600; font-size: 1.1rem; line-height: 1.8; padding: 0;">
-                            <li>📍 Vancouver</li>
-                            <li>📍 Richmond</li>
-                            <li>📍 Langley</li>
-                        </ul>
-                    </div>
-                    <div class="target-region" style="min-width: 200px;">
-                        <h4 style="color: var(--sj-green); font-size: 1.3rem; border-bottom: 2px solid var(--sj-red); padding-bottom: 5px; margin-bottom: 15px; font-weight:800;">Ontario</h4>
-                        <ul style="list-style: none; color: var(--text-dark); font-weight: 600; font-size: 1.1rem; line-height: 1.8; padding: 0;">
-                            <li>📍 Mississauga</li>
-                            <li>📍 Markham</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
         
         <div class="timeline-container">
@@ -887,6 +923,7 @@
                 <ul>
                     <li><a href="#about">Our Story</a></li>
                     <li><a href="#menu">Menu</a></li>
+                    <li><a href="#locations">Locations</a></li>
                     <li><a href="#franchise">Franchise</a></li>
                 </ul>
             </div>
@@ -911,7 +948,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>© 2019 Sinjeon Food Sys Canada. All Rights Reserved.</p>
+            <p>© 2026 Y2C Holdings. All Rights Reserved.</p>
             <p>Identity in Every Font.</p>
         </div>
     </footer>
@@ -942,6 +979,48 @@
         }
 
         // =========================================
+        // Split Map Logic
+        // =========================================
+        function changeMap(locId, element) {
+            document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            
+            const iframe = document.getElementById('main-map');
+            const newUrl = element.getAttribute('data-mapurl');
+            iframe.src = newUrl;
+        }
+
+        // =========================================
+        // 타임존 기반 영업시간 체커
+        // =========================================
+        function updateStoreStatuses() {
+            const storeCards = document.querySelectorAll('.store-card');
+            storeCards.forEach(card => {
+                const tz = card.getAttribute('data-timezone');
+                const openHour = parseInt(card.getAttribute('data-open') || 11);
+                const closeHour = parseInt(card.getAttribute('data-close') || 22);
+                const badge = card.querySelector('.loc-status');
+                
+                try {
+                    const localTimeString = new Date().toLocaleString("en-US", {timeZone: tz, hour12: false, hour: 'numeric'});
+                    const currentHour = parseInt(localTimeString);
+
+                    if (currentHour >= openHour && currentHour < closeHour) {
+                        const formatClose = closeHour > 12 ? closeHour - 12 : closeHour;
+                        badge.innerHTML = `Open Now (Closes ${formatClose} PM)`;
+                        badge.className = "loc-status open";
+                    } else {
+                        const formatOpen = openHour >= 12 ? (openHour === 12 ? "12 PM" : `${openHour - 12} PM`) : `${openHour} AM`;
+                        badge.innerHTML = `Closed (Opens ${formatOpen})`;
+                        badge.className = "loc-status closed";
+                    }
+                } catch(e) {
+                    badge.innerHTML = "Check Hours";
+                }
+            });
+        }
+
+        // =========================================
         // EmailJS + Webhook 로직
         // =========================================
         function handleInquiryEmailJS(event, type) {
@@ -960,7 +1039,6 @@
             submitButton.disabled = true;
             submitButton.innerHTML = "PROCESSING... ⏳";
 
-            // 요청된 서비스 아이디로 업데이트 완료
             let serviceID = "service_zyn89ll"; 
             let templateID = type === 'General' ? "template_r8gce22" : "template_kd0px6s";
             let targetEmail = type === 'General' ? "sinjeon.cjchoi@gmail.com" : "eunbeen.lee@y2choldings.co.kr";
@@ -1071,6 +1149,10 @@
             }, observerOptions);
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
             
+            // Initialize Store Statuses
+            updateStoreStatuses();
+            setInterval(updateStoreStatuses, 60000);
+
             // Check Elfsight widget loading status after 4 seconds
             setTimeout(() => {
                 const elfsightContainer = document.querySelector('.elfsight-app-a68ca13f-d70c-481f-a65e-fd85666c959d');
