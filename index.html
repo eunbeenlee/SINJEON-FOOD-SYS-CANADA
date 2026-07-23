@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sinjeon | The New Standard of Topokki</title>
     
+    <!-- 탭창 로고 (Favicon) 연결 -->
+    <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
+    
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
@@ -22,8 +25,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Elfsight Instagram Widget SDK -->
-    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+    <!-- Elfsight Instagram Widget 원본 스크립트 -->
+    <script src="https://elfsightcdn.com/platform.js" async></script>
 
     <style>
         /* =========================================
@@ -121,7 +124,8 @@
             padding: 220px 5% 100px; 
             text-align: center; 
             position: relative; 
-            background: radial-gradient(circle at center, rgba(255,255,255,0.9) 0%, rgba(249,249,249,0.95) 100%), url('background/base_1.jpg') center/cover no-repeat, var(--bg-light); 
+            /* [해결] base_1.JPG 대문자 확장자로 변경하여 404 에러 원천 차단 */
+            background: radial-gradient(circle at center, rgba(255,255,255,0.9) 0%, rgba(249,249,249,0.95) 100%), url('background/base_1.JPG') center/cover no-repeat, var(--bg-light); 
             background-attachment: fixed; 
             display: flex; 
             flex-direction: column; 
@@ -250,10 +254,12 @@
         
         .elfsight-fallback { display: none; padding: 60px 20px; color: var(--text-gray); font-size: 1.1rem; font-weight: 500;}
         .elfsight-fallback i { font-size: 3rem; color: var(--sj-red); margin-bottom: 15px; opacity: 0.5;}
+        
+        /* 불필요한 위젯 버튼 강제 제거 (방어 코드) */
         [class*="elfsight-app"] a, [class*="eapps-link"] { display: none !important; opacity: 0 !important; pointer-events: none !important; }
 
         /* =========================================
-           9. Franchise Process
+           9. Franchise Process (Target Map 제거됨)
            ========================================= */
         .timeline-section { padding: 130px 5%; background: var(--bg-white); }
         .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
@@ -379,6 +385,10 @@
             .bento-large { grid-column: span 1; grid-template-columns: 1fr 1fr; gap: 20px;}
             .bento-grid { grid-template-columns: 1fr; }
             .spice-grid { grid-template-columns: 1fr; }
+            
+            .split-layout { flex-direction: column; height: auto; }
+            .loc-list-wrapper { padding: 20px; max-height: 400px; }
+            .loc-map-wrapper { height: 400px; }
             
             .mega-footer-container { grid-template-columns: 1fr; gap: 40px; text-align: left; }
             .footer-col h4::after { left: 0; transform: none; }
@@ -711,6 +721,7 @@
         </div>
     </section>
 
+    <!-- 지도 위치 정보 유지 -->
     <section class="locations" id="locations">
         <div class="section-header reveal">
             <p>Find Us</p>
@@ -771,8 +782,9 @@
         </div>
         
         <div class="elfsight-container reveal delay-100">
-            <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-            <div class="elfsight-app-a68ca13f-d70c-481f-a65e-fd85666c959d" data-elfsight-app-lazy></div>
+            <!-- [오류 해결] Elfsight 스크립트 강제 로딩 -->
+            <script src="https://elfsightcdn.com/platform.js" async></script>
+            <div class="elfsight-app-a68ca13f-d70c-481f-a65e-fd85666c959d"></div>
             
             <div class="elfsight-fallback" style="padding: 60px 20px; color: var(--text-gray); font-size: 1.1rem; font-weight: 500;">
                 <i class="fa-brands fa-instagram" style="font-size: 3rem; color: var(--sj-red); margin-bottom: 15px; opacity: 0.5; display:block;"></i>
@@ -787,7 +799,6 @@
             <p>Join Us</p>
             <h2>Franchise <span>Process</span></h2>
         </div>
-        
         <div class="timeline-container">
             <div class="timeline-step reveal delay-100">
                 <div class="timeline-marker">1</div>
@@ -1039,6 +1050,7 @@
             submitButton.disabled = true;
             submitButton.innerHTML = "PROCESSING... ⏳";
 
+            // 요청된 서비스 아이디로 업데이트 완료
             let serviceID = "service_zyn89ll"; 
             let templateID = type === 'General' ? "template_r8gce22" : "template_kd0px6s";
             let targetEmail = type === 'General' ? "sinjeon.cjchoi@gmail.com" : "eunbeen.lee@y2choldings.co.kr";
