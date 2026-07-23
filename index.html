@@ -33,7 +33,7 @@
 
     <style>
         /* =========================================
-           1. 타이포그래피 (신전 공식 폰트 + 영문 모던 폰트 믹스매치)
+           1. 타이포그래피 및 기본 설정 (모바일 가로 밀림 방지)
            ========================================= */
         @font-face {
             font-family: 'SinjeonCustom';
@@ -213,7 +213,7 @@
         .menu-grid-container { max-width: 1300px; margin: 0 auto; min-height: 500px; } 
         .menu-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px; animation: fadeInMenu 0.4s ease-in-out; }
         .menu-grid.active { display: grid; }
-        @keyframes fadeInMenu { from { opacity: 0; transform: translateY(15px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes fadeInMenu { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         .menu-item { background: var(--bg-light); border-radius: var(--border-radius-md); padding: 40px 25px 30px; border: 1px solid var(--border-color); transition: var(--transition-fast); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; box-shadow: var(--shadow-xs); position: relative; overflow: hidden;}
         .menu-item::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); transition: left 0.7s ease; z-index: 1; pointer-events: none; }
@@ -337,12 +337,11 @@
         .btn-red:hover { background: #b83e35; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25); transform: translateY(-3px);}
         .submit-btn:disabled { background: var(--text-light); cursor: not-allowed; transform: none; box-shadow: none; }
 
+        /* 플로팅 탑 버튼 유지 (APPLY NOW 제거) */
         .fab-container { position: fixed; bottom: 40px; right: 40px; z-index: 999; display: flex; flex-direction: column; gap: 15px; transform: translateY(100px) translateZ(0); opacity: 0; transition: var(--transition-normal); will-change: transform, opacity;}
         .fab-container.visible { transform: translateY(0) translateZ(0); opacity: 1; }
         .fab { width: 65px; height: 65px; border-radius: 50%; background: var(--bg-white); color: var(--text-dark); display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-md); transition: var(--transition-fast); text-decoration: none; font-size: 1.8rem; border: 1px solid var(--border-color); cursor: pointer;}
         .fab:hover { box-shadow: var(--shadow-hover); border-color: var(--sj-red); color: var(--sj-red); transform: translateY(-5px);}
-        .fab-order { background: var(--sj-red); color: var(--bg-white); border: none; font-weight: 900; font-size: 1.1rem; width: auto; padding: 0 30px; border-radius: 40px; letter-spacing: 1px; box-shadow: 0 10px 25px rgba(210,75,65,0.3);}
-        .fab-order:hover { background: #b83e35; color: var(--bg-white); transform: translateY(-5px);}
 
         /* =========================================
            11. Mega Footer
@@ -881,43 +880,6 @@
         </div>
     </section>
 
-    <section class="timeline-section" id="franchise">
-        <div class="section-header reveal">
-            <p>Join Us</p>
-            <h2>Franchise <span>Process</span></h2>
-        </div>
-        <div class="timeline-container">
-            <div class="timeline-step reveal delay-100">
-                <div class="timeline-marker">1</div>
-                <div class="timeline-content">
-                    <h4>Application & Consultation</h4>
-                    <p>Submit your inquiry via our form. Our team will contact you for an initial consultation regarding your desired location and investment plan.</p>
-                </div>
-            </div>
-            <div class="timeline-step reveal delay-200">
-                <div class="timeline-marker">2</div>
-                <div class="timeline-content">
-                    <h4>Location Analysis</h4>
-                    <p>We provide comprehensive commercial area analysis and help you secure the optimal store location using our data-driven system.</p>
-                </div>
-            </div>
-            <div class="timeline-step reveal delay-300">
-                <div class="timeline-marker">3</div>
-                <div class="timeline-content">
-                    <h4>Contract & Interior</h4>
-                    <p>Sign the official franchise agreement. We begin interior construction adhering strictly to Sinjeon's global brand identity.</p>
-                </div>
-            </div>
-            <div class="timeline-step reveal delay-100">
-                <div class="timeline-marker">4</div>
-                <div class="timeline-content">
-                    <h4>Training & Grand Opening</h4>
-                    <p>Complete our rigorous training program covering operations, hygiene, and recipe mastery. Celebrate your Grand Opening with our dedicated support team!</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="contact-section" id="contact">
         <div class="section-header reveal">
             <p>Get in Touch</p>
@@ -1001,12 +963,12 @@
         </div>
     </section>
 
+    <!-- APPLY NOW 버튼 제거, 플로팅 탑 버튼 유지 -->
     <div class="fab-container" id="fab-container">
-        <a href="#contact" class="fab-order" title="Apply Now">APPLY NOW</a>
         <div class="fab" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to Top">↑</div>
     </div>
 
-    <!-- Mega Footer -->
+    <!-- Mega Footer (저작권자 변경 완료) -->
     <footer>
         <div class="mega-footer-container reveal delay-100">
             <div class="footer-brand" style="text-align: left;">
@@ -1046,7 +1008,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>© 2026 Y2C Holdings. All Rights Reserved.</p>
+            <p>© 2019 Sinjeon Food Sys Canada. All Rights Reserved.</p>
             <p>Identity in Every Font.</p>
         </div>
     </footer>
@@ -1077,7 +1039,7 @@
         }
 
         // =========================================
-        // Split Map Logic (구글 장소 검색 쿼리로 수정)
+        // Split Map Logic
         // =========================================
         function changeMap(mapUrl, element) {
             document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
