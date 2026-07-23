@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sinjeon Canada | The New Standard of Topokki</title>
+    <title>Sinjeon | The New Standard of Topokki</title>
     
     <!-- 탭창 로고 (Favicon) 연결 -->
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
@@ -25,12 +25,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Elfsight Instagram Widget 스크립트 -->
+    <!-- Elfsight Instagram Widget 원본 스크립트 -->
     <script src="https://elfsightcdn.com/platform.js" async></script>
 
     <style>
         /* =========================================
-           1. 타이포그래피 및 기본 설정 (모바일 가로 밀림 방지)
+           1. 타이포그래피 (신전 공식 폰트 + 영문 모던 폰트 믹스매치)
            ========================================= */
         @font-face {
             font-family: 'SinjeonCustom';
@@ -52,6 +52,7 @@
             --transition-fast: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             --transition-normal: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             
+            --shadow-xs: 0 2px 4px rgba(0,0,0,0.03);
             --shadow-sm: 0 8px 16px rgba(0,0,0,0.04);
             --shadow-md: 0 12px 32px rgba(0, 130, 80, 0.06);
             --shadow-lg: 0 24px 64px rgba(0,0,0,0.1);
@@ -223,13 +224,14 @@
         .menu-item .menu-eng { font-size: 0.95rem; color: var(--text-gray); font-weight: 500; line-height: 1.4; position: relative; z-index: 2;}
 
         /* =========================================
-           7. Locations & Maps (구글 플레이스토어 장소 팝업 카드 모드)
+           7. Locations & Maps (마커 팝업 및 전화번호 추가)
            ========================================= */
         .locations { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1400px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 750px; }
         .loc-list-wrapper { flex: 0 0 45%; overflow-y: auto; padding: 40px; }
         .loc-list-wrapper::-webkit-scrollbar { width: 6px; }
         .loc-list-wrapper::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 10px; }
+        
         .loc-item { background: var(--bg-light); border-radius: var(--border-radius-md); padding: 30px; margin-bottom: 25px; border: 2px solid transparent; cursor: pointer; transition: all var(--transition-fast); box-shadow: var(--shadow-xs); }
         .loc-item:hover { transform: translateX(8px); border-color: rgba(210, 75, 65, 0.2); background: var(--bg-white); }
         .loc-item.active { border-color: var(--sj-red); box-shadow: var(--shadow-md); transform: scale(1.02); background: var(--bg-white); }
@@ -240,7 +242,10 @@
         .loc-status.closed { color: var(--sj-red); background: rgba(210, 75, 65, 0.1); }
 
         .loc-item h3 { font-size: 1.7rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
-        .loc-item p { color: var(--text-gray); font-weight: 500; font-size: 1.05rem; margin-bottom: 20px; line-height: 1.5; }
+        .loc-item p { color: var(--text-gray); font-weight: 500; font-size: 1.05rem; line-height: 1.5; }
+        
+        .loc-phone { font-weight: 700; color: var(--sj-red); margin-bottom: 20px; margin-top: 5px; font-size: 1.1rem; }
+
         .loc-actions { display: flex; gap: 15px; }
         .btn-sm { padding: 12px 20px; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 0.95rem; flex: 1; text-align: center; transition: var(--transition-fast); }
         .btn-outline { border: 2px solid var(--border-color); color: var(--text-dark); background: var(--bg-white); }
@@ -256,14 +261,16 @@
         .ugc-section { padding: 130px 5%; background: var(--text-dark); color: white; text-align: center; overflow: hidden; }
         .ugc-section .section-header h2 { color: white; }
         .ugc-section .section-header p { color: var(--sj-red); }
-        .elfsight-container { max-width: 1300px; margin: 0 auto; background: var(--bg-light); border-radius: var(--border-radius-lg); padding: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); min-height: 350px; }
         
+        .elfsight-container { max-width: 1300px; margin: 0 auto; background: var(--bg-light); border-radius: var(--border-radius-lg); padding: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); min-height: 350px; }
         .elfsight-fallback { display: none; padding: 60px 20px; color: var(--text-gray); font-size: 1.1rem; font-weight: 500;}
         .elfsight-fallback i { font-size: 3rem; color: var(--sj-red); margin-bottom: 15px; opacity: 0.5;}
+        
+        /* Elfsight 워터마크만 특정하여 제거 */
         a[href*="elfsight.com"] { display: none !important; opacity: 0 !important; pointer-events: none !important; }
 
         /* =========================================
-           9. Franchise Process
+           9. Franchise Process (Target Map 삭제 완료)
            ========================================= */
         .timeline-section { padding: 130px 5%; background: var(--bg-white); }
         .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
@@ -722,7 +729,7 @@
         </div>
     </section>
 
-    <!-- [업그레이드] 구글 플레이스토어 공식 팝업 카드 방식의 지도 연동 -->
+    <!-- [업그레이드] 구글 맵 핀 & 팝업창 연동 및 모바일 레이아웃 고정 -->
     <section class="locations" id="locations">
         <div class="section-header reveal">
             <p>Find Us</p>
@@ -731,55 +738,63 @@
         
         <div class="split-layout reveal delay-100">
             <div class="loc-list-wrapper">
-                <!-- Finch 지점: 구글 장소 공식 검색 쿼리(pb=... 또는 고유 Place ID 검색 링크) 적용 -->
-                <div class="loc-item active store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="11" data-close="22">
+                <!-- Finch 지점 -->
+                <div class="loc-item active store-card" onclick="changeMap('https://maps.google.com/maps?q=Sinjeon+Topokki+-+Finch,+5+Byng+Ave&t=&z=15&ie=UTF8&iwloc=&output=embed', this)" data-timezone="America/Toronto" data-open="11" data-close="22">
                     <div class="loc-meta"><span class="loc-status">Loading Hours...</span></div>
                     <h3>Sinjeon Finch</h3>
-                    <p>5 Byng Ave, North York, ON M2N 5R7</p>
+                    <p style="margin-bottom: 5px;">5 Byng Ave, North York, ON M2N 5R7</p>
+                    <p class="loc-phone">📞 +1 416-218-8860</p>
                     <div class="loc-actions">
                         <a href="https://maps.google.com/?q=Sinjeon+Topokki+Finch" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();">Map</a>
                         <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-finch/LMMptGifXsOnJBVSXsoFuQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();">Uber Eats</a>
                     </div>
                 </div>
+                
                 <!-- Christie 지점 -->
-                <div class="loc-item store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.0!2d-79.42!3d43.665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b34a1b0000001%3A0x1!2sSinjeon%20Topokki%20Bloor!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="11" data-close="22">
+                <div class="loc-item store-card" onclick="changeMap('https://maps.google.com/maps?q=Sinjeon+Topokki,+712+Bloor+St+W&t=&z=15&ie=UTF8&iwloc=&output=embed', this)" data-timezone="America/Toronto" data-open="11" data-close="22">
                     <div class="loc-meta"><span class="loc-status">Loading Hours...</span></div>
                     <h3>Sinjeon Christie</h3>
-                    <p>712 Bloor St W, Toronto, ON M6G 1L4</p>
+                    <p style="margin-bottom: 5px;">712 Bloor St W, Toronto, ON M6G 1L4</p>
+                    <p class="loc-phone">📞 +1 416-000-0000</p>
                     <div class="loc-actions">
                         <a href="https://maps.google.com/?q=Sinjeon+Topokki+Bloor" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();">Map</a>
                         <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-bloor/SXFYVKNMX12RbmYzYsXF5w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();">Uber Eats</a>
                     </div>
                 </div>
+                
                 <!-- Lougheed 지점 -->
-                <div class="loc-item store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.0!2d-122.89!3d49.25!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x1!2sSinjeon%20Topokki%20Lougheed!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Vancouver" data-open="11" data-close="22">
+                <div class="loc-item store-card" onclick="changeMap('https://maps.google.com/maps?q=Sinjeon+Topokki,+329+North+Rd&t=&z=15&ie=UTF8&iwloc=&output=embed', this)" data-timezone="America/Vancouver" data-open="11" data-close="22">
                     <div class="loc-meta"><span class="loc-status">Loading Hours...</span></div>
                     <h3>Sinjeon Lougheed</h3>
-                    <p>329 North Rd #455, Coquitlam, BC V3K 6Z8</p>
+                    <p style="margin-bottom: 5px;">329 North Rd #455, Coquitlam, BC V3K 6Z8</p>
+                    <p class="loc-phone">📞 +1 604-000-0000</p>
                     <div class="loc-actions">
                         <a href="https://maps.google.com/?q=Sinjeon+Topokki+Lougheed" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();">Map</a>
                         <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-lougheed/rEGaT6FoWKuCNfwSGIWy8w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();">Uber Eats</a>
                     </div>
                 </div>
+                
                 <!-- Church 지점 -->
-                <div class="loc-item store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2888.0!2d-79.378!3d43.659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x1!2sSinjeon%20Topokki%20Church!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="11" data-close="23">
+                <div class="loc-item store-card" onclick="changeMap('https://maps.google.com/maps?q=Sinjeon+Topokki,+377+Church+St&t=&z=15&ie=UTF8&iwloc=&output=embed', this)" data-timezone="America/Toronto" data-open="11" data-close="23">
                     <div class="loc-meta"><span class="loc-status">Loading Hours...</span></div>
                     <h3>Sinjeon Church</h3>
-                    <p>377 Church St, Toronto, ON M5B 1H9</p>
+                    <p style="margin-bottom: 5px;">377 Church St, Toronto, ON M5B 1H9</p>
+                    <p class="loc-phone">📞 +1 416-000-0000</p>
                     <div class="loc-actions">
                         <a href="https://maps.google.com/maps?q=Sinjeon+Topokki+Church" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();">Map</a>
                         <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-downtown-toronto/fK_ps-eeWiWycUrGuC-TIQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();">Uber Eats</a>
                     </div>
                 </div>
             </div>
-            <!-- 초기 로딩 시 Finch 지점의 구글 장소 공식 카드 임베드 출력 -->
+            
             <div class="loc-map-wrapper">
-                <iframe id="main-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <!-- 초기 로딩 맵: Finch 지점 -->
+                <iframe id="main-map" src="https://maps.google.com/maps?q=Sinjeon+Topokki+-+Finch,+5+Byng+Ave&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>
 
-    <!-- 사용자 지정 Elfsight Instagram Widget (오류 방지 및 최적화) -->
+    <!-- 사용자 지정 Elfsight Instagram Widget -->
     <section class="ugc-section" id="community">
         <div class="section-header reveal">
             <p>Social Proof</p>
@@ -790,12 +805,6 @@
         <div class="elfsight-container reveal delay-100">
             <script src="https://elfsightcdn.com/platform.js" async></script>
             <div class="elfsight-app-a68ca13f-d70c-481f-a65e-fd85666c959d" data-elfsight-app-lazy></div>
-            
-            <div class="elfsight-fallback" style="padding: 60px 20px; color: var(--text-gray); font-size: 1.1rem; font-weight: 500;">
-                <i class="fa-brands fa-instagram" style="font-size: 3rem; color: var(--sj-red); margin-bottom: 15px; opacity: 0.5; display:block;"></i>
-                <p>Instagram Feed is connecting...</p>
-                <p style="font-size:0.9rem; margin-top:10px;">(Notice: If you are opening this file locally (file:///), your browser's security settings may block the widget. Please upload to a web server to view the live feed.)</p>
-            </div>
         </div>
     </section>
 
@@ -995,7 +1004,7 @@
         }
 
         // =========================================
-        // Split Map Logic (구글 장소 팝업 카드 URL 연동)
+        // Split Map Logic (구글 장소 검색 쿼리로 수정)
         // =========================================
         function changeMap(mapUrl, element) {
             document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
@@ -1170,7 +1179,7 @@
         });
 
         // =========================================
-        // 통합 동적 모달 로직
+        // 통합 동적 모달 로직 (Clean Heat 포함)
         // =========================================
         function openModal(type) {
             const modal = document.getElementById('dynamic-modal');
