@@ -1,138 +1,1171 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- 1. 모바일 최적화를 위한 핵심 뷰포트 메타 태그 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sinjeon Canada | Coming Soon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sinjeon | The New Standard of Topokki</title>
     
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init({ publicKey: "DITntTK9NnZLeavvX" });
+            } else {
+                console.error("EmailJS SDK failed to load.");
+            }
+        });
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Elfsight Instagram Widget SDK -->
+    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+
     <style>
-        /* 기본 반응형 스타일 (모바일 우선) */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
+        /* =========================================
+           1. 타이포그래피 (신전 공식 폰트 + 영문 모던 폰트 믹스매치)
+           ========================================= */
+        @font-face {
+            font-family: 'SinjeonCustom';
+            src: url('fonts/SinjeonFont.otf') format('opentype');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+
+        :root {
+            --sj-green: #008250; 
+            --sj-red: #D24B41;   
+            --text-dark: #2A2A2A; 
+            --text-gray: #666666;
+            --text-light: #9E9E9E;
+            --bg-light: #F8F9FA; 
+            --bg-white: #FFFFFF;
+            --border-color: rgba(0, 0, 0, 0.06);
+            --uber-green: #06C167;
             
-            /* 2. 콘솔 오류 해결: 영어 이름의 이미지 파일을 사용하도록 설정 */
-            /* 중요: 사용자님은 저장소에 /images 폴더를 만들고, */
-            /* 그 안에 영어 이름의 이미지 파일(예: background-main.jpg)을 넣어야 합니다. */
-            background-image: url('images/background-main.jpg'); 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            --transition-fast: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            --transition-normal: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             
-            color: #333;
-            background-color: #f9f9f9; /* 배경 이미지 로딩 전 기본 색상 */
-        }
-
-        /* 메인 컨테이너 */
-        .main-container {
-            max-width: 340px; /* 초기 모바일 컨테이너 폭 */
-            width: 90%; /* 뷰포트 폭에 맞춰 조절 */
-            padding: 30px;
-            background-color: rgba(255, 255, 255, 0.98);
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        /* 로고 (반응형) */
-        .logo {
-            max-width: 140px; /* 모바일 로고 크기 */
-            height: auto;
-            margin-bottom: 25px;
-        }
-
-        /* 텍스트 크기 최적화 (rem 사용) */
-        h1 {
-            font-size: 1.6rem;
-            margin: 0 0 15px;
-            color: #2c3e50;
-        }
-
-        p {
-            font-size: 1rem;
-            margin: 0 0 25px;
-            line-height: 1.6;
-            color: #7f8c8d;
-        }
-
-        /* 터치 최적화 버튼 */
-        .contact-button {
-            display: inline-block;
-            padding: 15px 35px;
-            background-color: #e74c3c; /* Sinjeon 브랜드 컬러 예시 */
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: background-color 0.2s, transform 0.1s;
-            /* 터치 타겟 크기 최적화 */
-            min-height: 48px;
-            cursor: pointer;
-        }
-
-        .contact-button:hover {
-            background-color: #c0392b;
-        }
-
-        .contact-button:active {
-            transform: scale(0.98);
-        }
-
-        /* 푸터 메시지 */
-        .footer-message {
-            margin-top: 30px;
-            font-size: 0.85rem;
-            color: #bdc3c7;
-        }
-
-        /* 데스크톱 최적화 (태블릿 이상, min-width: 768px) */
-        @media (min-width: 768px) {
-            .main-container {
-                max-width: 600px; /* 데스크톱 컨테이너 폭 */
-                padding: 50px;
-            }
+            --shadow-xs: 0 2px 4px rgba(0,0,0,0.03);
+            --shadow-sm: 0 8px 16px rgba(0,0,0,0.04);
+            --shadow-md: 0 12px 32px rgba(0, 130, 80, 0.06);
+            --shadow-lg: 0 24px 64px rgba(0,0,0,0.1);
+            --shadow-hover: 0 15px 40px rgba(210, 75, 65, 0.15); 
             
-            .logo {
-                max-width: 180px; /* 데스크톱 로고 크기 */
-            }
+            --border-radius-lg: 32px; 
+            --border-radius-md: 20px;
+        }
 
-            h1 {
-                font-size: 2.2rem;
-            }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-            p {
-                font-size: 1.2rem;
+        body { 
+            font-family: 'Outfit', 'Poppins', sans-serif; 
+            color: var(--text-dark); background-color: var(--bg-white); 
+            line-height: 1.6; scroll-behavior: smooth; overflow-x: hidden;
+            -webkit-font-smoothing: antialiased; 
+            -moz-osx-font-smoothing: grayscale;
+            user-select: none; -webkit-user-select: none;
+        }
+        input, textarea, select { user-select: auto; -webkit-user-select: auto; font-family: 'Outfit', sans-serif; }
+        img { user-drag: none; -webkit-user-drag: none; -webkit-touch-callout: none; }
+        *:focus-visible { outline: 3px solid var(--sj-red); outline-offset: 4px; border-radius: 8px; }
+
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; height: 4px; background: var(--sj-red);
+            z-index: 1001; width: 0%; border-top-right-radius: 4px; border-bottom-right-radius: 4px;
+            transition: width 0.1s ease; will-change: width;
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px) translateZ(0); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: opacity, transform; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @keyframes float-normal { 0%, 100% { transform: translateY(0px) rotate(0deg) translateZ(0); } 50% { transform: translateY(-12px) rotate(2deg) translateZ(0); } }
+        @keyframes float-slow { 0%, 100% { transform: translateY(0px) rotate(0deg) translateZ(0); } 50% { transform: translateY(-8px) rotate(-2deg) translateZ(0); } }
+        @keyframes float-fast { 0%, 100% { transform: translateY(0px) rotate(0deg) translateZ(0); } 50% { transform: translateY(-16px) rotate(3deg) translateZ(0); } }
+        
+        .char-img { position: absolute; z-index: 5; pointer-events: auto; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.12)); will-change: transform; transition: transform var(--transition-fast); }
+        .char-img:hover { transform: scale(1.1) translateY(-5px) !important; cursor: pointer; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.2)); }
+        
+        .anim-float-1 { animation: float-normal 4.5s ease-in-out infinite; }
+        .anim-float-2 { animation: float-slow 6s ease-in-out infinite 0.5s; }
+        .anim-float-3 { animation: float-fast 3.5s ease-in-out infinite 1s; }
+
+        .section-header { text-align: center; margin-bottom: 60px; position: relative; }
+        .section-header h2 { font-size: 3.5rem; font-weight: 900; color: var(--text-dark); letter-spacing: -1.5px; margin-bottom: 10px; text-transform: uppercase; }
+        .section-header h2 span { color: var(--sj-red); font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 4.2rem; letter-spacing: -1px; }
+        .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* =========================================
+           2. Navigation 
+           ========================================= */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: rgba(255, 255, 255, 0.85); position: fixed; width: 100%; top: 0; z-index: 1000; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); transition: var(--transition-normal); border-bottom: 1px solid transparent; }
+        header.scrolled { padding: 15px 5%; border-bottom: 1px solid var(--border-color); box-shadow: var(--shadow-sm); background: rgba(255, 255, 255, 0.98); }
+        
+        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-container img { height: 44px; transition: var(--transition-normal); }
+        .logo-container span { font-family: 'SinjeonCustom', sans-serif; font-size: 1.6rem; font-weight: normal; color: var(--sj-green); letter-spacing: -0.5px; margin-top: 5px;}
+        
+        nav { display: flex; gap: 40px; }
+        nav a { text-decoration: none; color: var(--text-dark); font-weight: 700; font-size: 0.95rem; position: relative; padding: 5px 0; transition: color var(--transition-fast); text-transform: uppercase; letter-spacing: 0.5px;}
+        nav a::after { content: ''; position: absolute; width: 0; height: 3px; bottom: -2px; left: 0; background-color: var(--sj-red); transition: width var(--transition-fast); border-radius: 2px; }
+        nav a:hover { color: var(--sj-red); }
+        nav a:hover::after { width: 100%; }
+
+        /* =========================================
+           3. Hero Section (모바일 최적화 및 404 해결)
+           ========================================= */
+        .hero { 
+            padding: 220px 5% 100px; 
+            text-align: center; 
+            position: relative; 
+            /* [수정 1] 한글 폴더명을 영어로 변경: 배경화면 -> background */
+            background: radial-gradient(circle at center, rgba(255,255,255,0.9) 0%, rgba(249,249,249,0.95) 100%), url('background/base_1.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            /* 데스크탑에서만 fixed 유지, 모바일은 미디어쿼리에서 풀기 */
+            background-attachment: fixed; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            overflow: hidden; 
+        }
+        .hero-badge { display: inline-block; padding: 10px 28px; background: rgba(0, 130, 80, 0.08); color: var(--sj-green); border-radius: 50px; font-size: 0.9rem; font-weight: 800; margin-bottom: 25px; letter-spacing: 2px; text-transform: uppercase; }
+        .hero h1 { font-family: 'Outfit', sans-serif; font-size: 5rem; margin: 0; letter-spacing: -2px; line-height: 1.1; font-weight: 900; color: var(--text-dark); text-transform: uppercase; position: relative; z-index: 2; }
+        .hero h1 span.highlight { color: var(--sj-red); display: block; font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 6.5rem; letter-spacing: -1px; margin-top: 10px;}
+        .hero > p { font-size: 1.25rem; color: var(--text-gray); margin-top: 25px; font-weight: 500; max-width: 600px; position: relative; z-index: 2;}
+        
+        .btn-clean-heat { margin-top: 30px; padding: 12px 35px; background: var(--bg-white); color: var(--sj-red); border: 2px solid var(--sj-red); border-radius: 50px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: var(--transition-fast); position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 8px; box-shadow: var(--shadow-sm); }
+        .btn-clean-heat:hover { background: var(--sj-red); color: var(--bg-white); box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+
+        .char-hero { width: 180px; right: 15%; top: 25%; } 
+
+        .marquee-wrapper { width: 100%; background: var(--sj-green); color: var(--bg-white); padding: 15px 0; overflow: hidden; position: relative; display: flex; transform: rotate(-1.5deg) scale(1.02) translateZ(0); margin-top: 60px; z-index: 1; box-shadow: 0 10px 20px rgba(0,130,80,0.15);}
+        .marquee { display: flex; white-space: nowrap; animation: marquee 20s linear infinite; will-change: transform; }
+        .marquee span { font-size: 1.4rem; font-weight: 800; margin: 0 30px; text-transform: uppercase; letter-spacing: 1px; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* =========================================
+           4. About & Core Values
+           ========================================= */
+        .about-section { padding: 130px 5%; background: var(--bg-white); }
+        .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1250px; margin: 0 auto; }
+        .bento-item { background: var(--bg-light); border-radius: var(--border-radius-lg); padding: 50px 40px; border: 1px solid var(--border-color); position: relative; overflow: visible; transition: transform var(--transition-fast), box-shadow var(--transition-fast); display: flex; flex-direction: column; justify-content: center; text-align: left; }
+        .bento-item:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); border-color: var(--sj-green); background: var(--bg-white); }
+        .bento-large { grid-column: span 3; background: var(--text-dark); color: var(--bg-white); display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; align-items: center; padding: 60px; overflow: hidden; border: none;}
+        .bento-large:hover { border-color: var(--sj-red); background: #222; }
+        .stat-item h4 { font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 4rem; color: var(--sj-red); margin-bottom: 5px; }
+        .stat-item p { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.8); }
+        .value-icon { width: 65px; height: 65px; background: rgba(210, 75, 65, 0.1); color: var(--sj-red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 25px; position: relative; z-index: 2; }
+        .bento-item h3 { font-size: 1.7rem; font-weight: 800; color: var(--sj-green); margin-bottom: 15px; position: relative; z-index: 2; }
+        .bento-item p { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; font-weight: 500; position: relative; z-index: 2; }
+        
+        .btn-clean-heat-sm { margin-top: 20px; padding: 10px 20px; background: transparent; color: var(--sj-red); border: 2px solid var(--sj-red); border-radius: 30px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: var(--transition-fast); width: max-content; }
+        .btn-clean-heat-sm:hover { background: var(--sj-red); color: var(--bg-white); box-shadow: var(--shadow-sm); }
+
+        .char-bento-1 { width: 100px; bottom: -20px; right: -10px; }
+        .char-bento-2 { width: 90px; top: -30px; right: 20px; }
+
+        /* =========================================
+           5. Interactive Spice Guide
+           ========================================= */
+        .spice-section { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
+        .spice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .spice-card { padding: 60px 30px; border-radius: var(--border-radius-lg); text-align: center; position: relative; overflow: visible; background: var(--bg-white); border: 1px solid var(--border-color); transition: var(--transition-normal); z-index: 1; cursor: pointer; box-shadow: var(--shadow-sm); }
+        .spice-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0; transition: var(--transition-normal); border-radius: var(--border-radius-lg); }
+        .spice-card:hover { transform: translateY(-12px); border-color: transparent; box-shadow: var(--shadow-lg); color: var(--bg-white); }
+        .spice-card:hover::before { opacity: 1; }
+        .spice-mild::before { background: linear-gradient(135deg, #008250, #005c38); }
+        .spice-medium::before { background: linear-gradient(135deg, #F29A2E, #E67E22); }
+        .spice-spicy::before { background: linear-gradient(135deg, #D24B41, #a3352d); }
+        .spice-level-num { font-family: 'SinjeonCustom', sans-serif; font-size: 3.5rem; font-weight: normal; opacity: 0.08; position: absolute; top: 20px; left: 30px; transition: var(--transition-normal); }
+        .spice-card:hover .spice-level-num { opacity: 0.3; color: var(--bg-white); }
+        
+        .spice-card h3 { font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 2.2rem; margin-top: 40px; margin-bottom: 15px; transition: color var(--transition-fast); position: relative; z-index: 2;}
+        .spice-card p { font-size: 1.05rem; color: var(--text-gray); transition: color var(--transition-fast); position: relative; z-index: 2; line-height: 1.6;}
+        .spice-card:hover h3, .spice-card:hover p { color: var(--bg-white); }
+        
+        .char-spice { width: 130px; position: absolute; top: -65px; left: 50%; transform: translateX(-50%); z-index: 10; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); transition: transform var(--transition-fast); }
+        .spice-card:hover .char-spice { transform: translateX(-50%) scale(1.15) translateY(-10px); }
+
+        /* =========================================
+           6. Categorized Menu Section
+           ========================================= */
+        .menu-section { padding: 130px 5%; background: var(--bg-white); text-align: center; border-top: 1px solid var(--border-color); }
+        .menu-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
+        .menu-tab-btn { background: var(--bg-light); border: 1px solid var(--border-color); color: var(--text-gray); padding: 14px 35px; border-radius: 50px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: var(--transition-fast); text-transform: uppercase; box-shadow: var(--shadow-xs);}
+        .menu-tab-btn:hover { background: var(--bg-white); box-shadow: var(--shadow-sm); border-color: var(--sj-red); color: var(--sj-red); }
+        .menu-tab-btn.active { background: var(--sj-red); color: var(--bg-white); border-color: var(--sj-red); box-shadow: 0 6px 20px rgba(210, 75, 65, 0.25); }
+
+        .menu-grid-container { max-width: 1300px; margin: 0 auto; min-height: 500px; } 
+        .menu-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px; animation: fadeInMenu 0.4s ease-in-out; }
+        .menu-grid.active { display: grid; }
+        @keyframes fadeInMenu { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .menu-item { background: var(--bg-light); border-radius: var(--border-radius-md); padding: 40px 25px 30px; border: 1px solid var(--border-color); transition: var(--transition-fast); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; box-shadow: var(--shadow-xs); position: relative; overflow: hidden;}
+        .menu-item::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); transition: left 0.7s ease; z-index: 1; pointer-events: none; }
+        .menu-item:hover::after { left: 150%; }
+        .menu-item:hover { transform: translateY(-10px); box-shadow: var(--shadow-md); border-color: var(--sj-green); background: var(--bg-white); }
+        .menu-item-img { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; position: relative; z-index: 2;}
+        .menu-item-img img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 15px 20px rgba(0,0,0,0.1)); transition: transform var(--transition-normal); }
+        .menu-item:hover .menu-item-img img { transform: scale(1.15) rotate(2deg); filter: drop-shadow(0 20px 25px rgba(0,0,0,0.15));}
+        
+        .menu-item h3 { font-size: 1.35rem; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; line-height: 1.2; position: relative; z-index: 2;}
+        .menu-item .menu-kor { font-family: 'SinjeonCustom', sans-serif; font-size: 1.2rem; color: var(--sj-red); font-weight: normal; margin-bottom: 10px; position: relative; z-index: 2;}
+        .menu-item .menu-eng { font-size: 0.95rem; color: var(--text-gray); font-weight: 500; line-height: 1.4; position: relative; z-index: 2;}
+
+        /* =========================================
+           7. Target Territories & Franchise Process
+           ========================================= */
+        .timeline-section { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
+        
+        .franchise-target-section { margin-bottom: 100px; text-align: center; }
+        .franchise-target-section h3 { font-size: 2.2rem; font-weight: 800; color: var(--text-dark); margin-bottom: 30px; }
+        .target-box { max-width: 900px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); padding: 50px; box-shadow: var(--shadow-md); border: 1px solid var(--border-color); }
+        .target-box img { width: 100%; height: auto; border-radius: 12px; margin-bottom: 40px; box-shadow: var(--shadow-xs); }
+        .target-regions { display: flex; justify-content: center; gap: 60px; text-align: left; flex-wrap: wrap; }
+        .target-region { min-width: 220px; background: var(--bg-light); padding: 25px 30px; border-radius: 16px; border: 1px solid var(--border-color); }
+        .target-region h4 { color: var(--sj-green); font-size: 1.3rem; border-bottom: 2px solid var(--sj-red); padding-bottom: 8px; margin-bottom: 15px; font-weight: 800;}
+        .target-region ul { list-style: none; color: var(--text-dark); font-weight: 600; font-size: 1.1rem; line-height: 1.8; padding: 0; }
+        .target-region ul li::before { content: '📍'; margin-right: 8px; font-size: 0.9rem;}
+
+        .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
+        .timeline-container::before { content: ''; position: absolute; top: 0; left: 45px; width: 4px; height: 100%; background: var(--border-color); border-radius: 4px; }
+        .timeline-step { display: flex; align-items: flex-start; margin-bottom: 60px; position: relative; }
+        .timeline-marker { position: absolute; left: 20px; width: 54px; height: 54px; background: var(--sj-red); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; color: var(--bg-white); font-size: 1.4rem; box-shadow: 0 0 0 8px var(--bg-white); z-index: 2; }
+        .timeline-content { margin-left: 110px; background: var(--bg-white); padding: 40px 45px; border-radius: var(--border-radius-md); transition: var(--transition-fast); width: 100%; border: 1px solid var(--border-color); box-shadow: var(--shadow-xs); }
+        .timeline-content:hover { transform: translateY(-5px); box-shadow: var(--shadow-sm); border-color: var(--sj-red); }
+        .timeline-content h4 { font-size: 1.6rem; color: var(--text-dark); margin-bottom: 10px; font-weight: 800; }
+        .timeline-content p { color: var(--text-gray); font-size: 1.05rem; font-weight: 500; line-height: 1.6;}
+
+        /* =========================================
+           8. Elfsight Instagram Widget
+           ========================================= */
+        .ugc-section { padding: 130px 5%; background: var(--text-dark); color: white; text-align: center; overflow: hidden; }
+        .ugc-section .section-header h2 { color: white; }
+        .ugc-section .section-header p { color: var(--sj-red); }
+        .elfsight-container { max-width: 1300px; margin: 0 auto; background: var(--bg-light); border-radius: var(--border-radius-lg); padding: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); }
+        
+        .elfsight-fallback { display: none; padding: 60px 20px; color: var(--text-gray); font-size: 1.1rem; font-weight: 500;}
+        .elfsight-fallback i { font-size: 3rem; color: var(--sj-red); margin-bottom: 15px; opacity: 0.5;}
+        [class*="elfsight-app"] a, [class*="eapps-link"] { display: none !important; opacity: 0 !important; pointer-events: none !important; }
+
+        /* =========================================
+           9. Contact Us & Tabs
+           ========================================= */
+        .contact-section { padding: 130px 5%; background: var(--bg-white); position: relative; border-top: 1px solid var(--border-color); }
+        .contact-wrapper { max-width: 860px; margin: 0 auto; position: relative; z-index: 2; }
+        .tab-container { display: flex; justify-content: center; margin: 0 auto 50px; background: var(--bg-light); border-radius: 50px; padding: 8px; box-shadow: var(--shadow-xs); width: max-content; }
+        .tab-btn { padding: 16px 50px; border: none; background: transparent; font-family: inherit; font-size: 1.15rem; font-weight: 800; color: var(--text-gray); border-radius: 40px; cursor: pointer; transition: var(--transition-fast); }
+        .tab-btn.active { background: var(--sj-green); color: var(--bg-white); box-shadow: 0 6px 15px rgba(0, 130, 80, 0.25); }
+        .tab-btn[data-target="franchise"].active { background: var(--sj-red); box-shadow: 0 6px 15px rgba(210, 75, 65, 0.25); }
+        
+        .form-content { display: none; background: var(--bg-light); padding: 60px 70px; border-radius: var(--border-radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+        .form-content.active { display: block; animation: formFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes formFadeIn { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        
+        .form-header { margin-bottom: 40px; text-align: center; }
+        .form-header h3 { font-size: 2rem; margin-bottom: 12px; color: var(--text-dark); font-weight: 900; }
+        .form-header p { color: var(--text-gray); font-size: 1.05rem; }
+
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .input-wrapper { position: relative; margin-bottom: 25px; }
+        .input-wrapper input, .input-wrapper textarea, .input-wrapper select { width: 100%; padding: 24px 20px 12px; border: 2px solid var(--bg-white); border-radius: 16px; font-weight: 600; font-size: 1.05rem; color: var(--text-dark); background: var(--bg-white); box-sizing: border-box; transition: var(--transition-fast); outline: none; box-shadow: 0 2px 10px rgba(0,0,0,0.01); appearance: none;}
+        .input-wrapper textarea { resize: vertical; min-height: 140px; }
+        .input-wrapper label { position: absolute; left: 22px; top: 20px; font-size: 1.05rem; color: var(--text-light); pointer-events: none; transition: var(--transition-fast); font-weight: 500; }
+        .input-wrapper input:focus, .input-wrapper textarea:focus, .input-wrapper select:focus { border-color: var(--sj-green); background: var(--bg-white); box-shadow: 0 4px 15px rgba(0,130,80,0.05);}
+        .input-wrapper input:focus + label, .input-wrapper input:not(:placeholder-shown) + label,
+        .input-wrapper textarea:focus + label, .input-wrapper textarea:not(:placeholder-shown) + label,
+        .input-wrapper select:focus + label, .input-wrapper select:valid + label { top: 8px; font-size: 0.8rem; color: var(--sj-green); font-weight: 800; }
+        
+        #franchise-form .input-wrapper input:focus, #franchise-form .input-wrapper textarea:focus, #franchise-form .input-wrapper select:focus { border-color: var(--sj-red); box-shadow: 0 4px 15px rgba(210,75,65,0.05); }
+        #franchise-form .input-wrapper input:focus + label, #franchise-form .input-wrapper textarea:focus + label, #franchise-form .input-wrapper select:focus + label,
+        #franchise-form .input-wrapper input:not(:placeholder-shown) + label, #franchise-form .input-wrapper textarea:not(:placeholder-shown) + label, #franchise-form .input-wrapper select:valid + label { color: var(--sj-red); }
+
+        .submit-btn { width: 100%; padding: 22px; border: none; border-radius: 16px; color: var(--bg-white); font-weight: 900; transition: var(--transition-fast); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; cursor: pointer;}
+        .btn-green { background: var(--sj-green); }
+        .btn-green:hover { background: #006a40; box-shadow: 0 10px 25px rgba(0, 130, 80, 0.25); transform: translateY(-3px);}
+        .btn-red { background: var(--sj-red); }
+        .btn-red:hover { background: #b83e35; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25); transform: translateY(-3px);}
+        .submit-btn:disabled { background: var(--text-light); cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .fab-container { position: fixed; bottom: 40px; right: 40px; z-index: 999; display: flex; flex-direction: column; gap: 15px; transform: translateY(100px) translateZ(0); opacity: 0; transition: var(--transition-normal); will-change: transform, opacity;}
+        .fab-container.visible { transform: translateY(0) translateZ(0); opacity: 1; }
+        .fab { width: 65px; height: 65px; border-radius: 50%; background: var(--bg-white); color: var(--text-dark); display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-md); transition: var(--transition-fast); text-decoration: none; font-size: 1.8rem; border: 1px solid var(--border-color); cursor: pointer;}
+        .fab:hover { box-shadow: var(--shadow-hover); border-color: var(--sj-red); color: var(--sj-red); transform: translateY(-5px);}
+        .fab-order { background: var(--sj-red); color: var(--bg-white); border: none; font-weight: 900; font-size: 1.1rem; width: auto; padding: 0 30px; border-radius: 40px; letter-spacing: 1px; box-shadow: 0 10px 25px rgba(210,75,65,0.3);}
+        .fab-order:hover { background: #b83e35; color: var(--bg-white); transform: translateY(-5px);}
+
+        /* =========================================
+           10. Mega Footer
+           ========================================= */
+        footer { background: #333333; color: rgba(255,255,255,0.8); padding: 80px 5% 40px; font-size: 0.95rem; border-top: 5px solid var(--sj-red); }
+        .mega-footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 60px; }
+        
+        .footer-brand .footer-logo-box { display: inline-flex; align-items: center; margin-bottom: 25px; }
+        .footer-logo-box img { height: 45px; display: block; object-fit: contain; } 
+        
+        .footer-brand p { font-size: 1.05rem; line-height: 1.8; max-width: 320px; color: rgba(255,255,255,0.9); }
+
+        .footer-col h4 { font-family: 'Outfit', sans-serif; color: var(--bg-white); font-size: 1.3rem; font-weight: 800; margin-bottom: 30px; position: relative; display: inline-block; }
+        .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: -10px; width: 35px; height: 3px; background: var(--sj-red); border-radius: 2px; }
+        
+        .footer-col ul { list-style: none; padding: 0; }
+        .footer-col ul li { margin-bottom: 18px; }
+        .footer-col ul li a { color: rgba(255,255,255,0.8); text-decoration: none; font-weight: 500; font-size: 1.05rem; transition: var(--transition-fast); display: inline-block; cursor: pointer;}
+        .footer-col ul li a:hover { color: var(--bg-white); transform: translateX(5px); }
+
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 35px; text-align: left; max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-bottom p { margin: 0; font-weight: 500; font-size: 1rem;}
+
+        /* Modal Base & Clean Heat Modal Specifics */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); backdrop-filter: blur(5px); }
+        .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+        .modal-content { background: var(--bg-white); width: 90%; max-width: 750px; max-height: 85vh; border-radius: var(--border-radius-lg); padding: 50px; position: relative; transform: translateY(30px) translateZ(0); transition: transform var(--transition-normal); display: flex; flex-direction: column; cursor: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.5);}
+        .modal-overlay.active .modal-content { transform: translateY(0) translateZ(0); }
+        .modal-close { position: absolute; top: 25px; right: 30px; font-size: 2.5rem; background: none; border: none; color: var(--text-light); transition: color var(--transition-fast); line-height: 1; cursor: pointer; z-index: 10; }
+        .modal-close:hover { color: var(--sj-red); }
+        .modal-body { overflow-y: auto; padding-right: 15px; margin-top: 10px; color: var(--text-gray); font-size: 1.05rem; line-height: 1.8; text-align: left; }
+        .modal-body h4 { color: var(--text-dark); font-size: 1.4rem; margin: 30px 0 10px; font-weight: 800; }
+        .modal-body::-webkit-scrollbar { width: 6px; }
+        .modal-body::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+        .heat-diagram { display: flex; flex-direction: column; gap: 30px; margin-top: 25px; }
+        .heat-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .heat-box { padding: 30px 25px; border-radius: 20px; text-align: center; }
+        .heat-bad { background: #fdf5f5; border: 1px solid #fbdcde; }
+        .heat-good { background: #f4f9f6; border: 1px solid #dcf0e7; position: relative; box-shadow: 0 10px 25px rgba(0,130,80,0.1); transform: scale(1.02); }
+        .heat-good::before { content: 'OUR SECRET'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--sj-green); color: white; font-size: 0.75rem; font-weight: 900; padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+        .heat-box h5 { font-size: 1.25rem; font-weight: 800; margin-bottom: 15px; }
+        .heat-bad h5 { color: var(--text-gray); text-decoration: line-through; opacity: 0.8;}
+        .heat-good h5 { color: var(--sj-green); }
+        .heat-box p { font-size: 0.95rem; color: var(--text-dark); margin-bottom: 12px; font-weight: 600; }
+        .heat-flow { display: flex; justify-content: space-between; align-items: center; background: var(--bg-light); padding: 35px 20px; border-radius: 20px; border: 1px solid var(--border-color); }
+        .flow-step { text-align: center; flex: 1; }
+        .flow-step i { font-size: 2.5rem; display: block; margin-bottom: 12px; }
+        .flow-step span { display: block; font-weight: 800; font-size: 0.95rem; color: var(--text-dark); line-height: 1.3;}
+        .flow-arrow { color: var(--text-light); font-size: 1.5rem; font-weight: 900; }
+
+        /* =========================================
+           Mobile Responsiveness
+           ========================================= */
+        @media (max-width: 1000px) {
+            /* [모바일] 배경 최적화 적용 */
+            .hero {
+                background-attachment: scroll; 
             }
+            .char-img { display: none; }
+            .hero { padding: 160px 5% 80px; }
+            .hero h1 { font-size: 3.5rem; }
+            .hero h1 span.highlight { font-size: 4.5rem; }
+            header { padding: 15px 5%; }
+            nav { display: none; } 
+            
+            .bento-large { grid-column: span 1; grid-template-columns: 1fr 1fr; gap: 20px;}
+            .bento-grid { grid-template-columns: 1fr; }
+            .spice-grid { grid-template-columns: 1fr; }
+            
+            .target-regions { flex-direction: column; gap: 30px; }
+            
+            .mega-footer-container { grid-template-columns: 1fr; gap: 40px; text-align: left; }
+            .footer-col h4::after { left: 0; transform: none; }
+            .footer-bottom { flex-direction: column; justify-content: center; text-align: center; gap: 15px;}
+            
+            .form-content { padding: 40px 30px; }
+            .input-row { grid-template-columns: 1fr; gap: 0; }
+            .fab-container { bottom: 25px; right: 25px; }
+            .section-header h2 { font-size: 2.8rem; }
+            .section-header h2 span { font-size: 3.2rem; }
+            .modal-content { padding: 40px 25px; width: 95%;}
+            
+            .menu-tab-btn { padding: 12px 25px; font-size: 1rem; }
+            .timeline-container::before { left: 30px; }
+            .timeline-step { flex-direction: column; }
+            .timeline-marker { left: 8px; width: 48px; height: 48px;}
+            .timeline-content { margin-left: 0; margin-top: 30px; }
+
+            .heat-compare { grid-template-columns: 1fr; }
+            .heat-flow { flex-direction: column; gap: 20px; padding: 25px; }
+            .flow-arrow { transform: rotate(90deg); margin: 5px 0; }
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <!-- 
-            3. 콘솔 오류 해결:
-            사용자님, 스크린샷(`image_2.png`)의 404 오류를 해결하기 위해
-            저장소의 한글 이미지 파일 이름을 영어 소문자 및 하이픈으로 변경해 주세요.
-            예: "신전로고_logo_1.png" -> "sinjeon-logo.png"
-            그리고 'images' 폴더를 만들어 그 안에 넣어주세요.
-        -->
+
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <header id="header">
+        <a href="#home" class="logo-container">
+            <img src="sinjeon_logo_canada.png" alt="Sinjeon Canada Logo">
+            <span>SINJEON CANADA</span>
+        </a>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#menu">Menu</a>
+            <a href="#franchise">Franchise</a>
+            <a href="#community">Community</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-badge reveal">The Global No.1 K-Food</div>
         
-        <!-- 로고 이미지 (반응형) -->
-        <img src="images/sinjeon-logo.png" alt="Sinjeon Canada Logo" class="logo">
+        <img src="character/character_7.png" class="char-img char-hero anim-float-1" alt="Sinjeon Character" loading="lazy">
         
-        <h1>곧 만나요, Sinjeon Canada!</h1>
-        <p>캐나다에 계신 모든 분들께 진짜 신전 떡볶이의 맛을 전해드리기 위해 열심히 준비 중입니다. 웹사이트 오픈을 기대해 주세요!</p>
+        <h1 class="reveal delay-100">
+            The New Standard<br>
+            <span class="highlight">of Topokki</span>
+        </h1>
+        <p class="reveal delay-200">From Korea to Canada. Experience the authentic, HACCP-certified spice that captivated over 800 locations worldwide.</p>
         
-        <!-- 연락처 버튼 -->
-        <a href="mailto:contact@sinjeoncanada.com" class="contact-button">Contact Us</a>
+        <button class="btn-clean-heat reveal delay-300" onclick="openModal('clean-heat')">
+            🌶️ Discover the Secret of Clean Heat
+        </button>
+
+        <div class="marquee-wrapper reveal delay-300">
+            <div class="marquee">
+                <span>🌶️ THE NEW STANDARD OF TOPOKKI</span>
+                <span>🔥 OVER 800+ STORES WORLDWIDE</span>
+                <span>🌶️ HACCP CERTIFIED</span>
+                <span>🔥 CLEAN HEAT, REAL PEPPER</span>
+                <span>🌶️ THE NEW STANDARD OF TOPOKKI</span>
+                <span>🔥 OVER 800+ STORES WORLDWIDE</span>
+                <span>🌶️ HACCP CERTIFIED</span>
+                <span>🔥 CLEAN HEAT, REAL PEPPER</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="section-header reveal">
+            <p>Brand Story</p>
+            <h2>Why <span>Sinjeon?</span></h2>
+        </div>
+        <div class="bento-grid">
+            <div class="bento-item reveal delay-100">
+                <div class="value-icon">01</div>
+                <h3>Sanitary Seasoning</h3>
+                <p>Manufactured in our HACCP-certified facility in Korea. We strictly control quality to deliver the exact same authentic taste globally.</p>
+                <img src="character/character_4.png" class="char-img char-bento-1 anim-float-2" alt="Sinjeon Mandoo" loading="lazy">
+            </div>
+            <div class="bento-item reveal delay-200">
+                <div class="value-icon">02</div>
+                <h3>The Perfect Dip</h3>
+                <p>Sinjeon's signature broth is designed perfectly for dipping. Pair our legendary fried menu items with the spicy sauce.</p>
+            </div>
+            <div class="bento-item reveal delay-300">
+                <div class="value-icon">03</div>
+                <h3>Customized Heat</h3>
+                <p>From Mild to Extra Spicy, our unique seasoning profile offers a clean, addictive heat that caters to everyone's spice tolerance.</p>
+                <button class="btn-clean-heat-sm" onclick="openModal('clean-heat')">How we make it ➔</button>
+                <img src="character/character_6.png" class="char-img char-bento-2 anim-float-3" alt="Sinjeon Golf" loading="lazy">
+            </div>
+            
+            <div class="bento-item bento-large reveal delay-100">
+                <div class="stat-item">
+                    <h4>800+</h4>
+                    <p>Stores in Korea</p>
+                </div>
+                <div class="stat-item">
+                    <h4>20+</h4>
+                    <p>Global Locations</p>
+                </div>
+                <div class="stat-item">
+                    <h4>1999</h4>
+                    <p>Year Established</p>
+                </div>
+                <div class="stat-item">
+                    <h4>100%</h4>
+                    <p>HACCP Certified</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="spice-section" id="spice">
+        <div class="section-header reveal">
+            <p>Spice Level</p>
+            <h2>Choose Your <span>Heat</span></h2>
+        </div>
+        <div class="spice-grid">
+            <div class="spice-card spice-mild reveal delay-100">
+                <span class="spice-level-num">01</span>
+                <img src="character/character_1.png" class="char-spice anim-float-2" alt="Mild Character" loading="lazy">
+                <h3>MILD</h3>
+                <p>Sweet and gently warming. Perfect for beginners to enjoy K-Spice.</p>
+            </div>
+            <div class="spice-card spice-medium reveal delay-200">
+                <span class="spice-level-num">02</span>
+                <img src="character/character_2.png" class="char-spice anim-float-1" alt="Medium Character" loading="lazy">
+                <h3>MEDIUM</h3>
+                <p>The authentic original heat. A balanced kick that keeps you wanting more.</p>
+            </div>
+            <div class="spice-card spice-spicy reveal delay-300">
+                <span class="spice-level-num">03</span>
+                <img src="character/character_3.png" class="char-spice anim-float-3" alt="Spicy Character" loading="lazy">
+                <h3>SPICY</h3>
+                <p>For the brave. Intense, sweat-inducing heat using pure Cheongyang Chili.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="menu-section" id="menu">
+        <div class="section-header reveal">
+            <p>Signature Menu</p>
+            <h2>Taste the <span>Original</span></h2>
+        </div>
         
-        <p class="footer-message">&copy; 2024 Sinjeon Canada. All rights reserved.</p>
+        <div class="menu-tabs reveal delay-100">
+            <button class="menu-tab-btn active" onclick="showMenuCategory('Main')">Main</button>
+            <button class="menu-tab-btn" onclick="showMenuCategory('DeepFried')">Deep Fried</button>
+            <button class="menu-tab-btn" onclick="showMenuCategory('Rice')">Rice & Cupbap</button>
+            <button class="menu-tab-btn" onclick="showMenuCategory('Topping')">Toppings</button>
+        </div>
+
+        <div class="menu-grid-container reveal delay-200">
+            <!-- 1. Main Category -->
+            <div id="cat-Main" class="menu-grid active">
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/신전 오리지널 떡볶이.png" alt="Sinjeon Original Topokki" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Original+Topokki'"></div>
+                    <h3>Original Topokki</h3>
+                    <p class="menu-kor">신전 오리지널 떡볶이</p>
+                    <p class="menu-eng">Classic spicy rice cakes in signature broth</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/신전 로제 떡볶이.png" alt="Rose Topokki" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Rose+Topokki'"></div>
+                    <h3>Rosé Topokki</h3>
+                    <p class="menu-kor">신전 로제 떡볶이</p>
+                    <p class="menu-eng">Creamy and spicy rosé sauce rice cakes</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/신전 마라 로제 떡볶이.png" alt="Mala Rose Topokki" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Mala+Rose+Topokki'"></div>
+                    <h3>Mala Rosé Topokki</h3>
+                    <p class="menu-kor">신전 마라 로제 떡볶이</p>
+                    <p class="menu-eng">Trend-setting mala flavor with rich cream</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/신전 맵닭.png" alt="Spicy Chicken Topokki" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Spicy+Chicken+Topokki'"></div>
+                    <h3>Spicy Chicken Topokki</h3>
+                    <p class="menu-kor">신전 맵닭</p>
+                    <p class="menu-eng">Topokki topped with spicy chicken</p>
+                </div>
+                <div class="menu-item">
+                    <!-- [오류 해결 1] 로제 맵닭 경로수정 완료 -->
+                    <div class="menu-item-img"><img src="menus/Main/신전 로제 맵닭.png" alt="Rose Spicy Chicken" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Rose+Spicy+Chicken'"></div>
+                    <h3>Rosé Spicy Chicken</h3>
+                    <p class="menu-kor">신전 로제 맵닭</p>
+                    <p class="menu-eng">Spicy chicken in rich creamy rosé sauce</p>
+                </div>
+            </div>
+
+            <!-- 2. Deep Fried Category -->
+            <div id="cat-DeepFried" class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/튀김오뎅.png" alt="Fried Fishcake" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Fried+Fishcake'"></div>
+                    <h3>Fried Fishcake</h3>
+                    <p class="menu-kor">튀김오뎅</p>
+                    <p class="menu-eng">Signature crispy fishcake sticks</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/튀김만두.png" alt="Fried Mandoo" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Fried+Mandoo'"></div>
+                    <h3>Fried Mandoo</h3>
+                    <p class="menu-kor">튀김만두</p>
+                    <p class="menu-eng">Crispy glass noodle dumplings</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/김말이.png" alt="Seaweed Roll" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Seaweed+Roll'"></div>
+                    <h3>Seaweed Roll</h3>
+                    <p class="menu-kor">김말이</p>
+                    <p class="menu-eng">Deep-fried seaweed glass noodle rolls</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/잡채말이.png" alt="Glass Noodle Roll" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Glass+Noodle+Roll'"></div>
+                    <h3>Glass Noodle Roll</h3>
+                    <p class="menu-kor">잡채말이</p>
+                    <p class="menu-eng">Fried rolls filled with savory glass noodles</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/치즈스틱.png" alt="Cheese Stick" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Cheese+Stick'"></div>
+                    <h3>Cheese Stick</h3>
+                    <p class="menu-kor">치즈스틱</p>
+                    <p class="menu-eng">Crispy sticks filled with melted mozzarella</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/통살오징어튀김.png" alt="Squid Fries" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Squid+Fries'"></div>
+                    <h3>Squid Fries</h3>
+                    <p class="menu-kor">통살오징어튀김</p>
+                    <p class="menu-eng">Crispy battered thick squid</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/해쉬브라운.png" alt="Hash Brown" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Hash+Brown'"></div>
+                    <h3>Hash Brown</h3>
+                    <p class="menu-kor">해쉬브라운</p>
+                    <p class="menu-eng">Golden crispy potato hash browns</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/납작만두.png" alt="Flat Mandoo" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Flat+Mandoo'"></div>
+                    <h3>Flat Mandoo</h3>
+                    <p class="menu-kor">납작만두</p>
+                    <p class="menu-eng">Crispy flat dumplings</p>
+                </div>
+            </div>
+
+            <!-- 3. Rice & Cupbap Category -->
+            <div id="cat-Rice" class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/신전치즈김밥.png" alt="Sinjeon Cheese Kimbap" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Cheese+Kimbap'"></div>
+                    <h3>Cheese Kimbap</h3>
+                    <p class="menu-kor">신전치즈김밥</p>
+                    <p class="menu-eng">Spicy rice rolled with melted cheese</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/신전김밥.png" alt="Sinjeon Kimbap" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sinjeon+Kimbap'"></div>
+                    <h3>Sinjeon Kimbap</h3>
+                    <p class="menu-kor">신전김밥</p>
+                    <p class="menu-eng">Signature spicy rice roll</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/참치마요김밥.png" alt="Tuna Mayo Kimbap" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Tuna+Mayo+Kimbap'"></div>
+                    <h3>Tuna Mayo Kimbap</h3>
+                    <p class="menu-kor">참치마요김밥</p>
+                    <p class="menu-eng">Tuna and mayo with spicy rice</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/참치마요컵밥.png" alt="Tuna Mayo Cupbap" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Tuna+Mayo+Cupbap'"></div>
+                    <h3>Tuna Mayo Cupbap</h3>
+                    <p class="menu-kor">참치마요컵밥</p>
+                    <p class="menu-eng">Rice bowl topped with tuna and mayo</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/스팸마요컵밥.png" alt="Spam Mayo Cupbap" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Spam+Mayo+Cupbap'"></div>
+                    <h3>Spam Mayo Cupbap</h3>
+                    <p class="menu-kor">스팸마요컵밥</p>
+                    <p class="menu-eng">Rice bowl with Spam and savory mayo</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/치킨마요컵밥.png" alt="Chicken Mayo Cupbap" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Chicken+Mayo+Cupbap'"></div>
+                    <h3>Chicken Mayo Cupbap</h3>
+                    <p class="menu-kor">치킨마요컵밥</p>
+                    <p class="menu-eng">Rice bowl with crispy chicken and mayo</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/신전라이스.png" alt="Sinjeon Rice" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sinjeon+Rice'"></div>
+                    <h3>Sinjeon Rice</h3>
+                    <p class="menu-kor">신전라이스</p>
+                    <p class="menu-eng">Signature spicy fried rice with cheese</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/맵크림리조또.png" alt="Spicy Cream Risotto" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Spicy+Cream+Risotto'"></div>
+                    <h3>Spicy Cream Risotto</h3>
+                    <p class="menu-kor">맵크림리조또</p>
+                    <p class="menu-eng">Creamy risotto with a spicy kick</p>
+                </div>
+            </div>
+
+            <!-- 4. Topping Category -->
+            <div id="cat-Topping" class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Topping/치즈.png" alt="Cheese Topping" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Cheese'"></div>
+                    <h3>Cheese</h3>
+                    <p class="menu-kor">치즈 토핑</p>
+                    <p class="menu-eng">Extra melted mozzarella cheese</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Topping/분모자.png" alt="Bunmoja" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Bunmoja'"></div>
+                    <h3>Bunmoja</h3>
+                    <p class="menu-kor">분모자</p>
+                    <p class="menu-eng">Chewy potato starch noodles</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Topping/넓은당면.png" alt="Wide Glass Noodles" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Wide+Glass+Noodles'"></div>
+                    <h3>Wide Glass Noodles</h3>
+                    <p class="menu-kor">넓은당면</p>
+                    <p class="menu-eng">Flat and chewy glass noodles</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Topping/순대.png" alt="Sundae" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sundae'"></div>
+                    <h3>Sundae</h3>
+                    <p class="menu-kor">순대</p>
+                    <p class="menu-eng">Traditional Korean blood sausage</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Topping/소세지.png" alt="Sausage" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sausage'"></div>
+                    <h3>Sausage</h3>
+                    <p class="menu-kor">소세지</p>
+                    <p class="menu-eng">Bite-sized smoked sausages</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 사용자 지정 Elfsight Instagram Widget -->
+    <section class="ugc-section" id="community">
+        <div class="section-header reveal">
+            <p>Social Proof</p>
+            <h2>Community <span>Feed</span></h2>
+            <p style="color:var(--text-light); text-transform:none; letter-spacing:0;">Follow <a href="https://www.instagram.com/sinjeon.canada" target="_blank" style="color:var(--sj-red); text-decoration:none; font-weight:800;">@sinjeon.canada</a></p>
+        </div>
+        
+        <div class="elfsight-container reveal delay-100">
+            <!-- Elfsight Instagram Feed -->
+            <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+            <div class="elfsight-app-a68ca13f-d70c-481f-a65e-fd85666c959d" data-elfsight-app-lazy></div>
+            
+            <div class="elfsight-fallback" style="padding: 60px 20px; color: var(--text-gray); font-size: 1.1rem; font-weight: 500;">
+                <i class="fa-brands fa-instagram" style="font-size: 3rem; color: var(--sj-red); margin-bottom: 15px; opacity: 0.5; display:block;"></i>
+                <p>Instagram Feed is connecting...</p>
+                <p style="font-size:0.9rem; margin-top:10px;">(Notice: If you are opening this file locally (file:///), your browser's security settings may block the widget. Please upload to a web server to view the live feed.)</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline-section" id="franchise">
+        <div class="section-header reveal">
+            <p>Join Us</p>
+            <h2>Franchise <span>Process</span></h2>
+        </div>
+        
+        <div class="franchise-target-section reveal delay-100" style="margin-bottom: 80px; text-align: center;">
+            <h3 style="font-size: 2.2rem; font-weight: 800; color: var(--text-dark); margin-bottom: 30px;">Target Territories</h3>
+            <div class="target-box" style="max-width: 900px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); padding: 40px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color);">
+                <img src="target_locations.png" alt="Franchise Target Locations" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 35px; box-shadow: var(--shadow-xs);">
+                
+                <div class="target-regions" style="display: flex; justify-content: center; gap: 60px; text-align: left; flex-wrap: wrap;">
+                    <div class="target-region" style="min-width: 200px;">
+                        <h4 style="color: var(--sj-green); font-size: 1.3rem; border-bottom: 2px solid var(--sj-red); padding-bottom: 5px; margin-bottom: 15px; font-weight:800;">British Columbia</h4>
+                        <ul style="list-style: none; color: var(--text-dark); font-weight: 600; font-size: 1.1rem; line-height: 1.8; padding: 0;">
+                            <li>📍 Vancouver</li>
+                            <li>📍 Richmond</li>
+                            <li>📍 Langley</li>
+                        </ul>
+                    </div>
+                    <div class="target-region" style="min-width: 200px;">
+                        <h4 style="color: var(--sj-green); font-size: 1.3rem; border-bottom: 2px solid var(--sj-red); padding-bottom: 5px; margin-bottom: 15px; font-weight:800;">Ontario</h4>
+                        <ul style="list-style: none; color: var(--text-dark); font-weight: 600; font-size: 1.1rem; line-height: 1.8; padding: 0;">
+                            <li>📍 Mississauga</li>
+                            <li>📍 Markham</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline-container">
+            <div class="timeline-step reveal delay-100">
+                <div class="timeline-marker">1</div>
+                <div class="timeline-content">
+                    <h4>Application & Consultation</h4>
+                    <p>Submit your inquiry via our form. Our team will contact you for an initial consultation regarding your desired location and investment plan.</p>
+                </div>
+            </div>
+            <div class="timeline-step reveal delay-200">
+                <div class="timeline-marker">2</div>
+                <div class="timeline-content">
+                    <h4>Location Analysis</h4>
+                    <p>We provide comprehensive commercial area analysis and help you secure the optimal store location using our data-driven system.</p>
+                </div>
+            </div>
+            <div class="timeline-step reveal delay-300">
+                <div class="timeline-marker">3</div>
+                <div class="timeline-content">
+                    <h4>Contract & Interior</h4>
+                    <p>Sign the official franchise agreement. We begin interior construction adhering strictly to Sinjeon's global brand identity.</p>
+                </div>
+            </div>
+            <div class="timeline-step reveal delay-100">
+                <div class="timeline-marker">4</div>
+                <div class="timeline-content">
+                    <h4>Training & Grand Opening</h4>
+                    <p>Complete our rigorous training program covering operations, hygiene, and recipe mastery. Celebrate your Grand Opening with our dedicated support team!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="section-header reveal">
+            <p>Get in Touch</p>
+            <h2>Connect <span>With Us</span></h2>
+        </div>
+        <div class="contact-wrapper reveal delay-200">
+            <div class="tab-container">
+                <button class="tab-btn active" data-target="general" onclick="switchContactTab('general')">General</button>
+                <button class="tab-btn" data-target="franchise" onclick="switchContactTab('franchise')">Franchise</button>
+            </div>
+
+            <div id="general-form" class="form-content active">
+                <div class="form-header">
+                    <h3>General Support</h3>
+                </div>
+                <form id="form-general" onsubmit="return handleInquiryEmailJS(event, 'General')">
+                    <div class="input-row">
+                        <div class="input-wrapper">
+                            <input type="text" id="gen-name" name="from_name" placeholder=" " required>
+                            <label for="gen-name">Full Name</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="tel" id="gen-phone" name="reply_phone" placeholder=" " required>
+                            <label for="gen-phone">Phone Number</label>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="email" id="gen-email" name="reply_email" placeholder=" " required>
+                        <label for="gen-email">Email Address</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <textarea id="gen-msg" name="message" placeholder=" " required></textarea>
+                        <label for="gen-msg">Message</label>
+                    </div>
+                    <button type="submit" id="btn-gen-submit" class="submit-btn btn-green">Send Message</button>
+                </form>
+            </div>
+
+            <div id="franchise-form" class="form-content">
+                <div class="form-header">
+                    <h3>Franchise Inquiries</h3>
+                </div>
+                <form id="form-franchise" onsubmit="return handleInquiryEmailJS(event, 'Franchise')">
+                    <div class="input-row">
+                        <div class="input-wrapper">
+                            <input type="text" id="fra-name" name="from_name" placeholder=" " required>
+                            <label for="fra-name">Applicant Name</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="tel" id="fra-phone" name="reply_phone" placeholder=" " required>
+                            <label for="fra-phone">Contact Number</label>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="email" id="fra-email" name="reply_email" placeholder=" " required>
+                        <label for="fra-email">Email Address</label>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-wrapper">
+                            <input type="text" id="fra-location" name="desired_location" placeholder=" " required>
+                            <label for="fra-location">Desired City / Location</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <select id="fra-budget" name="budget" required>
+                                <option value="" disabled selected hidden></option>
+                                <option value="Under $200k">Under $200k CAD</option>
+                                <option value="$200k - $350k">$200k - $350k CAD</option>
+                                <option value="$350k - $500k">$350k - $500k CAD</option>
+                                <option value="Over $500k">Over $500k CAD</option>
+                            </select>
+                            <label for="fra-budget">Estimated Budget</label>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <textarea id="fra-msg" name="message" placeholder=" " required></textarea>
+                        <label for="fra-msg">Business Background</label>
+                    </div>
+                    <button type="submit" id="btn-fra-submit" class="submit-btn btn-red">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="fab-container" id="fab-container">
+        <a href="#contact" class="fab-order" title="Apply Now">APPLY NOW</a>
+        <div class="fab" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to Top">↑</div>
     </div>
+
+    <!-- 스크린샷 완벽 매핑 메가 푸터 -->
+    <footer>
+        <div class="mega-footer-container reveal delay-100">
+            <div class="footer-brand" style="text-align: left;">
+                <div class="footer-logo-box">
+                    <img src="sinjeon_logo_canada.png" alt="Sinjeon Logo" loading="lazy">
+                </div>
+                <p>Bringing the authentic and uncompromising taste of K-Spice to the world since 1999.</p>
+            </div>
+            
+            <div class="footer-col" style="text-align: left;">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">Our Story</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#franchise">Franchise</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col" style="text-align: left;">
+                <h4>Social</h4>
+                <ul>
+                    <li><a href="https://instagram.com/sinjeon.canada" target="_blank">Instagram</a></li>
+                    <li><a href="#community">Community Feed</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col" style="text-align: left;">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a onclick="openModal('privacy')">Privacy Policy</a></li>
+                    <li><a onclick="openModal('terms')">Terms of Service</a></li>
+                    <li><a href="#contact">Franchise Inquiry</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2019 Sinjeon Food Sys Canada. All Rights Reserved.</p>
+            <p>Identity in Every Font.</p>
+        </div>
+    </footer>
+
+    <!-- 통합 동적 모달 창 -->
+    <div class="modal-overlay" id="dynamic-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h3 id="modal-title" style="font-size: 2rem; font-weight: 900; color: var(--text-dark); margin-top: 0; line-height: 1.2;"></h3>
+            <div class="modal-body" id="modal-body">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =========================================
+        // Menu Tab Logic
+        // =========================================
+        function showMenuCategory(catId) {
+            document.querySelectorAll('.menu-tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.menu-grid').forEach(grid => {
+                grid.classList.remove('active');
+            });
+            document.getElementById('cat-' + catId).classList.add('active');
+        }
+
+        // =========================================
+        // EmailJS + Webhook 로직
+        // =========================================
+        function handleInquiryEmailJS(event, type) {
+            event.preventDefault();
+            
+            if (typeof emailjs === 'undefined') {
+                alert("EmailJS service is currently unavailable. Launching your default email client instead.");
+                fallbackMailto(type, getFormParams(event.target, type));
+                return false;
+            }
+
+            const formElement = event.target;
+            const submitButton = formElement.querySelector('.submit-btn');
+            const originalButtonText = submitButton.innerHTML;
+            
+            submitButton.disabled = true;
+            submitButton.innerHTML = "PROCESSING... ⏳";
+
+            // 요청된 서비스 아이디로 업데이트 완료
+            let serviceID = "service_zyn89ll"; 
+            let templateID = type === 'General' ? "template_r8gce22" : "template_kd0px6s";
+            let targetEmail = type === 'General' ? "sinjeon.cjchoi@gmail.com" : "eunbeen.lee@y2choldings.co.kr";
+
+            const extraParams = getFormParams(formElement, type);
+            extraParams.target_email = targetEmail;
+            extraParams.inquiry_type = type;
+
+            const WEBHOOK_URL = "YOUR_WEBHOOK_URL_HERE"; 
+            if (WEBHOOK_URL !== "YOUR_WEBHOOK_URL_HERE") {
+                fetch(WEBHOOK_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(extraParams)
+                }).catch(err => console.error("Webhook Delivery Failed:", err));
+            }
+
+            emailjs.sendForm(serviceID, templateID, formElement, extraParams)
+                .then(() => {
+                    alert(`Thank you! Your ${type} inquiry has been submitted successfully.`);
+                    formElement.reset();
+                })
+                .catch((error) => {
+                    console.error("EmailJS Failure:", error);
+                    alert(`Cloud service routing is completing configuration. Alternative mail window will open now.`);
+                    fallbackMailto(type, extraParams);
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
+                });
+            return false;
+        }
+
+        function getFormParams(formElement, type) {
+            let params = {
+                name: formElement.querySelector('[name="from_name"]').value,
+                phone: formElement.querySelector('[name="reply_phone"]').value,
+                email: formElement.querySelector('[name="reply_email"]').value,
+                message: formElement.querySelector('[name="message"]').value
+            };
+            if(type === 'Franchise') {
+                params.location = formElement.querySelector('[name="desired_location"]').value;
+                params.budget = formElement.querySelector('[name="budget"]').value;
+            }
+            return params;
+        }
+
+        function fallbackMailto(type, params) {
+            const subject = `[${type} Inquiry] from ${params.name}`;
+            let body = "";
+            if(type === 'General') {
+                body = `Name: ${params.name}%0D%0APhone: ${params.phone}%0D%0AEmail: ${params.email}%0D%0A%0D%0AInquiry:%0D%0A${params.message}`;
+            } else {
+                body = `Applicant Name: ${params.name}%0D%0AContact: ${params.phone}%0D%0AEmail: ${params.email}%0D%0ADesired Location: ${params.location}%0D%0AEstimated Budget: ${params.budget}%0D%0A%0D%0ABusiness Background / Inquiry:%0D%0A${params.message}`;
+            }
+            const targetMail = type === 'General' ? "sinjeon.cjchoi@gmail.com" : "eunbeen.lee@y2choldings.co.kr";
+            window.location.href = `mailto:${targetMail}?subject=${encodeURIComponent(subject)}&body=${body}`;
+        }
+
+        // =========================================
+        // UI, Tabs & Scroll Logic
+        // =========================================
+        function switchContactTab(target) {
+            document.querySelectorAll('.contact-wrapper .tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.contact-wrapper .form-content').forEach(form => {
+                form.classList.remove('active');
+                form.style.animation = 'none';
+                form.offsetHeight; 
+                form.style.animation = null; 
+            });
+            document.querySelector(`.contact-wrapper .tab-btn[data-target="${target}"]`).classList.add('active');
+            document.getElementById(`${target}-form`).classList.add('active');
+        }
+
+        let isScrolling = false;
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    const header = document.getElementById('header');
+                    if (window.scrollY > 50) header.classList.add('scrolled');
+                    else header.classList.remove('scrolled');
+
+                    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    const scrolled = (winScroll / height) * 100;
+                    document.getElementById("scroll-progress").style.width = scrolled + "%";
+
+                    const fabContainer = document.getElementById('fab-container');
+                    if (window.scrollY > 500) fabContainer.classList.add('visible');
+                    else fabContainer.classList.remove('visible');
+                    
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            
+            // Check Elfsight widget loading status after 4 seconds
+            setTimeout(() => {
+                const elfsightContainer = document.querySelector('.elfsight-app-a68ca13f-d70c-481f-a65e-fd85666c959d');
+                if (elfsightContainer && elfsightContainer.innerHTML.trim() === '') {
+                    const fallback = document.querySelector('.elfsight-fallback');
+                    if (fallback) fallback.style.display = 'block';
+                }
+            }, 4000);
+        });
+
+        // =========================================
+        // 통합 동적 모달 로직 (Clean Heat 포함)
+        // =========================================
+        function openModal(type) {
+            const modal = document.getElementById('dynamic-modal');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+
+            if(type === 'clean-heat') {
+                title.style.display = 'none';
+                body.innerHTML = `
+                    <h4 style="margin-top:0; font-size: 2rem; color: var(--sj-red); line-height: 1.2; font-family: 'SinjeonCustom', sans-serif; font-weight: normal;">How Cheongyang Chili Peppers Make Our Clean Heat</h4>
+                    <p style="font-size: 1.1rem; color: var(--text-dark); margin-top: 15px;">At Sinjeon, we refuse to compromise on wellness. We use 100% authentic Cheongyang chili peppers instead of chemical capsaicin extracts to create our signature addictive spice that North Americans are falling in love with.</p>
+                    
+                    <div class="heat-diagram">
+                        <div class="heat-compare">
+                            <div class="heat-box heat-bad">
+                                <h5>Artificial Capsaicin</h5>
+                                <p>❌ Chemical extracts</p>
+                                <p>❌ Lingering, painful heat</p>
+                                <p>❌ Can cause stomach discomfort</p>
+                            </div>
+                            <div class="heat-box heat-good">
+                                <h5>Authentic Cheongyang Chili</h5>
+                                <p>✅ 100% Natural ingredients</p>
+                                <p>✅ Sharp, clean, and refreshing heat</p>
+                                <p>✅ Dissipates quickly, leaving rich flavor</p>
+                            </div>
+                        </div>
+                        
+                        <div class="heat-flow">
+                            <div class="flow-step">
+                                <i>🌶️</i><span>Premium Chili<br>Harvesting</span>
+                            </div>
+                            <div class="flow-arrow">➔</div>
+                            <div class="flow-step">
+                                <i>🏭</i><span>HACCP Certified<br>Processing</span>
+                            </div>
+                            <div class="flow-arrow">➔</div>
+                            <div class="flow-step">
+                                <i>✨</i><span>Sinjeon's<br>Secret Sauce</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } 
+            else if(type === 'privacy') {
+                title.style.display = 'block';
+                title.innerText = "Privacy Policy";
+                body.innerHTML = `
+                    <h4>1. Introduction</h4>
+                    <p>Sinjeon Food Sys Canada ("we", "our", or "us") is committed to protecting the privacy and security of your personal information. This Privacy Policy outlines how we collect, use, and safeguard data in compliance with the Personal Information Protection and Electronic Documents Act (PIPEDA).</p>
+                    <h4>2. Information We Collect</h4>
+                    <p>We only collect personal information that is necessary for our business operations. This includes your name, phone number, email address, and desired location data when you voluntarily submit inquiries via our Contact Us or Franchise forms.</p>
+                    <h4>3. Use of Information</h4>
+                    <p>The information collected is strictly used to:<br>- Respond to your general support or franchise inquiries.<br>- Assess your franchise application and provide preliminary consulting.<br>- Communicate updates regarding our operations or your application status.</p>
+                    <h4>4. Data Security and Sharing</h4>
+                    <p>We implement robust, industry-standard security protocols to protect your data transmitted through our Cloud infrastructure. <strong>We do not sell, rent, or trade your personal information to any third parties.</strong></p>
+                `;
+            } 
+            else if(type === 'terms') {
+                title.style.display = 'block';
+                title.innerText = "Terms of Service";
+                body.innerHTML = `
+                    <h4>1. Acceptance of Terms</h4>
+                    <p>By accessing and using the Sinjeon Canada website, you accept and agree to be bound by the terms and provision of this agreement. These terms are governed by the laws of the Province of Ontario and the federal laws of Canada applicable therein.</p>
+                    <h4>2. Intellectual Property Rights</h4>
+                    <p>All content published on this website, including but not limited to brand logos, typography ('SinjeonCustom'), graphical assets, character illustrations ('Mill-tto Family'), and textual content, are the exclusive intellectual property of Sinjeon Food Sys. <strong>Unauthorized scraping, copying, reproduction, or commercial use is strictly prohibited and subject to legal action.</strong></p>
+                    <h4>3. Franchise Application Disclaimer</h4>
+                    <p>Submitting a franchise inquiry through this website does not constitute a binding legal contract or a guarantee of franchise approval.</p>
+                `;
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() {
+            document.getElementById('dynamic-modal').classList.remove('active');
+            document.body.style.overflow = ''; 
+        }
+        
+        document.getElementById('dynamic-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
 </body>
 </html>
