@@ -337,7 +337,7 @@
         .btn-red:hover { background: #b83e35; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25); transform: translateY(-3px);}
         .submit-btn:disabled { background: var(--text-light); cursor: not-allowed; transform: none; box-shadow: none; }
 
-        /* 플로팅 탑 버튼 유지 (APPLY NOW 제거) */
+        /* 플로팅 탑 버튼 유지 */
         .fab-container { position: fixed; bottom: 40px; right: 40px; z-index: 999; display: flex; flex-direction: column; gap: 15px; transform: translateY(100px) translateZ(0); opacity: 0; transition: var(--transition-normal); will-change: transform, opacity;}
         .fab-container.visible { transform: translateY(0) translateZ(0); opacity: 1; }
         .fab { width: 65px; height: 65px; border-radius: 50%; background: var(--bg-white); color: var(--text-dark); display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-md); transition: var(--transition-fast); text-decoration: none; font-size: 1.8rem; border: 1px solid var(--border-color); cursor: pointer;}
@@ -780,8 +780,8 @@
                     </div>
                 </div>
 
-                <!-- Christie 지점 -->
-                <div class="loc-item store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.685338!2d-79.4187!3d43.6635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b349d970997cb%3A0xc3c9f2be9b05c56b!2sSinjeon%20Topokki%20Bloor!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="11" data-close="22">
+                <!-- Christie 지점 (전화번호 및 영업시간 오류 수정 적용) -->
+                <div class="loc-item store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.685338!2d-79.4187!3d43.6635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b349d970997cb%3A0xc3c9f2be9b05c56b!2sSinjeon%20Topokki%20Bloor!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="12" data-close="1">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.8 (210)</span>
@@ -790,8 +790,8 @@
                     
                     <div class="loc-info-list">
                         <p><i class="fas fa-map-marker-alt"></i> 712 Bloor St W, Toronto, ON M6G 1L4</p>
-                        <p><i class="fas fa-phone-alt"></i> <a href="tel:+14165323444">+1 416-532-3444</a></p>
-                        <p><i class="fas fa-clock"></i> Mon-Sun 11:30 AM - 10:00 PM</p>
+                        <p><i class="fas fa-phone-alt"></i> <a href="tel:+14165380676">+1 416-538-0676</a></p>
+                        <p><i class="fas fa-clock"></i> Mon-Sun 12:00 PM - 1:00 AM</p>
                     </div>
 
                     <div class="feature-tags">
@@ -880,6 +880,43 @@
         </div>
     </section>
 
+    <section class="timeline-section" id="franchise">
+        <div class="section-header reveal">
+            <p>Join Us</p>
+            <h2>Franchise <span>Process</span></h2>
+        </div>
+        <div class="timeline-container">
+            <div class="timeline-step reveal delay-100">
+                <div class="timeline-marker">1</div>
+                <div class="timeline-content">
+                    <h4>Application & Consultation</h4>
+                    <p>Submit your inquiry via our form. Our team will contact you for an initial consultation regarding your desired location and investment plan.</p>
+                </div>
+            </div>
+            <div class="timeline-step reveal delay-200">
+                <div class="timeline-marker">2</div>
+                <div class="timeline-content">
+                    <h4>Location Analysis</h4>
+                    <p>We provide comprehensive commercial area analysis and help you secure the optimal store location using our data-driven system.</p>
+                </div>
+            </div>
+            <div class="timeline-step reveal delay-300">
+                <div class="timeline-marker">3</div>
+                <div class="timeline-content">
+                    <h4>Contract & Interior</h4>
+                    <p>Sign the official franchise agreement. We begin interior construction adhering strictly to Sinjeon's global brand identity.</p>
+                </div>
+            </div>
+            <div class="timeline-step reveal delay-100">
+                <div class="timeline-marker">4</div>
+                <div class="timeline-content">
+                    <h4>Training & Grand Opening</h4>
+                    <p>Complete our rigorous training program covering operations, hygiene, and recipe mastery. Celebrate your Grand Opening with our dedicated support team!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="contact-section" id="contact">
         <div class="section-header reveal">
             <p>Get in Touch</p>
@@ -963,12 +1000,12 @@
         </div>
     </section>
 
-    <!-- APPLY NOW 버튼 제거, 플로팅 탑 버튼 유지 -->
+    <!-- 플로팅 탑 버튼 -->
     <div class="fab-container" id="fab-container">
         <div class="fab" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to Top">↑</div>
     </div>
 
-    <!-- Mega Footer (저작권자 변경 완료) -->
+    <!-- Mega Footer -->
     <footer>
         <div class="mega-footer-container reveal delay-100">
             <div class="footer-brand" style="text-align: left;">
@@ -1039,7 +1076,7 @@
         }
 
         // =========================================
-        // Split Map Logic
+        // Split Map Logic (구글 장소 검색 쿼리로 수정)
         // =========================================
         function changeMap(mapUrl, element) {
             document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
@@ -1050,7 +1087,7 @@
         }
 
         // =========================================
-        // 타임존 기반 영업시간 체커
+        // 타임존 기반 영업시간 체커 (새벽 마감 알고리즘 수정)
         // =========================================
         function updateStoreStatuses() {
             const storeCards = document.querySelectorAll('.store-card');
@@ -1062,15 +1099,33 @@
                 
                 try {
                     const localTimeString = new Date().toLocaleString("en-US", {timeZone: tz, hour12: false, hour: 'numeric'});
-                    const currentHour = parseInt(localTimeString);
+                    let currentHour = parseInt(localTimeString);
+                    if (currentHour === 24) currentHour = 0; // 자정을 0으로 통일
 
-                    if (currentHour >= openHour && currentHour < closeHour) {
-                        const formatClose = closeHour > 12 ? closeHour - 12 : closeHour;
-                        badge.innerHTML = `Open Now (Closes ${formatClose} PM)`;
+                    let isOpen = false;
+                    if (openHour < closeHour) {
+                        isOpen = currentHour >= openHour && currentHour < closeHour;
+                    } else { // 자정을 넘기는 매장 (예: 12시 오픈, 1시 마감)
+                        isOpen = currentHour >= openHour || currentHour < closeHour;
+                    }
+
+                    if (isOpen) {
+                        let formatClose = closeHour;
+                        let ampm = "AM";
+                        if (closeHour === 0 || closeHour === 24) { formatClose = 12; ampm = "AM"; }
+                        else if (closeHour === 12) { formatClose = 12; ampm = "PM"; }
+                        else if (closeHour > 12) { formatClose = closeHour - 12; ampm = "PM"; }
+                        
+                        badge.innerHTML = `Open Now (Closes ${formatClose} ${ampm})`;
                         badge.className = "loc-status open";
                     } else {
-                        const formatOpen = openHour >= 12 ? (openHour === 12 ? "12 PM" : `${openHour - 12} PM`) : `${openHour} AM`;
-                        badge.innerHTML = `Closed (Opens ${formatOpen})`;
+                        let formatOpen = openHour;
+                        let ampm = "AM";
+                        if (openHour === 0 || openHour === 24) { formatOpen = 12; ampm = "AM"; }
+                        else if (openHour === 12) { formatOpen = 12; ampm = "PM"; }
+                        else if (openHour > 12) { formatOpen = openHour - 12; ampm = "PM"; }
+                        
+                        badge.innerHTML = `Closed (Opens ${formatOpen} ${ampm})`;
                         badge.className = "loc-status closed";
                     }
                 } catch(e) {
@@ -1105,15 +1160,6 @@
             const extraParams = getFormParams(formElement, type);
             extraParams.target_email = targetEmail;
             extraParams.inquiry_type = type;
-
-            const WEBHOOK_URL = "YOUR_WEBHOOK_URL_HERE"; 
-            if (WEBHOOK_URL !== "YOUR_WEBHOOK_URL_HERE") {
-                fetch(WEBHOOK_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(extraParams)
-                }).catch(err => console.error("Webhook Delivery Failed:", err));
-            }
 
             emailjs.sendForm(serviceID, templateID, formElement, extraParams)
                 .then(() => {
