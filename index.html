@@ -68,9 +68,10 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* [모바일 가로 밀림 완벽 차단] */
         html, body {
             width: 100%;
-            max-width: 100%;
+            max-width: 100vw;
             overflow-x: hidden !important;
             position: relative;
         }
@@ -84,7 +85,7 @@
             user-select: none; -webkit-user-select: none;
         }
         input, textarea, select { user-select: auto; -webkit-user-select: auto; font-family: 'Outfit', sans-serif; }
-        img { user-drag: none; -webkit-user-drag: none; -webkit-touch-callout: none; max-width: 100%; height: auto; }
+        img { user-drag: none; -webkit-user-drag: none; -webkit-touch-callout: none; max-width: 100%; height: auto; display: block; }
         *:focus-visible { outline: 3px solid var(--sj-red); outline-offset: 4px; border-radius: 8px; }
 
         .scroll-progress {
@@ -164,10 +165,14 @@
         .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1250px; margin: 0 auto; }
         .bento-item { background: var(--bg-light); border-radius: var(--border-radius-lg); padding: 50px 40px; border: 1px solid var(--border-color); position: relative; overflow: visible; transition: transform var(--transition-fast), box-shadow var(--transition-fast); display: flex; flex-direction: column; justify-content: center; text-align: left; }
         .bento-item:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); border-color: var(--sj-green); background: var(--bg-white); }
-        .bento-large { grid-column: span 3; background: var(--text-dark); color: var(--bg-white); display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; align-items: center; padding: 60px; overflow: hidden; border: none;}
+        
+        /* [오류 해결] 숫자가 나타나는 bento-large 박스 최적화 */
+        .bento-large { grid-column: span 3; background: var(--text-dark); color: var(--bg-white); display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; align-items: center; padding: 50px; overflow: hidden; border: none;}
         .bento-large:hover { border-color: var(--sj-red); background: #222; }
-        .stat-item h4 { font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 4rem; color: var(--sj-red); margin-bottom: 5px; }
-        .stat-item p { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.8); }
+        .stat-item { padding: 10px; }
+        .stat-item h4 { font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 4rem; color: var(--sj-red); margin-bottom: 5px; line-height: 1; }
+        .stat-item p { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.8); margin: 0; }
+        
         .value-icon { width: 65px; height: 65px; background: rgba(210, 75, 65, 0.1); color: var(--sj-red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 25px; position: relative; z-index: 2; }
         .bento-item h3 { font-size: 1.7rem; font-weight: 800; color: var(--sj-green); margin-bottom: 15px; position: relative; z-index: 2; }
         .bento-item p { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; font-weight: 500; position: relative; z-index: 2; }
@@ -227,7 +232,7 @@
         .menu-item .menu-eng { font-size: 0.95rem; color: var(--text-gray); font-weight: 500; line-height: 1.4; position: relative; z-index: 2;}
 
         /* =========================================
-           7. Locations & Maps 
+           7. Locations & Maps
            ========================================= */
         .locations { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1400px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 750px; }
@@ -265,7 +270,7 @@
         .btn-fill { background: var(--uber-green); color: var(--bg-white); border: 2px solid var(--uber-green); }
         .btn-fill:hover { background: #05a659; border-color: #05a659;}
         .loc-map-wrapper { flex: 1; background: #e0e0e0; position: relative; pointer-events: auto; }
-        .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; }
+        .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; display: block;}
 
         /* =========================================
            8. Elfsight Instagram Widget
@@ -387,19 +392,25 @@
         .flow-arrow { color: var(--text-light); font-size: 1.5rem; font-weight: 900; }
 
         /* =========================================
-           Mobile Responsiveness (가로 밀림 완벽 방지)
+           Mobile Responsiveness (렉, 가로 밀림 완벽 차단)
            ========================================= */
+        @media (max-width: 1200px) {
+            .bento-large { padding: 40px; }
+            .stat-item h4 { font-size: 3.5rem; }
+        }
         @media (max-width: 1000px) {
-            .hero { background-attachment: scroll; }
+            .hero { background-attachment: scroll; padding: 160px 5% 80px;}
             .char-img { display: none; }
-            .hero { padding: 160px 5% 80px; }
             .hero h1 { font-size: 3.2rem; }
             .hero h1 span.highlight { font-size: 4rem; }
             header { padding: 15px 5%; }
             nav { display: none; } 
             
-            .bento-large { grid-column: span 1; grid-template-columns: 1fr 1fr; gap: 20px;}
+            /* [수정 적용] 4열 구조를 2열(2x2)로 변경하여 글자 잘림 방지 */
+            .bento-large { grid-column: span 1; grid-template-columns: 1fr 1fr; gap: 30px; padding: 40px 20px; }
             .bento-grid { grid-template-columns: 1fr; }
+            .stat-item h4 { font-size: 3rem; }
+            
             .spice-grid { grid-template-columns: 1fr; }
             
             .split-layout { flex-direction: column; height: auto; }
@@ -426,6 +437,15 @@
             .heat-compare { grid-template-columns: 1fr; }
             .heat-flow { flex-direction: column; gap: 20px; padding: 25px; }
             .flow-arrow { transform: rotate(90deg); margin: 5px 0; }
+        }
+        @media (max-width: 600px) {
+            .bento-large { gap: 20px; padding: 30px 15px; }
+            .stat-item h4 { font-size: 2.2rem; }
+            .stat-item p { font-size: 0.8rem; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero h1 span.highlight { font-size: 3.5rem; }
+            .section-header h2 { font-size: 2.2rem; }
+            .section-header h2 span { font-size: 2.8rem; }
         }
     </style>
 </head>
