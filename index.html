@@ -113,6 +113,52 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
+           [신규 추가] 멀티 팝업 공지 스타일
+           ========================================= */
+        .event-popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); z-index: 3000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+        .event-popup-overlay.show {
+            opacity: 1; visibility: visible;
+        }
+        .event-popup-content {
+            background: var(--bg-white); 
+            border-radius: var(--border-radius-md);
+            width: 90%; max-width: 450px; overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+            transform: translateY(30px); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column;
+        }
+        .event-popup-overlay.show .event-popup-content {
+            transform: translateY(0);
+        }
+        .event-popup-content img {
+            width: 100%; height: auto; display: block;
+        }
+        .event-popup-actions {
+            display: flex; 
+            border-top: 1px solid var(--border-color);
+        }
+        .event-popup-actions button {
+            flex: 1; padding: 16px 0; border: none; background: var(--bg-white);
+            font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.2s;
+            font-family: 'Outfit', 'Poppins', sans-serif;
+        }
+        .btn-hide-24h {
+            color: var(--text-gray); 
+            border-right: 1px solid var(--border-color) !important;
+        }
+        .btn-hide-24h:hover { background: var(--bg-light); color: var(--text-dark); }
+        .btn-close-popup {
+            color: var(--sj-red);
+        }
+        .btn-close-popup:hover { background: rgba(210, 75, 65, 0.05); }
+
+        /* =========================================
            2. Navigation 
            ========================================= */
         header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: rgba(255, 255, 255, 0.85); position: fixed; width: 100%; top: 0; z-index: 1000; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); transition: var(--transition-normal); border-bottom: 1px solid transparent; }
@@ -228,7 +274,7 @@
         .menu-item .menu-eng { font-size: 0.95rem; color: var(--text-gray); font-weight: 500; line-height: 1.4; position: relative; z-index: 2;}
 
         /* =========================================
-           7. Locations & Maps 
+           7. Locations & Maps
            ========================================= */
         .locations { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1400px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 750px; }
@@ -293,7 +339,6 @@
         .timeline-content h4 { font-size: 1.6rem; color: var(--text-dark); margin-bottom: 10px; font-weight: 800; }
         .timeline-content p { color: var(--text-gray); font-size: 1.05rem; font-weight: 500; line-height: 1.6;}
 
-        /* [추가] 가맹 신청 포털로 가는 프리미엄 버튼 스타일 */
         .btn-apply-portal {
             display: inline-flex; align-items: center; gap: 10px;
             background: var(--sj-red); color: var(--bg-white);
@@ -394,7 +439,7 @@
         .flow-arrow { color: var(--text-light); font-size: 1.5rem; font-weight: 900; }
 
         /* =========================================
-           Mobile Responsiveness (렉, 가로 밀림 완벽 차단)
+           Mobile Responsiveness
            ========================================= */
         @media (max-width: 1200px) {
             .bento-large { padding: 40px; }
@@ -467,6 +512,18 @@
             <a href="#community">Community</a>
         </nav>
     </header>
+
+    <!-- [업데이트 완료] 1~5 랜덤 이미지 자동 로드 기능이 탑재된 이벤트 팝업 -->
+    <div class="event-popup-overlay" id="main-event-popup">
+        <div class="event-popup-content">
+            <!-- 자바스크립트가 파일명을 popup_event_1.jpg ~ popup_event_5.jpg 중 하나로 교체합니다 -->
+            <img id="dynamic-popup-img" alt="Notice / Event">
+            <div class="event-popup-actions">
+                <button class="btn-hide-24h" onclick="hidePopupFor24Hours()">24시간 동안 보지 않기</button>
+                <button class="btn-close-popup" onclick="closeEventPopup()">닫기 (Close)</button>
+            </div>
+        </div>
+    </div>
 
     <section class="hero" id="home">
         <div class="hero-badge reveal">The Global No.1 K-Food</div>
@@ -909,7 +966,6 @@
             </div>
         </div>
         
-        <!-- [신규 추가] 가맹 절차 바로 밑에 위치한 CTA 버튼 -->
         <div class="reveal delay-200" style="text-align: center; margin-top: 70px;">
             <h3 style="font-size: 1.8rem; font-weight: 800; color: var(--text-dark); margin-bottom: 20px;">Ready to Start Your Journey?</h3>
             <a href="apply.html" class="btn-apply-portal">
@@ -956,7 +1012,6 @@
                 </form>
             </div>
 
-            <!-- Contact Us 내부의 Franchise 탭에도 버튼 유지 -->
             <div id="franchise-form" class="form-content">
                 <div class="form-header">
                     <h3>Official Franchise Application</h3>
@@ -974,7 +1029,7 @@
         </div>
     </section>
 
-    <!-- 플로팅 탑 버튼 -->
+    <!-- 플로팅 탑 버튼 유지 -->
     <div class="fab-container" id="fab-container">
         <div class="fab" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to Top">↑</div>
     </div>
@@ -1133,7 +1188,8 @@
 
             let serviceID = "service_zyn89ll"; 
             let templateID = type === 'General' ? "template_r8gce22" : "template_kd0px6s";
-            let targetEmail = type === 'General' ? "sinjeon.cjchoi@gmail.com" : "eunbeen.lee@y2choldings.co.kr";
+            
+            let targetEmail = type === 'General' ? "eunbeen.lee@daum.net" : "eunbeen.lee@y2choldings.co.kr";
 
             const extraParams = getFormParams(formElement, type);
             extraParams.target_email = targetEmail;
@@ -1178,7 +1234,7 @@
             } else {
                 body = `Applicant Name: ${params.name}%0D%0AContact: ${params.phone}%0D%0AEmail: ${params.email}%0D%0ADesired Location: ${params.location}%0D%0AEstimated Budget: ${params.budget}%0D%0A%0D%0ABusiness Background / Inquiry:%0D%0A${params.message}`;
             }
-            const targetMail = type === 'General' ? "sinjeon.cjchoi@gmail.com" : "eunbeen.lee@y2choldings.co.kr";
+            const targetMail = type === 'General' ? "eunbeen.lee@daum.net" : "eunbeen.lee@y2choldings.co.kr";
             window.location.href = `mailto:${targetMail}?subject=${encodeURIComponent(subject)}&body=${body}`;
         }
 
@@ -1217,7 +1273,37 @@
             }
         });
 
+        // =========================================
+        // 메인 팝업 (1~5 랜덤 이미지 기능 탑재)
+        // =========================================
         document.addEventListener('DOMContentLoaded', () => {
+            const popup = document.getElementById('main-event-popup');
+            if (popup) {
+                const hideUntil = localStorage.getItem('hideMainPopupUntil');
+                const now = new Date().getTime();
+
+                if (!hideUntil || now > parseInt(hideUntil)) {
+                    
+                    // 1에서 5까지 무작위 숫자 생성
+                    const randomNum = Math.floor(Math.random() * 5) + 1;
+                    const popupImg = document.getElementById('dynamic-popup-img');
+                    
+                    if (popupImg) {
+                        // 생성된 숫자를 파일명에 결합
+                        popupImg.src = `popup_event_${randomNum}.jpg`;
+                        
+                        // 이미지가 서버에 아직 업로드되지 않았을 때 깨짐 방지용 방어 코드
+                        popupImg.onerror = function() {
+                            this.src = 'https://via.placeholder.com/450x600?text=Event+Notice+' + randomNum;
+                        };
+                    }
+
+                    setTimeout(() => {
+                        popup.classList.add('show');
+                    }, 800);
+                }
+            }
+
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -1232,6 +1318,18 @@
             updateStoreStatuses();
             setInterval(updateStoreStatuses, 60000);
         });
+
+        function closeEventPopup() {
+            const popup = document.getElementById('main-event-popup');
+            if (popup) popup.classList.remove('show');
+        }
+
+        function hidePopupFor24Hours() {
+            const now = new Date().getTime();
+            const twentyFourHours = 24 * 60 * 60 * 1000; 
+            localStorage.setItem('hideMainPopupUntil', now + twentyFourHours);
+            closeEventPopup();
+        }
 
         function openModal(type) {
             const modal = document.getElementById('dynamic-modal');
