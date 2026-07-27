@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Franchise Application | Sinjeon Canada & Y2C Holdings</title>
+    
+    <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init({ publicKey: "DITntTK9NnZLeavvX" });
+            } else {
+                console.error("EmailJS SDK failed to load.");
+            }
+        });
+    </script>
+    
+    <style>
+        :root {
+            --sj-red: #D24B41;
+            --sj-green: #008250;
+            --y2c-gold: #C29B57;
+            --bg-light: #F4F6F8;
+            --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-gray: #666666;
+            --border-color: #E2E8F0;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header {
+            background-color: var(--white);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header img {
+            height: 120px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .header h2 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--sj-red);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            padding-bottom: 80px;
+        }
+
+        .notice-box {
+            background-color: rgba(194, 155, 87, 0.1);
+            border-left: 4px solid var(--y2c-gold);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 40px;
+        }
+
+        .notice-box p {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .form-section {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--sj-green);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--bg-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-section-title span {
+            background: var(--sj-green);
+            color: white;
+            width: 28px; height: 28px;
+            display: inline-flex; justify-content: center; align-items: center;
+            border-radius: 50%; font-size: 1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .sub-label {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            font-weight: 400;
+        }
+
+        input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], select, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background-color: #F8FAFC;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--sj-green);
+            background-color: var(--white);
+            box-shadow: 0 0 0 3px rgba(0, 130, 80, 0.1);
+        }
+
+        .input-icon-wrapper {
+            position: relative;
+        }
+        
+        .input-icon-wrapper span {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            font-weight: 600;
+        }
+
+        .input-icon-wrapper input {
+            padding-left: 35px;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .radio-label, .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .declaration-box {
+            background: #F8FAFC;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .declaration-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .declaration-item input[type="checkbox"] {
+            margin-top: 5px;
+            width: 18px; height: 18px;
+            accent-color: var(--sj-green);
+        }
+
+        .declaration-item p {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* DocuSign 스타일 서명 패드 CSS */
+        .signature-container {
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            background: #F8FAFC;
+            padding: 20px;
+            margin-bottom: 10px;
+        }
+        .signature-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .signature-header label {
+            margin: 0;
+            color: var(--sj-green);
+        }
+        .clear-btn {
+            background: rgba(210, 75, 65, 0.1);
+            border: none;
+            color: var(--sj-red);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .clear-btn:hover {
+            background: var(--sj-red);
+            color: white;
+        }
+        .canvas-wrapper {
+            background: var(--white);
+            border: 1px dashed #CBD5E1;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .canvas-wrapper::before {
+            content: 'X';
+            position: absolute;
+            left: 20px;
+            bottom: 35px;
+            font-size: 1.8rem;
+            color: #E2E8F0;
+            font-family: 'Outfit', sans-serif;
+            pointer-events: none;
+        }
+        .canvas-wrapper::after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            bottom: 35px;
+            height: 2px;
+            background: #E2E8F0;
+            pointer-events: none;
+        }
+        canvas {
+            width: 100%;
+            height: 200px;
+            cursor: crosshair;
+            display: block;
+            touch-action: none;
+        }
+
+        .submit-btn {
+            background: var(--sj-red);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(210, 75, 65, 0.2);
+        }
+
+        .submit-btn:hover {
+            background: #b83e35;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(210, 75, 65, 0.3);
+        }
+        .submit-btn:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--sj-red); }
+
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .form-section { padding: 25px; }
+            .radio-group { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="image_c27067.png" alt="Y2C Holdings Inc.">
+        <h1>Y2C HOLDINGS INC. | SINJEON FOOD SYS CANADA</h1>
+        <h2>Franchise Application Form</h2>
+    </div>
+
+    <div class="container">
+        <div class="notice-box">
+            <p><strong>CONFIDENTIALITY NOTICE:</strong> The information provided in this form will be used solely by Y2C Holdings Inc. & Sinjeon Food Sys Canada to evaluate your franchise qualification. All information will be kept strictly confidential.</p>
+        </div>
+
+        <form id="full-franchise-form" onsubmit="return handleFormSubmit(event)">
+            
+            <!-- EmailJS 수신 이메일 및 폼 식별용 숨겨진 값 -->
+            <input type="hidden" name="target_email" value="eunbeen.lee@y2choldings.co.kr">
+            <input type="hidden" name="inquiry_type" value="Official Franchise Application">
+
+            <!-- 1. APPLICANT GENERAL INFORMATION -->
+            <div class="form-section">
+                <div class="form-section-title"><span>1</span> Applicant General Information</div>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>Full Name (Legal)</label>
+                        <input type="text" name="full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" name="dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="radio-group" style="margin-top: 14px;">
+                            <label class="radio-label"><input type="radio" name="gender" value="Male" required> Male</label>
+                            <label class="radio-label"><input type="radio" name="gender" value="Female"> Female</label>
+                            <label class="radio-label"><input type="radio" name="gender" value="Other"> Other</label>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Status in Canada</label>
+                        <div class="radio-group" style="margin-top: 10px;">
+                            <label class="radio-label"><input type="radio" name="status" value="Citizen" required> Citizen</label>
+                            <label class="radio-label"><input type="radio" name="status" value="PR"> Permanent Resident (PR)</label>
+                            <label class="radio-label"><input type="radio" name="status" value="Work Permit"> Work Permit</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Phone Number</label>
+                        <input type="tel" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Current Home Address</label>
+                        <input type="text" name="address" placeholder="Street Address" style="margin-bottom: 10px;" required>
+                        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                            <input type="text" name="city" placeholder="City" required>
+                            <input type="text" name="province" placeholder="Province" required>
+                            <input type="text" name="postal_code" placeholder="Postal Code" required>
+                        </div>
+                    </div>
+
+                    <!-- Co-Applicant -->
+                    <div class="form-group full-width" style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border-color);">
+                        <label style="color: var(--sj-red); font-size: 1.1rem;"><i class="fas fa-user-plus"></i> Co-Applicant / Business Partner Details (If Applicable)</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Co-Applicant Full Name</label>
+                        <input type="text" name="co_name">
+                    </div>
+                    <div class="form-group">
+                        <label>Relationship to Applicant</label>
+                        <input type="text" name="co_relationship">
+                    </div>
+                    <div class="form-group">
+                        <label>Status in Canada</label>
+                        <select name="co_status">
+                            <option value="">Select Status...</option>
+                            <option value="Citizen">Citizen</option>
+                            <option value="PR">Permanent Resident (PR)</option>
+                            <option value="Work Permit">Work Permit</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Phone / Email</label>
+                        <input type="text" name="co_contact">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. PROPOSED BUSINESS & LOCATION INTEREST -->
+            <div class="form-section">
+                <div class="form-section-title"><span>2</span> Proposed Business & Location Interest</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Preferred Province / City (1st Choice)</label>
+                        <input type="text" name="pref_location_1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Province / City (2nd Choice)</label>
+                        <input type="text" name="pref_location_2">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Target Area / Neighborhood</label>
+                        <input type="text" name="target_area" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Preferred Store Format</label>
+                        <div class="radio-group" style="flex-direction: column; gap: 12px; margin-top: 10px;">
+                            <label class="radio-label"><input type="radio" name="store_format" value="Express" required> Express Model (600–800 sq ft / To-Go & Delivery Focused)</label>
+                            <label class="radio-label"><input type="radio" name="store_format" value="Standard"> Standard Model (1,200–1,800 sq ft / Casual Dining & Take-out)</label>
+                            <label class="radio-label"><input type="radio" name="store_format" value="Flexible"> Flexible / Open to Recommendation</label>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Operational Role</label>
+                        <div class="radio-group" style="flex-direction: column; gap: 12px; margin-top: 10px;">
+                            <label class="radio-label"><input type="radio" name="op_role" value="Owner-Operator" required> Full-time Owner-Operator (Directly involved in daily operations)</label>
+                            <label class="radio-label"><input type="radio" name="op_role" value="Investor"> Investor with Designated Full-time Manager</label>
+                            <label class="radio-label"><input type="radio" name="op_role" value="Multi-Unit"> Multi-Unit Franchisee (Regional Development)</label>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Target Business Start Date</label>
+                        <div class="radio-group" style="margin-top: 10px;">
+                            <label class="radio-label"><input type="radio" name="start_date" value="Within 3 Months" required> Within 3 Months</label>
+                            <label class="radio-label"><input type="radio" name="start_date" value="3-6 Months"> 3–6 Months</label>
+                            <label class="radio-label"><input type="radio" name="start_date" value="6-12 Months"> 6–12 Months</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. FINANCIAL PROFILE -->
+            <div class="form-section">
+                <div class="form-section-title"><span>3</span> Financial Profile <span class="sub-label" style="background:none; color:var(--text-gray); width:auto;">(All figures in CAD $)</span></div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Liquid Cash Available <span class="sub-label">(유동자금)</span></label>
+                        <div class="input-icon-wrapper">
+                            <span>$</span><input type="number" name="liquid_cash" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Real Estate Equity <span class="sub-label">(부동산 자산)</span></label>
+                        <div class="input-icon-wrapper">
+                            <span>$</span><input type="number" name="real_estate" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Assets <span class="sub-label">(총 자산)</span></label>
+                        <div class="input-icon-wrapper">
+                            <span>$</span><input type="number" name="total_assets" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Liabilities <span class="sub-label">(총 부채)</span></label>
+                        <div class="input-icon-wrapper">
+                            <span>$</span><input type="number" name="total_liabilities" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Calculated Net Worth <span class="sub-label">(순자산)</span></label>
+                        <div class="input-icon-wrapper">
+                            <span>$</span><input type="number" name="net_worth" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Annual Personal Income <span class="sub-label">(연소득)</span></label>
+                        <div class="input-icon-wrapper">
+                            <span>$</span><input type="number" name="annual_income" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width" style="margin-top: 15px;">
+                        <label>Source of Capital <span class="sub-label">(자금 조달 계획)</span></label>
+                        <div class="form-grid" style="margin-top:10px;">
+                            <div>
+                                <label class="checkbox-label" style="margin-bottom:5px;"><input type="checkbox" name="source_personal" value="Yes"> Personal Savings</label>
+                                <div class="input-icon-wrapper"><span>$</span><input type="number" name="amt_personal"></div>
+                            </div>
+                            <div>
+                                <label class="checkbox-label" style="margin-bottom:5px;"><input type="checkbox" name="source_bank" value="Yes"> Bank Loan</label>
+                                <div class="input-icon-wrapper"><span>$</span><input type="number" name="amt_bank"></div>
+                            </div>
+                            <div>
+                                <label class="checkbox-label" style="margin-bottom:5px;"><input type="checkbox" name="source_investor" value="Yes"> Investors / Partners</label>
+                                <div class="input-icon-wrapper"><span>$</span><input type="number" name="amt_investor"></div>
+                            </div>
+                            <div>
+                                <label class="checkbox-label" style="margin-bottom:5px;"><input type="checkbox" name="source_other" value="Yes"> Other</label>
+                                <div class="input-icon-wrapper"><span>$</span><input type="number" name="amt_other"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width" style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border-color);">
+                        <label>Banking Reference</label>
+                        <div class="form-grid">
+                            <input type="text" name="bank_name" placeholder="Bank Name" required>
+                            <input type="text" name="bank_branch" placeholder="Branch / City" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. BACKGROUND & BUSINESS EXPERIENCE -->
+            <div class="form-section">
+                <div class="form-section-title"><span>4</span> Background & Business Experience</div>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>Highest Education Level</label>
+                        <input type="text" name="education" placeholder="Degree / Major" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Current Occupation</label>
+                        <input type="text" name="occupation" placeholder="Employer / Title" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Restaurant / Retail Experience</label>
+                        <div class="radio-group" style="margin-top: 10px;">
+                            <label class="radio-label"><input type="radio" name="experience_years" value="5+ Years" required> 5+ Years</label>
+                            <label class="radio-label"><input type="radio" name="experience_years" value="1-5 Years"> 1–5 Years</label>
+                            <label class="radio-label"><input type="radio" name="experience_years" value="Less than 1 Year"> Less than 1 Year</label>
+                            <label class="radio-label"><input type="radio" name="experience_years" value="No Experience"> No Experience</label>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Details of Management or Business Experience</label>
+                        <textarea name="experience_details" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>English Proficiency</label>
+                        <select name="lang_english" required>
+                            <option value="">Select Level...</option>
+                            <option value="Native/Fluent">Native / Fluent</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Basic">Basic</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Korean Proficiency</label>
+                        <select name="lang_korean" required>
+                            <option value="">Select Level...</option>
+                            <option value="Native/Fluent">Native / Fluent</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Basic">Basic</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. PROFESSIONAL REFERENCES -->
+            <div class="form-section">
+                <div class="form-section-title"><span>5</span> Professional References</div>
+                <div class="form-grid">
+                    <div class="form-group full-width"><label style="color: var(--sj-green);">Reference 1</label></div>
+                    <div class="form-group"><input type="text" name="ref1_name" placeholder="Name" required></div>
+                    <div class="form-group"><input type="text" name="ref1_rel" placeholder="Relationship" required></div>
+                    <div class="form-group"><input type="text" name="ref1_company" placeholder="Company / Title" required></div>
+                    <div class="form-group"><input type="text" name="ref1_contact" placeholder="Phone / Email" required></div>
+                    
+                    <div class="form-group full-width" style="margin-top: 10px;"><label style="color: var(--sj-green);">Reference 2</label></div>
+                    <div class="form-group"><input type="text" name="ref2_name" placeholder="Name" required></div>
+                    <div class="form-group"><input type="text" name="ref2_rel" placeholder="Relationship" required></div>
+                    <div class="form-group"><input type="text" name="ref2_company" placeholder="Company / Title" required></div>
+                    <div class="form-group"><input type="text" name="ref2_contact" placeholder="Phone / Email" required></div>
+                </div>
+            </div>
+
+            <!-- 6. AUTHORIZATION, PRIVACY & SIGNATURE (DocuSign Style) -->
+            <div class="form-section">
+                <div class="form-section-title"><span>6</span> Authorization, Privacy & Declaration</div>
+                
+                <div class="declaration-box">
+                    <label class="declaration-item">
+                        <input type="checkbox" name="consent_pipeda" value="Agreed" required>
+                        <p><strong>1. PIPEDA / Privacy Consent:</strong> I consent to Y2C HOLDINGS INC. and SINJEON FOOD SYS CANADA collecting, using, and disclosing my personal information provided herein for the sole purpose of evaluating my suitability as a franchisee.</p>
+                    </label>
+                    <label class="declaration-item">
+                        <input type="checkbox" name="consent_bgcheck" value="Agreed" required>
+                        <p><strong>2. Credit & Background Check Authorization:</strong> I hereby authorize Y2C HOLDINGS INC., SINJEON FOOD SYS CANADA, or their designated agents to conduct a personal credit check, background check, and reference verification as part of the franchise evaluation process.</p>
+                    </label>
+                    <label class="declaration-item">
+                        <input type="checkbox" name="consent_nonbinding" value="Agreed" required>
+                        <p><strong>3. Non-Binding Acknowledgement:</strong> I understand that submission of this application does not obligate the franchisor to grant a franchise, nor does it constitute any contractual or binding agreement between parties.</p>
+                    </label>
+                </div>
+
+                <p style="margin-bottom: 25px; font-weight: 700; color: var(--sj-red); font-size: 1.05rem;"><i class="fas fa-pen-nib"></i> I hereby declare that all information provided in this application is true, complete, and correct to the best of my knowledge.</p>
+
+                <!-- Primary Applicant Signature Block -->
+                <div class="form-grid" style="background: #ffffff; padding: 25px; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 30px; box-shadow: var(--shadow-sm);">
+                    <div class="form-group full-width">
+                        <label style="font-size: 1.1rem;">Primary Applicant Name (Print)</label>
+                        <input type="text" name="print_primary_name" placeholder="Type your full legal name here" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <div class="signature-container">
+                            <div class="signature-header">
+                                <label><i class="fas fa-signature"></i> Draw Signature Here</label>
+                                <button type="button" class="clear-btn" onclick="clearSignature('canvas-primary')">Clear Signature</button>
+                            </div>
+                            <div class="canvas-wrapper">
+                                <canvas id="canvas-primary"></canvas>
+                            </div>
+                            <!-- EmailJS로 보낼 Base64 서명 데이터가 담길 숨겨진 Input -->
+                            <input type="hidden" name="sig_primary_data" id="sig_primary_data">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" name="sig_primary_date" required>
+                    </div>
+                </div>
+
+                <!-- Co-Applicant Signature Block -->
+                <div class="form-grid" style="background: #ffffff; padding: 25px; border: 1px dashed #CBD5E1; border-radius: 12px;">
+                    <div class="form-group full-width">
+                        <label style="font-size: 1.1rem; color: var(--text-gray);">Co-Applicant Name (Print) - Optional</label>
+                        <input type="text" name="print_co_name" placeholder="Type co-applicant's full legal name here">
+                    </div>
+                    <div class="form-group full-width">
+                        <div class="signature-container" style="background: var(--white);">
+                            <div class="signature-header">
+                                <label style="color: var(--text-gray);"><i class="fas fa-signature"></i> Draw Signature Here</label>
+                                <button type="button" class="clear-btn" onclick="clearSignature('canvas-co')" style="color: var(--text-gray);">Clear Signature</button>
+                            </div>
+                            <div class="canvas-wrapper">
+                                <canvas id="canvas-co"></canvas>
+                            </div>
+                            <input type="hidden" name="sig_co_data" id="sig_co_data">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: var(--text-gray);">Date</label>
+                        <input type="date" name="sig_co_date">
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="submit" class="submit-btn" id="final-submit-btn"><i class="fas fa-paper-plane"></i> Submit Official Application</button>
+        </form>
+
+        <a href="index.html" class="back-link">← Return to Main Website</a>
+    </div>
+
+    <script>
+        // =========================================
+        // Digital Signature Pad Logic (DocuSign Style)
+        // =========================================
+        function initSignaturePad(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+
+            function resizeCanvas() {
+                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                canvas.width = canvas.offsetWidth * ratio;
+                canvas.height = canvas.offsetHeight * ratio;
+                ctx.scale(ratio, ratio);
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = '#1A1A1A'; 
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            function getPosition(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: clientX - rect.left,
+                    y: clientY - rect.top
+                };
+            }
+
+            function startPosition(e) {
+                isDrawing = true;
+                const pos = getPosition(e);
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+                draw(e);
+                if(e.type.includes('touch')) e.preventDefault(); 
+            }
+
+            function endPosition() {
+                isDrawing = false;
+                ctx.beginPath();
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                const pos = getPosition(e);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+                if(e.type.includes('touch')) e.preventDefault(); 
+            }
+
+            canvas.addEventListener('mousedown', startPosition);
+            canvas.addEventListener('mouseup', endPosition);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseleave', endPosition);
+
+            canvas.addEventListener('touchstart', startPosition, {passive: false});
+            canvas.addEventListener('touchend', endPosition);
+            canvas.addEventListener('touchmove', draw, {passive: false});
+            
+            // 빈 상태 이미지 값 저장 (입력 여부 판별용)
+            canvas.setAttribute('data-empty', canvas.toDataURL());
+        }
+
+        window.clearSignature = function(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initSignaturePad('canvas-primary');
+            initSignaturePad('canvas-co');
+        });
+
+        // =========================================
+        // Form Submission & EmailJS Logic
+        // =========================================
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            // 서명 유효성 검사 (Primary는 필수)
+            const canvasPrimary = document.getElementById('canvas-primary');
+            const dataPrimaryInput = document.getElementById('sig_primary_data');
+            
+            if (canvasPrimary.toDataURL() === canvasPrimary.getAttribute('data-empty')) {
+                alert("Please draw your signature in the designated box before submitting.");
+                canvasPrimary.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return false;
+            } else {
+                dataPrimaryInput.value = canvasPrimary.toDataURL(); 
+            }
+
+            const canvasCo = document.getElementById('canvas-co');
+            if (canvasCo.toDataURL() !== canvasCo.getAttribute('data-empty')) {
+                document.getElementById('sig_co_data').value = canvasCo.toDataURL();
+            }
+
+            const formElement = event.target;
+            const submitBtn = document.getElementById('final-submit-btn');
+            const originalButtonText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> SUBMITTING...";
+            submitBtn.disabled = true;
+
+            // 기존 메인 웹사이트와 동일한 EmailJS 서비스 및 템플릿 사용 (가맹용 템플릿: template_kd0px6s)
+            let serviceID = "service_zyn89ll"; 
+            let templateID = "template_kd0px6s"; 
+
+            emailjs.sendForm(serviceID, templateID, formElement)
+                .then(() => {
+                    alert("Thank you! Your official franchise application has been submitted securely.");
+                    formElement.reset();
+                    clearSignature('canvas-primary');
+                    clearSignature('canvas-co');
+                    window.location.href = "index.html"; 
+                })
+                .catch((error) => {
+                    console.error("EmailJS Failure:", error);
+                    alert("Submission failed. Please check your internet connection and try again.");
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalButtonText;
+                });
+
+            return false;
+        }
+    </script>
+</body>
+</html>
