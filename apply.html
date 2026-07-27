@@ -54,6 +54,9 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* =========================================
+           헤더 및 투트랙 로고 레이아웃
+           ========================================= */
         .header {
             background-color: var(--white);
             padding: 40px 20px;
@@ -62,9 +65,31 @@
             box-shadow: var(--shadow-sm);
         }
 
-        .header img {
-            height: 120px;
-            margin-bottom: 20px;
+        .header-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+            margin-bottom: 25px;
+        }
+
+        /* 가로로 긴 신전 로고 */
+        .header-logos img.logo-sj {
+            height: 50px;
+            object-fit: contain;
+        }
+
+        /* 세로로 긴 Y2C 홀딩스 로고 */
+        .header-logos img.logo-y2c {
+            height: 110px;
+            object-fit: contain;
+        }
+
+        /* 고급스러운 세로 구분선 */
+        .header-divider {
+            width: 2px;
+            height: 55px;
+            background-color: var(--border-color);
         }
 
         .header h1 {
@@ -83,6 +108,9 @@
             letter-spacing: 2px;
         }
 
+        /* =========================================
+           공통 폼 스타일 레이아웃
+           ========================================= */
         .container {
             max-width: 900px;
             margin: 40px auto;
@@ -345,17 +373,30 @@
         }
         .back-link:hover { color: var(--sj-red); }
 
+        /* 모바일 대응 */
         @media (max-width: 768px) {
             .form-grid { grid-template-columns: 1fr; }
             .form-section { padding: 25px; }
             .radio-group { flex-direction: column; gap: 10px; }
+            
+            /* 모바일 헤더 로고 크기 축소 */
+            .header-logos { gap: 20px; }
+            .header-logos img.logo-sj { height: 40px; }
+            .header-logos img.logo-y2c { height: 80px; }
+            .header-divider { height: 40px; }
+            .header h1 { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <img src="image_c27067.png" alt="Y2C Holdings Inc.">
+        <div class="header-logos">
+            <!-- 2개의 로고와 구분선 대칭 적용 -->
+            <img src="sinjeon_logo_canada.png" alt="Sinjeon Food Sys Canada" class="logo-sj">
+            <div class="header-divider"></div>
+            <img src="y2c_holdings_logo.png" alt="Y2C Holdings Inc." class="logo-y2c">
+        </div>
         <h1>Y2C HOLDINGS INC. | SINJEON FOOD SYS CANADA</h1>
         <h2>Franchise Application Form</h2>
     </div>
@@ -367,7 +408,6 @@
 
         <form id="full-franchise-form" onsubmit="return handleFormSubmit(event)">
             
-            <!-- EmailJS 수신 이메일 및 폼 식별용 숨겨진 값 -->
             <input type="hidden" name="target_email" value="eunbeen.lee@y2choldings.co.kr">
             <input type="hidden" name="inquiry_type" value="Official Franchise Application">
 
@@ -661,7 +701,6 @@
                             <div class="canvas-wrapper">
                                 <canvas id="canvas-primary"></canvas>
                             </div>
-                            <!-- EmailJS로 보낼 Base64 서명 데이터가 담길 숨겨진 Input -->
                             <input type="hidden" name="sig_primary_data" id="sig_primary_data">
                         </div>
                     </div>
@@ -769,7 +808,6 @@
             canvas.addEventListener('touchend', endPosition);
             canvas.addEventListener('touchmove', draw, {passive: false});
             
-            // 빈 상태 이미지 값 저장 (입력 여부 판별용)
             canvas.setAttribute('data-empty', canvas.toDataURL());
         }
 
@@ -790,7 +828,6 @@
         function handleFormSubmit(event) {
             event.preventDefault();
 
-            // 서명 유효성 검사 (Primary는 필수)
             const canvasPrimary = document.getElementById('canvas-primary');
             const dataPrimaryInput = document.getElementById('sig_primary_data');
             
@@ -814,7 +851,6 @@
             submitBtn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> SUBMITTING...";
             submitBtn.disabled = true;
 
-            // 기존 메인 웹사이트와 동일한 EmailJS 서비스 및 템플릿 사용 (가맹용 템플릿: template_kd0px6s)
             let serviceID = "service_zyn89ll"; 
             let templateID = "template_kd0px6s"; 
 
