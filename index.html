@@ -68,10 +68,9 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* [모바일 가로 밀림 완벽 차단] */
         html, body {
             width: 100%;
-            max-width: 100vw;
+            max-width: 100%;
             overflow-x: hidden !important;
             position: relative;
         }
@@ -85,7 +84,7 @@
             user-select: none; -webkit-user-select: none;
         }
         input, textarea, select { user-select: auto; -webkit-user-select: auto; font-family: 'Outfit', sans-serif; }
-        img { user-drag: none; -webkit-user-drag: none; -webkit-touch-callout: none; max-width: 100%; height: auto; display: block; }
+        img { user-drag: none; -webkit-user-drag: none; -webkit-touch-callout: none; max-width: 100%; height: auto; }
         *:focus-visible { outline: 3px solid var(--sj-red); outline-offset: 4px; border-radius: 8px; }
 
         .scroll-progress {
@@ -165,14 +164,11 @@
         .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1250px; margin: 0 auto; }
         .bento-item { background: var(--bg-light); border-radius: var(--border-radius-lg); padding: 50px 40px; border: 1px solid var(--border-color); position: relative; overflow: visible; transition: transform var(--transition-fast), box-shadow var(--transition-fast); display: flex; flex-direction: column; justify-content: center; text-align: left; }
         .bento-item:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); border-color: var(--sj-green); background: var(--bg-white); }
-        
-        /* [오류 해결] 숫자가 나타나는 bento-large 박스 최적화 */
         .bento-large { grid-column: span 3; background: var(--text-dark); color: var(--bg-white); display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; align-items: center; padding: 50px; overflow: hidden; border: none;}
         .bento-large:hover { border-color: var(--sj-red); background: #222; }
         .stat-item { padding: 10px; }
         .stat-item h4 { font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 4rem; color: var(--sj-red); margin-bottom: 5px; line-height: 1; }
         .stat-item p { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.8); margin: 0; }
-        
         .value-icon { width: 65px; height: 65px; background: rgba(210, 75, 65, 0.1); color: var(--sj-red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 25px; position: relative; z-index: 2; }
         .bento-item h3 { font-size: 1.7rem; font-weight: 800; color: var(--sj-green); margin-bottom: 15px; position: relative; z-index: 2; }
         .bento-item p { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; font-weight: 500; position: relative; z-index: 2; }
@@ -232,7 +228,7 @@
         .menu-item .menu-eng { font-size: 0.95rem; color: var(--text-gray); font-weight: 500; line-height: 1.4; position: relative; z-index: 2;}
 
         /* =========================================
-           7. Locations & Maps
+           7. Locations & Maps 
            ========================================= */
         .locations { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1400px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 750px; }
@@ -285,7 +281,7 @@
         a[href*="elfsight.com"] { display: none !important; opacity: 0 !important; pointer-events: none !important; }
 
         /* =========================================
-           9. Franchise Process
+           9. Franchise Process & Portal Button
            ========================================= */
         .timeline-section { padding: 130px 5%; background: var(--bg-white); }
         .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
@@ -296,6 +292,23 @@
         .timeline-content:hover { transform: translateY(-5px); box-shadow: var(--shadow-sm); border-color: var(--sj-red); background: var(--bg-white); }
         .timeline-content h4 { font-size: 1.6rem; color: var(--text-dark); margin-bottom: 10px; font-weight: 800; }
         .timeline-content p { color: var(--text-gray); font-size: 1.05rem; font-weight: 500; line-height: 1.6;}
+
+        /* [추가] 가맹 신청 포털로 가는 프리미엄 버튼 스타일 */
+        .btn-apply-portal {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--sj-red); color: var(--bg-white);
+            padding: 18px 45px; font-size: 1.15rem; font-weight: 800;
+            border-radius: 50px; text-decoration: none;
+            box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3);
+            transition: var(--transition-fast); text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-apply-portal:hover {
+            background: #b83e35;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(210, 75, 65, 0.4);
+            color: var(--bg-white);
+        }
 
         /* =========================================
            10. Contact Us & Tabs
@@ -325,15 +338,9 @@
         .input-wrapper textarea:focus + label, .input-wrapper textarea:not(:placeholder-shown) + label,
         .input-wrapper select:focus + label, .input-wrapper select:valid + label { top: 8px; font-size: 0.8rem; color: var(--sj-green); font-weight: 800; }
         
-        #franchise-form .input-wrapper input:focus, #franchise-form .input-wrapper textarea:focus, #franchise-form .input-wrapper select:focus { border-color: var(--sj-red); box-shadow: 0 4px 15px rgba(210,75,65,0.05); }
-        #franchise-form .input-wrapper input:focus + label, #franchise-form .input-wrapper textarea:focus + label, #franchise-form .input-wrapper select:focus + label,
-        #franchise-form .input-wrapper input:not(:placeholder-shown) + label, #franchise-form .input-wrapper textarea:not(:placeholder-shown) + label, #franchise-form .input-wrapper select:valid + label { color: var(--sj-red); }
-
         .submit-btn { width: 100%; padding: 22px; border: none; border-radius: 16px; color: var(--bg-white); font-weight: 900; transition: var(--transition-fast); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; cursor: pointer;}
         .btn-green { background: var(--sj-green); }
         .btn-green:hover { background: #006a40; box-shadow: 0 10px 25px rgba(0, 130, 80, 0.25); transform: translateY(-3px);}
-        .btn-red { background: var(--sj-red); }
-        .btn-red:hover { background: #b83e35; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25); transform: translateY(-3px);}
         .submit-btn:disabled { background: var(--text-light); cursor: not-allowed; transform: none; box-shadow: none; }
 
         .fab-container { position: fixed; bottom: 40px; right: 40px; z-index: 999; display: flex; flex-direction: column; gap: 15px; transform: translateY(100px) translateZ(0); opacity: 0; transition: var(--transition-normal); will-change: transform, opacity;}
@@ -346,24 +353,19 @@
            ========================================= */
         footer { background: #333333; color: rgba(255,255,255,0.8); padding: 80px 5% 40px; font-size: 0.95rem; border-top: 5px solid var(--sj-red); }
         .mega-footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 60px; }
-        
         .footer-brand .footer-logo-box { display: inline-flex; align-items: center; margin-bottom: 25px; }
         .footer-logo-box img { height: 45px; display: block; object-fit: contain; } 
-        
         .footer-brand p { font-size: 1.05rem; line-height: 1.8; max-width: 320px; color: rgba(255,255,255,0.9); }
-
         .footer-col h4 { font-family: 'Outfit', sans-serif; color: var(--bg-white); font-size: 1.3rem; font-weight: 800; margin-bottom: 30px; position: relative; display: inline-block; }
         .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: -10px; width: 35px; height: 3px; background: var(--sj-red); border-radius: 2px; }
-        
         .footer-col ul { list-style: none; padding: 0; }
         .footer-col ul li { margin-bottom: 18px; }
         .footer-col ul li a { color: rgba(255,255,255,0.8); text-decoration: none; font-weight: 500; font-size: 1.05rem; transition: var(--transition-fast); display: inline-block; cursor: pointer;}
         .footer-col ul li a:hover { color: var(--bg-white); transform: translateX(5px); }
-
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 35px; text-align: left; max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
         .footer-bottom p { margin: 0; font-weight: 500; font-size: 1rem;}
 
-        /* Modal Base & Clean Heat Modal Specifics */
+        /* Modal Base */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); backdrop-filter: blur(5px); }
         .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
         .modal-content { background: var(--bg-white); width: 90%; max-width: 750px; max-height: 85vh; border-radius: var(--border-radius-lg); padding: 50px; position: relative; transform: translateY(30px) translateZ(0); transition: transform var(--transition-normal); display: flex; flex-direction: column; cursor: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.5);}
@@ -406,7 +408,6 @@
             header { padding: 15px 5%; }
             nav { display: none; } 
             
-            /* [수정 적용] 4열 구조를 2열(2x2)로 변경하여 글자 잘림 방지 */
             .bento-large { grid-column: span 1; grid-template-columns: 1fr 1fr; gap: 30px; padding: 40px 20px; }
             .bento-grid { grid-template-columns: 1fr; }
             .stat-item h4 { font-size: 3rem; }
@@ -542,7 +543,6 @@
         </div>
     </section>
 
-    <!-- [수정 적용] 맵기 단계 명칭 변경 (Medium -> Normal) -->
     <section class="spice-section" id="spice">
         <div class="section-header reveal">
             <p>Spice Level</p>
@@ -584,7 +584,6 @@
         </div>
 
         <div class="menu-grid-container reveal delay-200">
-            <!-- 1. Main Category -->
             <div id="cat-Main" class="menu-grid active">
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/신전 오리지널 떡볶이.png" alt="Sinjeon Original Topokki" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Original+Topokki'"></div>
@@ -618,7 +617,6 @@
                 </div>
             </div>
 
-            <!-- 2. Deep Fried Category -->
             <div id="cat-DeepFried" class="menu-grid">
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Deep Fried/튀김오뎅.png" alt="Fried Fishcake" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Fried+Fishcake'"></div>
@@ -670,7 +668,6 @@
                 </div>
             </div>
 
-            <!-- 3. Rice & Cupbap Category -->
             <div id="cat-Rice" class="menu-grid">
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Rice/신전치즈김밥.png" alt="Sinjeon Cheese Kimbap" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Cheese+Kimbap'"></div>
@@ -722,7 +719,6 @@
                 </div>
             </div>
 
-            <!-- 4. Topping Category -->
             <div id="cat-Topping" class="menu-grid">
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Topping/치즈.png" alt="Cheese Topping" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Cheese'"></div>
@@ -758,7 +754,7 @@
         </div>
     </section>
 
-    <!-- [업데이트 적용] 구글 공식 매장 정보 기반 매핑 (전화번호, 영업시간) -->
+    <!-- [프리미엄 위치 정보] -->
     <section class="locations" id="locations">
         <div class="section-header reveal">
             <p>Find Us</p>
@@ -768,104 +764,88 @@
         <div class="split-layout reveal delay-100">
             <div class="loc-list-wrapper">
                 
-                <!-- Finch 지점 -->
                 <div class="loc-item active store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="11.5" data-close="23">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.9 (314)</span>
                     </div>
                     <h3>Sinjeon Finch</h3>
-                    
                     <div class="loc-info-list">
                         <p><i class="fas fa-map-marker-alt"></i> 5 Byng Ave, North York, ON M2N 5R7</p>
                         <p><i class="fas fa-phone-alt"></i> <a href="tel:+14162188860">+1 416-218-8860</a></p>
                         <p><i class="fas fa-clock"></i> <span>Mon-Sun 11:30 AM - 11:00 PM</span></p>
                     </div>
-                    
                     <div class="feature-tags">
                         <span class="feature-tag">Dine-in</span>
                         <span class="feature-tag">Takeout</span>
                         <span class="feature-tag">Delivery</span>
                     </div>
-
                     <div class="loc-actions">
                         <a href="https://maps.google.com/?q=Sinjeon+Topokki+Finch" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow"></i> Map</a>
                         <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-finch/LMMptGifXsOnJBVSXsoFuQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle"></i> Uber Eats</a>
                     </div>
                 </div>
 
-                <!-- Christie 지점 -->
                 <div class="loc-item store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.685338!2d-79.4187!3d43.6635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b349d970997cb%3A0xc3c9f2be9b05c56b!2sSinjeon%20Topokki%20Bloor!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="12" data-close="1">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.8 (210)</span>
                     </div>
                     <h3>Sinjeon Christie</h3>
-                    
                     <div class="loc-info-list">
                         <p><i class="fas fa-map-marker-alt"></i> 712 Bloor St W, Toronto, ON M6G 1L4</p>
                         <p><i class="fas fa-phone-alt"></i> <a href="tel:+14165380676">+1 416-538-0676</a></p>
                         <p><i class="fas fa-clock"></i> <span>Mon-Sun 12:00 PM - 1:00 AM</span></p>
                     </div>
-
                     <div class="feature-tags">
                         <span class="feature-tag">Dine-in</span>
                         <span class="feature-tag">Takeout</span>
                         <span class="feature-tag">Delivery</span>
                     </div>
-
                     <div class="loc-actions">
                         <a href="https://maps.google.com/?q=Sinjeon+Topokki+Bloor" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow"></i> Map</a>
                         <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-bloor/SXFYVKNMX12RbmYzYsXF5w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle"></i> Uber Eats</a>
                     </div>
                 </div>
 
-                <!-- Lougheed 지점 -->
                 <div class="loc-item store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.825!2d-122.8943!3d49.248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548678229df83c9b%3A0xc3b7d1e8c9b2f6b3!2sSinjeon%20Topokki%20Lougheed!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Vancouver" data-open="11.5" data-close="21.5">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.7 (185)</span>
                     </div>
                     <h3>Sinjeon Lougheed</h3>
-                    
                     <div class="loc-info-list">
                         <p><i class="fas fa-map-marker-alt"></i> 329 North Rd #455, Coquitlam, BC V3K 6Z8</p>
                         <p><i class="fas fa-phone-alt"></i> <a href="tel:+12365532222">+1 236-553-2222</a></p>
                         <p><i class="fas fa-clock"></i> <span>Mon-Sun 11:30 AM - 9:30 PM</span></p>
                     </div>
-
                     <div class="feature-tags">
                         <span class="feature-tag">Dine-in</span>
                         <span class="feature-tag">Takeout</span>
                         <span class="feature-tag">Parking</span>
                     </div>
-
                     <div class="loc-actions">
                         <a href="https://maps.google.com/?q=Sinjeon+Topokki+Lougheed" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow"></i> Map</a>
                         <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-lougheed/rEGaT6FoWKuCNfwSGIWy8w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle"></i> Uber Eats</a>
                     </div>
                 </div>
 
-                <!-- Church 지점 -->
                 <div class="loc-item store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.208!2d-79.378!3d43.659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb34f0d6118d%3A0x6e788c7f2165e3b5!2sSinjeon%20Topokki%20Church!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="11" data-close="22" data-close-weekend="23">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.8 (150)</span>
                     </div>
                     <h3>Sinjeon Church</h3>
-                    
                     <div class="loc-info-list">
                         <p><i class="fas fa-map-marker-alt"></i> 377 Church St, Toronto, ON M5B 1H9</p>
                         <p><i class="fas fa-phone-alt"></i> <a href="tel:+14165910676">+1 416-591-0676</a></p>
                         <p><i class="fas fa-clock"></i> <span>Sun-Thu 11:00 AM - 10:00 PM<br>Fri-Sat 11:00 AM - 11:00 PM</span></p>
                     </div>
-
                     <div class="feature-tags">
                         <span class="feature-tag">Dine-in</span>
                         <span class="feature-tag">Takeout</span>
                         <span class="feature-tag">Late Night</span>
                     </div>
-
                     <div class="loc-actions">
                         <a href="https://maps.google.com/?q=Sinjeon+Topokki+Church" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow"></i> Map</a>
                         <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-downtown-toronto/fK_ps-eeWiWycUrGuC-TIQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle"></i> Uber Eats</a>
@@ -874,7 +854,6 @@
             </div>
             
             <div class="loc-map-wrapper">
-                <!-- 초기 로딩 맵: Finch 지점 구글 플레이스토어 공식 팝업 임베드 -->
                 <iframe id="main-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
@@ -929,6 +908,14 @@
                 </div>
             </div>
         </div>
+        
+        <!-- [신규 추가] 가맹 절차 바로 밑에 위치한 CTA 버튼 -->
+        <div class="reveal delay-200" style="text-align: center; margin-top: 70px;">
+            <h3 style="font-size: 1.8rem; font-weight: 800; color: var(--text-dark); margin-bottom: 20px;">Ready to Start Your Journey?</h3>
+            <a href="apply.html" class="btn-apply-portal">
+                <i class="fas fa-file-signature"></i> Apply for Franchise
+            </a>
+        </div>
     </section>
 
     <section class="contact-section" id="contact">
@@ -969,52 +956,25 @@
                 </form>
             </div>
 
+            <!-- Contact Us 내부의 Franchise 탭에도 버튼 유지 -->
             <div id="franchise-form" class="form-content">
                 <div class="form-header">
-                    <h3>Franchise Inquiries</h3>
+                    <h3>Official Franchise Application</h3>
+                    <p style="margin-top: 15px; line-height: 1.6;">
+                        Thank you for your interest in joining the Sinjeon family. <br>
+                        To ensure a thorough evaluation of your qualifications, all prospective partners are required to complete our official application portal.
+                    </p>
                 </div>
-                <form id="form-franchise" onsubmit="return handleInquiryEmailJS(event, 'Franchise')">
-                    <div class="input-row">
-                        <div class="input-wrapper">
-                            <input type="text" id="fra-name" name="from_name" placeholder=" " required>
-                            <label for="fra-name">Applicant Name</label>
-                        </div>
-                        <div class="input-wrapper">
-                            <input type="tel" id="fra-phone" name="reply_phone" placeholder=" " required>
-                            <label for="fra-phone">Contact Number</label>
-                        </div>
-                    </div>
-                    <div class="input-wrapper">
-                        <input type="email" id="fra-email" name="reply_email" placeholder=" " required>
-                        <label for="fra-email">Email Address</label>
-                    </div>
-                    <div class="input-row">
-                        <div class="input-wrapper">
-                            <input type="text" id="fra-location" name="desired_location" placeholder=" " required>
-                            <label for="fra-location">Desired City / Location</label>
-                        </div>
-                        <div class="input-wrapper">
-                            <select id="fra-budget" name="budget" required>
-                                <option value="" disabled selected hidden></option>
-                                <option value="Under $200k">Under $200k CAD</option>
-                                <option value="$200k - $350k">$200k - $350k CAD</option>
-                                <option value="$350k - $500k">$350k - $500k CAD</option>
-                                <option value="Over $500k">Over $500k CAD</option>
-                            </select>
-                            <label for="fra-budget">Estimated Budget</label>
-                        </div>
-                    </div>
-                    <div class="input-wrapper">
-                        <textarea id="fra-msg" name="message" placeholder=" " required></textarea>
-                        <label for="fra-msg">Business Background</label>
-                    </div>
-                    <button type="submit" id="btn-fra-submit" class="submit-btn btn-red">Submit Application</button>
-                </form>
+                <div style="text-align: center; padding: 30px 0;">
+                    <a href="apply.html" class="btn-apply-portal" style="font-size: 1rem; padding: 16px 40px;">
+                        Proceed to Application Portal ➔
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 플로팅 탑 버튼 유지 -->
+    <!-- 플로팅 탑 버튼 -->
     <div class="fab-container" id="fab-container">
         <div class="fab" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to Top">↑</div>
     </div>
@@ -1076,9 +1036,6 @@
     </div>
 
     <script>
-        // =========================================
-        // Menu Tab Logic
-        // =========================================
         function showMenuCategory(catId) {
             document.querySelectorAll('.menu-tab-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
@@ -1089,9 +1046,6 @@
             document.getElementById('cat-' + catId).classList.add('active');
         }
 
-        // =========================================
-        // Split Map Logic
-        // =========================================
         function changeMap(mapUrl, element) {
             document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
@@ -1100,29 +1054,22 @@
             iframe.src = mapUrl;
         }
 
-        // =========================================
-        // 타임존 기반 영업시간 체커 (초정밀 새벽 마감, 30분 단위, 요일별 알고리즘 완벽 적용)
-        // =========================================
         function updateStoreStatuses() {
             const storeCards = document.querySelectorAll('.store-card');
             storeCards.forEach(card => {
                 const tz = card.getAttribute('data-timezone');
                 
                 try {
-                    // 현재 해당 타임존의 날짜와 시간을 가져옴
                     const dateInTz = new Date(new Date().toLocaleString("en-US", {timeZone: tz}));
-                    const currentHour = dateInTz.getHours();
+                    let currentHour = dateInTz.getHours();
                     const currentMin = dateInTz.getMinutes();
-                    const currentDay = dateInTz.getDay(); // 0(일요일) ~ 6(토요일)
+                    const currentDay = dateInTz.getDay(); 
                     
-                    // 현재 시간을 소수점(예: 9:30 -> 9.5)으로 변환
                     const currentTimeVal = currentHour + (currentMin / 60);
 
-                    // HTML data 속성에서 오픈/마감 시간 가져오기
                     let openHour = parseFloat(card.getAttribute('data-open') || 11);
                     let closeHour = parseFloat(card.getAttribute('data-close') || 22);
                     
-                    // 주말(금, 토) 전용 마감 시간이 지정된 경우 덮어쓰기 (예: 처치 지점)
                     if (card.hasAttribute('data-close-weekend') && (currentDay === 5 || currentDay === 6)) {
                         closeHour = parseFloat(card.getAttribute('data-close-weekend'));
                     }
@@ -1131,7 +1078,6 @@
                     let adjustedCurrent = currentTimeVal;
                     let adjustedClose = closeHour;
                     
-                    // 새벽 마감 로직 처리 (예: 마감시간이 1시(AM)라서 오픈시간보다 숫자가 작은 경우)
                     if (closeHour <= openHour) { 
                         adjustedClose += 24;
                         if (currentTimeVal < openHour) {
@@ -1143,7 +1089,6 @@
                         isOpen = true;
                     }
 
-                    // 시간을 12시간제(AM/PM) 문자열로 예쁘게 포맷팅해주는 함수
                     function formatTime(decimalTime) {
                         let h = Math.floor(decimalTime);
                         let m = Math.round((decimalTime - h) * 60);
@@ -1170,9 +1115,6 @@
             });
         }
 
-        // =========================================
-        // EmailJS + Webhook 로직
-        // =========================================
         function handleInquiryEmailJS(event, type) {
             event.preventDefault();
             
@@ -1240,9 +1182,6 @@
             window.location.href = `mailto:${targetMail}?subject=${encodeURIComponent(subject)}&body=${body}`;
         }
 
-        // =========================================
-        // UI, Tabs & Scroll Logic
-        // =========================================
         function switchContactTab(target) {
             document.querySelectorAll('.contact-wrapper .tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.contact-wrapper .form-content').forEach(form => {
@@ -1290,14 +1229,10 @@
             }, observerOptions);
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
             
-            // Initialize Store Statuses
             updateStoreStatuses();
             setInterval(updateStoreStatuses, 60000);
         });
 
-        // =========================================
-        // 통합 동적 모달 로직
-        // =========================================
         function openModal(type) {
             const modal = document.getElementById('dynamic-modal');
             const title = document.getElementById('modal-title');
