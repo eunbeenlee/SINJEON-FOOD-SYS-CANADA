@@ -84,7 +84,7 @@
             user-select: none; -webkit-user-select: none;
         }
         input, textarea, select { user-select: auto; -webkit-user-select: auto; font-family: 'Outfit', sans-serif; }
-        img { user-drag: none; -webkit-user-drag: none; -webkit-touch-callout: none; max-width: 100%; height: auto; }
+        img { user-drag: none; -webkit-user-drag: none; -webkit-touch-callout: none; max-width: 100%; height: auto; display: block; }
         *:focus-visible { outline: 3px solid var(--sj-red); outline-offset: 4px; border-radius: 8px; }
 
         .scroll-progress {
@@ -113,28 +113,34 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           [신규 추가] 멀티 팝업 공지 스타일
+           [팝업 로직] 배경 없음 + 가벼운 플로팅
            ========================================= */
-        .event-popup-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); z-index: 3000;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; transition: opacity 0.4s ease;
-            backdrop-filter: blur(5px);
+        .event-popup-wrapper {
+            position: fixed;
+            top: 100px; 
+            left: 20px; 
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-30px);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none; 
         }
-        .event-popup-overlay.show {
-            opacity: 1; visibility: visible;
+        .event-popup-wrapper.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+            pointer-events: auto; 
         }
         .event-popup-content {
-            background: var(--bg-white); 
-            border-radius: var(--border-radius-md);
-            width: 90%; max-width: 450px; overflow: hidden;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
-            transform: translateY(30px); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column;
-        }
-        .event-popup-overlay.show .event-popup-content {
-            transform: translateY(0);
+            background: var(--bg-white);
+            border-radius: 16px;
+            width: 320px; 
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
         }
         .event-popup-content img {
             width: 100%; height: auto; display: block;
@@ -144,9 +150,9 @@
             border-top: 1px solid var(--border-color);
         }
         .event-popup-actions button {
-            flex: 1; padding: 16px 0; border: none; background: var(--bg-white);
-            font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.2s;
-            font-family: 'Outfit', 'Poppins', sans-serif;
+            flex: 1; padding: 12px 0; border: none; background: var(--bg-white);
+            font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: background 0.2s;
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
         }
         .btn-hide-24h {
             color: var(--text-gray); 
@@ -315,7 +321,7 @@
         .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; display: block;}
 
         /* =========================================
-           8. Elfsight Instagram Widget
+           8. Elfsight Instagram Widget 
            ========================================= */
         .ugc-section { padding: 130px 5%; background: var(--text-dark); color: white; text-align: center; overflow: hidden; }
         .ugc-section .section-header h2 { color: white; }
@@ -383,9 +389,15 @@
         .input-wrapper textarea:focus + label, .input-wrapper textarea:not(:placeholder-shown) + label,
         .input-wrapper select:focus + label, .input-wrapper select:valid + label { top: 8px; font-size: 0.8rem; color: var(--sj-green); font-weight: 800; }
         
+        #franchise-form .input-wrapper input:focus, #franchise-form .input-wrapper textarea:focus, #franchise-form .input-wrapper select:focus { border-color: var(--sj-red); box-shadow: 0 4px 15px rgba(210,75,65,0.05); }
+        #franchise-form .input-wrapper input:focus + label, #franchise-form .input-wrapper textarea:focus + label, #franchise-form .input-wrapper select:focus + label,
+        #franchise-form .input-wrapper input:not(:placeholder-shown) + label, #franchise-form .input-wrapper textarea:not(:placeholder-shown) + label, #franchise-form .input-wrapper select:valid + label { color: var(--sj-red); }
+
         .submit-btn { width: 100%; padding: 22px; border: none; border-radius: 16px; color: var(--bg-white); font-weight: 900; transition: var(--transition-fast); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; cursor: pointer;}
         .btn-green { background: var(--sj-green); }
         .btn-green:hover { background: #006a40; box-shadow: 0 10px 25px rgba(0, 130, 80, 0.25); transform: translateY(-3px);}
+        .btn-red { background: var(--sj-red); }
+        .btn-red:hover { background: #b83e35; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25); transform: translateY(-3px);}
         .submit-btn:disabled { background: var(--text-light); cursor: not-allowed; transform: none; box-shadow: none; }
 
         .fab-container { position: fixed; bottom: 40px; right: 40px; z-index: 999; display: flex; flex-direction: column; gap: 15px; transform: translateY(100px) translateZ(0); opacity: 0; transition: var(--transition-normal); will-change: transform, opacity;}
@@ -439,7 +451,7 @@
         .flow-arrow { color: var(--text-light); font-size: 1.5rem; font-weight: 900; }
 
         /* =========================================
-           Mobile Responsiveness
+           Mobile Responsiveness (렉 차단 및 터치 영역 픽셀 퍼펙트 최적화)
            ========================================= */
         @media (max-width: 1200px) {
             .bento-large { padding: 40px; }
@@ -461,7 +473,9 @@
             
             .split-layout { flex-direction: column; height: auto; }
             .loc-list-wrapper { padding: 20px; max-height: auto; }
-            .loc-map-wrapper { height: 450px; }
+            
+            /* [모바일] 맵 높이 안정화 및 스크롤 충돌 완화 */
+            .loc-map-wrapper { height: 350px; }
             
             .mega-footer-container { grid-template-columns: 1fr; gap: 40px; text-align: left; }
             .footer-col h4::after { left: 0; transform: none; }
@@ -474,7 +488,6 @@
             .section-header h2 span { font-size: 3rem; }
             .modal-content { padding: 40px 25px; width: 95%;}
             
-            .menu-tab-btn { padding: 12px 25px; font-size: 1rem; }
             .timeline-container::before { left: 30px; }
             .timeline-step { flex-direction: column; }
             .timeline-marker { left: 8px; width: 48px; height: 48px;}
@@ -488,10 +501,53 @@
             .bento-large { gap: 20px; padding: 30px 15px; }
             .stat-item h4 { font-size: 2.2rem; }
             .stat-item p { font-size: 0.8rem; }
+            /* 긴 텍스트 모바일 폭 대응 */
             .hero h1 { font-size: 2.8rem; }
-            .hero h1 span.highlight { font-size: 3.5rem; }
+            .hero h1 span.highlight { font-size: 3.2rem; }
             .section-header h2 { font-size: 2.2rem; }
             .section-header h2 span { font-size: 2.8rem; }
+            
+            /* [모바일] 버튼 터치 영역 및 텍스트 짤림(Overflow) 완벽 차단 */
+            .loc-actions .btn-sm {
+                padding: 10px 15px;
+                font-size: 0.85rem;
+            }
+            .tab-btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            .menu-tab-btn {
+                padding: 12px 20px; 
+                font-size: 0.95rem; 
+            }
+            .btn-apply-portal {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+            .submit-btn {
+                padding: 16px;
+                font-size: 1.1rem;
+            }
+
+            /* [모바일] 팝업 화면 하단 토스트 뷰로 최적화 (메뉴 버튼 안 가리게 처리) */
+            .event-popup-wrapper {
+                top: auto;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%) translateY(20px);
+                width: 90%;
+                max-width: 350px;
+            }
+            .event-popup-wrapper.show {
+                transform: translateX(-50%) translateY(0);
+            }
+            .event-popup-content {
+                width: 100%;
+            }
+            .event-popup-actions button {
+                font-size: 0.8rem;
+                padding: 12px 0;
+            }
         }
     </style>
 </head>
@@ -513,13 +569,12 @@
         </nav>
     </header>
 
-    <!-- [업데이트 완료] 1~5 랜덤 이미지 자동 로드 기능이 탑재된 이벤트 팝업 -->
-    <div class="event-popup-overlay" id="main-event-popup">
+    <!-- [업데이트] 배경 딤(Dim) 제거, 좌측 상단(모바일은 하단) 플로팅 팝업 -->
+    <div class="event-popup-wrapper" id="main-event-popup" style="display: none;">
         <div class="event-popup-content">
-            <!-- 자바스크립트가 파일명을 popup_event_1.jpg ~ popup_event_5.jpg 중 하나로 교체합니다 -->
             <img id="dynamic-popup-img" alt="Notice / Event">
             <div class="event-popup-actions">
-                <button class="btn-hide-24h" onclick="hidePopupFor24Hours()">24시간 동안 보지 않기</button>
+                <button class="btn-hide-24h" onclick="hidePopupFor24Hours()">24시간 보지 않기</button>
                 <button class="btn-close-popup" onclick="closeEventPopup()">닫기 (Close)</button>
             </div>
         </div>
@@ -921,7 +976,7 @@
         <div class="section-header reveal">
             <p>Social Proof</p>
             <h2>Community <span>Feed</span></h2>
-            <p style="color:var(--text-light); text-transform:none; letter-spacing:0;">Follow <a href="https://www.instagram.com/sinjeon.canada" target="_blank" style="color:var(--sj-red); text-decoration:none; font-weight:800;">@sinjeon.canada</a></p>
+            <p style="color:var(--text-light); text-transform:none; letter-spacing:0;">Follow <a href="https://www.instagram.com/sinjeon_Canada" target="_blank" style="color:var(--sj-red); text-decoration:none; font-weight:800;">@sinjeon_Canada</a></p>
         </div>
         
         <div class="elfsight-container reveal delay-100">
@@ -974,6 +1029,7 @@
         </div>
     </section>
 
+    <!-- Contact Us 폼 -->
     <section class="contact-section" id="contact">
         <div class="section-header reveal">
             <p>Get in Touch</p>
@@ -1014,17 +1070,45 @@
 
             <div id="franchise-form" class="form-content">
                 <div class="form-header">
-                    <h3>Official Franchise Application</h3>
-                    <p style="margin-top: 15px; line-height: 1.6;">
-                        Thank you for your interest in joining the Sinjeon family. <br>
-                        To ensure a thorough evaluation of your qualifications, all prospective partners are required to complete our official application portal.
-                    </p>
+                    <h3>Franchise Inquiries</h3>
                 </div>
-                <div style="text-align: center; padding: 30px 0;">
-                    <a href="apply.html" class="btn-apply-portal" style="font-size: 1rem; padding: 16px 40px;">
-                        Proceed to Application Portal ➔
-                    </a>
-                </div>
+                <form id="form-franchise" onsubmit="return handleInquiryEmailJS(event, 'Franchise')">
+                    <div class="input-row">
+                        <div class="input-wrapper">
+                            <input type="text" id="fra-name" name="from_name" placeholder=" " required>
+                            <label for="fra-name">Applicant Name</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="tel" id="fra-phone" name="reply_phone" placeholder=" " required>
+                            <label for="fra-phone">Contact Number</label>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="email" id="fra-email" name="reply_email" placeholder=" " required>
+                        <label for="fra-email">Email Address</label>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-wrapper">
+                            <input type="text" id="fra-location" name="desired_location" placeholder=" " required>
+                            <label for="fra-location">Desired City / Location</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <select id="fra-budget" name="budget" required>
+                                <option value="" disabled selected hidden></option>
+                                <option value="Under $200k">Under $200k CAD</option>
+                                <option value="$200k - $350k">$200k - $350k CAD</option>
+                                <option value="$350k - $500k">$350k - $500k CAD</option>
+                                <option value="Over $500k">Over $500k CAD</option>
+                            </select>
+                            <label for="fra-budget">Estimated Budget</label>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <textarea id="fra-msg" name="message" placeholder=" " required></textarea>
+                        <label for="fra-msg">Business Background</label>
+                    </div>
+                    <button type="submit" id="btn-fra-submit" class="submit-btn btn-red">Submit Application</button>
+                </form>
             </div>
         </div>
     </section>
@@ -1057,7 +1141,7 @@
             <div class="footer-col" style="text-align: left;">
                 <h4>Social</h4>
                 <ul>
-                    <li><a href="https://instagram.com/sinjeon.canada" target="_blank">Instagram</a></li>
+                    <li><a href="https://instagram.com/sinjeon_Canada" target="_blank">Instagram</a></li>
                     <li><a href="#community">Community Feed</a></li>
                     <li><a href="#">YouTube</a></li>
                 </ul>
@@ -1189,7 +1273,8 @@
             let serviceID = "service_zyn89ll"; 
             let templateID = type === 'General' ? "template_r8gce22" : "template_kd0px6s";
             
-            let targetEmail = type === 'General' ? "eunbeen.lee@daum.net" : "eunbeen.lee@y2choldings.co.kr";
+            // 수신 주소 eunbeen.lee@y2choldings.co.kr 유지
+            let targetEmail = "eunbeen.lee@y2choldings.co.kr";
 
             const extraParams = getFormParams(formElement, type);
             extraParams.target_email = targetEmail;
@@ -1234,7 +1319,7 @@
             } else {
                 body = `Applicant Name: ${params.name}%0D%0AContact: ${params.phone}%0D%0AEmail: ${params.email}%0D%0ADesired Location: ${params.location}%0D%0AEstimated Budget: ${params.budget}%0D%0A%0D%0ABusiness Background / Inquiry:%0D%0A${params.message}`;
             }
-            const targetMail = type === 'General' ? "eunbeen.lee@daum.net" : "eunbeen.lee@y2choldings.co.kr";
+            const targetMail = "eunbeen.lee@y2choldings.co.kr";
             window.location.href = `mailto:${targetMail}?subject=${encodeURIComponent(subject)}&body=${body}`;
         }
 
@@ -1274,33 +1359,37 @@
         });
 
         // =========================================
-        // 메인 팝업 (1~5 랜덤 이미지 기능 탑재)
+        // 메인 팝업 (이미지 존재 유무 철저한 확인 후 렌더링 최적화)
         // =========================================
         document.addEventListener('DOMContentLoaded', () => {
             const popup = document.getElementById('main-event-popup');
-            if (popup) {
-                const hideUntil = localStorage.getItem('hideMainPopupUntil');
-                const now = new Date().getTime();
+            const hideUntil = localStorage.getItem('hideMainPopupUntil');
+            const now = new Date().getTime();
 
-                if (!hideUntil || now > parseInt(hideUntil)) {
+            // 24시간 제한을 넘었거나 설정된 적이 없는 경우에만 실행
+            if (popup && (!hideUntil || now > parseInt(hideUntil))) {
+                
+                const randomNum = Math.floor(Math.random() * 5) + 1;
+                const popupImg = document.getElementById('dynamic-popup-img');
+                
+                if (popupImg) {
+                    // 1. 이미지가 성공적으로 로드된 경우에만 디스플레이 블록 및 show 애니메이션 추가
+                    popupImg.onload = function() {
+                        popup.style.display = 'block'; 
+                        setTimeout(() => {
+                            popup.classList.add('show'); 
+                        }, 50); 
+                    };
                     
-                    // 1에서 5까지 무작위 숫자 생성
-                    const randomNum = Math.floor(Math.random() * 5) + 1;
-                    const popupImg = document.getElementById('dynamic-popup-img');
+                    // 2. 파일이 없는 경우 팝업을 완전히 폐기하여 안보이게 처리
+                    popupImg.onerror = function() {
+                        console.log("No popup image found (popup_event_" + randomNum + ".jpg). Skipping popup display.");
+                        popup.style.display = 'none';
+                        popup.classList.remove('show');
+                    };
                     
-                    if (popupImg) {
-                        // 생성된 숫자를 파일명에 결합
-                        popupImg.src = `popup_event_${randomNum}.jpg`;
-                        
-                        // 이미지가 서버에 아직 업로드되지 않았을 때 깨짐 방지용 방어 코드
-                        popupImg.onerror = function() {
-                            this.src = 'https://via.placeholder.com/450x600?text=Event+Notice+' + randomNum;
-                        };
-                    }
-
-                    setTimeout(() => {
-                        popup.classList.add('show');
-                    }, 800);
+                    // 3. 소스 할당 (이 순간 onload 또는 onerror 발생)
+                    popupImg.src = `popup_event_${randomNum}.jpg`;
                 }
             }
 
@@ -1319,11 +1408,18 @@
             setInterval(updateStoreStatuses, 60000);
         });
 
+        // 팝업 닫기 버튼 로직 (투명도 조절 후 완전히 display:none 처리)
         function closeEventPopup() {
             const popup = document.getElementById('main-event-popup');
-            if (popup) popup.classList.remove('show');
+            if (popup) {
+                popup.classList.remove('show');
+                setTimeout(() => {
+                    popup.style.display = 'none';
+                }, 400); // CSS transition 시간에 맞춰 제거
+            }
         }
 
+        // 24시간 보지 않기 (로컬 스토리지 저장 후 닫기)
         function hidePopupFor24Hours() {
             const now = new Date().getTime();
             const twentyFourHours = 24 * 60 * 60 * 1000; 
@@ -1395,7 +1491,7 @@
                     <h4>1. Acceptance of Terms</h4>
                     <p>By accessing and using the Sinjeon Canada website, you accept and agree to be bound by the terms and provision of this agreement. These terms are governed by the laws of the Province of Ontario and the federal laws of Canada applicable therein.</p>
                     <h4>2. Intellectual Property Rights</h4>
-                    <p>All content published on this website, including but not limited to brand logos, typography ('SinjeonCustom'), graphical assets, character illustrations ('Mill-tto Family'), and textual content, are the exclusive intellectual property of Sinjeon Food Sys. <strong>Unauthorized scraping, copying, reproduction, or commercial use is strictly prohibited and subject to legal action.</strong></p>
+                    <p>All content published on this website, including but not limited to brand logos, typography ('SinjeonCustom'), graphical assets, character illustrations ('Mill-tto Family'), and textual content, are the exclusive intellectual 기득권 of Sinjeon Food Sys. <strong>Unauthorized scraping, copying, reproduction, or commercial use is strictly prohibited and subject to legal action.</strong></p>
                     <h4>3. Franchise Application Disclaimer</h4>
                     <p>Submitting a franchise inquiry through this website does not constitute a binding legal contract or a guarantee of franchise approval.</p>
                 `;
