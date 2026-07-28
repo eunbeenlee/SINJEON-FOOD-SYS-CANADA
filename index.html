@@ -70,7 +70,7 @@
 
         html, body {
             width: 100%;
-            max-width: 100%;
+            max-width: 100vw;
             overflow-x: hidden !important;
             position: relative;
         }
@@ -113,7 +113,7 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           [팝업 로직] 배경 없음 + 가벼운 플로팅
+           [가벼운 팝업 로직] 배경 딤(Dim) 제거 및 투명 처리
            ========================================= */
         .event-popup-wrapper {
             position: fixed;
@@ -280,7 +280,7 @@
         .menu-item .menu-eng { font-size: 0.95rem; color: var(--text-gray); font-weight: 500; line-height: 1.4; position: relative; z-index: 2;}
 
         /* =========================================
-           7. Locations & Maps
+           7. Locations & Maps (메뉴 버튼 제거 완벽 반영)
            ========================================= */
         .locations { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1400px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 750px; }
@@ -321,7 +321,7 @@
         .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; display: block;}
 
         /* =========================================
-           8. Elfsight Instagram Widget 
+           8. Elfsight Instagram Widget
            ========================================= */
         .ugc-section { padding: 130px 5%; background: var(--text-dark); color: white; text-align: center; overflow: hidden; }
         .ugc-section .section-header h2 { color: white; }
@@ -451,7 +451,7 @@
         .flow-arrow { color: var(--text-light); font-size: 1.5rem; font-weight: 900; }
 
         /* =========================================
-           Mobile Responsiveness (렉 차단 및 터치 영역 픽셀 퍼펙트 최적화)
+           Mobile Responsiveness (완벽 교차 검증)
            ========================================= */
         @media (max-width: 1200px) {
             .bento-large { padding: 40px; }
@@ -529,7 +529,7 @@
                 font-size: 1.1rem;
             }
 
-            /* [모바일] 팝업 화면 하단 토스트 뷰로 최적화 (메뉴 버튼 안 가리게 처리) */
+            /* [모바일] 팝업 화면 하단 토스트 뷰로 최적화 */
             .event-popup-wrapper {
                 top: auto;
                 bottom: 20px;
@@ -569,7 +569,7 @@
         </nav>
     </header>
 
-    <!-- [업데이트] 배경 딤(Dim) 제거, 좌측 상단(모바일은 하단) 플로팅 팝업 -->
+    <!-- [팝업 시스템] 투명화 로직 & 모바일 100% 최적화 -->
     <div class="event-popup-wrapper" id="main-event-popup" style="display: none;">
         <div class="event-popup-content">
             <img id="dynamic-popup-img" alt="Notice / Event">
@@ -866,7 +866,7 @@
         </div>
     </section>
 
-    <!-- [프리미엄 위치 정보] -->
+    <!-- [프리미엄 위치 정보 - 개별 메뉴판 제거 완료] -->
     <section class="locations" id="locations">
         <div class="section-header reveal">
             <p>Find Us</p>
@@ -1113,7 +1113,7 @@
         </div>
     </section>
 
-    <!-- 플로팅 탑 버튼 유지 -->
+    <!-- 플로팅 탑 버튼 -->
     <div class="fab-container" id="fab-container">
         <div class="fab" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to Top">↑</div>
     </div>
@@ -1273,7 +1273,6 @@
             let serviceID = "service_zyn89ll"; 
             let templateID = type === 'General' ? "template_r8gce22" : "template_kd0px6s";
             
-            // 수신 주소 eunbeen.lee@y2choldings.co.kr 유지
             let targetEmail = "eunbeen.lee@y2choldings.co.kr";
 
             const extraParams = getFormParams(formElement, type);
@@ -1359,7 +1358,7 @@
         });
 
         // =========================================
-        // 메인 팝업 (이미지 존재 유무 철저한 확인 후 렌더링 최적화)
+        // 메인 팝업 (가벼운 플로팅 & 투명화 에러 방지 로직)
         // =========================================
         document.addEventListener('DOMContentLoaded', () => {
             const popup = document.getElementById('main-event-popup');
@@ -1373,7 +1372,7 @@
                 const popupImg = document.getElementById('dynamic-popup-img');
                 
                 if (popupImg) {
-                    // 1. 이미지가 성공적으로 로드된 경우에만 디스플레이 블록 및 show 애니메이션 추가
+                    // 1. 이미지가 성공적으로 로드된 경우에만 디스플레이 처리
                     popupImg.onload = function() {
                         popup.style.display = 'block'; 
                         setTimeout(() => {
@@ -1381,7 +1380,7 @@
                         }, 50); 
                     };
                     
-                    // 2. 파일이 없는 경우 팝업을 완전히 폐기하여 안보이게 처리
+                    // 2. 파일이 없는 경우 팝업 완전 숨김 처리
                     popupImg.onerror = function() {
                         console.log("No popup image found (popup_event_" + randomNum + ".jpg). Skipping popup display.");
                         popup.style.display = 'none';
@@ -1408,18 +1407,16 @@
             setInterval(updateStoreStatuses, 60000);
         });
 
-        // 팝업 닫기 버튼 로직 (투명도 조절 후 완전히 display:none 처리)
         function closeEventPopup() {
             const popup = document.getElementById('main-event-popup');
             if (popup) {
                 popup.classList.remove('show');
                 setTimeout(() => {
                     popup.style.display = 'none';
-                }, 400); // CSS transition 시간에 맞춰 제거
+                }, 400);
             }
         }
 
-        // 24시간 보지 않기 (로컬 스토리지 저장 후 닫기)
         function hidePopupFor24Hours() {
             const now = new Date().getTime();
             const twentyFourHours = 24 * 60 * 60 * 1000; 
@@ -1491,7 +1488,7 @@
                     <h4>1. Acceptance of Terms</h4>
                     <p>By accessing and using the Sinjeon Canada website, you accept and agree to be bound by the terms and provision of this agreement. These terms are governed by the laws of the Province of Ontario and the federal laws of Canada applicable therein.</p>
                     <h4>2. Intellectual Property Rights</h4>
-                    <p>All content published on this website, including but not limited to brand logos, typography ('SinjeonCustom'), graphical assets, character illustrations ('Mill-tto Family'), and textual content, are the exclusive intellectual 기득권 of Sinjeon Food Sys. <strong>Unauthorized scraping, copying, reproduction, or commercial use is strictly prohibited and subject to legal action.</strong></p>
+                    <p>All content published on this website, including but not limited to brand logos, typography ('SinjeonCustom'), graphical assets, character illustrations ('Mill-tto Family'), and textual content, are the exclusive intellectual property of Sinjeon Food Sys. <strong>Unauthorized scraping, copying, reproduction, or commercial use is strictly prohibited and subject to legal action.</strong></p>
                     <h4>3. Franchise Application Disclaimer</h4>
                     <p>Submitting a franchise inquiry through this website does not constitute a binding legal contract or a guarantee of franchise approval.</p>
                 `;
