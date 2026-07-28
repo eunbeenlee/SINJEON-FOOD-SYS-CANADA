@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sinjeon Canada Menu</title>
+    <title>Sinjeon Lougheed Menu</title>
     <style>
-        /* 전체 배경을 갤러리 느낌의 다크 톤으로 처리 */
+        /* 기본 배경은 고급스러운 다크 톤으로 처리 */
         body {
             margin: 0;
             padding: 40px 20px;
@@ -13,31 +13,34 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 25px; /* 데스크탑: 8장의 메뉴판이 확실히 구분되도록 페이지 간 여백 추가 */
         }
 
-        /* 데스크탑 최적화: 너무 커지지 않게 제한 + 고급스러운 그림자 효과 */
+        /* 데스크탑 최적화: Letter 사이즈(세로형) 비율 자동 유지 + 그림자 */
         .menu-img {
             width: 100%;
             max-width: 800px; 
-            height: auto;
+            height: auto; /* 이미지의 원본 세로 비율(Letter)을 그대로 유지 */
             display: block;
             box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            border-radius: 4px; /* 종이 느낌의 살짝 둥근 모서리 */
         }
 
-        /* 이미지가 여러 장일 경우 사이에 아주 미세한 경계선 느낌만 주어 연결감 극대화 */
-        .menu-img + .menu-img {
-            margin-top: -1px;
-        }
-
-        /* 모바일 최적화: 화면에 꽉 차게 변경하고 불필요한 여백/그림자 제거 */
+        /* 모바일 최적화: 화면에 꽉 차게 변경하고 여백 제거하여 끊김 없는(Seamless) 스크롤 구현 */
         @media (max-width: 768px) {
             body {
                 padding: 0; 
                 background-color: #000000;
+                gap: 0; /* 모바일에서는 여백 제거 */
             }
             .menu-img {
                 max-width: 100%;
+                border-radius: 0;
                 box-shadow: none; 
+            }
+            /* 모바일에서 이미지 간 미세한 흰 선이 생기는 것을 방지 */
+            .menu-img + .menu-img {
+                margin-top: -1px;
             }
         }
     </style>
@@ -45,16 +48,17 @@
 <body>
 
     <!-- 
-      [스마트 이미지 로더]
-      폴더에 finch_menu_1.jpg ~ finch_menu_5.jpg 중 
-      올려진 이미지 개수만큼만 나타나고, 
-      없는 파일은 에러(onerror)를 감지해 흔적 없이 자동으로 숨깁니다.
+      [로히드 지점 세로형 8장 메뉴판]
+      이미지가 존재하지 않을 경우를 대비해 onerror 속성으로 에러 방어벽 구축
     -->
-    <img src="lougheed_menu_1.jpg" class="menu-img" alt="Menu Page 1" onerror="this.style.display='none'">
-    <img src="lougheed_menu_2.jpg" class="menu-img" alt="Menu Page 2" onerror="this.style.display='none'">
-    <img src="lougheed_menu_3.jpg" class="menu-img" alt="Menu Page 3" onerror="this.style.display='none'">
-    <img src="lougheed_menu_4.jpg" class="menu-img" alt="Menu Page 4" onerror="this.style.display='none'">
-    <img src="lougheed_menu_5.jpg" class="menu-img" alt="Menu Page 5" onerror="this.style.display='none'">
+    <img src="lougheed_menu_1.jpg" class="menu-img" alt="Lougheed Menu Page 1" onerror="this.style.display='none'">
+    <img src="lougheed_menu_2.jpg" class="menu-img" alt="Lougheed Menu Page 2" onerror="this.style.display='none'">
+    <img src="lougheed_menu_3.jpg" class="menu-img" alt="Lougheed Menu Page 3" onerror="this.style.display='none'">
+    <img src="lougheed_menu_4.jpg" class="menu-img" alt="Lougheed Menu Page 4" onerror="this.style.display='none'">
+    <img src="lougheed_menu_5.jpg" class="menu-img" alt="Lougheed Menu Page 5" onerror="this.style.display='none'">
+    <img src="lougheed_menu_6.jpg" class="menu-img" alt="Lougheed Menu Page 6" onerror="this.style.display='none'">
+    <img src="lougheed_menu_7.jpg" class="menu-img" alt="Lougheed Menu Page 7" onerror="this.style.display='none'">
+    <img src="lougheed_menu_8.jpg" class="menu-img" alt="Lougheed Menu Page 8" onerror="this.style.display='none'">
 
 </body>
 </html>
