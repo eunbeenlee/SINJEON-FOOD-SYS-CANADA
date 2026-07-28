@@ -70,7 +70,7 @@
 
         html, body {
             width: 100%;
-            max-width: 100vw;
+            max-width: 100%;
             overflow-x: hidden !important;
             position: relative;
         }
@@ -113,7 +113,7 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           [가벼운 팝업 로직] 배경 딤(Dim) 제거 및 투명 처리
+           [팝업 로직] 배경 없음 + 확실한 플로팅 UI
            ========================================= */
         .event-popup-wrapper {
             position: fixed;
@@ -121,16 +121,16 @@
             left: 20px; 
             z-index: 3000;
             opacity: 0;
-            visibility: hidden;
+            visibility: hidden; /* display: none 대신 사용 */
             transform: translateX(-30px);
-            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            pointer-events: none; 
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.4s;
+            pointer-events: none; /* 안 보일 땐 클릭 불가 */
         }
         .event-popup-wrapper.show {
             opacity: 1;
             visibility: visible;
             transform: translateX(0);
-            pointer-events: auto; 
+            pointer-events: auto; /* 보일 땐 클릭 가능 */
         }
         .event-popup-content {
             background: var(--bg-white);
@@ -280,7 +280,7 @@
         .menu-item .menu-eng { font-size: 0.95rem; color: var(--text-gray); font-weight: 500; line-height: 1.4; position: relative; z-index: 2;}
 
         /* =========================================
-           7. Locations & Maps (메뉴 버튼 제거 완벽 반영)
+           7. Locations & Maps
            ========================================= */
         .locations { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1400px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 750px; }
@@ -321,7 +321,7 @@
         .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; display: block;}
 
         /* =========================================
-           8. Elfsight Instagram Widget
+           8. Elfsight Instagram Widget 
            ========================================= */
         .ugc-section { padding: 130px 5%; background: var(--text-dark); color: white; text-align: center; overflow: hidden; }
         .ugc-section .section-header h2 { color: white; }
@@ -451,7 +451,7 @@
         .flow-arrow { color: var(--text-light); font-size: 1.5rem; font-weight: 900; }
 
         /* =========================================
-           Mobile Responsiveness (완벽 교차 검증)
+           Mobile Responsiveness (렉 차단 및 터치 영역 픽셀 퍼펙트 최적화)
            ========================================= */
         @media (max-width: 1200px) {
             .bento-large { padding: 40px; }
@@ -529,7 +529,7 @@
                 font-size: 1.1rem;
             }
 
-            /* [모바일] 팝업 화면 하단 토스트 뷰로 최적화 */
+            /* [모바일] 팝업 화면 하단 토스트 뷰로 최적화 (메뉴 버튼 안 가리게 처리) */
             .event-popup-wrapper {
                 top: auto;
                 bottom: 20px;
@@ -569,8 +569,8 @@
         </nav>
     </header>
 
-    <!-- [팝업 시스템] 투명화 로직 & 모바일 100% 최적화 -->
-    <div class="event-popup-wrapper" id="main-event-popup" style="display: none;">
+    <!-- [업데이트] 배경 딤(Dim) 제거, 좌측 상단(모바일은 하단) 플로팅 팝업 -->
+    <div class="event-popup-wrapper" id="main-event-popup">
         <div class="event-popup-content">
             <img id="dynamic-popup-img" alt="Notice / Event">
             <div class="event-popup-actions">
@@ -866,7 +866,7 @@
         </div>
     </section>
 
-    <!-- [프리미엄 위치 정보 - 개별 메뉴판 제거 완료] -->
+    <!-- [프리미엄 위치 정보 - 점포별 메뉴판 링크 제거본] -->
     <section class="locations" id="locations">
         <div class="section-header reveal">
             <p>Find Us</p>
@@ -1113,7 +1113,7 @@
         </div>
     </section>
 
-    <!-- 플로팅 탑 버튼 -->
+    <!-- 플로팅 탑 버튼 유지 -->
     <div class="fab-container" id="fab-container">
         <div class="fab" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to Top">↑</div>
     </div>
@@ -1273,6 +1273,7 @@
             let serviceID = "service_zyn89ll"; 
             let templateID = type === 'General' ? "template_r8gce22" : "template_kd0px6s";
             
+            // 수신 이메일 Y2C 공식 계정
             let targetEmail = "eunbeen.lee@y2choldings.co.kr";
 
             const extraParams = getFormParams(formElement, type);
@@ -1358,38 +1359,42 @@
         });
 
         // =========================================
-        // 메인 팝업 (가벼운 플로팅 & 투명화 에러 방지 로직)
+        // 메인 팝업 (이미지 로드 검증 완벽 처리)
         // =========================================
         document.addEventListener('DOMContentLoaded', () => {
             const popup = document.getElementById('main-event-popup');
+            if (!popup) return;
+
             const hideUntil = localStorage.getItem('hideMainPopupUntil');
             const now = new Date().getTime();
 
-            // 24시간 제한을 넘었거나 설정된 적이 없는 경우에만 실행
-            if (popup && (!hideUntil || now > parseInt(hideUntil))) {
-                
-                const randomNum = Math.floor(Math.random() * 5) + 1;
-                const popupImg = document.getElementById('dynamic-popup-img');
-                
-                if (popupImg) {
-                    // 1. 이미지가 성공적으로 로드된 경우에만 디스플레이 처리
-                    popupImg.onload = function() {
-                        popup.style.display = 'block'; 
-                        setTimeout(() => {
-                            popup.classList.add('show'); 
-                        }, 50); 
-                    };
-                    
-                    // 2. 파일이 없는 경우 팝업 완전 숨김 처리
-                    popupImg.onerror = function() {
-                        console.log("No popup image found (popup_event_" + randomNum + ".jpg). Skipping popup display.");
-                        popup.style.display = 'none';
-                        popup.classList.remove('show');
-                    };
-                    
-                    // 3. 소스 할당 (이 순간 onload 또는 onerror 발생)
-                    popupImg.src = `popup_event_${randomNum}.jpg`;
-                }
+            // 1. 24시간 숨김 상태 검증
+            if (hideUntil && now < parseInt(hideUntil)) {
+                console.log("[Popup] 24 hours hide active. Skipping popup.");
+                return; // 숨김 상태면 스크립트 종료
+            }
+
+            // 2. 1~5 랜덤 이미지 배정
+            const randomNum = Math.floor(Math.random() * 5) + 1;
+            const popupImg = document.getElementById('dynamic-popup-img');
+            const targetImageSrc = `popup_event_${randomNum}.jpg`;
+
+            if (popupImg) {
+                // [성공] 이미지가 존재하면 화면에 띄움
+                popupImg.onload = function() {
+                    console.log(`[Popup] Successfully loaded: ${targetImageSrc}`);
+                    setTimeout(() => {
+                        popup.classList.add('show');
+                    }, 100); 
+                };
+
+                // [실패] 이미지가 없을 경우 화면에 띄우지 않음 (완벽 방어)
+                popupImg.onerror = function() {
+                    console.warn(`[Popup] Image not found: ${targetImageSrc}. Skipping popup.`);
+                };
+
+                // 이미지 요청 시작
+                popupImg.src = targetImageSrc;
             }
 
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
@@ -1410,10 +1415,7 @@
         function closeEventPopup() {
             const popup = document.getElementById('main-event-popup');
             if (popup) {
-                popup.classList.remove('show');
-                setTimeout(() => {
-                    popup.style.display = 'none';
-                }, 400);
+                popup.classList.remove('show'); // CSS transition으로 자연스럽게 투명화
             }
         }
 
@@ -1421,6 +1423,7 @@
             const now = new Date().getTime();
             const twentyFourHours = 24 * 60 * 60 * 1000; 
             localStorage.setItem('hideMainPopupUntil', now + twentyFourHours);
+            console.log("[Popup] Set to hide for 24 hours.");
             closeEventPopup();
         }
 
