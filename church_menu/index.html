@@ -2,12 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- 모바일 환경 최적화: 고객이 손가락으로 화면을 확대(Pinch-Zoom) 할 수 있도록 허용 -->
+    <!-- 모바일 최적화: 고객이 자유롭게 확대(Pinch-to-zoom)해서 볼 수 있도록 허용 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Sinjeon Church Menu</title>
-    
-    <!-- PDF.js 라이브러리 (PDF를 초고속 이미지처럼 그려주는 엔진) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
     <style>
         /* =========================================
@@ -17,6 +14,7 @@
             margin: 0;
             padding: 0;
             width: 100%;
+            height: 100%;
             background-color: #1a1a1a; /* 고급스러운 다크 배경 */
             
             /* 텍스트 드래그 및 선택 완벽 차단 */
@@ -25,41 +23,47 @@
             -ms-user-select: none;
             user-select: none;
             
-            /* 모바일에서 길게 눌러서 메뉴 뜨는 현상 방지 */
+            /* 모바일에서 이미지를 꾹~ 눌러서 '저장하기' 뜨는 현상 원천 차단 */
             -webkit-touch-callout: none;
         }
 
-        /* 인쇄 시도 시 화면을 하얗게 가려버림 */
+        /* 인쇄(Ctrl+P) 시도 시 화면을 하얗게 가려버림 */
         @media print {
             body { display: none !important; }
         }
 
         /* =========================================
-           2. 뷰어 레이아웃 최적화 (크기 확대)
+           2. 레이아웃 & 이미지 최적화
            ========================================= */
-        #pdf-container {
+        .menu-container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
+            align-items: flex-start;
             width: 100%;
-            padding: 30px 0; /* 데스크톱 상하 여백 */
+            min-height: 100vh;
+            padding: 40px 20px; /* 데스크톱 상하좌우 여백 */
+            box-sizing: border-box;
         }
 
-        canvas {
-            /* 웹(PC)에서 작게 보이지 않도록 최대 너비를 1400px로 대폭 상향 */
-            max-width: 1400px; 
-            width: 95%; /* 양옆 여백을 살짝 주어 보기 편하게 설정 */
+        .menu-img {
+            max-width: 1400px; /* PC 화면에서 꽉 차면서도 보기 좋은 최대 너비 */
+            width: 100%;
             height: auto;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
-            margin-bottom: -1px;
-            pointer-events: none; /* 캔버스 위 우클릭/드래그 원천 차단 */
-            border-radius: 8px; /* 모서리를 살짝 둥글게 처리 */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8); /* 입체감 부여 */
+            border-radius: 8px; /* 모서리 라운딩 */
+            
+            /* 이미지 마우스 드래그 방지 */
+            -webkit-user-drag: none;
+            user-drag: none;
+            
+            position: relative;
+            z-index: 2;
         }
 
-        /* 로딩 스피너 UI */
-        #loading {
+        /* 로딩 중 표시될 배경 텍스트 */
+        .loading-text {
             color: #D24B41;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
             font-size: 1.2rem;
             font-weight: 800;
             position: fixed;
@@ -67,96 +71,53 @@
             left: 50%;
             transform: translate(-50%, -50%);
             letter-spacing: 1px;
+            z-index: 1;
         }
 
-        /* 모바일 꽉 차게 최적화 */
+        /* =========================================
+           3. 모바일 환경 100% 꽉 채우기 최적화
+           ========================================= */
         @media (max-width: 768px) {
-            #pdf-container { padding: 0; }
-            canvas { 
-                width: 100%; /* 모바일에서는 양옆 여백 없이 100% 꽉 차게 */
-                max-width: 100%; 
-                box-shadow: none; 
-                border-radius: 0; 
+            .menu-container {
+                padding: 0; /* 모바일에서는 여백 제거 */
+                background-color: #000000;
+            }
+            .menu-img {
+                max-width: 100%;
+                border-radius: 0; /* 모바일은 라운딩 없이 화면 꽉 차게 */
+                box-shadow: none;
             }
         }
     </style>
 </head>
+<!-- oncontextmenu: 마우스 우클릭 금지 / ondragstart: 드래그 금지 -->
 <body oncontextmenu="return false" ondragstart="return false">
 
-    <div id="loading">LOADING MENU... ⏳</div>
-    <div id="pdf-container"></div>
+    <!-- 인터넷이 느릴 때를 대비한 초고속 로딩 안내 텍스트 -->
+    <div class="loading-text">LOADING MENU... ⏳</div>
+
+    <div class="menu-container">
+        <!-- fetchpriority="high" 속성으로 브라우저가 최우선으로 다운로드하게 명령 -->
+        <img src="curch_menu_1.jpg" class="menu-img" alt="Sinjeon Church Menu" fetchpriority="high">
+    </div>
 
     <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-        const url = 'church_menu_1.pdf'; // 처치 지점 34x23 대형 메뉴판
-        const container = document.getElementById('pdf-container');
-        const loading = document.getElementById('loading');
-
-        async function renderPDF() {
-            try {
-                // PDF 파일 다운로드 대기
-                const pdf = await pdfjsLib.getDocument(url).promise;
-                loading.style.display = 'none';
-
-                // 기기 해상도 및 가로 너비 감지 (PC: 최대 1400px / 모바일: 화면 꽉 채움)
-                const isMobile = window.innerWidth <= 768;
-                const displayWidth = isMobile ? window.innerWidth : Math.min(window.innerWidth * 0.95, 1400);
-
-                // 페이지 렌더링 로직 (비동기 순차 처리로 브라우저 렉(Freeze) 원천 차단)
-                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-                    const page = await pdf.getPage(pageNum);
-                    
-                    // PDF 원본의 사이즈를 먼저 읽어옴
-                    const unscaledViewport = page.getViewport({ scale: 1.0 });
-                    
-                    // 기기별 선명도 유지를 위한 픽셀 비율 (메모리 폭주를 막기 위해 최대 2로 제한)
-                    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-                    
-                    // ★ 초고속 최적화 핵심: 초대형 34x23 원본을 무조건 렌더링하지 않고 화면 크기에 딱 맞춰 스케일링 계산
-                    const scale = (displayWidth / unscaledViewport.width) * pixelRatio;
-                    const viewport = page.getViewport({ scale: scale });
-
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    
-                    // 캔버스 물리적 크기 할당
-                    canvas.width = viewport.width;
-                    canvas.height = viewport.height;
-                    
-                    // 캔버스 시각적 CSS 크기 할당
-                    canvas.style.width = displayWidth + 'px';
-                    canvas.style.height = 'auto';
-
-                    container.appendChild(canvas);
-
-                    // 화면에 그리기
-                    await page.render({
-                        canvasContext: context,
-                        viewport: viewport
-                    }).promise;
-                }
-            } catch (error) {
-                loading.innerHTML = "메뉴판을 불러오는 데 실패했습니다.<br>새로고침(F5)을 눌러주세요.";
-                console.error('Error rendering PDF:', error);
-            }
-        }
-
-        renderPDF();
-
         // =========================================
-        // 완벽한 복사 방지용 JS 락(Lock)
+        // 완벽한 불펌 방지용 JS 락(Lock)
         // =========================================
         document.addEventListener('keydown', function(e) {
-            // F12 (개발자 도구), Ctrl+Shift+I 차단
+            // F12 (개발자 도구), Ctrl+Shift+I 차단 (코드 뜯어보기 방지)
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
                 e.preventDefault();
             }
-            // Ctrl+C (복사), Ctrl+S (저장), Ctrl+P (인쇄) 차단
-            if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 's' || e.key === 'p')) {
+            // Ctrl+C (복사), Ctrl+S (저장), Ctrl+P (인쇄), Ctrl+U (소스보기) 차단
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 's' || e.key === 'p' || e.key === 'u')) {
                 e.preventDefault();
             }
         });
+
+        // 모바일 기기별 특이 버그(우클릭 우회)를 막기 위한 추가 락
+        document.addEventListener('contextmenu', event => event.preventDefault());
     </script>
 
 </body>
