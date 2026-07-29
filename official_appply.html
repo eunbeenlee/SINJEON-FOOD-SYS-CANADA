@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Official Franchise Application | Y2C Holdings Inc.</title>
+    
+    <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- EmailJS SDK -->
+    <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init({ publicKey: "DITntTK9NnZLeavvX" });
+            }
+        });
+    </script>
+    
+    <style>
+        :root {
+            --sj-red: #D24B41;
+            --sj-green: #008250;
+            --y2c-gold: #C29B57;
+            --bg-light: #F8FAFC;
+            --white: #FFFFFF;
+            --text-dark: #0F172A;
+            --text-gray: #475569;
+            --border-color: #E2E8F0;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 보안 문서 안내 바 */
+        .security-banner {
+            background-color: var(--text-dark);
+            color: var(--y2c-gold);
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .security-banner i { margin-right: 8px; }
+
+        /* =========================================
+           헤더 (프리미엄 투트랙 로고)
+           ========================================= */
+        .header {
+            background-color: var(--white);
+            padding: 50px 20px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+        .header-logos {
+            display: flex; justify-content: center; align-items: center; gap: 35px; margin-bottom: 25px;
+        }
+        .header-logos img.logo-sj { height: 50px; object-fit: contain; }
+        .header-logos img.logo-y2c { height: 110px; object-fit: contain; }
+        .header-divider { width: 2px; height: 55px; background-color: var(--border-color); }
+        .header h1 { font-size: 1.8rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; letter-spacing: 1px; }
+        .header h2 { font-size: 1.2rem; font-weight: 600; color: var(--sj-red); text-transform: uppercase; letter-spacing: 2px; }
+
+        /* =========================================
+           공통 폼 레이아웃
+           ========================================= */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px 80px;
+        }
+
+        .notice-box {
+            background-color: rgba(194, 155, 87, 0.08);
+            border-left: 4px solid var(--y2c-gold);
+            padding: 25px;
+            border-radius: 4px;
+            margin-bottom: 40px;
+        }
+        .notice-box p { font-size: 0.95rem; color: var(--text-dark); font-weight: 500; }
+
+        .form-section {
+            background: var(--white);
+            padding: 40px 50px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+        }
+        .form-section-title {
+            font-size: 1.4rem; font-weight: 800; color: var(--sj-green);
+            margin-bottom: 30px; padding-bottom: 15px;
+            border-bottom: 2px solid var(--bg-light);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .form-section-title span {
+            background: var(--sj-green); color: white;
+            width: 32px; height: 32px; display: inline-flex; justify-content: center; align-items: center;
+            border-radius: 50%; font-size: 1.1rem;
+        }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-group { margin-bottom: 20px; }
+        .full-width { grid-column: 1 / -1; }
+
+        label {
+            display: block; font-size: 0.95rem; font-weight: 700;
+            color: var(--text-dark); margin-bottom: 8px;
+        }
+        .sub-label { font-size: 0.8rem; color: var(--text-gray); font-weight: 400; margin-left: 6px; }
+
+        /* 입력 폼 공통 스타일 */
+        input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], select, textarea {
+            width: 100%; padding: 14px 16px; border: 2px solid #CBD5E1;
+            border-radius: 8px; font-family: inherit; font-size: 16px; /* iOS 자동확대 방지 */
+            transition: all 0.2s ease; background-color: #F8FAFC; color: var(--text-dark); font-weight: 500;
+            appearance: none; -webkit-appearance: none;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none; border-color: var(--sj-green); background-color: var(--white);
+            box-shadow: 0 0 0 3px rgba(0, 130, 80, 0.1);
+        }
+
+        .input-icon-wrapper { position: relative; }
+        .input-icon-wrapper span {
+            position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+            color: var(--text-gray); font-weight: 700;
+        }
+        .input-icon-wrapper input { padding-left: 35px; }
+
+        .radio-group, .checkbox-group { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 8px; }
+        .radio-label, .checkbox-label {
+            display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer; font-size: 0.95rem; color: var(--text-dark);
+        }
+        .radio-label input[type="radio"], .checkbox-label input[type="checkbox"] {
+            width: 18px; height: 18px; accent-color: var(--sj-green); margin: 0; padding: 0; cursor: pointer;
+        }
+
+        /* 개인정보 동의 박스 */
+        .declaration-box {
+            background: #F8FAFC; padding: 25px; border-radius: 8px; margin-bottom: 30px; border: 1px solid var(--border-color);
+        }
+        .declaration-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; }
+        .declaration-item input[type="checkbox"] { margin-top: 4px; }
+        .declaration-item p { font-size: 0.9rem; color: var(--text-gray); margin: 0; line-height: 1.5; }
+
+        /* =========================================
+           전자 서명 (DocuSign Style)
+           ========================================= */
+        .signature-container {
+            border: 2px solid var(--border-color); border-radius: 12px;
+            background: #F8FAFC; padding: 25px; margin-bottom: 10px;
+        }
+        .signature-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
+        }
+        .signature-header label { margin: 0; color: var(--sj-green); font-size: 1.1rem; }
+        .clear-btn {
+            background: rgba(210, 75, 65, 0.1); border: none; color: var(--sj-red);
+            padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 700;
+            cursor: pointer; transition: all 0.2s ease;
+        }
+        .clear-btn:hover { background: var(--sj-red); color: white; }
+        
+        .canvas-wrapper {
+            background: var(--white); border: 1px dashed #CBD5E1; border-radius: 8px;
+            position: relative; overflow: hidden; height: 200px;
+        }
+        .canvas-wrapper::before {
+            content: 'X'; position: absolute; left: 20px; bottom: 35px;
+            font-size: 1.8rem; color: #E2E8F0; font-family: 'Outfit', sans-serif; pointer-events: none;
+        }
+        .canvas-wrapper::after {
+            content: ''; position: absolute; left: 20px; right: 20px; bottom: 35px;
+            height: 2px; background: #E2E8F0; pointer-events: none;
+        }
+        canvas {
+            width: 100%; height: 100%; cursor: crosshair; display: block; touch-action: none;
+        }
+
+        .submit-btn {
+            background: var(--sj-red); color: white; border: none; padding: 22px 40px;
+            font-size: 1.2rem; font-weight: 800; border-radius: 50px; cursor: pointer; width: 100%;
+            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1.5px;
+            box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25);
+            display: flex; justify-content: center; align-items: center; gap: 12px;
+        }
+        .submit-btn:hover {
+            background: #b83e35; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(210, 75, 65, 0.35);
+        }
+        .submit-btn:disabled {
+            background: var(--text-light); cursor: not-allowed; transform: none; box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-section { padding: 30px 20px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .radio-group { flex-direction: column; gap: 12px; }
+            .header-logos { gap: 20px; }
+            .header-logos img.logo-sj { height: 40px; }
+            .header-logos img.logo-y2c { height: 80px; }
+            .header-divider { height: 40px; }
+            .header h1 { font-size: 1.3rem; }
+            .signature-container { padding: 15px; }
+            .submit-btn { padding: 18px 20px; font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="security-banner">
+        <i class="fas fa-lock"></i> Confidential & Secure Application Portal
+    </div>
+
+    <div class="header">
+        <div class="header-logos">
+            <img src="sinjeon_logo_canada.png" alt="Sinjeon Food Sys Canada" class="logo-sj">
+            <div class="header-divider"></div>
+            <img src="y2c_holdings_logo.png" alt="Y2C Holdings Inc." class="logo-y2c">
+        </div>
+        <h1>Y2C HOLDINGS INC. | SINJEON FOOD SYS CANADA</h1>
+        <h2>Official Franchise Application</h2>
+    </div>
+
+    <div class="container">
+        <div class="notice-box">
+            <p><i class="fas fa-shield-alt" style="color: var(--y2c-gold); margin-right: 8px;"></i> <strong>CONFIDENTIALITY NOTICE:</strong> The detailed financial and personal information provided in this form is strictly encrypted and used solely by Y2C Holdings Inc. & Sinjeon Food Sys Canada for the franchise qualification process.</p>
+        </div>
+
+        <form id="official-franchise-form" onsubmit="return handleOfficialSubmit(event)">
+            
+            <input type="hidden" name="target_email" value="eunbeen.lee@y2choldings.co.kr">
+            <input type="hidden" name="inquiry_type" value="Step 2: Official Franchise Application">
+
+            <!-- 1. APPLICANT GENERAL INFORMATION -->
+            <div class="form-section">
+                <div class="form-section-title"><span>1</span> Applicant General Information</div>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>Full Legal Name</label>
+                        <input type="text" name="full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" name="dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="radio-group">
+                            <label class="radio-label"><input type="radio" name="gender" value="Male" required> Male</label>
+                            <label class="radio-label"><input type="radio" name="gender" value="Female"> Female</label>
+                            <label class="radio-label"><input type="radio" name="gender" value="Other"> Other</label>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Status in Canada</label>
+                        <div class="radio-group">
+                            <label class="radio-label"><input type="radio" name="status" value="Citizen" required> Citizen</label>
+                            <label class="radio-label"><input type="radio" name="status" value="PR"> Permanent Resident (PR)</label>
+                            <label class="radio-label"><input type="radio" name="status" value="Work Permit"> Work Permit</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Phone Number</label>
+                        <input type="tel" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Current Home Address</label>
+                        <input type="text" name="address" placeholder="Street Address" style="margin-bottom: 15px;" required>
+                        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                            <input type="text" name="city" placeholder="City" required>
+                            <input type="text" name="province" placeholder="Province" required>
+                            <input type="text" name="postal_code" placeholder="Postal Code" required>
+                        </div>
+                    </div>
+
+                    <!-- Co-Applicant Section -->
+                    <div class="form-group full-width" style="margin-top: 30px; padding-top: 30px; border-top: 1px dashed var(--border-color);">
+                        <label style="color: var(--sj-red); font-size: 1.15rem; margin-bottom: 20px;"><i class="fas fa-user-plus"></i> Co-Applicant Details (If Applicable)</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Co-Applicant Full Legal Name</label>
+                        <input type="text" name="co_name">
+                    </div>
+                    <div class="form-group">
+                        <label>Relationship to Applicant</label>
+                        <input type="text" name="co_relationship">
+                    </div>
+                    <div class="form-group">
+                        <label>Status in Canada</label>
+                        <select name="co_status">
+                            <option value="">Select Status...</option>
+                            <option value="Citizen">Citizen</option>
+                            <option value="PR">Permanent Resident (PR)</option>
+                            <option value="Work Permit">Work Permit</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Phone / Email</label>
+                        <input type="text" name="co_contact">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. PROPOSED BUSINESS & LOCATION -->
+            <div class="form-section">
+                <div class="form-section-title"><span>2</span> Proposed Business Strategy</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Preferred Province / City (1st Choice)</label>
+                        <input type="text" name="pref_location_1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Province / City (2nd Choice)</label>
+                        <input type="text" name="pref_location_2">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Target Area / Neighborhood Specifics</label>
+                        <input type="text" name="target_area" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Preferred Store Format</label>
+                        <div class="radio-group" style="flex-direction: column;">
+                            <label class="radio-label"><input type="radio" name="store_format" value="Express" required> Express Model (600–800 sq ft / To-Go & Delivery Focused)</label>
+                            <label class="radio-label"><input type="radio" name="store_format" value="Standard"> Standard Model (1,200–1,800 sq ft / Casual Dining & Take-out)</label>
+                            <label class="radio-label"><input type="radio" name="store_format" value="Flexible"> Flexible / Open to Franchisor's Recommendation</label>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Proposed Operational Role</label>
+                        <div class="radio-group" style="flex-direction: column;">
+                            <label class="radio-label"><input type="radio" name="op_role" value="Owner-Operator" required> Full-time Owner-Operator (Directly involved in daily operations)</label>
+                            <label class="radio-label"><input type="radio" name="op_role" value="Investor"> Investor with Designated Full-time Manager</label>
+                            <label class="radio-label"><input type="radio" name="op_role" value="Multi-Unit"> Multi-Unit Franchisee (Regional Developer)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. FINANCIAL PROFILE -->
+            <div class="form-section">
+                <div class="form-section-title"><span>3</span> Financial Profile <span class="sub-label" style="background:none; color:var(--text-gray);">(All figures in CAD $)</span></div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Liquid Cash Available</label>
+                        <div class="input-icon-wrapper"><span>$</span><input type="number" name="liquid_cash" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Real Estate Equity</label>
+                        <div class="input-icon-wrapper"><span>$</span><input type="number" name="real_estate" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Assets</label>
+                        <div class="input-icon-wrapper"><span>$</span><input type="number" name="total_assets" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Liabilities</label>
+                        <div class="input-icon-wrapper"><span>$</span><input type="number" name="total_liabilities" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Calculated Net Worth</label>
+                        <div class="input-icon-wrapper"><span>$</span><input type="number" name="net_worth" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Annual Personal Income</label>
+                        <div class="input-icon-wrapper"><span>$</span><input type="number" name="annual_income" required></div>
+                    </div>
+                    
+                    <div class="form-group full-width" style="margin-top: 20px;">
+                        <label>Proposed Capital Source</label>
+                        <div class="form-grid" style="margin-top: 15px; row-gap: 20px;">
+                            <div>
+                                <label class="checkbox-label" style="margin-bottom:8px;"><input type="checkbox" name="source_personal" value="Yes"> Personal Savings</label>
+                                <div class="input-icon-wrapper"><span>$</span><input type="number" name="amt_personal"></div>
+                            </div>
+                            <div>
+                                <label class="checkbox-label" style="margin-bottom:8px;"><input type="checkbox" name="source_bank" value="Yes"> Bank Loan</label>
+                                <div class="input-icon-wrapper"><span>$</span><input type="number" name="amt_bank"></div>
+                            </div>
+                            <div>
+                                <label class="checkbox-label" style="margin-bottom:8px;"><input type="checkbox" name="source_investor" value="Yes"> Investors / Partners</label>
+                                <div class="input-icon-wrapper"><span>$</span><input type="number" name="amt_investor"></div>
+                            </div>
+                            <div>
+                                <label class="checkbox-label" style="margin-bottom:8px;"><input type="checkbox" name="source_other" value="Yes"> Other</label>
+                                <div class="input-icon-wrapper"><span>$</span><input type="number" name="amt_other"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width" style="margin-top: 30px; padding-top: 30px; border-top: 1px dashed var(--border-color);">
+                        <label>Banking Reference</label>
+                        <div class="form-grid" style="margin-top: 10px;">
+                            <input type="text" name="bank_name" placeholder="Primary Bank Name" required>
+                            <input type="text" name="bank_branch" placeholder="Branch City / Location" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. BACKGROUND & EXPERIENCE -->
+            <div class="form-section">
+                <div class="form-section-title"><span>4</span> Professional Background</div>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>Highest Education Level</label>
+                        <input type="text" name="education" placeholder="Degree / Institution" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Current Occupation</label>
+                        <input type="text" name="occupation" placeholder="Employer / Title" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>F&B / Retail Experience</label>
+                        <div class="radio-group">
+                            <label class="radio-label"><input type="radio" name="experience_years" value="5+ Years" required> 5+ Years</label>
+                            <label class="radio-label"><input type="radio" name="experience_years" value="1-5 Years"> 1–5 Years</label>
+                            <label class="radio-label"><input type="radio" name="experience_years" value="Less than 1 Year"> Less than 1 Year</label>
+                            <label class="radio-label"><input type="radio" name="experience_years" value="No Experience"> No Experience</label>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Provide details of your management or business experience</label>
+                        <textarea name="experience_details" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>English Proficiency</label>
+                        <select name="lang_english" required>
+                            <option value="">Select Level...</option>
+                            <option value="Native/Fluent">Native / Fluent</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Basic">Basic</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Korean Proficiency</label>
+                        <select name="lang_korean" required>
+                            <option value="">Select Level...</option>
+                            <option value="Native/Fluent">Native / Fluent</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Basic">Basic</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. PROFESSIONAL REFERENCES -->
+            <div class="form-section">
+                <div class="form-section-title"><span>5</span> Professional References</div>
+                <div class="form-grid">
+                    <div class="form-group full-width"><label style="color: var(--sj-green); font-size: 1.1rem;"><i class="fas fa-address-card"></i> Reference 1</label></div>
+                    <div class="form-group"><input type="text" name="ref1_name" placeholder="Full Name" required></div>
+                    <div class="form-group"><input type="text" name="ref1_rel" placeholder="Relationship (e.g. Colleague, Manager)" required></div>
+                    <div class="form-group"><input type="text" name="ref1_company" placeholder="Company & Title" required></div>
+                    <div class="form-group"><input type="text" name="ref1_contact" placeholder="Phone or Email" required></div>
+                    
+                    <div class="form-group full-width" style="margin-top: 20px;"><label style="color: var(--sj-green); font-size: 1.1rem;"><i class="fas fa-address-card"></i> Reference 2</label></div>
+                    <div class="form-group"><input type="text" name="ref2_name" placeholder="Full Name" required></div>
+                    <div class="form-group"><input type="text" name="ref2_rel" placeholder="Relationship" required></div>
+                    <div class="form-group"><input type="text" name="ref2_company" placeholder="Company & Title" required></div>
+                    <div class="form-group"><input type="text" name="ref2_contact" placeholder="Phone or Email" required></div>
+                </div>
+            </div>
+
+            <!-- 6. AUTHORIZATION, PRIVACY & SIGNATURE (DocuSign Style) -->
+            <div class="form-section" style="margin-bottom: 20px;">
+                <div class="form-section-title"><span>6</span> Authorization & Digital Signature</div>
+                
+                <div class="declaration-box">
+                    <label class="declaration-item">
+                        <input type="checkbox" name="consent_pipeda" value="Agreed" required>
+                        <p><strong>1. PIPEDA / Privacy Consent:</strong> I consent to Y2C HOLDINGS INC. and SINJEON FOOD SYS CANADA collecting, using, and disclosing my personal information provided herein for the sole purpose of evaluating my suitability as a franchisee.</p>
+                    </label>
+                    <label class="declaration-item">
+                        <input type="checkbox" name="consent_bgcheck" value="Agreed" required>
+                        <p><strong>2. Credit & Background Check Authorization:</strong> I hereby authorize Y2C HOLDINGS INC., SINJEON FOOD SYS CANADA, or their designated agents to conduct a personal credit check, background check, and reference verification as part of the franchise evaluation process.</p>
+                    </label>
+                    <label class="declaration-item">
+                        <input type="checkbox" name="consent_nonbinding" value="Agreed" required>
+                        <p><strong>3. Non-Binding Acknowledgement:</strong> I understand that submission of this application does not obligate the franchisor to grant a franchise, nor does it constitute any contractual or binding agreement between parties.</p>
+                    </label>
+                </div>
+
+                <p style="margin-bottom: 30px; font-weight: 800; color: var(--sj-red); font-size: 1.1rem; text-align: center;"><i class="fas fa-pen-nib"></i> I hereby declare that all information provided in this application is true, complete, and correct to the best of my knowledge.</p>
+
+                <!-- Primary Applicant Signature Block -->
+                <div class="form-grid" style="background: var(--white); padding: 30px; border: 2px solid var(--border-color); border-radius: 12px; margin-bottom: 30px; box-shadow: var(--shadow-sm);">
+                    <div class="form-group full-width">
+                        <label style="font-size: 1.1rem;">Primary Applicant Name (Print)</label>
+                        <input type="text" name="print_primary_name" placeholder="Type your full legal name here" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <div class="signature-container">
+                            <div class="signature-header">
+                                <label><i class="fas fa-signature"></i> Draw Signature Here</label>
+                                <button type="button" class="clear-btn" onclick="clearSignature('canvas-primary')"><i class="fas fa-eraser"></i> Clear</button>
+                            </div>
+                            <div class="canvas-wrapper">
+                                <canvas id="canvas-primary"></canvas>
+                            </div>
+                            <input type="hidden" name="sig_primary_data" id="sig_primary_data">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" name="sig_primary_date" required>
+                    </div>
+                </div>
+
+                <!-- Co-Applicant Signature Block -->
+                <div class="form-grid" style="background: var(--white); padding: 30px; border: 2px dashed #CBD5E1; border-radius: 12px;">
+                    <div class="form-group full-width">
+                        <label style="font-size: 1.1rem; color: var(--text-gray);">Co-Applicant Name (Print) - Optional</label>
+                        <input type="text" name="print_co_name" placeholder="Type co-applicant's full legal name here">
+                    </div>
+                    <div class="form-group full-width">
+                        <div class="signature-container">
+                            <div class="signature-header">
+                                <label style="color: var(--text-gray);"><i class="fas fa-signature"></i> Draw Signature Here</label>
+                                <button type="button" class="clear-btn" onclick="clearSignature('canvas-co')" style="color: var(--text-gray);"><i class="fas fa-eraser"></i> Clear</button>
+                            </div>
+                            <div class="canvas-wrapper">
+                                <canvas id="canvas-co"></canvas>
+                            </div>
+                            <input type="hidden" name="sig_co_data" id="sig_co_data">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: var(--text-gray);">Date</label>
+                        <input type="date" name="sig_co_date">
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="submit" class="submit-btn" id="final-submit-btn"><i class="fas fa-lock"></i> Submit Official Application & NDA</button>
+        </form>
+    </div>
+
+    <script>
+        // =========================================
+        // Digital Signature Pad Logic (DocuSign Style)
+        // =========================================
+        function initSignaturePad(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+
+            function resizeCanvas() {
+                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                canvas.width = canvas.offsetWidth * ratio;
+                canvas.height = canvas.offsetHeight * ratio;
+                ctx.scale(ratio, ratio);
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = '#0F172A'; 
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            function getPosition(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: clientX - rect.left,
+                    y: clientY - rect.top
+                };
+            }
+
+            function startPosition(e) {
+                isDrawing = true;
+                const pos = getPosition(e);
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+                draw(e);
+                if(e.type.includes('touch')) e.preventDefault(); 
+            }
+
+            function endPosition() {
+                isDrawing = false;
+                ctx.beginPath();
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                const pos = getPosition(e);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+                if(e.type.includes('touch')) e.preventDefault(); 
+            }
+
+            canvas.addEventListener('mousedown', startPosition);
+            canvas.addEventListener('mouseup', endPosition);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseleave', endPosition);
+
+            canvas.addEventListener('touchstart', startPosition, {passive: false});
+            canvas.addEventListener('touchend', endPosition);
+            canvas.addEventListener('touchmove', draw, {passive: false});
+            
+            canvas.setAttribute('data-empty', canvas.toDataURL());
+        }
+
+        window.clearSignature = function(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initSignaturePad('canvas-primary');
+            initSignaturePad('canvas-co');
+        });
+
+        // =========================================
+        // Form Submission & EmailJS Logic
+        // =========================================
+        function handleOfficialSubmit(event) {
+            event.preventDefault();
+
+            const canvasPrimary = document.getElementById('canvas-primary');
+            const dataPrimaryInput = document.getElementById('sig_primary_data');
+            
+            if (canvasPrimary.toDataURL() === canvasPrimary.getAttribute('data-empty')) {
+                alert("Please draw your signature in the designated box before submitting.");
+                canvasPrimary.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return false;
+            } else {
+                dataPrimaryInput.value = canvasPrimary.toDataURL(); 
+            }
+
+            const canvasCo = document.getElementById('canvas-co');
+            if (canvasCo.toDataURL() !== canvasCo.getAttribute('data-empty')) {
+                document.getElementById('sig_co_data').value = canvasCo.toDataURL();
+            }
+
+            const formElement = event.target;
+            const submitBtn = document.getElementById('final-submit-btn');
+            const originalButtonText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> SUBMITTING SECURELY...";
+            submitBtn.disabled = true;
+
+            let serviceID = "service_zyn89ll"; 
+            let templateID = "template_kd0px6s"; 
+
+            emailjs.sendForm(serviceID, templateID, formElement)
+                .then(() => {
+                    alert("Thank you! Your official franchise application has been securely submitted. Our franchise development team will contact you shortly.");
+                    formElement.reset();
+                    clearSignature('canvas-primary');
+                    clearSignature('canvas-co');
+                    window.location.href = "index.html"; 
+                })
+                .catch((error) => {
+                    console.error("EmailJS Failure:", error);
+                    alert("Submission failed. Please check your network connection and try again.");
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalButtonText;
+                });
+
+            return false;
+        }
+    </script>
+</body>
+</html>
