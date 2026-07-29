@@ -4,17 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sinjeon Church Menu</title>
+    
+    <!-- 아이콘 및 폰트 로드 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* 화면 여백을 0으로 만들어 PDF가 브라우저 전체를 덮도록 설정 */
+        /* =========================================
+           1. 전체 화면 여백 제거 및 다크 배경 (눈부심 방지)
+           ========================================= */
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden; /* 이중 스크롤바 방지 */
-            background-color: #333333; /* PDF 로딩 전 깔끔한 다크 배경 */
+            background-color: #222222; 
+            overflow: hidden; /* 브라우저 이중 스크롤바 생성 방지 */
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
         }
         
+        /* =========================================
+           2. 데스크톱 및 아이패드 스크롤 최적화
+           ========================================= */
+        .pdf-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch; /* iOS 기기 부드러운 스크롤 강제 적용 */
+        }
+
+        /* 꽉 차는 PDF 화면 */
         iframe {
             width: 100%;
             height: 100%;
@@ -22,33 +43,68 @@
             display: block;
         }
 
-        /* PDF 뷰어 미지원 기기(일부 구형 안드로이드 등)를 위한 안내 문구 스타일 */
-        .fallback-message {
-            color: #ffffff;
-            text-align: center;
-            padding: 50px 20px;
-            font-family: sans-serif;
-            line-height: 1.6;
+        /* =========================================
+           3. 모바일 전용 UI (스마트폰 최적화 플로팅 버튼)
+           ========================================= */
+        .mobile-fab-wrapper {
+            display: none; /* PC에서는 보이지 않음 */
         }
-        .fallback-message a {
-            color: #D24B41;
-            font-weight: bold;
-            text-decoration: underline;
+
+        @media (max-width: 768px) {
+            .mobile-fab-wrapper {
+                display: flex;
+                position: fixed;
+                bottom: 40px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 9999;
+            }
+            
+            /* 모바일에서 여러 장의 PDF가 잘릴 때를 대비해, 
+               터치 한 번에 폰 자체 고화질 뷰어로 여는 마법의 버튼입니다. */
+            .btn-mobile-pdf {
+                background-color: #D24B41; /* 신전 레드 */
+                color: #ffffff;
+                text-decoration: none;
+                padding: 16px 35px;
+                border-radius: 50px;
+                font-size: 1.1rem;
+                font-weight: 800;
+                box-shadow: 0 10px 25px rgba(210, 75, 65, 0.4);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                white-space: nowrap;
+                letter-spacing: 0.5px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- 지정하신 PDF 파일을 브라우저 내장 뷰어로 즉시 호출합니다 -->
-    <iframe src="church_menu_1.pdf" title="Sinjeon Church Menu">
-        
-        <!-- 브라우저 자체 뷰어가 없는 모바일 환경을 대비한 다운로드 링크 제공 -->
-        <div class="fallback-message">
-            미리보기를 지원하지 않는 브라우저입니다.<br><br>
-            <a href="church_menu_1.pdf" download>여기를 눌러 메뉴판(PDF)을 다운로드 및 확인해 주세요.</a>
-        </div>
-        
-    </iframe>
+    <!-- 
+      [최적화 파라미터 적용]
+      #toolbar=0 : 데스크톱 브라우저 상단의 지저분한 회색 툴바 숨김 처리
+      &view=FitH : 화면 가로 너비에 메뉴판을 꽉 차게 강제 맞춤
+    -->
+    <div class="pdf-wrapper">
+        <iframe src="church_menu_1.pdf#toolbar=0&view=FitH" title="Sinjeon Church Menu">
+            
+            <!-- 브라우저 자체 뷰어가 고장난 안드로이드 기기를 위한 대비책 -->
+            <p style="color: white; text-align: center; padding: 50px; line-height: 1.6;">
+                현재 기기에서 PDF 미리보기를 지원하지 않습니다.<br><br>
+                <a href="church_menu_1.pdf" download style="color: #D24B41; font-weight: bold; text-decoration: none; border: 1px solid #D24B41; padding: 10px 20px; border-radius: 8px;">메뉴판 직접 열기</a>
+            </p>
+            
+        </iframe>
+    </div>
+
+    <!-- 모바일 환경 최적화: 브라우저 충돌을 피하기 위한 Native 전체화면 뷰어 버튼 -->
+    <div class="mobile-fab-wrapper">
+        <a href="church_menu_1.pdf" target="_blank" class="btn-mobile-pdf">
+            <i class="fas fa-external-link-alt"></i> 모바일 전체화면으로 보기
+        </a>
+    </div>
 
 </body>
 </html>
