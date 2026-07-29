@@ -5,106 +5,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sinjeon Church Menu</title>
     
-    <!-- 아이콘 및 폰트 로드 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- PDF.js 라이브러리 (PDF를 이미지처럼 그려주는 엔진) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
     <style>
         /* =========================================
-           1. 전체 화면 여백 제거 및 다크 배경 (눈부심 방지)
+           1. 보안 및 복사 방지 (Anti-Theft) CSS
            ========================================= */
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100%;
-            background-color: #222222; 
-            overflow: hidden; /* 브라우저 이중 스크롤바 생성 방지 */
-            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
-        }
-        
-        /* =========================================
-           2. 데스크톱 및 아이패드 스크롤 최적화
-           ========================================= */
-        .pdf-wrapper {
-            width: 100%;
-            height: 100%;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch; /* iOS 기기 부드러운 스크롤 강제 적용 */
-        }
-
-        /* 꽉 차는 PDF 화면 */
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-
-        /* =========================================
-           3. 모바일 전용 UI (스마트폰 최적화 플로팅 버튼)
-           ========================================= */
-        .mobile-fab-wrapper {
-            display: none; /* PC에서는 보이지 않음 */
-        }
-
-        @media (max-width: 768px) {
-            .mobile-fab-wrapper {
-                display: flex;
-                position: fixed;
-                bottom: 40px;
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 9999;
-            }
+            background-color: #1a1a1a; /* 고급스러운 다크 배경 */
             
-            /* 모바일에서 여러 장의 PDF가 잘릴 때를 대비해, 
-               터치 한 번에 폰 자체 고화질 뷰어로 여는 마법의 버튼입니다. */
-            .btn-mobile-pdf {
-                background-color: #D24B41; /* 신전 레드 */
-                color: #ffffff;
-                text-decoration: none;
-                padding: 16px 35px;
-                border-radius: 50px;
-                font-size: 1.1rem;
-                font-weight: 800;
-                box-shadow: 0 10px 25px rgba(210, 75, 65, 0.4);
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                white-space: nowrap;
-                letter-spacing: 0.5px;
-            }
+            /* 텍스트 드래그 및 선택 완벽 차단 */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            
+            /* 모바일에서 길게 눌러서 메뉴 뜨는 현상 방지 */
+            -webkit-touch-callout: none;
+        }
+
+        /* 인쇄 시도 시 화면을 하얗게 가려버림 */
+        @media print {
+            body { display: none !important; }
+        }
+
+        /* =========================================
+           2. 뷰어 레이아웃 최적화
+           ========================================= */
+        #pdf-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 20px 0; /* 데스크톱 상하 여백 */
+        }
+
+        /* 렌더링된 PDF 도화지(Canvas) 스타일 */
+        canvas {
+            max-width: 800px; /* 데스크톱에서 너무 커지지 않게 제한 */
+            width: 100%;
+            height: auto;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5); /* 메뉴판 그림자 효과 */
+            margin-bottom: -1px; /* 페이지 사이 뜨는 현상 방지 */
+            pointer-events: none; /* 캔버스 위 우클릭/드래그 원천 차단 */
+        }
+
+        /* 로딩 스피너 UI */
+        #loading {
+            color: #D24B41;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            letter-spacing: 1px;
+        }
+
+        /* 모바일 꽉 차게 최적화 */
+        @media (max-width: 768px) {
+            #pdf-container { padding: 0; }
+            canvas { box-shadow: none; max-width: 100%; }
         }
     </style>
 </head>
-<body>
+<!-- oncontextmenu="return false": 마우스 우클릭 방지 -->
+<!-- ondragstart="return false": 드래그 방지 -->
+<body oncontextmenu="return false" ondragstart="return false">
 
-    <!-- 
-      [최적화 파라미터 적용]
-      #toolbar=0 : 데스크톱 브라우저 상단의 지저분한 회색 툴바 숨김 처리
-      &view=FitH : 화면 가로 너비에 메뉴판을 꽉 차게 강제 맞춤
-    -->
-    <div class="pdf-wrapper">
-        <iframe src="church_menu_1.pdf#toolbar=0&view=FitH" title="Sinjeon Church Menu">
-            
-            <!-- 브라우저 자체 뷰어가 고장난 안드로이드 기기를 위한 대비책 -->
-            <p style="color: white; text-align: center; padding: 50px; line-height: 1.6;">
-                현재 기기에서 PDF 미리보기를 지원하지 않습니다.<br><br>
-                <a href="church_menu_1.pdf" download style="color: #D24B41; font-weight: bold; text-decoration: none; border: 1px solid #D24B41; padding: 10px 20px; border-radius: 8px;">메뉴판 직접 열기</a>
-            </p>
-            
-        </iframe>
-    </div>
+    <div id="loading">LOADING MENU... ⏳</div>
+    
+    <!-- PDF가 그려질 컨테이너 -->
+    <div id="pdf-container"></div>
 
-    <!-- 모바일 환경 최적화: 브라우저 충돌을 피하기 위한 Native 전체화면 뷰어 버튼 -->
-    <div class="mobile-fab-wrapper">
-        <a href="church_menu_1.pdf" target="_blank" class="btn-mobile-pdf">
-            <i class="fas fa-external-link-alt"></i> 모바일 전체화면으로 보기
-        </a>
-    </div>
+    <script>
+        // PDF.js 워커 세팅
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const url = 'church_menu_1.pdf'; // 서버에 올린 PDF 파일명
+        const container = document.getElementById('pdf-container');
+        const loading = document.getElementById('loading');
+
+        // 고해상도 렌더링을 위한 스케일 (스마트폰 확대 시 깨짐 방지)
+        const scale = 2.0;
+
+        // PDF 불러오기
+        pdfjsLib.getDocument(url).promise.then(function(pdf) {
+            loading.style.display = 'none'; // 로딩 완료 시 글자 숨김
+
+            // PDF의 모든 페이지를 순서대로 가져와서 캔버스에 그림
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                pdf.getPage(pageNum).then(function(page) {
+                    const viewport = page.getViewport({ scale: scale });
+
+                    // 페이지마다 캔버스 생성
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+
+                    page.render(renderContext);
+                    container.appendChild(canvas); // 컨테이너에 추가
+                });
+            }
+        }).catch(function(error) {
+            loading.innerHTML = "메뉴판을 불러오는 데 실패했습니다.<br>잠시 후 다시 시도해 주세요.";
+            console.error('Error loading PDF:', error);
+        });
+
+        // =========================================
+        // 완벽한 복사 방지용 JS 락(Lock)
+        // =========================================
+        document.addEventListener('keydown', function(e) {
+            // F12 (개발자 도구), Ctrl+Shift+I 차단
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+            }
+            // Ctrl+C (복사), Ctrl+S (저장), Ctrl+P (인쇄) 차단
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 's' || e.key === 'p')) {
+                e.preventDefault();
+            }
+        });
+    </script>
 
 </body>
 </html>
