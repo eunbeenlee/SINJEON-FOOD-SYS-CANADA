@@ -307,7 +307,7 @@
     </div>
 
     <script>
-        function handleFormSubmit(event) {
+function handleFormSubmit(event) {
             event.preventDefault();
 
             const formElement = event.target;
@@ -319,12 +319,16 @@
 
             // EmailJS 파라미터 세팅
             let serviceID = "service_zyn89ll"; 
-            let templateID = "template_kd0px6s"; // 기존에 사용하시던 프랜차이즈 템플릿 유지
+            
+            // ★ 2개의 템플릿을 분리해서 사용 ★
+            let adminTemplateID = "template_r8gce22"; // 본사 수신용 (템플릿 A)
+            let autoReplyTemplateID = "template_kd0px6s"; // 고객 자동회신용 (템플릿 B)
             
             let params = {
                 name: formElement.querySelector('[name="first_name"]').value + " " + formElement.querySelector('[name="last_name"]').value,
                 phone: formElement.querySelector('[name="reply_phone"]').value,
-                email: formElement.querySelector('[name="reply_email"]').value,
+                reply_email: formElement.querySelector('[name="reply_email"]').value,
+                email: formElement.querySelector('[name="reply_email"]').value, // 호환성 유지용
                 location: formElement.querySelector('[name="target_location"]').value,
                 budget: formElement.querySelector('[name="liquid_capital"]').value,
                 timeframe: formElement.querySelector('[name="timeframe"]').value,
@@ -341,15 +345,17 @@
                 return false;
             }
 
-            // 이메일 발송
-            emailjs.sendForm(serviceID, templateID, formElement, params)
+            // [마법의 연속 발송 로직] 1. 본사(대표님)로 알림 발송
+            emailjs.send(serviceID, adminTemplateID, params)
                 .then(() => {
-                    // 성공 시: 폼을 숨기고 멋진 Thank You 화면 띄우기
+                    // 2. 본사 발송 성공 시, 곧바로 고객에게 자동 회신 발송
+                    return emailjs.send(serviceID, autoReplyTemplateID, params);
+                })
+                .then(() => {
+                    // 3. 모두 발송 완료 후 완료 화면 띄우기
                     document.getElementById('form-container').style.display = 'none';
                     document.getElementById('bottom-back-link').style.display = 'none';
                     document.getElementById('success-message').style.display = 'block';
-                    
-                    // 화면을 카드 맨 위로 스크롤
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 })
                 .catch((error) => {
@@ -363,6 +369,7 @@
                 });
 
             return false;
+        }
         }
 
         // 이메일 전송 실패 시 기본 메일앱(Outlook, 메일 앱 등) 호출
