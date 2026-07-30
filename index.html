@@ -473,7 +473,7 @@
         .flow-arrow { color: var(--text-light); font-size: 1.5rem; font-weight: 900; }
 
         /* =========================================
-           Mobile Responsiveness (교차 검증 완료)
+           Mobile Responsiveness
            ========================================= */
         @media (max-width: 1200px) {
             .bento-large { padding: 40px; }
@@ -1276,8 +1276,9 @@
             submitButton.disabled = true;
             submitButton.innerHTML = "PROCESSING... ⏳";
 
+            // ★ EmailJS 템플릿 A 통합 (쿼터 소모 절감) ★
             let serviceID = "service_zyn89ll"; 
-            let templateID = type === 'General' ? "template_r8gce22" : "template_kd0px6s";
+            let templateID = "template_r8gce22"; // 일반, 가맹 문의 모두 템플릿 A 하나로 통일
             
             let targetEmail = "eunbeen.lee@y2choldings.co.kr";
 
