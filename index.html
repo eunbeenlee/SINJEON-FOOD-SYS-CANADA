@@ -29,7 +29,7 @@
     <!-- FontAwesome 아이콘 라이브러리 추가 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- EmailJS SDK -->
+    <!-- EmailJS SDK (defer 추가로 로딩 딜레이 방지) -->
     <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
@@ -691,7 +691,9 @@
         </div>
 
         <div class="menu-grid-container reveal delay-200">
-            <!-- Main Category -->
+            <!-- ==============================
+                 [업데이트] Main Category 
+                 ============================== -->
             <div id="cat-Main" class="menu-grid active">
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/신전 오리지널 떡볶이.png" alt="Sinjeon Original Topokki" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Original+Topokki'"></div>
@@ -722,6 +724,44 @@
                     <h3>Rosé Spicy Chicken</h3>
                     <p class="menu-kor">신전 로제 맵닭</p>
                     <p class="menu-eng">Spicy chicken in rich creamy rosé sauce</p>
+                </div>
+
+                <!-- ★ 신규 추가된 6종 메뉴 ★ -->
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/크림 카레 떡볶이.jpg" alt="Cream Curry Topokki" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Cream+Curry+Topokki'"></div>
+                    <h3>Cream Curry Topokki</h3>
+                    <p class="menu-kor">크림 카레 떡볶이</p>
+                    <p class="menu-eng">Rich curry and cream sauce with chewy rice cakes</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/크림 카레 우동.jpg" alt="Cream Curry Udon" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Cream+Curry+Udon'"></div>
+                    <h3>Cream Curry Udon</h3>
+                    <p class="menu-kor">크림 카레 우동</p>
+                    <p class="menu-eng">Thick udon noodles in a smooth cream curry broth</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/크림 떡볶이.jpg" alt="Cream Topokki" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Cream+Topokki'"></div>
+                    <h3>Cream Topokki</h3>
+                    <p class="menu-kor">크림 떡볶이</p>
+                    <p class="menu-eng">Soft and savory cream sauce rice cakes</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/마라 로제 우동.jpg" alt="Mala Rose Udon" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Mala+Rose+Udon'"></div>
+                    <h3>Mala Rosé Udon</h3>
+                    <p class="menu-kor">마라 로제 우동</p>
+                    <p class="menu-eng">Spicy mala and creamy rosé sauce with thick udon noodles</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/크림 우동.jpg" alt="Cream Udon" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Cream+Udon'"></div>
+                    <h3>Cream Udon</h3>
+                    <p class="menu-kor">크림 우동</p>
+                    <p class="menu-eng">Classic udon noodles in a rich creamy sauce</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/신전 마라 떡볶이.jpg" alt="Sinjeon Mala Topokki" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Mala+Topokki'"></div>
+                    <h3>Sinjeon Mala Topokki</h3>
+                    <p class="menu-kor">신전 마라 떡볶이</p>
+                    <p class="menu-eng">Intense and numbing spicy mala topokki</p>
                 </div>
             </div>
 
