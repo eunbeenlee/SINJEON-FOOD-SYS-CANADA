@@ -5,6 +5,11 @@
     <!-- 모바일 최적화: 고객이 자유롭게 확대(Pinch-to-zoom)해서 볼 수 있도록 허용 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Sinjeon Church Menu</title>
+    
+    <!-- 로딩 화면용 폰트 불러오기 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@800&display=swap" rel="stylesheet">
 
     <style>
         /* =========================================
@@ -15,7 +20,7 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            background-color: #1a1a1a; /* 고급스러운 다크 배경 */
+            background-color: #111111; /* 눈이 편안한 리얼 다크 블랙 */
             
             /* 텍스트 드래그 및 선택 완벽 차단 */
             -webkit-user-select: none;
@@ -43,14 +48,15 @@
             min-height: 100vh;
             padding: 40px 20px; /* 데스크톱 상하좌우 여백 */
             box-sizing: border-box;
+            position: relative;
         }
 
         .menu-img {
             max-width: 1400px; /* PC 화면에서 꽉 차면서도 보기 좋은 최대 너비 */
             width: 100%;
             height: auto;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8); /* 입체감 부여 */
-            border-radius: 8px; /* 모서리 라운딩 */
+            box-shadow: 0 15px 50px rgba(0,0,0,0.9); /* 입체감 부여 */
+            border-radius: 12px; /* 모서리 라운딩 */
             
             /* 이미지 마우스 드래그 방지 */
             -webkit-user-drag: none;
@@ -58,29 +64,71 @@
             
             position: relative;
             z-index: 2;
+            opacity: 0; /* 처음엔 숨김 (로딩 처리용) */
+            transition: opacity 0.5s ease-in-out; /* 부드러운 페이드인 애니메이션 */
         }
 
-        /* 로딩 중 표시될 배경 텍스트 */
-        .loading-text {
-            color: #D24B41;
-            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 800;
+        .menu-img.loaded {
+            opacity: 1; /* 로딩 완료 시 표시 */
+        }
+
+        /* =========================================
+           3. 스마트 로딩 스크린 & 에러 UI
+           ========================================= */
+        .loading-wrapper {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            letter-spacing: 1px;
             z-index: 1;
+            text-align: center;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .loading-text {
+            color: #D24B41; /* 신전 레드 */
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-top: 20px;
+        }
+
+        /* 빙글빙글 도는 스피너 애니메이션 */
+        .spinner {
+            width: 45px;
+            height: 45px;
+            border: 5px solid rgba(210, 75, 65, 0.2);
+            border-top: 5px solid #D24B41;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 통신 불량 시 에러 메시지 */
+        .error-text {
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            background: rgba(210, 75, 65, 0.9);
+            padding: 15px 25px;
+            border-radius: 8px;
+            display: none; /* 기본 숨김 */
+            margin-top: 15px;
         }
 
         /* =========================================
-           3. 모바일 환경 100% 꽉 채우기 최적화
+           4. 모바일 환경 100% 꽉 채우기 최적화
            ========================================= */
         @media (max-width: 768px) {
             .menu-container {
                 padding: 0; /* 모바일에서는 여백 제거 */
-                background-color: #000000;
+                background-color: #000000; /* 완전한 블랙 (몰입감 강화 및 배터리 절약) */
             }
             .menu-img {
                 max-width: 100%;
@@ -90,20 +138,65 @@
         }
     </style>
 </head>
+
 <!-- oncontextmenu: 마우스 우클릭 금지 / ondragstart: 드래그 금지 -->
 <body oncontextmenu="return false" ondragstart="return false">
 
-    <!-- 인터넷이 느릴 때를 대비한 초고속 로딩 안내 텍스트 -->
-    <div class="loading-text">LOADING MENU... ⏳</div>
+    <!-- 스마트 로딩 스크린 (스피너 포함) -->
+    <div class="loading-wrapper" id="loading-wrapper">
+        <div class="spinner" id="spinner"></div>
+        <div class="loading-text" id="loading-msg">LOADING MENU...</div>
+        <div class="error-text" id="error-msg">
+            Failed to load menu.<br>Please check your connection and refresh the page.
+        </div>
+    </div>
 
     <div class="menu-container">
-        <!-- fetchpriority="high" 속성으로 브라우저가 최우선으로 다운로드하게 명령 -->
-        <img src="curch_menu_1.jpg" class="menu-img" alt="Sinjeon Church Menu" fetchpriority="high">
+        <!-- fetchpriority="high": 최우선 다운로드 
+             onload / onerror: 로딩 상태를 완벽히 통제하는 이벤트 트리거 -->
+        <img src="curch_menu_1.jpg" id="menu-image" class="menu-img" alt="Sinjeon Church Menu" fetchpriority="high">
     </div>
 
     <script>
         // =========================================
-        // 완벽한 불펌 방지용 JS 락(Lock)
+        // 1. 이미지 로딩 & 에러 핸들링 (무한 로딩 버그 완벽 해결)
+        // =========================================
+        const menuImage = document.getElementById('menu-image');
+        const loadingWrapper = document.getElementById('loading-wrapper');
+        const spinner = document.getElementById('spinner');
+        const loadingMsg = document.getElementById('loading-msg');
+        const errorMsg = document.getElementById('error-msg');
+
+        // 이미지가 성공적으로 로드되었을 때 실행되는 함수
+        function showMenuImage() {
+            // 부드럽게 이미지 페이드인
+            menuImage.classList.add('loaded');
+            // 로딩 스크린 숨기기
+            loadingWrapper.style.opacity = '0';
+            setTimeout(() => {
+                loadingWrapper.style.display = 'none';
+            }, 500); // 0.5초 뒤 완전히 DOM에서 제거
+        }
+
+        // 정상 로딩 이벤트
+        menuImage.onload = function() {
+            showMenuImage();
+        };
+
+        // 이미지 로딩 실패 이벤트 (경로 오류, 네트워크 끊김 등)
+        menuImage.onerror = function() {
+            spinner.style.display = 'none';
+            loadingMsg.style.display = 'none';
+            errorMsg.style.display = 'inline-block';
+        };
+
+        // ★ 핵심 버그 픽스: 이미 캐시된 이미지라서 onload 이벤트가 터지지 않을 때를 대비한 강제 체크
+        if (menuImage.complete && menuImage.naturalHeight !== 0) {
+            showMenuImage();
+        }
+
+        // =========================================
+        // 2. 완벽한 불펌 방지용 JS 락(Lock)
         // =========================================
         document.addEventListener('keydown', function(e) {
             // F12 (개발자 도구), Ctrl+Shift+I 차단 (코드 뜯어보기 방지)
