@@ -1,124 +1,230 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <!-- 모바일 최적화: 고객이 자유롭게 확대(Pinch-to-zoom)해서 볼 수 있도록 허용 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Sinjeon Church Menu</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신전떡볶이 - 처치 지점 (Church St. Branch)</title>
     <style>
-        /* =========================================
-           1. 보안 및 복사 방지 (Anti-Theft) CSS
-           ========================================= */
-        html, body {
+        :root {
+            --primary-red: #d32f2f;
+            --dark-text: #2c2c2c;
+            --light-bg: #f9f9f9;
+            --border-color: #e0e0e0;
+        }
+
+        /* 불펌 및 복사 방지 최적화 */
+        body {
+            font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #1a1a1a; /* 고급스러운 다크 배경 */
+            background-color: var(--light-bg);
+            color: var(--dark-text);
             
-            /* 텍스트 드래그 및 선택 완벽 차단 */
+            /* 텍스트 선택 방지 */
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            
-            /* 모바일에서 이미지를 꾹~ 눌러서 '저장하기' 뜨는 현상 원천 차단 */
-            -webkit-touch-callout: none;
+            /* 모바일 터치 하이라이트 제거 */
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* 인쇄(Ctrl+P) 시도 시 화면을 하얗게 가려버림 */
-        @media print {
-            body { display: none !important; }
-        }
-
-        /* =========================================
-           2. 레이아웃 & 이미지 최적화
-           ========================================= */
-        .menu-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            width: 100%;
+        .menu-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             min-height: 100vh;
-            padding: 40px 20px; /* 데스크톱 상하좌우 여백 */
-            box-sizing: border-box;
         }
 
-        .menu-img {
-            max-width: 1400px; /* PC 화면에서 꽉 차면서도 보기 좋은 최대 너비 */
-            width: 100%;
-            height: auto;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8); /* 입체감 부여 */
-            border-radius: 8px; /* 모서리 라운딩 */
-            
-            /* 이미지 마우스 드래그 방지 */
-            -webkit-user-drag: none;
-            user-drag: none;
-            
-            position: relative;
-            z-index: 2;
+        /* 상단 헤더 영역 */
+        .header {
+            background-color: var(--primary-red);
+            color: #ffffff;
+            text-align: center;
+            padding: 2.5rem 1rem;
         }
 
-        /* 로딩 중 표시될 배경 텍스트 */
-        .loading-text {
-            color: #D24B41;
-            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 800;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            letter-spacing: 1px;
-            z-index: 1;
+        .header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            letter-spacing: 0.5px;
         }
 
-        /* =========================================
-           3. 모바일 환경 100% 꽉 채우기 최적화
-           ========================================= */
-        @media (max-width: 768px) {
+        .header p {
+            margin: 0.5rem 0 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* 매장 정보 영역 */
+        .store-info {
+            background-color: #b71c1c;
+            color: #ffcdd2;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .store-info strong {
+            color: #ffffff;
+            margin-right: 4px;
+        }
+
+        /* 메뉴 리스트 영역 - CSS Grid로 데스크탑/모바일 반응형 구축 */
+        .menu-container {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+
+        /* 데스크탑 최적화 (768px 이상) */
+        @media (min-width: 768px) {
             .menu-container {
-                padding: 0; /* 모바일에서는 여백 제거 */
-                background-color: #000000;
+                grid-template-columns: 1fr 1fr;
             }
-            .menu-img {
-                max-width: 100%;
-                border-radius: 0; /* 모바일은 라운딩 없이 화면 꽉 차게 */
-                box-shadow: none;
+            .menu-wrapper {
+                min-height: auto;
+                margin: 2rem auto;
+                border-radius: 12px;
+                overflow: hidden;
             }
         }
+
+        .category-title {
+            font-size: 1.4rem;
+            color: var(--primary-red);
+            border-bottom: 2px solid var(--primary-red);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px dotted var(--border-color);
+            padding-bottom: 0.4rem;
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            max-width: 75%;
+        }
+
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .item-desc {
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        .item-price {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary-red);
+        }
+
+        /* 하단 푸터 */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.85rem;
+            color: #888;
+            background-color: #fafafa;
+            border-top: 1px solid var(--border-color);
+        }
+
     </style>
 </head>
-<!-- oncontextmenu: 마우스 우클릭 금지 / ondragstart: 드래그 금지 -->
-<body oncontextmenu="return false" ondragstart="return false">
+<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
 
-    <!-- 인터넷이 느릴 때를 대비한 초고속 로딩 안내 텍스트 -->
-    <div class="loading-text">LOADING MENU... ⏳</div>
+    <div class="menu-wrapper">
+        <header class="header">
+            <h1>SINJEON TTEOKBOKKI</h1>
+            <p>Church St. Branch</p>
+        </header>
+        
+        <div class="store-info">
+            <strong>Address:</strong> 377 Church St, Toronto<br>
+            <strong>Tel:</strong> (416) 591-0676<br>
+            <strong>Hours:</strong> Sun-Thu 11:00 AM - 10:00 PM | Fri-Sat 11:00 AM - 11:00 PM
+        </div>
 
-    <div class="menu-container">
-        <!-- fetchpriority="high" 속성으로 브라우저가 최우선으로 다운로드하게 명령 -->
-        <img src="church_menu_1.jpg" class="menu-img" alt="Sinjeon Church Menu" fetchpriority="high">
+        <main class="menu-container">
+            <!-- Tteokbokki Section -->
+            <section class="menu-section">
+                <h2 class="category-title">Tteokbokki</h2>
+                
+                <div class="menu-item">
+                    <div class="item-details">
+                        <span class="item-name">오리지널 떡볶이 (Original)</span>
+                        <span class="item-desc">Mild / Medium / Spicy</span>
+                    </div>
+                    <span class="item-price">$10.99</span>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="item-details">
+                        <span class="item-name">로제 떡볶이 (Rosé)</span>
+                        <span class="item-desc">부드러운 크림과 특제 소스</span>
+                    </div>
+                    <span class="item-price">$12.99</span>
+                </div>
+            </section>
+
+            <!-- Combo Section -->
+            <section class="menu-section">
+                <h2 class="category-title">Set Menu</h2>
+                
+                <div class="menu-item">
+                    <div class="item-details">
+                        <span class="item-name">Combo 1</span>
+                        <span class="item-desc">떡볶이 + 튀김 세트</span>
+                    </div>
+                    <span class="item-price">From $17.99</span>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="item-details">
+                        <span class="item-name">Combo 2</span>
+                        <span class="item-desc">치즈떡볶이 + 튀김 세트 + 음료</span>
+                    </div>
+                    <span class="item-price">From $22.99</span>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-details">
+                        <span class="item-name">Rosé Combo</span>
+                        <span class="item-desc">로제떡볶이 + 튀김 세트 + 음료</span>
+                    </div>
+                    <span class="item-price">From $26.99</span>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-details">
+                        <span class="item-name">Combo 3</span>
+                        <span class="item-desc">떡볶이(2) + 대형 튀김 세트 + 음료(2)</span>
+                    </div>
+                    <span class="item-price">From $42.99</span>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            맵기 조절 및 추가 토핑은 매장 직원에게 문의 바랍니다.<br>
+            &copy; Sinjeon Tteokbokki Church St. All rights reserved.
+        </footer>
     </div>
-
-    <script>
-        // =========================================
-        // 완벽한 불펌 방지용 JS 락(Lock)
-        // =========================================
-        document.addEventListener('keydown', function(e) {
-            // F12 (개발자 도구), Ctrl+Shift+I 차단 (코드 뜯어보기 방지)
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-                e.preventDefault();
-            }
-            // Ctrl+C (복사), Ctrl+S (저장), Ctrl+P (인쇄), Ctrl+U (소스보기) 차단
-            if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 's' || e.key === 'p' || e.key === 'u')) {
-                e.preventDefault();
-            }
-        });
-
-        // 모바일 기기별 특이 버그(우클릭 우회)를 막기 위한 추가 락
-        document.addEventListener('contextmenu', event => event.preventDefault());
-    </script>
 
 </body>
 </html>
