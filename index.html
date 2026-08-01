@@ -131,16 +131,17 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           [팝업 강력 보완] 다중 팝업 스크롤 지원
+           [수정됨] 팝업 우측 정렬 및 겹침 방지 설계
            ========================================= */
         .event-popup-wrapper {
             position: fixed;
-            top: 100px; 
-            left: 20px; 
-            z-index: 9999; /* 어떤 요소보다 가장 위에 오도록 설정 */
+            top: 110px; /* 헤더보다 살짝 아래 */
+            right: 20px; /* ★ 좌측에서 우측 정렬로 수정 */
+            left: auto;
+            z-index: 9999;
             opacity: 0;
             visibility: hidden;
-            transform: translateX(-30px);
+            transform: translateX(30px); /* 우측에서 스르륵 등장 */
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none; 
         }
@@ -161,17 +162,15 @@
             flex-direction: column;
         }
         
-        /* 다중 팝업이 들어갈 스크롤 컨테이너 */
+        /* 다중 팝업 스크롤 및 찌그러짐 방지 구역 */
         .popup-image-container {
-            display: flex;
-            flex-direction: column;
-            max-height: 65vh; /* 화면 밖으로 나가지 않도록 최대 높이 설정 */
-            overflow-y: auto; /* 넘치면 스크롤 생성 */
+            display: block; /* ★ Flexbox의 찌그러짐(shrink) 겹침 버그를 막기 위해 Block으로 변경 */
+            max-height: 65vh; 
+            overflow-y: auto; 
             background: var(--bg-white);
-            position: relative;
+            width: 100%;
         }
         
-        /* 커스텀 스크롤바 디자인 */
         .popup-image-container::-webkit-scrollbar { width: 6px; }
         .popup-image-container::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 10px; }
         
@@ -179,19 +178,16 @@
             width: 100%; 
             height: auto; 
             display: block; 
-            z-index: 1; 
-            background: var(--bg-white);
-            border-bottom: 1px solid var(--border-color); /* 다중 팝업 구분선 */
+            border-bottom: 1px solid var(--border-color); 
         }
-        .popup-image-container img:last-child {
-            border-bottom: none; /* 마지막 이미지는 구분선 제거 */
+        .popup-image-container div:last-child img {
+            border-bottom: none; /* 마지막 이미지 구분선 제거 */
         }
 
         .event-popup-actions {
             display: flex; 
             border-top: 1px solid var(--border-color);
             width: 100%;
-            z-index: 2;
         }
         .event-popup-actions button {
             flex: 1; padding: 14px 0; border: none; background: var(--bg-white);
@@ -298,7 +294,7 @@
         .spice-card:hover .char-spice { transform: translateX(-50%) scale(1.15) translateY(-10px); }
 
         /* =========================================
-           6. Categorized Menu Section (업데이트 완료)
+           6. Categorized Menu Section
            ========================================= */
         .menu-section { padding: 130px 5%; background: var(--bg-white); text-align: center; border-top: 1px solid var(--border-color); }
         .menu-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
@@ -558,21 +554,25 @@
             .btn-apply-portal { padding: 15px 30px; font-size: 1rem; }
             .submit-btn { padding: 16px; font-size: 1.1rem; }
 
+            /* ★ 모바일 환경에서는 팝업이 정중앙에 뜨도록 수정 */
             .event-popup-wrapper {
-                top: auto;
-                bottom: 20px;
+                top: 50%;
+                bottom: auto;
                 left: 50%;
-                transform: translateX(-50%) translateY(20px);
+                right: auto;
+                transform: translate(-50%, -50%) scale(0.95);
                 width: 90%;
                 max-width: 350px;
             }
-            .event-popup-wrapper.show { transform: translateX(-50%) translateY(0); }
-            .event-popup-content { width: 100%; }
-            .event-popup-actions button { font-size: 0.8rem; padding: 14px 0; }
+            .event-popup-wrapper.show { 
+                transform: translate(-50%, -50%) scale(1); 
+            }
+            
+            .event-popup-actions button { font-size: 0.8rem; padding: 12px 0; }
         }
     </style>
 
-    <!-- ★ [최종 완성형 팝업 로직] 최대 5개 이미지 일괄 로딩 및 스크롤 배치 -->
+    <!-- ★ [최종 완성형 팝업 로직] 순서 보장 + 겹침/찌그러짐 완벽 방지 -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             try {
@@ -587,31 +587,39 @@
                     } else {
                         const popupImgContainer = document.getElementById('popup-image-container');
                         let loadedCount = 0;
-                        const maxPopups = 5; // 최대 확인 개수 (1번~5번)
+                        const maxPopups = 5; 
 
-                        // 1번부터 5번까지 이미지가 서버에 있는지 일괄 요청
+                        // 1. 이미지가 순서대로 들어가도록 빈 방(slot)을 먼저 순서대로 만듭니다.
+                        for (let i = 1; i <= maxPopups; i++) {
+                            const slot = document.createElement('div');
+                            slot.id = `popup-slot-${i}`;
+                            popupImgContainer.appendChild(slot);
+                        }
+
+                        // 2. 이미지를 불러오고 자기 방에 넣습니다.
                         for (let i = 1; i <= maxPopups; i++) {
                             const img = new Image();
                             const targetImageSrc = `popup_event_${i}.jpg`;
                             
                             img.onload = function() {
-                                // 로딩 성공한 이미지만 컨테이너에 추가 (순서대로 아래로 쌓임)
                                 this.alt = `Sinjeon Event Notice ${i}`;
-                                popupImgContainer.appendChild(this);
+                                // 로딩이 완료되면 미리 만들어둔 빈 방(slot)에 이미지를 넣습니다. (무조건 1번부터 차례대로 정렬됨)
+                                document.getElementById(`popup-slot-${i}`).appendChild(this);
                                 loadedCount++;
                                 
-                                // 1개라도 로딩 성공하면 팝업창 띄우기 (빈 껍데기가 뜨는 버그 방지)
+                                // 단 1개라도 로딩에 성공하면 팝업창을 띄웁니다.
                                 if (loadedCount === 1) {
                                     setTimeout(() => { popup.classList.add('show'); }, 100); 
                                 }
                             };
                             
                             img.onerror = function() {
-                                // 파일이 없는 번호는 에러 없이 조용히 패스
-                                console.log(`[Popup] ${targetImageSrc} not found. Skipping.`);
+                                // 파일이 없는 번호의 빈 방(slot)은 깔끔하게 삭제합니다.
+                                const emptySlot = document.getElementById(`popup-slot-${i}`);
+                                if(emptySlot) emptySlot.remove();
                             };
                             
-                            img.src = targetImageSrc; // 다운로드 요청 시작
+                            img.src = targetImageSrc; // 서버에 이미지 다운로드 요청 시작
                         }
                     }
                 }
@@ -1549,7 +1557,7 @@
                     <h4>2. Information We Collect</h4>
                     <p>We only collect personal information that is necessary for our business operations. This includes your name, phone number, email address, and desired location data when you voluntarily submit inquiries via our Contact Us or Franchise forms.</p>
                     <h4>3. Use of Information</h4>
-                    <p>The information collected is strictly used to:<br>- Respond to your general support or franchise inquiries.<br>- Assess your franchise application and provide preliminary consulting.<br>- Communicate updates 액Updates regarding our operations or your application status.</p>
+                    <p>The information collected is strictly used to:<br>- Respond to your general support or franchise inquiries.<br>- Assess your franchise application and provide preliminary consulting.<br>- Communicate updates regarding our operations or your application status.</p>
                     <h4>4. Data Security and Sharing</h4>
                     <p>We implement robust, industry-standard security protocols to protect your data transmitted through our Cloud infrastructure. <strong>We do not sell, rent, or trade your personal information to any third parties.</strong></p>
                 `;
