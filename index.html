@@ -131,17 +131,17 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           [가벼운 팝업 로직] 배경 딤(Dim) 제거 및 투명 처리
+           [팝업 강력 보완] 가장 높은 z-index 및 안정적인 배치
            ========================================= */
         .event-popup-wrapper {
             position: fixed;
             top: 100px; 
             left: 20px; 
-            z-index: 3000;
+            z-index: 9999; /* 어떤 요소보다 가장 위에 오도록 설정 */
             opacity: 0;
             visibility: hidden;
             transform: translateX(-30px);
-            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none; 
         }
         .event-popup-wrapper.show {
@@ -155,17 +155,32 @@
             border-radius: 16px;
             width: 320px; 
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25); /* 그림자를 강하게 주어 강조 */
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
+            min-height: 200px; /* 이미지가 없어도 기본 크기 유지 */
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        /* 이미지 로딩 전 기본 배경 표시 */
+        .event-popup-content::before {
+            content: 'LOADING EVENT...';
+            position: absolute;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-light);
+            font-weight: 700;
+            z-index: -1;
         }
         .event-popup-content img {
-            width: 100%; height: auto; display: block;
+            width: 100%; height: auto; display: block; z-index: 1; background: var(--bg-white);
         }
         .event-popup-actions {
             display: flex; 
             border-top: 1px solid var(--border-color);
+            width: 100%;
+            z-index: 2;
         }
         .event-popup-actions button {
             flex: 1; padding: 12px 0; border: none; background: var(--bg-white);
@@ -272,7 +287,7 @@
         .spice-card:hover .char-spice { transform: translateX(-50%) scale(1.15) translateY(-10px); }
 
         /* =========================================
-           6. Categorized Menu Section
+           6. Categorized Menu Section (업데이트 완료)
            ========================================= */
         .menu-section { padding: 130px 5%; background: var(--bg-white); text-align: center; border-top: 1px solid var(--border-color); }
         .menu-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
@@ -545,6 +560,51 @@
             .event-popup-actions button { font-size: 0.8rem; padding: 12px 0; }
         }
     </style>
+
+    <!-- ★ [팝업 강력 보완] 브라우저가 최우선으로 팝업 로직을 실행하도록 head에 선언 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const popup = document.getElementById('main-event-popup');
+                if (popup) {
+                    const hideUntil = localStorage.getItem('hideMainPopupUntil');
+                    const now = new Date().getTime();
+
+                    // '24시간 숨기기' 체크
+                    if (hideUntil && now < parseInt(hideUntil)) {
+                        console.log("[Popup] 24 hours hide active. Skipping popup.");
+                    } else {
+                        const randomNum = Math.floor(Math.random() * 5) + 1;
+                        const popupImg = document.getElementById('dynamic-popup-img');
+                        if (popupImg) {
+                            // 팝업 이미지 1~5번 랜덤 띄우기
+                            const targetImageSrc = `popup_event_${randomNum}.jpg`;
+                            
+                            // 성공적으로 불러오면 팝업창을 부드럽게 띄움
+                            popupImg.onload = function() {
+                                setTimeout(() => { popup.classList.add('show'); }, 100); 
+                            };
+                            
+                            // ★ 방어 코드: 만약 랜덤 지정된 번호의 이미지가 서버에 없으면? -> 1번 이미지로 강제 시도 후 띄움
+                            popupImg.onerror = function() {
+                                console.warn(`[Popup] Image not found: ${targetImageSrc}. Attempting fallback to popup_event_1.jpg`);
+                                if(this.src.indexOf('popup_event_1.jpg') === -1) {
+                                    this.src = 'popup_event_1.jpg'; // 최후의 보루: 1번 이미지
+                                } else {
+                                    // 1번 이미지조차 없어도 빈 창(테두리와 버튼)은 띄워서 에러 방지
+                                    setTimeout(() => { popup.classList.add('show'); }, 100); 
+                                }
+                            };
+                            
+                            popupImg.src = targetImageSrc;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("Popup Module Error:", error);
+            }
+        });
+    </script>
 </head>
 <body>
 
@@ -1305,7 +1365,6 @@
             });
         }
 
-        // ★ EmailJS 함수 전면 안정화 완료 ★
         function handleInquiryEmailJS(event, type) {
             event.preventDefault();
             
@@ -1322,7 +1381,6 @@
             submitButton.disabled = true;
             submitButton.innerHTML = "PROCESSING... ⏳";
 
-            // ★ EmailJS 템플릿 A 통합 (모든 폼에서 템플릿 1개만 소모)
             let serviceID = "service_zyn89ll"; 
             let templateID = "template_r8gce22"; 
             
@@ -1330,7 +1388,6 @@
             params.target_email = "eunbeen.lee@y2choldings.co.kr";
             params.inquiry_type = type;
 
-            // sendForm 내부 충돌 방지를 위해 가장 안정적인 send() 메서드 사용
             emailjs.send(serviceID, templateID, params)
                 .then(() => {
                     alert(`Thank you! Your ${type} inquiry has been submitted successfully.`);
@@ -1409,38 +1466,7 @@
             }
         });
 
-        // ★ 치명적인 Return 에러를 해결하기 위한 Try-Catch 격리 구조 ★
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // 1. 팝업 시스템 (오류가 나거나 Return 되더라도 다른 기능에 영향을 주지 않음)
-            try {
-                const popup = document.getElementById('main-event-popup');
-                if (popup) {
-                    const hideUntil = localStorage.getItem('hideMainPopupUntil');
-                    const now = new Date().getTime();
-
-                    if (hideUntil && now < parseInt(hideUntil)) {
-                        console.log("[Popup] 24 hours hide active. Skipping popup.");
-                    } else {
-                        const randomNum = Math.floor(Math.random() * 5) + 1;
-                        const popupImg = document.getElementById('dynamic-popup-img');
-                        if (popupImg) {
-                            const targetImageSrc = `popup_event_${randomNum}.jpg`;
-                            popupImg.onload = function() {
-                                setTimeout(() => { popup.classList.add('show'); }, 100); 
-                            };
-                            popupImg.onerror = function() {
-                                console.warn(`[Popup] Image not found: ${targetImageSrc}`);
-                            };
-                            popupImg.src = targetImageSrc;
-                        }
-                    }
-                }
-            } catch (error) {
-                console.error("Popup Module Error:", error);
-            }
-
-            // 2. 스크롤 애니메이션 옵저버 시스템
             try {
                 const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
                 const observer = new IntersectionObserver((entries, observer) => {
@@ -1456,7 +1482,6 @@
                 console.error("Scroll Observer Module Error:", error);
             }
             
-            // 3. 지점별 영업시간 계산 시스템 (중단 없이 항상 100% 실행 보장)
             try {
                 updateStoreStatuses();
                 setInterval(updateStoreStatuses, 60000);
