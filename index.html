@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- 모바일 기기에서의 핀치 줌은 허용하되, 레이아웃 배율은 1.0으로 고정하여 최적화 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     
     <!-- Primary Meta Tags -->
     <title>Sinjeon Canada | The New Standard of Topokki</title>
@@ -84,6 +85,7 @@
             --border-radius-md: 20px;
         }
 
+        /* 초기화 및 모바일 가로 스크롤 방지 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html, body {
@@ -101,8 +103,10 @@
             -moz-osx-font-smoothing: grayscale;
             user-select: none; -webkit-user-select: none;
         }
+        
+        /* 텍스트 입력창은 드래그 가능하게 허용 */
         input, textarea, select { user-select: auto; -webkit-user-select: auto; font-family: 'Outfit', sans-serif; }
-        img { user-drag: none; -webkit-user-drag: none; -webkit-touch-callout: none; max-width: 100%; height: auto; display: block; }
+        img { user-drag: none; -webkit-user-drag: none; -webkit-touch-callout: none; max-width: 100%; height: auto; display: block; object-fit: contain;}
         *:focus-visible { outline: 3px solid var(--sj-red); outline-offset: 4px; border-radius: 8px; }
 
         .scroll-progress {
@@ -126,22 +130,22 @@
         .anim-float-3 { animation: float-fast 3.5s ease-in-out infinite 1s; }
 
         .section-header { text-align: center; margin-bottom: 60px; position: relative; padding: 0 20px; }
-        .section-header h2 { font-size: 3.5rem; font-weight: 900; color: var(--text-dark); letter-spacing: -1.5px; margin-bottom: 10px; text-transform: uppercase; }
+        .section-header h2 { font-size: 3.5rem; font-weight: 900; color: var(--text-dark); letter-spacing: -1.5px; margin-bottom: 10px; text-transform: uppercase; word-break: keep-all;}
         .section-header h2 span { color: var(--sj-red); font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 4.2rem; letter-spacing: -1px; }
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           [수정됨] 팝업 우측 정렬 및 겹침 방지 설계
+           [팝업 강력 보완] 우측 정렬 및 겹침 방지 설계
            ========================================= */
         .event-popup-wrapper {
             position: fixed;
-            top: 110px; /* 헤더보다 살짝 아래 */
-            right: 20px; /* ★ 좌측에서 우측 정렬로 수정 */
+            top: 110px; 
+            right: 20px; 
             left: auto;
             z-index: 9999;
             opacity: 0;
             visibility: hidden;
-            transform: translateX(30px); /* 우측에서 스르륵 등장 */
+            transform: translateX(30px); 
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none; 
         }
@@ -162,9 +166,8 @@
             flex-direction: column;
         }
         
-        /* 다중 팝업 스크롤 및 찌그러짐 방지 구역 */
         .popup-image-container {
-            display: block; /* ★ Flexbox의 찌그러짐(shrink) 겹침 버그를 막기 위해 Block으로 변경 */
+            display: block; 
             max-height: 65vh; 
             overflow-y: auto; 
             background: var(--bg-white);
@@ -181,7 +184,7 @@
             border-bottom: 1px solid var(--border-color); 
         }
         .popup-image-container div:last-child img {
-            border-bottom: none; /* 마지막 이미지 구분선 제거 */
+            border-bottom: none; 
         }
 
         .event-popup-actions {
@@ -191,7 +194,7 @@
         }
         .event-popup-actions button {
             flex: 1; padding: 14px 0; border: none; background: var(--bg-white);
-            font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: background 0.2s;
+            font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.2s;
             font-family: 'Outfit', 'Noto Sans KR', sans-serif;
         }
         .btn-hide-24h {
@@ -235,11 +238,11 @@
             overflow: hidden; 
         }
         .hero-badge { display: inline-block; padding: 10px 28px; background: rgba(0, 130, 80, 0.08); color: var(--sj-green); border-radius: 50px; font-size: 0.9rem; font-weight: 800; margin-bottom: 25px; letter-spacing: 2px; text-transform: uppercase; }
-        .hero h1 { font-family: 'Outfit', sans-serif; font-size: 5rem; margin: 0; letter-spacing: -2px; line-height: 1.1; font-weight: 900; color: var(--text-dark); text-transform: uppercase; position: relative; z-index: 2; }
+        .hero h1 { font-family: 'Outfit', sans-serif; font-size: 5rem; margin: 0; letter-spacing: -2px; line-height: 1.1; font-weight: 900; color: var(--text-dark); text-transform: uppercase; position: relative; z-index: 2; word-break: keep-all;}
         .hero h1 span.highlight { color: var(--sj-red); display: block; font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 6.5rem; letter-spacing: -1px; margin-top: 10px;}
         .hero > p { font-size: 1.25rem; color: var(--text-gray); margin-top: 25px; font-weight: 500; max-width: 600px; position: relative; z-index: 2;}
         
-        .btn-clean-heat { margin-top: 30px; padding: 12px 35px; background: var(--bg-white); color: var(--sj-red); border: 2px solid var(--sj-red); border-radius: 50px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: var(--transition-fast); position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 8px; box-shadow: var(--shadow-sm); }
+        .btn-clean-heat { margin-top: 30px; padding: 14px 35px; background: var(--bg-white); color: var(--sj-red); border: 2px solid var(--sj-red); border-radius: 50px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: var(--transition-fast); position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 8px; box-shadow: var(--shadow-sm); }
         .btn-clean-heat:hover { background: var(--sj-red); color: var(--bg-white); box-shadow: var(--shadow-hover); transform: translateY(-3px); }
 
         .char-hero { width: 180px; right: 15%; top: 25%; } 
@@ -265,7 +268,7 @@
         .bento-item h3 { font-size: 1.7rem; font-weight: 800; color: var(--sj-green); margin-bottom: 15px; position: relative; z-index: 2; }
         .bento-item p { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; font-weight: 500; position: relative; z-index: 2; }
         
-        .btn-clean-heat-sm { margin-top: 20px; padding: 10px 20px; background: transparent; color: var(--sj-red); border: 2px solid var(--sj-red); border-radius: 30px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: var(--transition-fast); width: max-content; }
+        .btn-clean-heat-sm { margin-top: 20px; padding: 12px 24px; background: transparent; color: var(--sj-red); border: 2px solid var(--sj-red); border-radius: 30px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: var(--transition-fast); width: max-content; }
         .btn-clean-heat-sm:hover { background: var(--sj-red); color: var(--bg-white); box-shadow: var(--shadow-sm); }
 
         .char-bento-1 { width: 100px; bottom: -20px; right: -10px; }
@@ -294,7 +297,7 @@
         .spice-card:hover .char-spice { transform: translateX(-50%) scale(1.15) translateY(-10px); }
 
         /* =========================================
-           6. Categorized Menu Section
+           6. Categorized Menu Section 
            ========================================= */
         .menu-section { padding: 130px 5%; background: var(--bg-white); text-align: center; border-top: 1px solid var(--border-color); }
         .menu-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
@@ -303,7 +306,8 @@
         .menu-tab-btn.active { background: var(--sj-red); color: var(--bg-white); border-color: var(--sj-red); box-shadow: 0 6px 20px rgba(210, 75, 65, 0.25); }
 
         .menu-grid-container { max-width: 1300px; margin: 0 auto; min-height: 500px; } 
-        .menu-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px; animation: fadeInMenu 0.4s ease-in-out; }
+        /* ★ 모바일 메뉴 그리드 삐져나옴 방지 최소 너비 최적화 */
+        .menu-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 35px; animation: fadeInMenu 0.4s ease-in-out; }
         .menu-grid.active { display: grid; }
         @keyframes fadeInMenu { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -319,7 +323,6 @@
         .menu-item .menu-kor { font-family: 'SinjeonCustom', sans-serif; font-size: 1.2rem; color: var(--sj-red); font-weight: normal; margin-bottom: 10px; position: relative; z-index: 2;}
         .menu-item .menu-eng { font-size: 0.95rem; color: var(--text-gray); font-weight: 500; line-height: 1.4; position: relative; z-index: 2;}
 
-        /* 메뉴 법적 고지 (Disclaimer) 스타일 */
         .menu-disclaimer { margin-top: 40px; font-size: 0.95rem; color: var(--text-light); font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .menu-disclaimer i { color: var(--sj-red); font-size: 1.1rem; }
 
@@ -356,7 +359,7 @@
         .feature-tag { font-size: 0.75rem; padding: 6px 14px; background: rgba(0,0,0,0.04); border: 1px solid var(--border-color); border-radius: 20px; color: var(--text-dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 
         .loc-actions { display: flex; gap: 15px; margin-top: auto; }
-        .btn-sm { padding: 12px 20px; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 0.95rem; flex: 1; text-align: center; transition: var(--transition-fast); display: flex; align-items: center; justify-content: center; gap: 8px;}
+        .btn-sm { padding: 14px 20px; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 0.95rem; flex: 1; text-align: center; transition: var(--transition-fast); display: flex; align-items: center; justify-content: center; gap: 8px;}
         .btn-outline { border: 2px solid var(--border-color); color: var(--text-dark); background: var(--bg-white); }
         .btn-outline:hover { border-color: var(--sj-green); color: var(--sj-green); }
         .btn-fill { background: var(--uber-green); color: var(--bg-white); border: 2px solid var(--uber-green); }
@@ -392,7 +395,7 @@
         .btn-apply-portal {
             display: inline-flex; align-items: center; gap: 10px;
             background: var(--sj-red); color: var(--bg-white);
-            padding: 18px 45px; font-size: 1.15rem; font-weight: 800;
+            padding: 20px 50px; font-size: 1.15rem; font-weight: 800;
             border-radius: 50px; text-decoration: none;
             box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3);
             transition: var(--transition-fast); text-transform: uppercase;
@@ -425,13 +428,15 @@
 
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .input-wrapper { position: relative; margin-bottom: 25px; }
-        .input-wrapper input, .input-wrapper textarea, .input-wrapper select { width: 100%; padding: 24px 20px 12px; border: 2px solid var(--bg-light); border-radius: 16px; font-weight: 600; font-size: 1.05rem; color: var(--text-dark); background: var(--bg-light); box-sizing: border-box; transition: var(--transition-fast); outline: none; box-shadow: 0 2px 10px rgba(0,0,0,0.01); appearance: none;}
+        
+        /* ★ iOS 자동 줌(Zoom) 방지: font-size를 명확히 16px 이상으로 강제 설정 */
+        .input-wrapper input, .input-wrapper textarea, .input-wrapper select { width: 100%; padding: 26px 20px 14px; border: 2px solid var(--bg-light); border-radius: 16px; font-weight: 600; font-size: 16px !important; color: var(--text-dark); background: var(--bg-light); box-sizing: border-box; transition: var(--transition-fast); outline: none; box-shadow: 0 2px 10px rgba(0,0,0,0.01); appearance: none;}
         .input-wrapper textarea { resize: vertical; min-height: 140px; }
-        .input-wrapper label { position: absolute; left: 22px; top: 20px; font-size: 1.05rem; color: var(--text-light); pointer-events: none; transition: var(--transition-fast); font-weight: 500; }
+        .input-wrapper label { position: absolute; left: 22px; top: 22px; font-size: 1rem; color: var(--text-light); pointer-events: none; transition: var(--transition-fast); font-weight: 500; }
         .input-wrapper input:focus, .input-wrapper textarea:focus, .input-wrapper select:focus { border-color: var(--sj-green); background: var(--bg-white); box-shadow: 0 4px 15px rgba(0,130,80,0.05);}
         .input-wrapper input:focus + label, .input-wrapper input:not(:placeholder-shown) + label,
         .input-wrapper textarea:focus + label, .input-wrapper textarea:not(:placeholder-shown) + label,
-        .input-wrapper select:focus + label, .input-wrapper select:valid + label { top: 8px; font-size: 0.8rem; color: var(--sj-green); font-weight: 800; }
+        .input-wrapper select:focus + label, .input-wrapper select:valid + label { top: 10px; font-size: 0.8rem; color: var(--sj-green); font-weight: 800; }
         
         #franchise-form .input-wrapper input:focus, #franchise-form .input-wrapper textarea:focus, #franchise-form .input-wrapper select:focus { border-color: var(--sj-red); box-shadow: 0 4px 15px rgba(210,75,65,0.05); }
         #franchise-form .input-wrapper input:focus + label, #franchise-form .input-wrapper textarea:focus + label, #franchise-form .input-wrapper select:focus + label,
@@ -495,7 +500,7 @@
         .flow-arrow { color: var(--text-light); font-size: 1.5rem; font-weight: 900; }
 
         /* =========================================
-           Mobile Responsiveness
+           ★ 100% 모바일 완벽 최적화 (Responsive Design)
            ========================================= */
         @media (max-width: 1200px) {
             .bento-large { padding: 40px; }
@@ -543,18 +548,22 @@
             .bento-large { gap: 20px; padding: 30px 15px; }
             .stat-item h4 { font-size: 2.2rem; }
             .stat-item p { font-size: 0.8rem; }
-            .hero h1 { font-size: 2.8rem; }
-            .hero h1 span.highlight { font-size: 3.2rem; }
+            .hero h1 { font-size: 2.6rem; }
+            .hero h1 span.highlight { font-size: 3rem; }
             .section-header h2 { font-size: 2.2rem; }
             .section-header h2 span { font-size: 2.8rem; }
             
-            .loc-actions .btn-sm { padding: 10px 15px; font-size: 0.85rem; }
+            .loc-actions .btn-sm { padding: 12px 15px; font-size: 0.9rem; } /* 터치 최적화 */
             .tab-btn { padding: 12px 25px; font-size: 1rem; }
-            .menu-tab-btn { padding: 12px 20px; font-size: 0.95rem; }
-            .btn-apply-portal { padding: 15px 30px; font-size: 1rem; }
-            .submit-btn { padding: 16px; font-size: 1.1rem; }
+            .menu-tab-btn { padding: 14px 25px; font-size: 1rem; } /* 탭 버튼 터치 영역 확장 */
+            .btn-apply-portal { padding: 18px 30px; font-size: 1rem; width: 100%; justify-content: center; } /* 모바일에서 버튼 꽉 차게 */
+            .submit-btn { padding: 18px; font-size: 1.1rem; }
+            
+            /* 패딩 여백 좁혀서 모바일 몰입도 향상 */
+            .about-section, .spice-section, .menu-section, .locations, .ugc-section, .timeline-section, .contact-section { padding: 80px 15px; }
+            .form-content { padding: 30px 20px; }
 
-            /* ★ 모바일 환경에서는 팝업이 정중앙에 뜨도록 수정 */
+            /* ★ 모바일 팝업 완벽 중앙 정렬 및 높이 제어 */
             .event-popup-wrapper {
                 top: 50%;
                 bottom: auto;
@@ -567,8 +576,18 @@
             .event-popup-wrapper.show { 
                 transform: translate(-50%, -50%) scale(1); 
             }
+            .popup-image-container {
+                max-height: 70vh; /* 모바일 세로 화면을 넘지 않도록 제한 */
+            }
             
-            .event-popup-actions button { font-size: 0.8rem; padding: 12px 0; }
+            .event-popup-actions button { font-size: 0.9rem; padding: 16px 0; } /* 터치 영역 확장 */
+        }
+        
+        /* 초소형 스마트폰 (Galaxy Fold 외부 디스플레이 등) 추가 최적화 */
+        @media (max-width: 350px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero h1 span.highlight { font-size: 2.5rem; }
+            .bento-large .stat-item { grid-column: span 2; } /* 숫자 정보가 세로로 떨어지도록 */
         }
     </style>
 
