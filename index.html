@@ -84,7 +84,6 @@
             --border-radius-md: 20px;
         }
 
-        /* 초기화 및 모바일 가로 스크롤 방지 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html, body {
@@ -102,8 +101,6 @@
             -moz-osx-font-smoothing: grayscale;
             user-select: none; -webkit-user-select: none;
         }
-        
-        /* 텍스트 입력창은 드래그 가능하게 허용 */
         input, textarea, select { user-select: auto; -webkit-user-select: auto; font-family: 'Outfit', sans-serif; }
         img { user-drag: none; -webkit-user-drag: none; -webkit-touch-callout: none; max-width: 100%; height: auto; display: block; object-fit: contain;}
         *:focus-visible { outline: 3px solid var(--sj-red); outline-offset: 4px; border-radius: 8px; }
@@ -134,7 +131,7 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           [팝업 강력 보완] 우측 정렬 및 겹침 방지 설계
+           [에러 원천 차단] 가장 심플하고 완벽한 팝업 CSS
            ========================================= */
         .event-popup-wrapper {
             position: fixed;
@@ -176,13 +173,14 @@
         .popup-image-container::-webkit-scrollbar { width: 6px; }
         .popup-image-container::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 10px; }
         
+        /* 이미지가 정상 로드되면 border-bottom을 주고, 에러나서 display:none 되면 선도 안 보임 */
         .popup-image-container img {
             width: 100%; 
             height: auto; 
             display: block; 
             border-bottom: 1px solid var(--border-color); 
         }
-        .popup-image-container div:last-child img {
+        .popup-image-container img:last-of-type {
             border-bottom: none; 
         }
 
@@ -551,17 +549,15 @@
             .section-header h2 { font-size: 2.2rem; }
             .section-header h2 span { font-size: 2.8rem; }
             
-            .loc-actions .btn-sm { padding: 12px 15px; font-size: 0.9rem; } /* 터치 최적화 */
+            .loc-actions .btn-sm { padding: 12px 15px; font-size: 0.9rem; }
             .tab-btn { padding: 12px 25px; font-size: 1rem; }
-            .menu-tab-btn { padding: 14px 25px; font-size: 1rem; } /* 탭 버튼 터치 영역 확장 */
-            .btn-apply-portal { padding: 18px 30px; font-size: 1rem; width: 100%; justify-content: center; } /* 모바일에서 버튼 꽉 차게 */
+            .menu-tab-btn { padding: 14px 25px; font-size: 1rem; }
+            .btn-apply-portal { padding: 18px 30px; font-size: 1rem; width: 100%; justify-content: center; } 
             .submit-btn { padding: 18px; font-size: 1.1rem; }
             
-            /* 패딩 여백 좁혀서 모바일 몰입도 향상 */
             .about-section, .spice-section, .menu-section, .locations, .ugc-section, .timeline-section, .contact-section { padding: 80px 15px; }
             .form-content { padding: 30px 20px; }
 
-            /* ★ 모바일 팝업 완벽 중앙 정렬 및 높이 제어 */
             .event-popup-wrapper {
                 top: 50%;
                 bottom: auto;
@@ -575,78 +571,18 @@
                 transform: translate(-50%, -50%) scale(1); 
             }
             .popup-image-container {
-                max-height: 70vh; /* 모바일 세로 화면을 넘지 않도록 제한 */
+                max-height: 70vh; 
             }
             
-            .event-popup-actions button { font-size: 0.9rem; padding: 16px 0; } /* 터치 영역 확장 */
+            .event-popup-actions button { font-size: 0.9rem; padding: 16px 0; } 
         }
         
-        /* 초소형 스마트폰 (Galaxy Fold 외부 디스플레이 등) 추가 최적화 */
         @media (max-width: 350px) {
             .hero h1 { font-size: 2.2rem; }
             .hero h1 span.highlight { font-size: 2.5rem; }
-            .bento-large .stat-item { grid-column: span 2; } /* 숫자 정보가 세로로 떨어지도록 */
+            .bento-large .stat-item { grid-column: span 2; } 
         }
     </style>
-
-    <!-- ★ [최종 완성형 팝업 로직] 배열 지정 방식으로 404 에러 원천 차단 -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            try {
-                const popup = document.getElementById('main-event-popup');
-                if (popup) {
-                    const hideUntil = localStorage.getItem('hideMainPopupUntil');
-                    const now = new Date().getTime();
-
-                    // '24시간 숨기기' 쿠키 체크
-                    if (hideUntil && now < parseInt(hideUntil)) {
-                        console.log("[Popup] 24 hours hide active. Skipping popup.");
-                    } else {
-                        const popupImgContainer = document.getElementById('popup-image-container');
-                        
-                        // ★ 404 무한 로딩 해결: 현재 서버에 업로드되어 있는 파일명만 배열에 입력하세요!
-                        // (추후 팝업이 늘어나면 'popup_event_3.jpg' 처럼 배열에 추가만 하시면 됩니다)
-                        const popupFiles = ['popup_event_1.jpg', 'popup_event_2.jpg']; 
-                        let loadedCount = 0;
-
-                        // 1. 이미지가 순서대로 들어가도록 빈 방(slot)을 배열 개수만큼 생성
-                        popupFiles.forEach((file, index) => {
-                            const slot = document.createElement('div');
-                            slot.id = `popup-slot-${index}`;
-                            popupImgContainer.appendChild(slot);
-                        });
-
-                        // 2. 이미지를 다운로드하고 자기 방에 집어넣음
-                        popupFiles.forEach((targetImageSrc, index) => {
-                            const img = new Image();
-                            
-                            img.onload = function() {
-                                this.alt = `Sinjeon Event Notice ${index + 1}`;
-                                document.getElementById(`popup-slot-${index}`).appendChild(this);
-                                loadedCount++;
-                                
-                                // 첫 번째 이미지가 로딩 완료되면 부드럽게 팝업 띄우기
-                                if (loadedCount === 1) {
-                                    setTimeout(() => { popup.classList.add('show'); }, 100); 
-                                }
-                            };
-                            
-                            img.onerror = function() {
-                                // 만약 사용자가 적어둔 파일명에 오타가 있더라도 조용히 에러를 무시 (빨간 글씨 최소화)
-                                console.warn(`[Popup] Could not find: ${targetImageSrc}`);
-                                const emptySlot = document.getElementById(`popup-slot-${index}`);
-                                if(emptySlot) emptySlot.remove();
-                            };
-                            
-                            img.src = targetImageSrc; // 다운로드 시작
-                        });
-                    }
-                }
-            } catch (error) {
-                console.error("Popup Module Error:", error);
-            }
-        });
-    </script>
 </head>
 <body>
 
@@ -666,17 +602,47 @@
         </nav>
     </header>
 
-    <!-- [다중 팝업 시스템] 여러 이벤트가 한 번에 스크롤 됨 -->
+    <!-- ★ [최종 가장 안전한 방식] HTML에 직접 태그를 넣어 에러 발생 시 즉각 숨기기 처리 -->
     <div class="event-popup-wrapper" id="main-event-popup">
         <div class="event-popup-content">
-            <!-- 팝업 이미지들이 들어갈 스크롤 영역 -->
-            <div id="popup-image-container" class="popup-image-container"></div>
+            <div id="popup-image-container" class="popup-image-container">
+                <!-- 서버에 이미지 1~5번이 있으면 보이고, 없으면 onerror가 발동해 태그 자체를 화면에서 날려버립니다 -->
+                <img src="popup_event_1.jpg" alt="Event 1" onerror="this.style.display='none'; window.popupLoadFail1 = true;">
+                <img src="popup_event_2.jpg" alt="Event 2" onerror="this.style.display='none'; window.popupLoadFail2 = true;">
+                <img src="popup_event_3.jpg" alt="Event 3" onerror="this.style.display='none'; window.popupLoadFail3 = true;">
+                <img src="popup_event_4.jpg" alt="Event 4" onerror="this.style.display='none'; window.popupLoadFail4 = true;">
+                <img src="popup_event_5.jpg" alt="Event 5" onerror="this.style.display='none'; window.popupLoadFail5 = true;">
+            </div>
             <div class="event-popup-actions">
                 <button class="btn-hide-24h" onclick="hidePopupFor24Hours()">24시간 보지 않기</button>
                 <button class="btn-close-popup" onclick="closeEventPopup()">닫기 (Close)</button>
             </div>
         </div>
     </div>
+
+    <!-- 팝업 노출 스크립트 (가장 마지막에 실행) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const popup = document.getElementById('main-event-popup');
+            if (popup) {
+                const hideUntil = localStorage.getItem('hideMainPopupUntil');
+                const now = new Date().getTime();
+
+                if (hideUntil && now < parseInt(hideUntil)) {
+                    console.log("[Popup] 24 hours hide active. Skipping popup.");
+                } else {
+                    // 모든 이미지가 에러나서 안 보인다면 팝업창(껍데기)을 띄우지 않음
+                    setTimeout(() => {
+                        if(window.popupLoadFail1 && window.popupLoadFail2 && window.popupLoadFail3 && window.popupLoadFail4 && window.popupLoadFail5) {
+                            console.log("[Popup] No images found. Hiding popup.");
+                        } else {
+                            popup.classList.add('show');
+                        }
+                    }, 500); // 이미지 로드 체크를 위해 0.5초 딜레이 후 띄움
+                }
+            }
+        });
+    </script>
 
     <section class="hero" id="home">
         <div class="hero-badge reveal">The Global No.1 K-Food</div>
@@ -828,8 +794,6 @@
                     <p class="menu-kor">신전 로제 맵닭</p>
                     <p class="menu-eng">Spicy chicken in rich creamy rosé sauce</p>
                 </div>
-
-                <!-- ★ 신규 추가된 6종 메뉴 ★ -->
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/크림 카레 떡볶이.jpg" alt="Cream Curry Topokki" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Cream+Curry+Topokki'"></div>
                     <h3>Cream Curry Topokki</h3>
