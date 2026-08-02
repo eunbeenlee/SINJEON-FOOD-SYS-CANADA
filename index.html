@@ -111,6 +111,7 @@
             transition: width 0.1s ease; will-change: width;
         }
 
+        /* ★ 애니메이션 로직: 이걸 빼먹어서 하얗게 멈췄던 것입니다! */
         .reveal { opacity: 0; transform: translateY(30px) translateZ(0); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -131,7 +132,7 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           [에러 원천 차단] 가장 심플하고 완벽한 팝업 CSS
+           [팝업 강력 보완] 우측 정렬 다중 팝업
            ========================================= */
         .event-popup-wrapper {
             position: fixed;
@@ -173,14 +174,14 @@
         .popup-image-container::-webkit-scrollbar { width: 6px; }
         .popup-image-container::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 10px; }
         
-        /* 이미지가 정상 로드되면 border-bottom을 주고, 에러나서 display:none 되면 선도 안 보임 */
         .popup-image-container img {
             width: 100%; 
             height: auto; 
             display: block; 
             border-bottom: 1px solid var(--border-color); 
         }
-        .popup-image-container img:last-of-type {
+        /* 정상 표시되는 마지막 이미지의 선 제거 */
+        .popup-image-container img:not([style*="display: none"]):last-of-type {
             border-bottom: none; 
         }
 
@@ -607,11 +608,11 @@
         <div class="event-popup-content">
             <div id="popup-image-container" class="popup-image-container">
                 <!-- 서버에 이미지 1~5번이 있으면 보이고, 없으면 onerror가 발동해 태그 자체를 화면에서 날려버립니다 -->
-                <img src="popup_event_1.jpg" alt="Event 1" onerror="this.style.display='none'; window.popupLoadFail1 = true;">
-                <img src="popup_event_2.jpg" alt="Event 2" onerror="this.style.display='none'; window.popupLoadFail2 = true;">
-                <img src="popup_event_3.jpg" alt="Event 3" onerror="this.style.display='none'; window.popupLoadFail3 = true;">
-                <img src="popup_event_4.jpg" alt="Event 4" onerror="this.style.display='none'; window.popupLoadFail4 = true;">
-                <img src="popup_event_5.jpg" alt="Event 5" onerror="this.style.display='none'; window.popupLoadFail5 = true;">
+                <img src="popup_event_1.jpg" alt="Event Notice 1" onerror="this.style.display='none'; this.setAttribute('data-failed', 'true');">
+                <img src="popup_event_2.jpg" alt="Event Notice 2" onerror="this.style.display='none'; this.setAttribute('data-failed', 'true');">
+                <img src="popup_event_3.jpg" alt="Event Notice 3" onerror="this.style.display='none'; this.setAttribute('data-failed', 'true');">
+                <img src="popup_event_4.jpg" alt="Event Notice 4" onerror="this.style.display='none'; this.setAttribute('data-failed', 'true');">
+                <img src="popup_event_5.jpg" alt="Event Notice 5" onerror="this.style.display='none'; this.setAttribute('data-failed', 'true');">
             </div>
             <div class="event-popup-actions">
                 <button class="btn-hide-24h" onclick="hidePopupFor24Hours()">24시간 보지 않기</button>
@@ -620,28 +621,85 @@
         </div>
     </div>
 
-    <!-- 팝업 노출 스크립트 (가장 마지막에 실행) -->
+    <!-- JS 종합 통제 센터 -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const popup = document.getElementById('main-event-popup');
-            if (popup) {
-                const hideUntil = localStorage.getItem('hideMainPopupUntil');
-                const now = new Date().getTime();
-
-                if (hideUntil && now < parseInt(hideUntil)) {
-                    console.log("[Popup] 24 hours hide active. Skipping popup.");
-                } else {
-                    // 모든 이미지가 에러나서 안 보인다면 팝업창(껍데기)을 띄우지 않음
-                    setTimeout(() => {
-                        if(window.popupLoadFail1 && window.popupLoadFail2 && window.popupLoadFail3 && window.popupLoadFail4 && window.popupLoadFail5) {
-                            console.log("[Popup] No images found. Hiding popup.");
-                        } else {
-                            popup.classList.add('show');
+            
+            // 1. [핵심 복구] 스크롤 애니메이션 시스템 (이게 없어서 하얗게 보였음)
+            try {
+                const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                            observer.unobserve(entry.target);
                         }
-                    }, 500); // 이미지 로드 체크를 위해 0.5초 딜레이 후 띄움
+                    });
+                }, observerOptions);
+                document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+                
+                // [Failsafe] 만약 구형 기기에서 옵저버가 안 돌아가더라도 1초 뒤 강제로 다 보여줌
+                setTimeout(() => {
+                    document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+                }, 1000);
+            } catch (error) {
+                // 에러 발생 시 즉시 강제 오픈
+                document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+                console.error("Scroll Observer Module Error:", error);
+            }
+
+            // 2. 영업시간 갱신 시스템
+            try {
+                updateStoreStatuses();
+                setInterval(updateStoreStatuses, 60000);
+            } catch (error) {
+                console.error("Store Status Module Error:", error);
+            }
+
+            // 3. 팝업창 노출 시스템 (절대 멈춤 없는 안전한 로직)
+            try {
+                const popup = document.getElementById('main-event-popup');
+                if (popup) {
+                    const hideUntil = localStorage.getItem('hideMainPopupUntil');
+                    const now = new Date().getTime();
+
+                    if (hideUntil && now < parseInt(hideUntil)) {
+                        console.log("[Popup] 24 hours hide active. Skipping popup.");
+                    } else {
+                        // 0.5초 뒤에 살아남은 이미지가 단 1개라도 있는지 검사해서 팝업을 띄움
+                        setTimeout(() => {
+                            const images = document.querySelectorAll('#popup-image-container img');
+                            let hasVisibleImage = false;
+                            
+                            images.forEach(img => {
+                                if (img.getAttribute('data-failed') !== 'true') {
+                                    hasVisibleImage = true;
+                                }
+                            });
+                            
+                            if (hasVisibleImage) {
+                                popup.classList.add('show');
+                            }
+                        }, 500);
+                    }
                 }
+            } catch (error) {
+                console.error("Popup Display Error:", error);
             }
         });
+
+        // 팝업 관련 외부 함수들
+        function closeEventPopup() {
+            const popup = document.getElementById('main-event-popup');
+            if (popup) popup.classList.remove('show'); 
+        }
+
+        function hidePopupFor24Hours() {
+            const now = new Date().getTime();
+            const twentyFourHours = 24 * 60 * 60 * 1000; 
+            localStorage.setItem('hideMainPopupUntil', now + twentyFourHours);
+            closeEventPopup();
+        }
     </script>
 
     <section class="hero" id="home">
@@ -794,6 +852,8 @@
                     <p class="menu-kor">신전 로제 맵닭</p>
                     <p class="menu-eng">Spicy chicken in rich creamy rosé sauce</p>
                 </div>
+
+                <!-- ★ 신규 추가된 6종 메뉴 ★ -->
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/크림 카레 떡볶이.jpg" alt="Cream Curry Topokki" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Cream+Curry+Topokki'"></div>
                     <h3>Cream Curry Topokki</h3>
@@ -1472,21 +1532,6 @@
                 isScrolling = true;
             }
         });
-
-        function closeEventPopup() {
-            const popup = document.getElementById('main-event-popup');
-            if (popup) {
-                popup.classList.remove('show'); 
-            }
-        }
-
-        function hidePopupFor24Hours() {
-            const now = new Date().getTime();
-            const twentyFourHours = 24 * 60 * 60 * 1000; 
-            localStorage.setItem('hideMainPopupUntil', now + twentyFourHours);
-            console.log("[Popup] Set to hide for 24 hours.");
-            closeEventPopup();
-        }
 
         function openModal(type) {
             const modal = document.getElementById('dynamic-modal');
