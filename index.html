@@ -132,17 +132,17 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           [팝업 무결성 보장] 좌측 정렬 및 가로 슬라이드 팝업
+           [팝업 무결성 보장] 좌측 정렬 및 슬라이드 방향 교정
            ========================================= */
         .event-popup-wrapper {
             position: fixed;
             top: 110px; 
-            right: 20px; 
-            left: auto;
+            left: 20px; /* ★ 좌측에 위치하도록 변경 */
+            right: auto;
             z-index: 99999; 
             opacity: 0;
             visibility: hidden;
-            transform: translateX(30px); 
+            transform: translateX(-30px); /* ★ 왼쪽에서 들어오는 애니메이션으로 수정 */
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none; 
         }
@@ -433,7 +433,6 @@
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .input-wrapper { position: relative; margin-bottom: 25px; }
         
-        /* 모바일 키보드 최적화 및 줌 방지 */
         .input-wrapper input, .input-wrapper textarea, .input-wrapper select { width: 100%; padding: 26px 20px 14px; border: 2px solid var(--bg-light); border-radius: 16px; font-weight: 600; font-size: 16px !important; color: var(--text-dark); background: var(--bg-light); box-sizing: border-box; transition: var(--transition-fast); outline: none; box-shadow: 0 2px 10px rgba(0,0,0,0.01); appearance: none;}
         .input-wrapper textarea { resize: vertical; min-height: 140px; }
         .input-wrapper label { position: absolute; left: 22px; top: 22px; font-size: 1rem; color: var(--text-light); pointer-events: none; transition: var(--transition-fast); font-weight: 500; }
@@ -568,7 +567,7 @@
             .about-section, .spice-section, .menu-section, .locations, .ugc-section, .timeline-section, .contact-section { padding: 80px 15px; }
             .form-content { padding: 30px 20px; }
 
-            /* ★ 모바일: 팝업을 화면 정중앙에 고정 (우측 정렬 해제 및 비율 최적화) */
+            /* ★ 모바일: 팝업을 화면 정중앙에 고정 (좌측 정렬 해제 및 비율 최적화) */
             .event-popup-wrapper {
                 top: 50%;
                 bottom: auto;
@@ -740,7 +739,7 @@
         </nav>
     </header>
 
-    <!-- [다중 팝업 시스템] (데스크톱: 우측 상단 가로 스크롤 / 모바일: 중앙 세로 스크롤) -->
+    <!-- [다중 팝업 시스템] (데스크톱: 좌측 상단 가로 스크롤 / 모바일: 중앙 세로 스크롤) -->
     <div class="event-popup-wrapper" id="main-event-popup">
         <div class="event-popup-content">
             <div id="popup-image-container" class="popup-image-container"></div>
