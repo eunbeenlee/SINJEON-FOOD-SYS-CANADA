@@ -132,17 +132,17 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           [팝업 무결성 보장] 완벽한 레이아웃 및 z-index 제어
+           [팝업 무결성 보장] 좌측 정렬 및 가로 슬라이드 팝업
            ========================================= */
         .event-popup-wrapper {
             position: fixed;
             top: 110px; 
-            right: 20px; /* 데스크톱 우측 정렬 */
-            left: auto;
-            z-index: 99999; /* 모든 오브젝트 최상위 보장 */
+            left: 20px; /* ★ 우측에서 좌측으로 변경 */
+            right: auto;
+            z-index: 99999; 
             opacity: 0;
             visibility: hidden;
-            transform: translateX(30px); /* 우측에서 스르륵 */
+            transform: translateX(-30px); /* ★ 왼쪽에서 스르륵 들어오는 효과 */
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none; 
         }
@@ -155,39 +155,42 @@
         .event-popup-content {
             background: var(--bg-white);
             border-radius: 16px;
-            width: 320px; 
+            width: fit-content; /* ★ 이미지 개수에 맞춰 유동적으로 너비 증가 */
+            max-width: calc(100vw - 40px); /* 화면을 넘어가지 않도록 방어 */
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.35); /* 강조 그림자 */
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35); 
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
         }
         
         .popup-image-container {
-            display: block; 
-            max-height: 65vh; 
-            overflow-y: auto; 
-            overflow-x: hidden;
+            display: flex; /* ★ 가로 정렬을 위한 Flexbox */
+            flex-direction: row; 
+            overflow-x: auto; /* 데스크톱에서 다중 팝업 가로 스크롤 허용 */
+            overflow-y: hidden;
             background: var(--bg-white);
-            width: 100%;
+            max-width: 100%;
         }
         
-        .popup-image-container::-webkit-scrollbar { width: 6px; }
+        /* 가로 스크롤바 디자인 */
+        .popup-image-container::-webkit-scrollbar { height: 8px; }
         .popup-image-container::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 10px; }
         
-        /* 컨테이너 안의 슬롯(div)과 이미지의 완벽한 100% 핏 보장 */
         .popup-image-container div {
-            width: 100%;
-            display: block;
+            flex: 0 0 320px; /* ★ 각각의 팝업은 320px 고정 크기로 찌그러지지 않고 옆으로 나열 */
+            width: 320px;
+            border-right: 1px solid var(--border-color); /* 가로 나열이므로 구분선은 우측에 */
+            border-bottom: none;
         }
+        .popup-image-container div:last-child {
+            border-right: none; 
+        }
+        
         .popup-image-container img {
             width: 100%; 
             height: auto; 
             display: block; 
-            border-bottom: 1px solid var(--border-color); 
-        }
-        .popup-image-container div:last-child img {
-            border-bottom: none; 
         }
 
         .event-popup-actions {
@@ -431,7 +434,6 @@
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .input-wrapper { position: relative; margin-bottom: 25px; }
         
-        /* 모바일 줌 방지 & 자동완성 기능 반영 */
         .input-wrapper input, .input-wrapper textarea, .input-wrapper select { width: 100%; padding: 26px 20px 14px; border: 2px solid var(--bg-light); border-radius: 16px; font-weight: 600; font-size: 16px !important; color: var(--text-dark); background: var(--bg-light); box-sizing: border-box; transition: var(--transition-fast); outline: none; box-shadow: 0 2px 10px rgba(0,0,0,0.01); appearance: none;}
         .input-wrapper textarea { resize: vertical; min-height: 140px; }
         .input-wrapper label { position: absolute; left: 22px; top: 22px; font-size: 1rem; color: var(--text-light); pointer-events: none; transition: var(--transition-fast); font-weight: 500; }
@@ -502,7 +504,7 @@
         .flow-arrow { color: var(--text-light); font-size: 1.5rem; font-weight: 900; }
 
         /* =========================================
-           ★ 100% 모바일 완벽 최적화 (Responsive Design)
+           ★ 100% 모바일 & 데스크톱 완벽 반응형 제어
            ========================================= */
         @media (max-width: 1200px) {
             .bento-large { padding: 40px; }
@@ -546,6 +548,8 @@
             .heat-flow { flex-direction: column; gap: 20px; padding: 25px; }
             .flow-arrow { transform: rotate(90deg); margin: 5px 0; }
         }
+        
+        /* ★ 모바일 환경 팝업 및 레이아웃 제어 */
         @media (max-width: 600px) {
             .bento-large { gap: 20px; padding: 30px 15px; }
             .stat-item h4 { font-size: 2.2rem; }
@@ -564,7 +568,7 @@
             .about-section, .spice-section, .menu-section, .locations, .ugc-section, .timeline-section, .contact-section { padding: 80px 15px; }
             .form-content { padding: 30px 20px; }
 
-            /* ★ 모바일 팝업 화면 중앙 정렬 및 높이 제어 */
+            /* ★ 모바일: 팝업을 화면 정중앙에 고정 (우측 정렬 해제) */
             .event-popup-wrapper {
                 top: 50%;
                 bottom: auto;
@@ -577,9 +581,26 @@
             .event-popup-wrapper.show { 
                 transform: translate(-50%, -50%) scale(1); 
             }
-            .popup-image-container {
-                max-height: 70vh; 
+            .event-popup-content {
+                width: 100%;
             }
+            /* ★ 모바일: 팝업 이미지를 가로가 아닌 위아래(세로) 스크롤로 변경 */
+            .popup-image-container {
+                flex-direction: column; 
+                max-height: 70vh; 
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+            .popup-image-container div {
+                flex: auto;
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .popup-image-container div:last-child {
+                border-bottom: none;
+            }
+            .popup-image-container::-webkit-scrollbar { width: 6px; height: auto; }
             
             .event-popup-actions button { font-size: 0.9rem; padding: 16px 0; } 
         }
@@ -591,11 +612,11 @@
         }
     </style>
     
-    <!-- ★ [최종 팝업 JS] 에러 없는 100% 안전한 배열 명시 방식 -->
+    <!-- ★ [최종 팝업 JS] 지정된 파일만 다운로드, 레이스 컨디션 차단 -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. 스크롤 애니메이션 옵저버 (복구 완료)
+            // 1. 스크롤 애니메이션 옵저버
             try {
                 const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
                 const observer = new IntersectionObserver((entries, observer) => {
@@ -611,16 +632,16 @@
                     observer.observe(el);
                 });
                 
-                // 만약 구형 브라우저에서 옵저버가 작동안하면 1초 뒤 강제로 전부 표시 (Failsafe)
+                // [Failsafe] 어떤 환경에서도 무조건 1초 뒤 나타남 보장
                 setTimeout(() => {
                     document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
                 }, 1000);
             } catch (error) {
                 document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-                console.error("Scroll Observer Module Error:", error);
+                console.error("Scroll Observer Error:", error);
             }
 
-            // 2. 팝업 노출 제어 로직 (404 원천 차단)
+            // 2. 팝업 노출 제어 (404 원천 차단 + 다중 팝업 처리)
             try {
                 const popup = document.getElementById('main-event-popup');
                 if (popup) {
@@ -633,42 +654,43 @@
                     } else {
                         const popupImgContainer = document.getElementById('popup-image-container');
                         
-                        // ★★★ 서버에 올라가 있는 파일명만 이 배열 안에 정확히 적어주세요! ★★★
-                        // (3번 파일이 추가되면 ['popup_event_1.jpg', 'popup_event_2.jpg', 'popup_event_3.jpg'] 로 수정)
+                        // ★ 서버에 실제 업로드된 팝업 파일명들
                         const activePopupFiles = ['popup_event_1.jpg', 'popup_event_2.jpg']; 
                         
                         if (activePopupFiles.length > 0) {
                             let loadedImages = 0;
 
-                            // 순서 보장을 위한 빈 슬롯 생성
+                            // 이미지 로딩 순서를 완벽하게 보장하기 위해 빈 방(Slot)을 먼저 만들어 둠
                             activePopupFiles.forEach((file, index) => {
                                 const slot = document.createElement('div');
                                 slot.id = `popup-slot-${index}`;
                                 popupImgContainer.appendChild(slot);
                             });
 
-                            // 이미지 로딩 시작
+                            // 이미지 비동기 다운로드 및 슬롯 장착
                             activePopupFiles.forEach((file, index) => {
                                 const img = new Image();
                                 img.alt = `Sinjeon Event Notice ${index + 1}`;
                                 
                                 img.onload = function() {
+                                    // 자기 번호에 맞는 슬롯에 쏙 들어감 (순서 꼬임 완벽 방지)
                                     document.getElementById(`popup-slot-${index}`).appendChild(this);
                                     loadedImages++;
                                     
-                                    // 하나라도 로딩에 성공하면 팝업 창 띄우기
+                                    // 첫 번째 로딩 성공 시 팝업을 스르륵 띄움
                                     if (loadedImages === 1) {
                                         setTimeout(() => { popup.classList.add('show'); }, 100); 
                                     }
                                 };
                                 
                                 img.onerror = function() {
-                                    console.warn(`[Popup] Could not find: ${file}`);
+                                    // 파일이 없거나 깨지면 해당 슬롯을 DOM에서 깔끔하게 날려버림
+                                    console.warn(`[Popup] Not found or error loading: ${file}`);
                                     const emptySlot = document.getElementById(`popup-slot-${index}`);
                                     if(emptySlot) emptySlot.remove();
                                 };
                                 
-                                img.src = file;
+                                img.src = file; // 다운로드 트리거
                             });
                         }
                     }
@@ -677,7 +699,7 @@
                 console.error("Popup Module Error:", error);
             }
             
-            // 3. 지점 영업시간 업데이트 로직
+            // 3. 영업시간 업데이트
             try {
                 updateStoreStatuses();
                 setInterval(updateStoreStatuses, 60000);
@@ -686,7 +708,7 @@
             }
         });
 
-        // 팝업 닫기 관련 외부 함수
+        // 팝업 조작 외부 함수
         function closeEventPopup() {
             const popup = document.getElementById('main-event-popup');
             if (popup) popup.classList.remove('show'); 
@@ -699,7 +721,6 @@
             closeEventPopup();
         }
     </script>
-
 </head>
 <body>
 
@@ -719,7 +740,7 @@
         </nav>
     </header>
 
-    <!-- [다중 팝업 시스템 HTML 틀] -->
+    <!-- [다중 팝업 시스템] (좌측 상단 정렬, 가로 스크롤) -->
     <div class="event-popup-wrapper" id="main-event-popup">
         <div class="event-popup-content">
             <div id="popup-image-container" class="popup-image-container"></div>
@@ -880,7 +901,6 @@
                     <p class="menu-kor">신전 로제 맵닭</p>
                     <p class="menu-eng">Spicy chicken in rich creamy rosé sauce</p>
                 </div>
-                <!-- ★ 신규 추가 메뉴 -->
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/크림 카레 떡볶이.jpg" alt="Cream Curry Topokki" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Cream+Curry+Topokki'"></div>
                     <h3>Cream Curry Topokki</h3>
