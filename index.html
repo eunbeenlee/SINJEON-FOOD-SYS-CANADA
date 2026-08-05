@@ -112,6 +112,7 @@
             transition: width 0.1s ease; will-change: width;
         }
 
+        /* 스크롤 애니메이션 필수 유지 */
         .reveal { opacity: 0; transform: translateY(30px) translateZ(0); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -137,12 +138,12 @@
         .event-popup-wrapper {
             position: fixed;
             top: 110px; 
-            left: 20px; 
+            left: 20px; /* ★ 좌측에 위치하도록 변경 */
             right: auto;
             z-index: 99999; 
             opacity: 0;
             visibility: hidden;
-            transform: translateX(-30px); 
+            transform: translateX(-30px); /* ★ 왼쪽에서 스르륵 */
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none; 
         }
@@ -331,7 +332,7 @@
         .menu-disclaimer i { color: var(--sj-red); font-size: 1.1rem; }
 
         /* =========================================
-           7. Locations & Maps (글로벌 스탠다드 구글 맵 적용)
+           7. Locations & Maps (★ 지도 정보 고도화 레이아웃)
            ========================================= */
         .locations { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1400px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 750px; }
@@ -369,8 +370,45 @@
         .btn-fill { background: var(--uber-green); color: var(--bg-white); border: 2px solid var(--uber-green); }
         .btn-fill:hover { background: #05a659; border-color: #05a659;}
         
-        .loc-map-wrapper { flex: 1; background: #e0e0e0; position: relative; pointer-events: auto; }
-        .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; display: block;}
+        /* ★ 구글 지도 컨테이너 및 오버레이 설정 */
+        .loc-map-wrapper { flex: 1; background: #e0e0e0; position: relative; pointer-events: auto; overflow: hidden; }
+        .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; display: block; position: relative; z-index: 1; }
+        
+        /* ★ 고급 지도 정보 오버레이 (Glassmorphism Info Card) */
+        .map-info-overlay {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            z-index: 10;
+            width: calc(100% - 60px);
+            max-width: 320px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .map-info-overlay.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .map-info-overlay h4 { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); margin-bottom: 10px; }
+        .map-info-overlay p { font-size: 0.95rem; color: var(--text-gray); margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; font-weight: 500;}
+        .map-info-overlay p i { color: var(--sj-red); margin-top: 3px; }
+        .overlay-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: var(--sj-red); color: white; text-decoration: none; font-weight: 700;
+            padding: 12px 0; border-radius: 12px; width: 100%; margin-top: 10px;
+            transition: var(--transition-fast);
+        }
+        .overlay-btn:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(210, 75, 65, 0.25); color: white; }
 
         /* =========================================
            8. Elfsight Instagram Widget
@@ -547,9 +585,17 @@
             .heat-compare { grid-template-columns: 1fr; }
             .heat-flow { flex-direction: column; gap: 20px; padding: 25px; }
             .flow-arrow { transform: rotate(90deg); margin: 5px 0; }
+
+            /* 모바일 지도 오버레이 위치 수정 */
+            .map-info-overlay {
+                bottom: 20px; left: 50%; transform: translate(-50%, 20px);
+                max-width: 90%;
+            }
+            .map-info-overlay.active {
+                transform: translate(-50%, 0);
+            }
         }
         
-        /* ★ 모바일 환경 팝업 및 레이아웃 제어 */
         @media (max-width: 600px) {
             .bento-large { gap: 20px; padding: 30px 15px; }
             .stat-item h4 { font-size: 2.2rem; }
@@ -568,23 +614,22 @@
             .about-section, .spice-section, .menu-section, .locations, .ugc-section, .timeline-section, .contact-section { padding: 80px 15px; }
             .form-content { padding: 30px 20px; }
 
-            /* ★ 모바일: 팝업을 화면 정중앙에 고정 (좌측 정렬 해제 및 비율 최적화) */
+            /* 모바일 팝업 화면 정중앙 고정 */
             .event-popup-wrapper {
                 top: 50%;
                 bottom: auto;
                 left: 50%;
                 right: auto;
-                transform: translate(-50%, -50%) scale(0.95);
+                transform: translate(-50%, -45%);
                 width: 90%;
                 max-width: 350px;
             }
             .event-popup-wrapper.show { 
-                transform: translate(-50%, -50%) scale(1); 
+                transform: translate(-50%, -50%); 
             }
             .event-popup-content {
                 width: 100%;
             }
-            /* ★ 모바일: 팝업 이미지를 가로가 아닌 위아래(세로) 스크롤로 변경 */
             .popup-image-container {
                 flex-direction: column; 
                 max-height: 70vh; 
@@ -612,7 +657,7 @@
         }
     </style>
     
-    <!-- ★ [최종 팝업 JS & 스크롤 옵저버] 완벽 통제 시스템 -->
+    <!-- ★ [최종 JS 종합 통제 센터] -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
@@ -654,7 +699,7 @@
                     } else {
                         const popupImgContainer = document.getElementById('popup-image-container');
                         
-                        // ★ 서버에 실제 업로드된 팝업 파일명 배열 지정
+                        // ★ 서버에 실제 업로드된 팝업 파일명 배열 지정 (오류 없이 안정적)
                         const activePopupFiles = ['popup_event_1.jpg', 'popup_event_2.jpg']; 
                         
                         if (activePopupFiles.length > 0) {
@@ -706,9 +751,55 @@
             } catch (error) {
                 console.error("Store Status Module Error:", error);
             }
+
+            // 4. 지도 자동 활성화 (첫 번째 매장)
+            setTimeout(() => {
+                const firstLoc = document.querySelector('.loc-item');
+                if(firstLoc) {
+                    firstLoc.classList.remove('active'); // 강제 재실행을 위해 리셋
+                    triggerMapChange(firstLoc);
+                }
+            }, 500);
         });
 
-        // 팝업 닫기 관련 외부 함수
+        // =========================================
+        // ★ [고급화] Hover 만으로 작동하는 지도 정보 오버레이 함수
+        // =========================================
+        function triggerMapChange(element) {
+            // 이미 활성화된 카드면 스킵
+            if(element.classList.contains('active')) return;
+            
+            // 모든 카드 활성화 해제 후 현재 카드만 활성화
+            document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            
+            // HTML에 저장해둔 데이터(Data attributes) 가져오기
+            const mapUrl = element.getAttribute('data-map-url');
+            const title = element.getAttribute('data-title');
+            const address = element.getAttribute('data-address');
+            const hours = element.getAttribute('data-hours');
+            const link = element.getAttribute('data-link');
+
+            // 1. 구글 지도(iframe) 변경
+            const iframe = document.getElementById('main-map');
+            if(iframe.src !== mapUrl) {
+                iframe.src = mapUrl;
+            }
+
+            // 2. 고급 정보 오버레이 내용 교체 및 팝업 애니메이션
+            const overlay = document.getElementById('map-premium-overlay');
+            overlay.classList.remove('active'); // 부드럽게 사라짐
+            
+            setTimeout(() => {
+                document.getElementById('overlay-title').innerText = title;
+                document.getElementById('overlay-address').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${address}`;
+                document.getElementById('overlay-hours').innerHTML = `<i class="fas fa-clock"></i> ${hours}`;
+                document.getElementById('overlay-link').href = link;
+                
+                overlay.classList.add('active'); // 부드럽게 나타남
+            }, 200);
+        }
+
         function closeEventPopup() {
             const popup = document.getElementById('main-event-popup');
             if (popup) popup.classList.remove('show'); 
@@ -763,7 +854,7 @@
         <p class="reveal delay-200">From Korea to Canada. Experience the authentic, HACCP-certified spice that captivated over 800 locations worldwide.</p>
         
         <button class="btn-clean-heat reveal delay-300" onclick="openModal('clean-heat')">
-            🌶️ Discover the Secret of Clean Heat
+            🌶️ Discover 소Discover the Secret of Clean Heat
         </button>
 
         <div class="marquee-wrapper reveal delay-300">
@@ -868,7 +959,7 @@
 
         <div class="menu-grid-container reveal delay-200">
             <!-- ==============================
-                 Main Category 
+                 Main Category (신메뉴 6종 100% 반영)
                  ============================== -->
             <div id="cat-Main" class="menu-grid active">
                 <div class="menu-item">
@@ -1085,7 +1176,7 @@
 
     </section>
 
-    <!-- [글로벌 스탠다드 지도 + 마우스 호버(Hover) 전환 인터랙션 적용] -->
+    <!-- [프리미엄 위치 정보 및 Hover 정보 표시 오버레이] -->
     <section class="locations" id="locations">
         <div class="section-header reveal">
             <p>Find Us</p>
@@ -1095,8 +1186,15 @@
         <div class="split-layout reveal delay-100">
             <div class="loc-list-wrapper">
                 
-                <!-- ★ onmouseenter 속성으로 마우스만 가져다 대면 지도가 즉시 바뀝니다! -->
-                <div class="loc-item active store-card" onmouseenter="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="11.5" data-close="23">
+                <!-- ★ Hover(마우스 올림) 시 지도와 오버레이 창이 동시에 부드럽게 업데이트 됩니다 -->
+                <div class="loc-item store-card" 
+                     data-map-url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca"
+                     data-title="Sinjeon Finch"
+                     data-address="5 Byng Ave, North York, ON M2N 5R7"
+                     data-hours="Mon-Sun 11:30 AM - 11:00 PM"
+                     data-link="https://maps.google.com/?q=Sinjeon+Topokki+Finch"
+                     data-timezone="America/Toronto" data-open="11.5" data-close="23"
+                     onmouseenter="triggerMapChange(this)" onclick="triggerMapChange(this)">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.9 (314)</span>
@@ -1113,12 +1211,19 @@
                         <span class="feature-tag">Delivery</span>
                     </div>
                     <div class="loc-actions">
-                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Finch" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();" aria-label="View Finch Map"><i class="fas fa-location-arrow"></i> Map</a>
-                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-finch/LMMptGifXsOnJBVSXsoFuQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();" aria-label="Order Finch Uber Eats"><i class="fas fa-motorcycle"></i> Uber Eats</a>
+                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Finch" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow"></i> Google Maps</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-finch/LMMptGifXsOnJBVSXsoFuQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle"></i> Uber Eats</a>
                     </div>
                 </div>
 
-                <div class="loc-item store-card" onmouseenter="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.685338!2d-79.4187!3d43.6635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b349d970997cb%3A0xc3c9f2be9b05c56b!2sSinjeon%20Topokki%20Bloor!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.685338!2d-79.4187!3d43.6635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b349d970997cb%3A0xc3c9f2be9b05c56b!2sSinjeon%20Topokki%20Bloor!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="12" data-close="1">
+                <div class="loc-item store-card" 
+                     data-map-url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.685338!2d-79.4187!3d43.6635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b349d970997cb%3A0xc3c9f2be9b05c56b!2sSinjeon%20Topokki%20Bloor!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca"
+                     data-title="Sinjeon Christie"
+                     data-address="712 Bloor St W, Toronto, ON M6G 1L4"
+                     data-hours="Mon-Sun 12:00 PM - 1:00 AM"
+                     data-link="https://maps.google.com/?q=Sinjeon+Topokki+Bloor"
+                     data-timezone="America/Toronto" data-open="12" data-close="1"
+                     onmouseenter="triggerMapChange(this)" onclick="triggerMapChange(this)">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.8 (210)</span>
@@ -1135,12 +1240,19 @@
                         <span class="feature-tag">Delivery</span>
                     </div>
                     <div class="loc-actions">
-                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Bloor" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();" aria-label="View Christie Map"><i class="fas fa-location-arrow"></i> Map</a>
-                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-bloor/SXFYVKNMX12RbmYzYsXF5w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();" aria-label="Order Christie Uber Eats"><i class="fas fa-motorcycle"></i> Uber Eats</a>
+                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Bloor" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow"></i> Google Maps</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-bloor/SXFYVKNMX12RbmYzYsXF5w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle"></i> Uber Eats</a>
                     </div>
                 </div>
 
-                <div class="loc-item store-card" onmouseenter="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.825!2d-122.8943!3d49.248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548678229df83c9b%3A0xc3b7d1e8c9b2f6b3!2sSinjeon%20Topokki%20Lougheed!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.825!2d-122.8943!3d49.248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548678229df83c9b%3A0xc3b7d1e8c9b2f6b3!2sSinjeon%20Topokki%20Lougheed!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Vancouver" data-open="11.5" data-close="21.5">
+                <div class="loc-item store-card" 
+                     data-map-url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.825!2d-122.8943!3d49.248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548678229df83c9b%3A0xc3b7d1e8c9b2f6b3!2sSinjeon%20Topokki%20Lougheed!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca"
+                     data-title="Sinjeon Lougheed"
+                     data-address="329 North Rd #455, Coquitlam, BC V3K 6Z8"
+                     data-hours="Mon-Sun 11:30 AM - 9:30 PM"
+                     data-link="https://maps.google.com/?q=Sinjeon+Topokki+Lougheed"
+                     data-timezone="America/Vancouver" data-open="11.5" data-close="21.5"
+                     onmouseenter="triggerMapChange(this)" onclick="triggerMapChange(this)">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.7 (185)</span>
@@ -1157,12 +1269,19 @@
                         <span class="feature-tag">Parking</span>
                     </div>
                     <div class="loc-actions">
-                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Lougheed" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();" aria-label="View Lougheed Map"><i class="fas fa-location-arrow"></i> Map</a>
-                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-lougheed/rEGaT6FoWKuCNfwSGIWy8w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();" aria-label="Order Lougheed Uber Eats"><i class="fas fa-motorcycle"></i> Uber Eats</a>
+                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Lougheed" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow"></i> Google Maps</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-lougheed/rEGaT6FoWKuCNfwSGIWy8w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle"></i> Uber Eats</a>
                     </div>
                 </div>
 
-                <div class="loc-item store-card" onmouseenter="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.208!2d-79.378!3d43.659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb34f0d6118d%3A0x6e788c7f2165e3b5!2sSinjeon%20Topokki%20Church!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.208!2d-79.378!3d43.659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb34f0d6118d%3A0x6e788c7f2165e3b5!2sSinjeon%20Topokki%20Church!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="11" data-close="22" data-close-weekend="23">
+                <div class="loc-item store-card" 
+                     data-map-url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.208!2d-79.378!3d43.659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb34f0d6118d%3A0x6e788c7f2165e3b5!2sSinjeon%20Topokki%20Church!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca"
+                     data-title="Sinjeon Church"
+                     data-address="377 Church St, Toronto, ON M5B 1H9"
+                     data-hours="Sun-Thu 11am-10pm | Fri-Sat 11am-11pm"
+                     data-link="https://maps.google.com/?q=Sinjeon+Topokki+Church"
+                     data-timezone="America/Toronto" data-open="11" data-close="22" data-close-weekend="23"
+                     onmouseenter="triggerMapChange(this)" onclick="triggerMapChange(this)">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.8 (150)</span>
@@ -1179,15 +1298,23 @@
                         <span class="feature-tag">Late Night</span>
                     </div>
                     <div class="loc-actions">
-                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Church" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();" aria-label="View Church Map"><i class="fas fa-location-arrow"></i> Map</a>
-                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-downtown-toronto/fK_ps-eeWiWycUrGuC-TIQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();" aria-label="Order Church Uber Eats"><i class="fas fa-motorcycle"></i> Uber Eats</a>
+                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Church" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow"></i> Google Maps</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-downtown-toronto/fK_ps-eeWiWycUrGuC-TIQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle"></i> Uber Eats</a>
                     </div>
                 </div>
             </div>
             
-            <!-- 글로벌 스탠다드: 구글 맵 기본 임베드 iframe -->
             <div class="loc-map-wrapper">
-                <iframe id="main-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <!-- 글로벌 스탠다드 구글맵 iframe -->
+                <iframe id="main-map" src="about:blank" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                
+                <!-- ★ 고급화된 정보 표시 팝업 (Map Info Overlay) -->
+                <div class="map-info-overlay" id="map-premium-overlay">
+                    <h4 id="overlay-title">Loading...</h4>
+                    <p id="overlay-address"><i class="fas fa-map-marker-alt"></i> </p>
+                    <p id="overlay-hours"><i class="fas fa-clock"></i> </p>
+                    <a id="overlay-link" href="#" target="_blank" class="overlay-btn">Get Directions <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
         </div>
     </section>
