@@ -137,12 +137,12 @@
         .event-popup-wrapper {
             position: fixed;
             top: 110px; 
-            left: 20px; /* ★ 좌측에 위치하도록 변경 */
+            left: 20px; 
             right: auto;
             z-index: 99999; 
             opacity: 0;
             visibility: hidden;
-            transform: translateX(-30px); /* ★ 왼쪽에서 들어오는 애니메이션으로 수정 */
+            transform: translateX(-30px); 
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none; 
         }
@@ -331,7 +331,7 @@
         .menu-disclaimer i { color: var(--sj-red); font-size: 1.1rem; }
 
         /* =========================================
-           7. Locations & Maps 
+           7. Locations & Maps (글로벌 스탠다드 구글 맵 적용)
            ========================================= */
         .locations { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1400px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 750px; }
@@ -368,6 +368,7 @@
         .btn-outline:hover { border-color: var(--sj-green); color: var(--sj-green); }
         .btn-fill { background: var(--uber-green); color: var(--bg-white); border: 2px solid var(--uber-green); }
         .btn-fill:hover { background: #05a659; border-color: #05a659;}
+        
         .loc-map-wrapper { flex: 1; background: #e0e0e0; position: relative; pointer-events: auto; }
         .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; display: block;}
 
@@ -1084,7 +1085,7 @@
 
     </section>
 
-    <!-- [프리미엄 위치 정보] -->
+    <!-- [글로벌 스탠다드 지도 + 마우스 호버(Hover) 전환 인터랙션 적용] -->
     <section class="locations" id="locations">
         <div class="section-header reveal">
             <p>Find Us</p>
@@ -1094,7 +1095,8 @@
         <div class="split-layout reveal delay-100">
             <div class="loc-list-wrapper">
                 
-                <div class="loc-item active store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="11.5" data-close="23">
+                <!-- ★ onmouseenter 속성으로 마우스만 가져다 대면 지도가 즉시 바뀝니다! -->
+                <div class="loc-item active store-card" onmouseenter="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="11.5" data-close="23">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.9 (314)</span>
@@ -1116,7 +1118,7 @@
                     </div>
                 </div>
 
-                <div class="loc-item store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.685338!2d-79.4187!3d43.6635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b349d970997cb%3A0xc3c9f2be9b05c56b!2sSinjeon%20Topokki%20Bloor!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="12" data-close="1">
+                <div class="loc-item store-card" onmouseenter="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.685338!2d-79.4187!3d43.6635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b349d970997cb%3A0xc3c9f2be9b05c56b!2sSinjeon%20Topokki%20Bloor!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.685338!2d-79.4187!3d43.6635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b349d970997cb%3A0xc3c9f2be9b05c56b!2sSinjeon%20Topokki%20Bloor!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="12" data-close="1">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.8 (210)</span>
@@ -1138,7 +1140,7 @@
                     </div>
                 </div>
 
-                <div class="loc-item store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.825!2d-122.8943!3d49.248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548678229df83c9b%3A0xc3b7d1e8c9b2f6b3!2sSinjeon%20Topokki%20Lougheed!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Vancouver" data-open="11.5" data-close="21.5">
+                <div class="loc-item store-card" onmouseenter="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.825!2d-122.8943!3d49.248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548678229df83c9b%3A0xc3b7d1e8c9b2f6b3!2sSinjeon%20Topokki%20Lougheed!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.825!2d-122.8943!3d49.248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548678229df83c9b%3A0xc3b7d1e8c9b2f6b3!2sSinjeon%20Topokki%20Lougheed!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Vancouver" data-open="11.5" data-close="21.5">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.7 (185)</span>
@@ -1160,7 +1162,7 @@
                     </div>
                 </div>
 
-                <div class="loc-item store-card" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.208!2d-79.378!3d43.659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb34f0d6118d%3A0x6e788c7f2165e3b5!2sSinjeon%20Topokki%20Church!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="11" data-close="22" data-close-weekend="23">
+                <div class="loc-item store-card" onmouseenter="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.208!2d-79.378!3d43.659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb34f0d6118d%3A0x6e788c7f2165e3b5!2sSinjeon%20Topokki%20Church!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" onclick="changeMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.208!2d-79.378!3d43.659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb34f0d6118d%3A0x6e788c7f2165e3b5!2sSinjeon%20Topokki%20Church!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca', this)" data-timezone="America/Toronto" data-open="11" data-close="22" data-close-weekend="23">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star"></i> 4.8 (150)</span>
@@ -1183,6 +1185,7 @@
                 </div>
             </div>
             
+            <!-- 글로벌 스탠다드: 구글 맵 기본 임베드 iframe -->
             <div class="loc-map-wrapper">
                 <iframe id="main-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
@@ -1394,275 +1397,5 @@
         </div>
     </div>
 
-    <script>
-        function showMenuCategory(catId) {
-            document.querySelectorAll('.menu-tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            document.querySelectorAll('.menu-grid').forEach(grid => {
-                grid.classList.remove('active');
-            });
-            document.getElementById('cat-' + catId).classList.add('active');
-        }
-
-        function changeMap(mapUrl, element) {
-            document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
-            
-            const iframe = document.getElementById('main-map');
-            iframe.src = mapUrl;
-        }
-
-        function updateStoreStatuses() {
-            const storeCards = document.querySelectorAll('.store-card');
-            storeCards.forEach(card => {
-                try {
-                    const tz = card.getAttribute('data-timezone');
-                    if (!tz) return;
-
-                    const dateInTz = new Date(new Date().toLocaleString("en-US", {timeZone: tz}));
-                    let currentHour = dateInTz.getHours();
-                    const currentMin = dateInTz.getMinutes();
-                    const currentDay = dateInTz.getDay(); 
-                    
-                    const currentTimeVal = currentHour + (currentMin / 60);
-
-                    let openHour = parseFloat(card.getAttribute('data-open') || 11);
-                    let closeHour = parseFloat(card.getAttribute('data-close') || 22);
-                    
-                    if (card.hasAttribute('data-close-weekend') && (currentDay === 5 || currentDay === 6)) {
-                        closeHour = parseFloat(card.getAttribute('data-close-weekend'));
-                    }
-
-                    let isOpen = false;
-                    let adjustedCurrent = currentTimeVal;
-                    let adjustedClose = closeHour;
-                    
-                    if (closeHour <= openHour) { 
-                        adjustedClose += 24;
-                        if (currentTimeVal < openHour) {
-                            adjustedCurrent += 24;
-                        }
-                    }
-
-                    if (adjustedCurrent >= openHour && adjustedCurrent < adjustedClose) {
-                        isOpen = true;
-                    }
-
-                    function formatTime(decimalTime) {
-                        let h = Math.floor(decimalTime);
-                        let m = Math.round((decimalTime - h) * 60);
-                        let ampm = h >= 12 && h < 24 ? 'PM' : 'AM';
-                        h = h % 12;
-                        if (h === 0) h = 12;
-                        let mStr = m > 0 ? ':' + (m < 10 ? '0'+m : m) : '';
-                        return `${h}${mStr} ${ampm}`;
-                    }
-
-                    const badge = card.querySelector('.loc-status');
-                    if (badge) {
-                        if (isOpen) {
-                            badge.innerHTML = `Open Now (Closes ${formatTime(closeHour)})`;
-                            badge.className = "loc-status open";
-                        } else {
-                            badge.innerHTML = `Closed (Opens ${formatTime(openHour)})`;
-                            badge.className = "loc-status closed";
-                        }
-                    }
-                } catch(e) {
-                    console.error("Hours parsing error: ", e);
-                    const badge = card.querySelector('.loc-status');
-                    if (badge) {
-                        badge.innerHTML = "Check Hours";
-                        badge.className = "loc-status closed";
-                    }
-                }
-            });
-        }
-
-        function handleInquiryEmailJS(event, type) {
-            event.preventDefault();
-            
-            if (typeof emailjs === 'undefined') {
-                alert("EmailJS service is currently unavailable. Launching your default email client instead.");
-                fallbackMailto(type, getFormParams(event.target, type));
-                return false;
-            }
-
-            const formElement = event.target;
-            const submitButton = formElement.querySelector('.submit-btn');
-            const originalButtonText = submitButton.innerHTML;
-            
-            submitButton.disabled = true;
-            submitButton.innerHTML = "PROCESSING... ⏳";
-
-            let serviceID = "service_zyn89ll"; 
-            let templateID = "template_r8gce22"; 
-            
-            const params = getFormParams(formElement, type);
-            params.target_email = "eunbeen.lee@y2choldings.co.kr";
-            params.inquiry_type = type;
-
-            emailjs.send(serviceID, templateID, params)
-                .then(() => {
-                    alert(`Thank you! Your ${type} inquiry has been submitted successfully.`);
-                    formElement.reset();
-                })
-                .catch((error) => {
-                    console.error("EmailJS Failure:", error);
-                    alert(`Cloud service routing is completing configuration. Alternative mail window will open now.`);
-                    fallbackMailto(type, params);
-                })
-                .finally(() => {
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = originalButtonText;
-                });
-            return false;
-        }
-
-        function getFormParams(formElement, type) {
-            let params = {
-                name: formElement.querySelector('[name="from_name"]').value,
-                phone: formElement.querySelector('[name="reply_phone"]').value,
-                email: formElement.querySelector('[name="reply_email"]').value,
-                message: formElement.querySelector('[name="message"]').value
-            };
-            if(type === 'Franchise') {
-                params.location = formElement.querySelector('[name="desired_location"]').value;
-                params.budget = formElement.querySelector('[name="budget"]').value;
-            }
-            return params;
-        }
-
-        function fallbackMailto(type, params) {
-            const subject = `[${type} Inquiry] from ${params.name}`;
-            let body = "";
-            if(type === 'General') {
-                body = `Name: ${params.name}%0D%0APhone: ${params.phone}%0D%0AEmail: ${params.email}%0D%0A%0D%0AInquiry:%0D%0A${params.message}`;
-            } else {
-                body = `Applicant Name: ${params.name}%0D%0AContact: ${params.phone}%0D%0AEmail: ${params.email}%0D%0ADesired Location: ${params.location}%0D%0AEstimated Budget: ${params.budget}%0D%0A%0D%0ABusiness Background / Inquiry:%0D%0A${params.message}`;
-            }
-            const targetMail = "eunbeen.lee@y2choldings.co.kr";
-            window.location.href = `mailto:${targetMail}?subject=${encodeURIComponent(subject)}&body=${body}`;
-        }
-
-        function switchContactTab(target) {
-            document.querySelectorAll('.contact-wrapper .tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.contact-wrapper .form-content').forEach(form => {
-                form.classList.remove('active');
-                form.style.animation = 'none';
-                form.offsetHeight; 
-                form.style.animation = null; 
-            });
-            document.querySelector(`.contact-wrapper .tab-btn[data-target="${target}"]`).classList.add('active');
-            document.getElementById(`${target}-form`).classList.add('active');
-        }
-
-        let isScrolling = false;
-        window.addEventListener('scroll', () => {
-            if (!isScrolling) {
-                window.requestAnimationFrame(() => {
-                    const header = document.getElementById('header');
-                    if (window.scrollY > 50) header.classList.add('scrolled');
-                    else header.classList.remove('scrolled');
-
-                    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                    const scrolled = (winScroll / height) * 100;
-                    document.getElementById("scroll-progress").style.width = scrolled + "%";
-
-                    const fabContainer = document.getElementById('fab-container');
-                    if (window.scrollY > 500) fabContainer.classList.add('visible');
-                    else fabContainer.classList.remove('visible');
-                    
-                    isScrolling = false;
-                });
-                isScrolling = true;
-            }
-        });
-
-        function openModal(type) {
-            const modal = document.getElementById('dynamic-modal');
-            const title = document.getElementById('modal-title');
-            const body = document.getElementById('modal-body');
-
-            if(type === 'clean-heat') {
-                title.style.display = 'none';
-                body.innerHTML = `
-                    <h4 style="margin-top:0; font-size: 2rem; color: var(--sj-red); line-height: 1.2; font-family: 'SinjeonCustom', sans-serif; font-weight: normal;">How Cheongyang Chili Peppers Make Our Clean Heat</h4>
-                    <p style="font-size: 1.1rem; color: var(--text-dark); margin-top: 15px;">At Sinjeon, we refuse to compromise on wellness. We use 100% authentic Cheongyang chili peppers instead of chemical capsaicin extracts to create our signature addictive spice that North Americans are falling in love with.</p>
-                    
-                    <div class="heat-diagram">
-                        <div class="heat-compare">
-                            <div class="heat-box heat-bad">
-                                <h5>Artificial Capsaicin</h5>
-                                <p>❌ Chemical extracts</p>
-                                <p>❌ Lingering, painful heat</p>
-                                <p>❌ Can cause stomach discomfort</p>
-                            </div>
-                            <div class="heat-box heat-good">
-                                <h5>Authentic Cheongyang Chili</h5>
-                                <p>✅ 100% Natural ingredients</p>
-                                <p>✅ Sharp, clean, and refreshing heat</p>
-                                <p>✅ Dissipates quickly, leaving rich flavor</p>
-                            </div>
-                        </div>
-                        
-                        <div class="heat-flow">
-                            <div class="flow-step">
-                                <i>🌶️</i><span>Premium Chili<br>Harvesting</span>
-                            </div>
-                            <div class="flow-arrow">➔</div>
-                            <div class="flow-step">
-                                <i>🏭</i><span>HACCP Certified<br>Processing</span>
-                            </div>
-                            <div class="flow-arrow">➔</div>
-                            <div class="flow-step">
-                                <i>✨</i><span>Sinjeon's<br>Secret Sauce</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            } 
-            else if(type === 'privacy') {
-                title.style.display = 'block';
-                title.innerText = "Privacy Policy";
-                body.innerHTML = `
-                    <h4>1. Introduction</h4>
-                    <p>Sinjeon Food Sys Canada ("we", "our", or "us") is committed to protecting the privacy and security of your personal information. This Privacy Policy outlines how we collect, use, and safeguard data in compliance with the Personal Information Protection and Electronic Documents Act (PIPEDA).</p>
-                    <h4>2. Information We Collect</h4>
-                    <p>We only collect personal information that is necessary for our business operations. This includes your name, phone number, email address, and desired location data when you voluntarily submit inquiries via our Contact Us or Franchise forms.</p>
-                    <h4>3. Use of Information</h4>
-                    <p>The information collected is strictly used to:<br>- Respond to your general support or franchise inquiries.<br>- Assess your franchise application and provide preliminary consulting.<br>- Communicate updates regarding our operations or your application status.</p>
-                    <h4>4. Data Security and Sharing</h4>
-                    <p>We implement robust, industry-standard security protocols to protect your data transmitted through our Cloud infrastructure. <strong>We do not sell, rent, or trade your personal information to any third parties.</strong></p>
-                `;
-            } 
-            else if(type === 'terms') {
-                title.style.display = 'block';
-                title.innerText = "Terms of Service";
-                body.innerHTML = `
-                    <h4>1. Acceptance of Terms</h4>
-                    <p>By accessing and using the Sinjeon Canada website, you accept and agree to be bound by the terms and provision of this agreement. These terms are governed by the laws of the Province of Ontario and the federal laws of Canada applicable therein.</p>
-                    <h4>2. Intellectual Property Rights</h4>
-                    <p>All content published on this website, including but not limited to brand logos, typography ('SinjeonCustom'), graphical assets, character illustrations ('Mill-tto Family'), and textual content, are the exclusive intellectual property of Sinjeon Food Sys. <strong>Unauthorized scraping, copying, reproduction, or commercial use is strictly prohibited and subject to legal action.</strong></p>
-                    <h4>3. Franchise Application Disclaimer</h4>
-                    <p>Submitting a franchise inquiry through this website does not constitute a binding legal contract or a guarantee of franchise approval.</p>
-                `;
-            }
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; 
-        }
-
-        function closeModal() {
-            document.getElementById('dynamic-modal').classList.remove('active');
-            document.body.style.overflow = ''; 
-        }
-        
-        document.getElementById('dynamic-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-    </script>
 </body>
 </html>
