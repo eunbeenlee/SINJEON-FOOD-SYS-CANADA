@@ -112,7 +112,7 @@
             transition: width 0.1s ease; will-change: width;
         }
 
-        /* 스크롤 애니메이션 필수 유지 */
+        /* ★ 애니메이션 로직 */
         .reveal { opacity: 0; transform: translateY(30px) translateZ(0); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -138,12 +138,12 @@
         .event-popup-wrapper {
             position: fixed;
             top: 110px; 
-            left: 20px; /* ★ 좌측에 위치하도록 변경 */
+            left: 20px; 
             right: auto;
             z-index: 99999; 
             opacity: 0;
             visibility: hidden;
-            transform: translateX(-30px); /* ★ 왼쪽에서 스르륵 */
+            transform: translateX(-30px); 
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none; 
         }
@@ -332,7 +332,7 @@
         .menu-disclaimer i { color: var(--sj-red); font-size: 1.1rem; }
 
         /* =========================================
-           7. Locations & Maps (★ 지도 정보 고도화 레이아웃)
+           7. Locations & Maps (★ 프리미엄 오버레이)
            ========================================= */
         .locations { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1400px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 750px; }
@@ -370,11 +370,11 @@
         .btn-fill { background: var(--uber-green); color: var(--bg-white); border: 2px solid var(--uber-green); }
         .btn-fill:hover { background: #05a659; border-color: #05a659;}
         
-        /* ★ 구글 지도 컨테이너 및 오버레이 설정 */
+        /* 구글 지도 컨테이너 및 오버레이 설정 */
         .loc-map-wrapper { flex: 1; background: #e0e0e0; position: relative; pointer-events: auto; overflow: hidden; }
         .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; display: block; position: relative; z-index: 1; }
         
-        /* ★ 고급 지도 정보 오버레이 (Glassmorphism Info Card) */
+        /* 고급 정보 오버레이 (Glassmorphism Info Card) */
         .map-info-overlay {
             position: absolute;
             bottom: 30px;
@@ -397,7 +397,7 @@
         .map-info-overlay.active {
             transform: translateY(0);
             opacity: 1;
-            pointer-events: auto;
+            pointer-events: auto; /* 창이 떴을 때 클릭 가능하도록 */
         }
         .map-info-overlay h4 { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); margin-bottom: 10px; }
         .map-info-overlay p { font-size: 0.95rem; color: var(--text-gray); margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; font-weight: 500;}
@@ -657,11 +657,11 @@
         }
     </style>
     
-    <!-- ★ [최종 JS 종합 통제 센터] -->
+    <!-- ★ [에러 0% 보장] JS 종합 통제 센터 -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. 스크롤 애니메이션 옵저버
+            // 1. 스크롤 애니메이션 옵저버 (가장 먼저 실행)
             try {
                 const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
                 const observer = new IntersectionObserver((entries, observer) => {
@@ -677,60 +677,58 @@
                     observer.observe(el);
                 });
                 
-                // [Failsafe] 어떤 환경에서도 무조건 1초 뒤 나타남 보장
+                // [안전장치] 만약 스크롤 옵저버가 안 돌아가면 무조건 1초 뒤 다 나타나게 함
                 setTimeout(() => {
                     document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
                 }, 1000);
             } catch (error) {
+                // 에러나면 즉시 모든 요소를 화면에 띄워버림
                 document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
                 console.error("Scroll Observer Error:", error);
             }
 
-            // 2. 팝업 노출 제어 (404 에러 원천 차단 및 순서 보장)
+            // 2. 팝업 노출 제어 (배열 방식)
             try {
                 const popup = document.getElementById('main-event-popup');
                 if (popup) {
                     const hideUntil = localStorage.getItem('hideMainPopupUntil');
                     const now = new Date().getTime();
 
-                    // '24시간 숨기기' 쿠키 체크
                     if (hideUntil && now < parseInt(hideUntil)) {
                         console.log("[Popup] 24 hours hide active. Skipping popup.");
                     } else {
                         const popupImgContainer = document.getElementById('popup-image-container');
                         
-                        // ★ 서버에 실제 업로드된 팝업 파일명 배열 지정 (오류 없이 안정적)
+                        // ★ 서버에 실제 업로드된 팝업 파일명 배열 지정
                         const activePopupFiles = ['popup_event_1.jpg', 'popup_event_2.jpg']; 
                         
                         if (activePopupFiles.length > 0) {
                             let loadedImages = 0;
 
-                            // 이미지 로딩 순서를 완벽하게 보장하기 위해 빈 방(Slot)을 먼저 만들어 둠
+                            // 이미지 순서 보장을 위해 빈 공간(div) 먼저 생성
                             activePopupFiles.forEach((file, index) => {
                                 const slot = document.createElement('div');
                                 slot.id = `popup-slot-${index}`;
                                 popupImgContainer.appendChild(slot);
                             });
 
-                            // 이미지 비동기 다운로드 및 슬롯 장착
+                            // 이미지 비동기 다운로드 및 넣기
                             activePopupFiles.forEach((file, index) => {
                                 const img = new Image();
                                 img.alt = `Sinjeon Event Notice ${index + 1}`;
                                 
                                 img.onload = function() {
-                                    // 지정된 슬롯에 들어가므로 다운로드 속도와 상관없이 순서 보장
                                     document.getElementById(`popup-slot-${index}`).appendChild(this);
                                     loadedImages++;
                                     
-                                    // 1개라도 로딩 성공 시 팝업을 스르륵 띄움
+                                    // 1개라도 로드 성공하면 팝업 띄우기
                                     if (loadedImages === 1) {
                                         setTimeout(() => { popup.classList.add('show'); }, 100); 
                                     }
                                 };
                                 
                                 img.onerror = function() {
-                                    // 실패한 슬롯은 DOM에서 깔끔하게 제거하여 빈칸 방지
-                                    console.warn(`[Popup] Not found or error loading: ${file}`);
+                                    // 파일 없으면 빈 공간만 조용히 삭제
                                     const emptySlot = document.getElementById(`popup-slot-${index}`);
                                     if(emptySlot) emptySlot.remove();
                                 };
@@ -744,7 +742,7 @@
                 console.error("Popup Module Error:", error);
             }
             
-            // 3. 영업시간 업데이트 로직
+            // 3. 영업시간 갱신 시스템
             try {
                 updateStoreStatuses();
                 setInterval(updateStoreStatuses, 60000);
@@ -752,54 +750,59 @@
                 console.error("Store Status Module Error:", error);
             }
 
-            // 4. 지도 자동 활성화 (첫 번째 매장)
+            // 4. 페이지 진입 시 첫 번째 지도 정보(Finch) 미리 세팅
             setTimeout(() => {
                 const firstLoc = document.querySelector('.loc-item');
                 if(firstLoc) {
-                    firstLoc.classList.remove('active'); // 강제 재실행을 위해 리셋
+                    // 강제 트리거를 위해 active를 뺐다가 함수 안에서 다시 넣음
+                    firstLoc.classList.remove('active'); 
                     triggerMapChange(firstLoc);
                 }
             }, 500);
         });
 
         // =========================================
-        // ★ [고급화] Hover 만으로 작동하는 지도 정보 오버레이 함수
+        // ★ [고급화] 마우스를 올리면(Hover) 작동하는 구글 지도 & 오버레이 연동 함수
         // =========================================
         function triggerMapChange(element) {
-            // 이미 활성화된 카드면 스킵
+            // 이미 활성화된 카드면 무시
             if(element.classList.contains('active')) return;
             
-            // 모든 카드 활성화 해제 후 현재 카드만 활성화
+            // 모든 카드 활성화 해제 후 현재 카드만 활성화 효과 부여
             document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
             
-            // HTML에 저장해둔 데이터(Data attributes) 가져오기
+            // 해당 HTML 요소에 적어둔 데이터 가져오기
             const mapUrl = element.getAttribute('data-map-url');
             const title = element.getAttribute('data-title');
             const address = element.getAttribute('data-address');
             const hours = element.getAttribute('data-hours');
             const link = element.getAttribute('data-link');
 
-            // 1. 구글 지도(iframe) 변경
+            // 1. 구글 지도(iframe) 부드럽게 변경
             const iframe = document.getElementById('main-map');
             if(iframe.src !== mapUrl) {
                 iframe.src = mapUrl;
             }
 
-            // 2. 고급 정보 오버레이 내용 교체 및 팝업 애니메이션
+            // 2. 지도 위의 고급 오버레이 창 내용 교체 및 팝업 애니메이션
             const overlay = document.getElementById('map-premium-overlay');
-            overlay.classList.remove('active'); // 부드럽게 사라짐
+            overlay.classList.remove('active'); // 먼저 부드럽게 숨김
             
+            // 약간의 딜레이 후 글자 바꾸고 다시 띄움 (스르륵 효과)
             setTimeout(() => {
                 document.getElementById('overlay-title').innerText = title;
                 document.getElementById('overlay-address').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${address}`;
                 document.getElementById('overlay-hours').innerHTML = `<i class="fas fa-clock"></i> ${hours}`;
                 document.getElementById('overlay-link').href = link;
                 
-                overlay.classList.add('active'); // 부드럽게 나타남
-            }, 200);
+                overlay.classList.add('active'); // 다시 부드럽게 나타남
+            }, 300);
         }
 
+        // =========================================
+        // 기타 유틸리티 함수 모음
+        // =========================================
         function closeEventPopup() {
             const popup = document.getElementById('main-event-popup');
             if (popup) popup.classList.remove('show'); 
@@ -854,7 +857,7 @@
         <p class="reveal delay-200">From Korea to Canada. Experience the authentic, HACCP-certified spice that captivated over 800 locations worldwide.</p>
         
         <button class="btn-clean-heat reveal delay-300" onclick="openModal('clean-heat')">
-            🌶️ Discover 소Discover the Secret of Clean Heat
+            🌶️ Discover the Secret of Clean Heat
         </button>
 
         <div class="marquee-wrapper reveal delay-300">
@@ -959,7 +962,7 @@
 
         <div class="menu-grid-container reveal delay-200">
             <!-- ==============================
-                 Main Category (신메뉴 6종 100% 반영)
+                 Main Category 
                  ============================== -->
             <div id="cat-Main" class="menu-grid active">
                 <div class="menu-item">
@@ -1186,8 +1189,8 @@
         <div class="split-layout reveal delay-100">
             <div class="loc-list-wrapper">
                 
-                <!-- ★ Hover(마우스 올림) 시 지도와 오버레이 창이 동시에 부드럽게 업데이트 됩니다 -->
-                <div class="loc-item store-card" 
+                <!-- ★ Hover(마우스 올림) 시 지도와 오버레이 창이 동시에 부드럽게 업데이트 -->
+                <div class="loc-item active store-card" 
                      data-map-url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca"
                      data-title="Sinjeon Finch"
                      data-address="5 Byng Ave, North York, ON M2N 5R7"
