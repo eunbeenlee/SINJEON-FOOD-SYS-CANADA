@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- 모바일 환경 최적화: iOS 자동 줌 방지 및 스케일 고정 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    
-    <!-- 모바일 브라우저 상단 탭 색상을 신전 브랜드 컬러로 동기화 -->
     <meta name="theme-color" content="#D24B41">
     
     <!-- Primary Meta Tags -->
@@ -12,27 +11,17 @@
     <meta name="title" content="Sinjeon Canada | The New Standard of Topokki">
     <meta name="description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide.">
 
-    <!-- Open Graph / Facebook / KakaoTalk -->
+    <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sinjeoncanada.com/">
     <meta property="og:title" content="Sinjeon Canada | The New Standard of Topokki">
     <meta property="og:description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide.">
     <meta property="og:image" content="https://sinjeoncanada.com/sinjeon_og_image.jpg">
 
-    <!-- Twitter / iMessage -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://sinjeoncanada.com/">
-    <meta property="twitter:title" content="Sinjeon Canada | The New Standard of Topokki">
-    <meta property="twitter:description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide.">
-    <meta property="twitter:image" content="https://sinjeoncanada.com/sinjeon_og_image.jpg">
-    
-    <!-- 탭창 로고 (Favicon) 연결 -->
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
-    
-    <!-- FontAwesome 아이콘 라이브러리 추가 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- EmailJS SDK -->
+    <!-- EmailJS SDK (비동기 처리로 로딩 병목 차단) -->
     <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
@@ -42,17 +31,60 @@
         });
     </script>
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts (preconnect로 폰트 다운로드 속도 가속) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Elfsight Instagram Widget -->
-    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <!-- Elfsight Widget (비동기 지연 로딩) -->
+    <script src="https://elfsightcdn.com/platform.js" async defer></script>
 
     <style>
         /* =========================================
-           1. 타이포그래피 및 기본 설정
+           1. 보안 및 불펌 방지 (Anti-Theft System)
+           ========================================= */
+        html, body {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden !important;
+            position: relative;
+            
+            /* 텍스트 드래그 및 복사 방지 */
+            -webkit-user-select: none; 
+            -moz-user-select: none; 
+            -ms-user-select: none; 
+            user-select: none;
+            
+            /* iOS 팝업 메뉴 차단 */
+            -webkit-touch-callout: none; 
+        }
+
+        /* 폼 입력창은 드래그/복사 허용 (접근성 유지) */
+        input, textarea, select { 
+            -webkit-user-select: auto; 
+            -moz-user-select: auto; 
+            -ms-user-select: auto; 
+            user-select: auto; 
+            font-family: 'Outfit', sans-serif; 
+        }
+
+        /* 이미지 다운로드 차단 */
+        img { 
+            -webkit-user-drag: none; 
+            user-drag: none; 
+            max-width: 100%; 
+            height: auto; 
+            display: block; 
+            object-fit: contain;
+        }
+
+        /* 인쇄(Ctrl+P) 시도 시 화면 백지화 */
+        @media print {
+            body { display: none !important; }
+        }
+
+        /* =========================================
+           2. 기본 디자인 시스템 세팅
            ========================================= */
         @font-face {
             font-family: 'SinjeonCustom';
@@ -87,23 +119,13 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html, body {
-            width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden !important;
-            position: relative;
-        }
-
         body { 
             font-family: 'Outfit', 'Poppins', sans-serif; 
             color: var(--text-dark); background-color: var(--bg-white); 
             line-height: 1.6; scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased; 
             -moz-osx-font-smoothing: grayscale;
-            user-select: none; -webkit-user-select: none;
         }
-        input, textarea, select { user-select: auto; -webkit-user-select: auto; font-family: 'Outfit', sans-serif; }
-        img { user-drag: none; -webkit-user-drag: none; -webkit-touch-callout: none; max-width: 100%; height: auto; display: block; object-fit: contain;}
         *:focus-visible { outline: 3px solid var(--sj-red); outline-offset: 4px; border-radius: 8px; }
 
         .scroll-progress {
@@ -112,7 +134,7 @@
             transition: width 0.1s ease; will-change: width;
         }
 
-        /* ★ 애니메이션 로직 */
+        /* 렌더링 최적화: will-change를 통한 GPU 하드웨어 가속 */
         .reveal { opacity: 0; transform: translateY(30px) translateZ(0); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -133,7 +155,7 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           [팝업 무결성 보장] 좌측 정렬 및 슬라이드 방향 교정
+           3. 팝업 무결성 시스템 (다중 스크롤 레이아웃)
            ========================================= */
         .event-popup-wrapper {
             position: fixed;
@@ -146,6 +168,7 @@
             transform: translateX(-30px); 
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none; 
+            will-change: transform, opacity;
         }
         .event-popup-wrapper.show {
             opacity: 1;
@@ -183,38 +206,22 @@
             border-right: 1px solid var(--border-color); 
             border-bottom: none;
         }
-        .popup-image-container div:last-child {
-            border-right: none; 
-        }
-        
-        .popup-image-container img {
-            width: 100%; 
-            height: auto; 
-            display: block; 
-        }
+        .popup-image-container div:last-child { border-right: none; }
+        .popup-image-container img { width: 100%; height: auto; display: block; }
 
-        .event-popup-actions {
-            display: flex; 
-            border-top: 1px solid var(--border-color);
-            width: 100%;
-        }
+        .event-popup-actions { display: flex; border-top: 1px solid var(--border-color); width: 100%; }
         .event-popup-actions button {
             flex: 1; padding: 14px 0; border: none; background: var(--bg-white);
             font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.2s;
             font-family: 'Outfit', 'Noto Sans KR', sans-serif;
         }
-        .btn-hide-24h {
-            color: var(--text-gray); 
-            border-right: 1px solid var(--border-color) !important;
-        }
+        .btn-hide-24h { color: var(--text-gray); border-right: 1px solid var(--border-color) !important; }
         .btn-hide-24h:hover { background: var(--bg-light); color: var(--text-dark); }
-        .btn-close-popup {
-            color: var(--sj-red);
-        }
+        .btn-close-popup { color: var(--sj-red); }
         .btn-close-popup:hover { background: rgba(210, 75, 65, 0.05); }
 
         /* =========================================
-           2. Navigation 
+           4. Navigation 
            ========================================= */
         header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: rgba(255, 255, 255, 0.85); position: fixed; width: 100%; top: 0; z-index: 1000; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); transition: var(--transition-normal); border-bottom: 1px solid transparent; }
         header.scrolled { padding: 15px 5%; border-bottom: 1px solid var(--border-color); box-shadow: 0 4px 25px rgba(0,0,0,0.06); background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
@@ -230,7 +237,7 @@
         nav a:hover::after { width: 100%; }
 
         /* =========================================
-           3. Hero Section
+           5. Hero Section
            ========================================= */
         .hero { 
             padding: 220px 5% 100px; 
@@ -259,7 +266,7 @@
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* =========================================
-           4. About & Core Values
+           6. About & Core Values
            ========================================= */
         .about-section { padding: 130px 5%; background: var(--bg-white); }
         .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1250px; margin: 0 auto; }
@@ -281,7 +288,7 @@
         .char-bento-2 { width: 90px; top: -30px; right: 20px; }
 
         /* =========================================
-           5. Interactive Spice Guide
+           7. Interactive Spice Guide
            ========================================= */
         .spice-section { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .spice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1200px; margin: 0 auto; }
@@ -303,7 +310,7 @@
         .spice-card:hover .char-spice { transform: translateX(-50%) scale(1.15) translateY(-10px); }
 
         /* =========================================
-           6. Categorized Menu Section 
+           8. Categorized Menu Section (Zero-Lag Loading)
            ========================================= */
         .menu-section { padding: 130px 5%; background: var(--bg-white); text-align: center; border-top: 1px solid var(--border-color); }
         .menu-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
@@ -332,7 +339,7 @@
         .menu-disclaimer i { color: var(--sj-red); font-size: 1.1rem; }
 
         /* =========================================
-           7. Locations & Maps (★ 프리미엄 오버레이)
+           9. Locations & Premium Map Overlay
            ========================================= */
         .locations { padding: 130px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1400px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 750px; }
@@ -370,60 +377,36 @@
         .btn-fill { background: var(--uber-green); color: var(--bg-white); border: 2px solid var(--uber-green); }
         .btn-fill:hover { background: #05a659; border-color: #05a659;}
         
-        /* 구글 지도 컨테이너 및 오버레이 설정 */
         .loc-map-wrapper { flex: 1; background: #e0e0e0; position: relative; pointer-events: auto; overflow: hidden; }
         .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; display: block; position: relative; z-index: 1; }
         
-        /* 고급 정보 오버레이 (Glassmorphism Info Card) */
+        /* Map Hover Overlay (Glassmorphism) */
         .map-info-overlay {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            z-index: 10;
-            width: calc(100% - 60px);
-            max-width: 320px;
-            transform: translateY(20px);
-            opacity: 0;
+            position: absolute; bottom: 30px; left: 30px;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding: 25px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            z-index: 10; width: calc(100% - 60px); max-width: 320px;
+            transform: translateY(20px); opacity: 0;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            pointer-events: none;
-            border: 1px solid rgba(0,0,0,0.05);
+            pointer-events: none; border: 1px solid rgba(0,0,0,0.05);
         }
-        .map-info-overlay.active {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto; /* 창이 떴을 때 클릭 가능하도록 */
-        }
+        .map-info-overlay.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
         .map-info-overlay h4 { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); margin-bottom: 10px; }
         .map-info-overlay p { font-size: 0.95rem; color: var(--text-gray); margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; font-weight: 500;}
         .map-info-overlay p i { color: var(--sj-red); margin-top: 3px; }
-        .overlay-btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            background: var(--sj-red); color: white; text-decoration: none; font-weight: 700;
-            padding: 12px 0; border-radius: 12px; width: 100%; margin-top: 10px;
-            transition: var(--transition-fast);
-        }
+        .overlay-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--sj-red); color: white; text-decoration: none; font-weight: 700; padding: 12px 0; border-radius: 12px; width: 100%; margin-top: 10px; transition: var(--transition-fast); }
         .overlay-btn:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(210, 75, 65, 0.25); color: white; }
 
         /* =========================================
-           8. Elfsight Instagram Widget
+           10. Elfsight Instagram Widget
            ========================================= */
         .ugc-section { padding: 130px 5%; background: var(--text-dark); color: white; text-align: center; overflow: hidden; }
         .ugc-section .section-header h2 { color: white; }
         .ugc-section .section-header p { color: var(--sj-red); }
         .elfsight-container { max-width: 1300px; margin: 0 auto; background: var(--bg-light); border-radius: var(--border-radius-lg); padding: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); min-height: 350px; }
         
-        .elfsight-fallback { display: none; padding: 60px 20px; color: var(--text-gray); font-size: 1.1rem; font-weight: 500;}
-        .elfsight-fallback i { font-size: 3rem; color: var(--sj-red); margin-bottom: 15px; opacity: 0.5;}
-        a[href*="elfsight.com"] { display: none !important; opacity: 0 !important; pointer-events: none !important; }
-
         /* =========================================
-           9. Franchise Process & Portal Button
+           11. Franchise Process & Contact Forms
            ========================================= */
         .timeline-section { padding: 130px 5%; background: var(--bg-white); }
         .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
@@ -435,25 +418,9 @@
         .timeline-content h4 { font-size: 1.6rem; color: var(--text-dark); margin-bottom: 10px; font-weight: 800; }
         .timeline-content p { color: var(--text-gray); font-size: 1.05rem; font-weight: 500; line-height: 1.6;}
 
-        .btn-apply-portal {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: var(--sj-red); color: var(--bg-white);
-            padding: 20px 50px; font-size: 1.15rem; font-weight: 800;
-            border-radius: 50px; text-decoration: none;
-            box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3);
-            transition: var(--transition-fast); text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .btn-apply-portal:hover {
-            background: #b83e35;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(210, 75, 65, 0.4);
-            color: var(--bg-white);
-        }
+        .btn-apply-portal { display: inline-flex; align-items: center; gap: 10px; background: var(--sj-red); color: var(--bg-white); padding: 20px 50px; font-size: 1.15rem; font-weight: 800; border-radius: 50px; text-decoration: none; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3); transition: var(--transition-fast); text-transform: uppercase; letter-spacing: 1px; }
+        .btn-apply-portal:hover { background: #b83e35; transform: translateY(-3px); box-shadow: 0 15px 30px rgba(210, 75, 65, 0.4); color: var(--bg-white); }
 
-        /* =========================================
-           10. Contact Us & Tabs
-           ========================================= */
         .contact-section { padding: 130px 5%; background: var(--bg-light); position: relative; border-top: 1px solid var(--border-color); }
         .contact-wrapper { max-width: 860px; margin: 0 auto; position: relative; z-index: 2; }
         .tab-container { display: flex; justify-content: center; margin: 0 auto 50px; background: var(--bg-white); border-radius: 50px; padding: 8px; box-shadow: var(--shadow-xs); width: max-content; }
@@ -489,7 +456,6 @@
         .btn-green:hover { background: #006a40; box-shadow: 0 10px 25px rgba(0, 130, 80, 0.25); transform: translateY(-3px);}
         .btn-red { background: var(--sj-red); }
         .btn-red:hover { background: #b83e35; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25); transform: translateY(-3px);}
-        .submit-btn:disabled { background: var(--text-light); cursor: not-allowed; transform: none; box-shadow: none; }
 
         .fab-container { position: fixed; bottom: 40px; right: 40px; z-index: 999; display: flex; flex-direction: column; gap: 15px; transform: translateY(100px) translateZ(0); opacity: 0; transition: var(--transition-normal); will-change: transform, opacity;}
         .fab-container.visible { transform: translateY(0) translateZ(0); opacity: 1; }
@@ -497,7 +463,7 @@
         .fab:hover { box-shadow: var(--shadow-hover); border-color: var(--sj-red); color: var(--sj-red); transform: translateY(-5px);}
 
         /* =========================================
-           11. Mega Footer
+           12. Footer & Modal
            ========================================= */
         footer { background: #333333; color: rgba(255,255,255,0.8); padding: 80px 5% 40px; font-size: 0.95rem; border-top: 5px solid var(--sj-red); }
         .mega-footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 60px; }
@@ -513,7 +479,6 @@
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 35px; text-align: left; max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
         .footer-bottom p { margin: 0; font-weight: 500; font-size: 1rem;}
 
-        /* Modal Base */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); backdrop-filter: blur(5px); }
         .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
         .modal-content { background: var(--bg-white); width: 90%; max-width: 750px; max-height: 85vh; border-radius: var(--border-radius-lg); padding: 50px; position: relative; transform: translateY(30px) translateZ(0); transition: transform var(--transition-normal); display: flex; flex-direction: column; cursor: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.5);}
@@ -542,7 +507,7 @@
         .flow-arrow { color: var(--text-light); font-size: 1.5rem; font-weight: 900; }
 
         /* =========================================
-           ★ 100% 모바일 & 데스크톱 완벽 반응형 제어
+           ★ 100% Responsive Design (모바일 완벽 호환)
            ========================================= */
         @media (max-width: 1200px) {
             .bento-large { padding: 40px; }
@@ -586,14 +551,8 @@
             .heat-flow { flex-direction: column; gap: 20px; padding: 25px; }
             .flow-arrow { transform: rotate(90deg); margin: 5px 0; }
 
-            /* 모바일 지도 오버레이 위치 수정 */
-            .map-info-overlay {
-                bottom: 20px; left: 50%; transform: translate(-50%, 20px);
-                max-width: 90%;
-            }
-            .map-info-overlay.active {
-                transform: translate(-50%, 0);
-            }
+            .map-info-overlay { bottom: 20px; left: 50%; transform: translate(-50%, 20px); max-width: 90%; }
+            .map-info-overlay.active { transform: translate(-50%, 0); }
         }
         
         @media (max-width: 600px) {
@@ -614,37 +573,12 @@
             .about-section, .spice-section, .menu-section, .locations, .ugc-section, .timeline-section, .contact-section { padding: 80px 15px; }
             .form-content { padding: 30px 20px; }
 
-            /* 모바일 팝업 화면 정중앙 고정 */
-            .event-popup-wrapper {
-                top: 50%;
-                bottom: auto;
-                left: 50%;
-                right: auto;
-                transform: translate(-50%, -45%);
-                width: 90%;
-                max-width: 350px;
-            }
-            .event-popup-wrapper.show { 
-                transform: translate(-50%, -50%); 
-            }
-            .event-popup-content {
-                width: 100%;
-            }
-            .popup-image-container {
-                flex-direction: column; 
-                max-height: 70vh; 
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
-            .popup-image-container div {
-                flex: auto;
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid var(--border-color);
-            }
-            .popup-image-container div:last-child {
-                border-bottom: none;
-            }
+            .event-popup-wrapper { top: 50%; bottom: auto; left: 50%; right: auto; transform: translate(-50%, -45%); width: 90%; max-width: 350px; }
+            .event-popup-wrapper.show { transform: translate(-50%, -50%); }
+            .event-popup-content { width: 100%; }
+            .popup-image-container { flex-direction: column; max-height: 70vh; overflow-y: auto; overflow-x: hidden; }
+            .popup-image-container div { flex: auto; width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); }
+            .popup-image-container div:last-child { border-bottom: none; }
             .popup-image-container::-webkit-scrollbar { width: 6px; height: auto; }
             
             .event-popup-actions button { font-size: 0.9rem; padding: 16px 0; } 
@@ -657,11 +591,26 @@
         }
     </style>
     
-    <!-- ★ [에러 0% 보장] JS 종합 통제 센터 -->
+    <!-- ★ [최종 무결점 JS 통제 센터] 스크립트 충돌 원천 차단 -->
     <script>
+        // 불펌 방지 (Anti-Theft) 단축키 차단 로직
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('dragstart', e => {
+            // 입력창 등 일부 태그는 예외 허용
+            if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+            }
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u') || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) {
+                e.preventDefault();
+            }
+        });
+
+        // 메인 렌더링 로직
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. 스크롤 애니메이션 옵저버 (가장 먼저 실행)
+            // 1. [핵심] 스크롤 애니메이션 옵저버 (가장 먼저 실행되어 화면을 띄움)
             try {
                 const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
                 const observer = new IntersectionObserver((entries, observer) => {
@@ -673,21 +622,17 @@
                     });
                 }, observerOptions);
                 
-                document.querySelectorAll('.reveal').forEach(el => {
-                    observer.observe(el);
-                });
-                
-                // [안전장치] 만약 스크롤 옵저버가 안 돌아가면 무조건 1초 뒤 다 나타나게 함
+                document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            } catch (error) {
+                console.error("Observer Error:", error);
+            } finally {
+                // ★ 3중 Failsafe: 자바스크립트가 에러를 뿜든, 인터넷이 느리든 무조건 1.5초 뒤 모든 화면 강제 오픈 (백지화 완벽 차단)
                 setTimeout(() => {
                     document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-                }, 1000);
-            } catch (error) {
-                // 에러나면 즉시 모든 요소를 화면에 띄워버림
-                document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-                console.error("Scroll Observer Error:", error);
+                }, 1500);
             }
 
-            // 2. 팝업 노출 제어 (배열 방식)
+            // 2. 팝업 배열 로딩 로직
             try {
                 const popup = document.getElementById('main-event-popup');
                 if (popup) {
@@ -695,66 +640,60 @@
                     const now = new Date().getTime();
 
                     if (hideUntil && now < parseInt(hideUntil)) {
-                        console.log("[Popup] 24 hours hide active. Skipping popup.");
+                        console.log("[Popup] Hide active.");
                     } else {
                         const popupImgContainer = document.getElementById('popup-image-container');
                         
-                        // ★ 서버에 실제 업로드된 팝업 파일명 배열 지정
+                        // 서버에 존재하는 파일명만 명시하여 404 에러 원천 차단
                         const activePopupFiles = ['popup_event_1.jpg', 'popup_event_2.jpg']; 
                         
                         if (activePopupFiles.length > 0) {
                             let loadedImages = 0;
 
-                            // 이미지 순서 보장을 위해 빈 공간(div) 먼저 생성
                             activePopupFiles.forEach((file, index) => {
                                 const slot = document.createElement('div');
                                 slot.id = `popup-slot-${index}`;
                                 popupImgContainer.appendChild(slot);
                             });
 
-                            // 이미지 비동기 다운로드 및 넣기
                             activePopupFiles.forEach((file, index) => {
                                 const img = new Image();
                                 img.alt = `Sinjeon Event Notice ${index + 1}`;
                                 
                                 img.onload = function() {
-                                    document.getElementById(`popup-slot-${index}`).appendChild(this);
+                                    const targetSlot = document.getElementById(`popup-slot-${index}`);
+                                    if(targetSlot) targetSlot.appendChild(this);
                                     loadedImages++;
-                                    
-                                    // 1개라도 로드 성공하면 팝업 띄우기
                                     if (loadedImages === 1) {
-                                        setTimeout(() => { popup.classList.add('show'); }, 100); 
+                                        setTimeout(() => { popup.classList.add('show'); }, 300); 
                                     }
                                 };
                                 
                                 img.onerror = function() {
-                                    // 파일 없으면 빈 공간만 조용히 삭제
                                     const emptySlot = document.getElementById(`popup-slot-${index}`);
                                     if(emptySlot) emptySlot.remove();
                                 };
-                                
                                 img.src = file;
                             });
                         }
                     }
                 }
             } catch (error) {
-                console.error("Popup Module Error:", error);
+                console.error("Popup Error:", error);
             }
             
-            // 3. 영업시간 갱신 시스템
+            // 3. 영업시간 업데이트
             try {
                 updateStoreStatuses();
                 setInterval(updateStoreStatuses, 60000);
             } catch (error) {
-                console.error("Store Status Module Error:", error);
+                console.error("Store Status Error:", error);
             }
 
-            // 4. 페이지 진입 시 첫 번째 지도 정보(Finch) 미리 세팅
+            // 4. 페이지 진입 시 첫 번째 지도 정보 미리 세팅
             setTimeout(() => {
                 const firstLoc = document.querySelector('.loc-item');
                 if(firstLoc) {
-                    // 강제 트리거를 위해 active를 뺐다가 함수 안에서 다시 넣음
                     firstLoc.classList.remove('active'); 
                     triggerMapChange(firstLoc);
                 }
@@ -762,46 +701,38 @@
         });
 
         // =========================================
-        // ★ [고급화] 마우스를 올리면(Hover) 작동하는 구글 지도 & 오버레이 연동 함수
+        // ★ 지도 Hover 오버레이 연동 함수 (구글 맵 전용)
         // =========================================
         function triggerMapChange(element) {
-            // 이미 활성화된 카드면 무시
             if(element.classList.contains('active')) return;
             
-            // 모든 카드 활성화 해제 후 현재 카드만 활성화 효과 부여
             document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
             
-            // 해당 HTML 요소에 적어둔 데이터 가져오기
             const mapUrl = element.getAttribute('data-map-url');
             const title = element.getAttribute('data-title');
             const address = element.getAttribute('data-address');
             const hours = element.getAttribute('data-hours');
             const link = element.getAttribute('data-link');
 
-            // 1. 구글 지도(iframe) 부드럽게 변경
             const iframe = document.getElementById('main-map');
-            if(iframe.src !== mapUrl) {
-                iframe.src = mapUrl;
-            }
+            if(iframe.src !== mapUrl) iframe.src = mapUrl;
 
-            // 2. 지도 위의 고급 오버레이 창 내용 교체 및 팝업 애니메이션
             const overlay = document.getElementById('map-premium-overlay');
-            overlay.classList.remove('active'); // 먼저 부드럽게 숨김
-            
-            // 약간의 딜레이 후 글자 바꾸고 다시 띄움 (스르륵 효과)
-            setTimeout(() => {
-                document.getElementById('overlay-title').innerText = title;
-                document.getElementById('overlay-address').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${address}`;
-                document.getElementById('overlay-hours').innerHTML = `<i class="fas fa-clock"></i> ${hours}`;
-                document.getElementById('overlay-link').href = link;
-                
-                overlay.classList.add('active'); // 다시 부드럽게 나타남
-            }, 300);
+            if(overlay) {
+                overlay.classList.remove('active'); 
+                setTimeout(() => {
+                    document.getElementById('overlay-title').innerText = title;
+                    document.getElementById('overlay-address').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${address}`;
+                    document.getElementById('overlay-hours').innerHTML = `<i class="fas fa-clock"></i> ${hours}`;
+                    document.getElementById('overlay-link').href = link;
+                    overlay.classList.add('active'); 
+                }, 300);
+            }
         }
 
         // =========================================
-        // 기타 유틸리티 함수 모음
+        // 기타 유틸리티 기능
         // =========================================
         function closeEventPopup() {
             const popup = document.getElementById('main-event-popup');
@@ -834,7 +765,7 @@
         </nav>
     </header>
 
-    <!-- [다중 팝업 시스템] (데스크톱: 좌측 상단 가로 스크롤 / 모바일: 중앙 세로 스크롤) -->
+    <!-- [다중 팝업 시스템] (데스크톱: 좌측 정렬 / 모바일: 중앙) -->
     <div class="event-popup-wrapper" id="main-event-popup">
         <div class="event-popup-content">
             <div id="popup-image-container" class="popup-image-container"></div>
@@ -884,6 +815,7 @@
                 <div class="value-icon">01</div>
                 <h3>Sanitary Seasoning</h3>
                 <p>Manufactured in our HACCP-certified facility in Korea. We strictly control quality to deliver the exact same authentic taste globally.</p>
+                <!-- lazy 로딩 적용으로 성능 극대화 -->
                 <img src="character/character_4.png" class="char-img char-bento-1 anim-float-2" alt="Sinjeon Mandoo" loading="lazy">
             </div>
             <div class="bento-item reveal delay-200">
@@ -962,7 +894,7 @@
 
         <div class="menu-grid-container reveal delay-200">
             <!-- ==============================
-                 Main Category 
+                 Main Category (신메뉴 포함)
                  ============================== -->
             <div id="cat-Main" class="menu-grid active">
                 <div class="menu-item">
@@ -1179,7 +1111,7 @@
 
     </section>
 
-    <!-- [프리미엄 위치 정보 및 Hover 정보 표시 오버레이] -->
+    <!-- [글로벌 스탠다드 지도 + Hover 정보 표시 오버레이] -->
     <section class="locations" id="locations">
         <div class="section-header reveal">
             <p>Find Us</p>
@@ -1189,7 +1121,7 @@
         <div class="split-layout reveal delay-100">
             <div class="loc-list-wrapper">
                 
-                <!-- ★ Hover(마우스 올림) 시 지도와 오버레이 창이 동시에 부드럽게 업데이트 -->
+                <!-- 마우스를 올리기만 하면 지도가 바뀌고 오버레이 창이 뜹니다 -->
                 <div class="loc-item active store-card" 
                      data-map-url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.3598765!2d-79.4168!3d43.7780!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2d7088b90c7b%3A0xc47e3a39e80c4c4!2sSinjeon%20Topokki%20Finch!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca"
                      data-title="Sinjeon Finch"
@@ -1308,10 +1240,10 @@
             </div>
             
             <div class="loc-map-wrapper">
-                <!-- 글로벌 스탠다드 구글맵 iframe -->
-                <iframe id="main-map" src="about:blank" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <!-- 글로벌 스탠다드 로딩 가속화 적용 -->
+                <iframe id="main-map" src="about:blank" title="Google Maps" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 
-                <!-- ★ 고급화된 정보 표시 팝업 (Map Info Overlay) -->
+                <!-- 고급화된 정보 표시 팝업 (Map Info Overlay) -->
                 <div class="map-info-overlay" id="map-premium-overlay">
                     <h4 id="overlay-title">Loading...</h4>
                     <p id="overlay-address"><i class="fas fa-map-marker-alt"></i> </p>
@@ -1396,7 +1328,6 @@
                 <div class="form-header">
                     <h3>General Support</h3>
                 </div>
-                <!-- ★ 입력창 자동완성(autocomplete) 및 모바일 키보드 최적화(inputmode) -->
                 <form id="form-general" onsubmit="return handleInquiryEmailJS(event, 'General')">
                     <div class="input-row">
                         <div class="input-wrapper">
@@ -1424,7 +1355,6 @@
                 <div class="form-header">
                     <h3>Franchise Inquiries</h3>
                 </div>
-                <!-- ★ 입력창 자동완성(autocomplete) 및 모바일 키보드 최적화(inputmode) -->
                 <form id="form-franchise" onsubmit="return handleInquiryEmailJS(event, 'Franchise')">
                     <div class="input-row">
                         <div class="input-wrapper">
@@ -1527,5 +1457,258 @@
         </div>
     </div>
 
+    <script>
+        function showMenuCategory(catId) {
+            document.querySelectorAll('.menu-tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.menu-grid').forEach(grid => {
+                grid.classList.remove('active');
+            });
+            document.getElementById('cat-' + catId).classList.add('active');
+        }
+
+        function updateStoreStatuses() {
+            const storeCards = document.querySelectorAll('.store-card');
+            storeCards.forEach(card => {
+                try {
+                    const tz = card.getAttribute('data-timezone');
+                    if (!tz) return;
+
+                    const dateInTz = new Date(new Date().toLocaleString("en-US", {timeZone: tz}));
+                    let currentHour = dateInTz.getHours();
+                    const currentMin = dateInTz.getMinutes();
+                    const currentDay = dateInTz.getDay(); 
+                    
+                    const currentTimeVal = currentHour + (currentMin / 60);
+
+                    let openHour = parseFloat(card.getAttribute('data-open') || 11);
+                    let closeHour = parseFloat(card.getAttribute('data-close') || 22);
+                    
+                    if (card.hasAttribute('data-close-weekend') && (currentDay === 5 || currentDay === 6)) {
+                        closeHour = parseFloat(card.getAttribute('data-close-weekend'));
+                    }
+
+                    let isOpen = false;
+                    let adjustedCurrent = currentTimeVal;
+                    let adjustedClose = closeHour;
+                    
+                    if (closeHour <= openHour) { 
+                        adjustedClose += 24;
+                        if (currentTimeVal < openHour) {
+                            adjustedCurrent += 24;
+                        }
+                    }
+
+                    if (adjustedCurrent >= openHour && adjustedCurrent < adjustedClose) {
+                        isOpen = true;
+                    }
+
+                    function formatTime(decimalTime) {
+                        let h = Math.floor(decimalTime);
+                        let m = Math.round((decimalTime - h) * 60);
+                        let ampm = h >= 12 && h < 24 ? 'PM' : 'AM';
+                        h = h % 12;
+                        if (h === 0) h = 12;
+                        let mStr = m > 0 ? ':' + (m < 10 ? '0'+m : m) : '';
+                        return `${h}${mStr} ${ampm}`;
+                    }
+
+                    const badge = card.querySelector('.loc-status');
+                    if (badge) {
+                        if (isOpen) {
+                            badge.innerHTML = `Open Now (Closes ${formatTime(closeHour)})`;
+                            badge.className = "loc-status open";
+                        } else {
+                            badge.innerHTML = `Closed (Opens ${formatTime(openHour)})`;
+                            badge.className = "loc-status closed";
+                        }
+                    }
+                } catch(e) {
+                    console.error("Hours Error:", e);
+                }
+            });
+        }
+
+        function handleInquiryEmailJS(event, type) {
+            event.preventDefault();
+            
+            if (typeof emailjs === 'undefined') {
+                alert("EmailJS service is currently unavailable. Launching your default email client instead.");
+                fallbackMailto(type, getFormParams(event.target, type));
+                return false;
+            }
+
+            const formElement = event.target;
+            const submitButton = formElement.querySelector('.submit-btn');
+            const originalButtonText = submitButton.innerHTML;
+            
+            submitButton.disabled = true;
+            submitButton.innerHTML = "PROCESSING... ⏳";
+
+            let serviceID = "service_zyn89ll"; 
+            let templateID = "template_r8gce22"; 
+            
+            const params = getFormParams(formElement, type);
+            params.target_email = "eunbeen.lee@y2choldings.co.kr";
+            params.inquiry_type = type;
+
+            emailjs.send(serviceID, templateID, params)
+                .then(() => {
+                    alert(`Thank you! Your ${type} inquiry has been submitted successfully.`);
+                    formElement.reset();
+                })
+                .catch((error) => {
+                    console.error("EmailJS Failure:", error);
+                    alert(`Cloud service routing is completing configuration. Alternative mail window will open now.`);
+                    fallbackMailto(type, params);
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
+                });
+            return false;
+        }
+
+        function getFormParams(formElement, type) {
+            let params = {
+                name: formElement.querySelector('[name="from_name"]').value,
+                phone: formElement.querySelector('[name="reply_phone"]').value,
+                email: formElement.querySelector('[name="reply_email"]').value,
+                message: formElement.querySelector('[name="message"]').value
+            };
+            if(type === 'Franchise') {
+                params.location = formElement.querySelector('[name="desired_location"]').value;
+                params.budget = formElement.querySelector('[name="budget"]').value;
+            }
+            return params;
+        }
+
+        function fallbackMailto(type, params) {
+            const subject = `[${type} Inquiry] from ${params.name}`;
+            let body = "";
+            if(type === 'General') {
+                body = `Name: ${params.name}%0D%0APhone: ${params.phone}%0D%0AEmail: ${params.email}%0D%0A%0D%0AInquiry:%0D%0A${params.message}`;
+            } else {
+                body = `Applicant Name: ${params.name}%0D%0AContact: ${params.phone}%0D%0AEmail: ${params.email}%0D%0ADesired Location: ${params.location}%0D%0AEstimated Budget: ${params.budget}%0D%0A%0D%0ABusiness Background / Inquiry:%0D%0A${params.message}`;
+            }
+            const targetMail = "eunbeen.lee@y2choldings.co.kr";
+            window.location.href = `mailto:${targetMail}?subject=${encodeURIComponent(subject)}&body=${body}`;
+        }
+
+        function switchContactTab(target) {
+            document.querySelectorAll('.contact-wrapper .tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.contact-wrapper .form-content').forEach(form => {
+                form.classList.remove('active');
+                form.style.animation = 'none';
+                form.offsetHeight; 
+                form.style.animation = null; 
+            });
+            document.querySelector(`.contact-wrapper .tab-btn[data-target="${target}"]`).classList.add('active');
+            document.getElementById(`${target}-form`).classList.add('active');
+        }
+
+        let isScrolling = false;
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    const header = document.getElementById('header');
+                    if (window.scrollY > 50) header.classList.add('scrolled');
+                    else header.classList.remove('scrolled');
+
+                    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    const scrolled = (winScroll / height) * 100;
+                    document.getElementById("scroll-progress").style.width = scrolled + "%";
+
+                    const fabContainer = document.getElementById('fab-container');
+                    if (window.scrollY > 500) fabContainer.classList.add('visible');
+                    else fabContainer.classList.remove('visible');
+                    
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        });
+
+        function openModal(type) {
+            const modal = document.getElementById('dynamic-modal');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+
+            if(type === 'clean-heat') {
+                title.style.display = 'none';
+                body.innerHTML = `
+                    <h4 style="margin-top:0; font-size: 2rem; color: var(--sj-red); line-height: 1.2; font-family: 'SinjeonCustom', sans-serif; font-weight: normal;">How Cheongyang Chili Peppers Make Our Clean Heat</h4>
+                    <p style="font-size: 1.1rem; color: var(--text-dark); margin-top: 15px;">At Sinjeon, we refuse to compromise on wellness. We use 100% authentic Cheongyang chili peppers instead of chemical capsaicin extracts to create our signature addictive spice that North Americans are falling in love with.</p>
+                    
+                    <div class="heat-diagram">
+                        <div class="heat-compare">
+                            <div class="heat-box heat-bad">
+                                <h5>Artificial Capsaicin</h5>
+                                <p>❌ Chemical extracts</p>
+                                <p>❌ Lingering, painful heat</p>
+                                <p>❌ Can cause stomach discomfort</p>
+                            </div>
+                            <div class="heat-box heat-good">
+                                <h5>Authentic Cheongyang Chili</h5>
+                                <p>✅ 100% Natural ingredients</p>
+                                <p>✅ Sharp, clean, and refreshing heat</p>
+                                <p>✅ Dissipates quickly, leaving rich flavor</p>
+                            </div>
+                        </div>
+                        
+                        <div class="heat-flow">
+                            <div class="flow-step">
+                                <i>🌶️</i><span>Premium Chili<br>Harvesting</span>
+                            </div>
+                            <div class="flow-arrow">➔</div>
+                            <div class="flow-step">
+                                <i>🏭</i><span>HACCP Certified<br>Processing</span>
+                            </div>
+                            <div class="flow-arrow">➔</div>
+                            <div class="flow-step">
+                                <i>✨</i><span>Sinjeon's<br>Secret Sauce</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } 
+            else if(type === 'privacy') {
+                title.style.display = 'block';
+                title.innerText = "Privacy Policy";
+                body.innerHTML = `
+                    <h4>1. Introduction</h4>
+                    <p>Sinjeon Food Sys Canada ("we", "our", or "us") is committed to protecting the privacy and security of your personal information. This Privacy Policy outlines how we collect, use, and safeguard data in compliance with the Personal Information Protection and Electronic Documents Act (PIPEDA).</p>
+                    <h4>2. Information We Collect</h4>
+                    <p>We only collect personal information that is necessary for our business operations. This includes your name, phone number, email address, and desired location data when you voluntarily submit inquiries via our Contact Us or Franchise forms.</p>
+                    <h4>3. Use of Information</h4>
+                    <p>The information collected is strictly used to:<br>- Respond to your general support or franchise inquiries.<br>- Assess your franchise application and provide preliminary consulting.<br>- Communicate updates regarding our operations or your application status.</p>
+                    <h4>4. Data Security and Sharing</h4>
+                    <p>We implement robust, industry-standard security protocols to protect your data transmitted through our Cloud infrastructure. <strong>We do not sell, rent, or trade your personal information to any third parties.</strong></p>
+                `;
+            } 
+            else if(type === 'terms') {
+                title.style.display = 'block';
+                title.innerText = "Terms of Service";
+                body.innerHTML = `
+                    <h4>1. Acceptance of Terms</h4>
+                    <p>By accessing and using the Sinjeon Canada website, you accept and agree to be bound by the terms and provision of this agreement. These terms are governed by the laws of the Province of Ontario and the federal laws of Canada applicable therein.</p>
+                    <h4>2. Intellectual Property Rights</h4>
+                    <p>All content published on this website, including but not limited to brand logos, typography ('SinjeonCustom'), graphical assets, character illustrations ('Mill-tto Family'), and textual content, are the exclusive intellectual property of Sinjeon Food Sys. <strong>Unauthorized scraping, copying, reproduction, or commercial use is strictly prohibited and subject to legal action.</strong></p>
+                    <h4>3. Franchise Application Disclaimer</h4>
+                    <p>Submitting a franchise inquiry through this website does not constitute a binding legal contract or a guarantee of franchise approval.</p>
+                `;
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() {
+            document.getElementById('dynamic-modal').classList.remove('active');
+            document.body.style.overflow = ''; 
+        }
+    </script>
 </body>
 </html>
