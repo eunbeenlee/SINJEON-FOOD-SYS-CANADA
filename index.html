@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#D24B41">
     
-    <!-- Primary Meta Tags (SEO 최적화) -->
+    <!-- Primary Meta Tags -->
     <title>Sinjeon Canada | The New Standard of Topokki</title>
     <meta name="title" content="Sinjeon Canada | The New Standard of Topokki">
     <meta name="description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide.">
@@ -17,24 +17,23 @@
     <meta property="og:description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide.">
     <meta property="og:image" content="https://sinjeoncanada.com/sinjeon_og_image.jpg">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://sinjeoncanada.com/">
-    <meta property="twitter:title" content="Sinjeon Canada | The New Standard of Topokki">
-    <meta property="twitter:description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide.">
-    <meta property="twitter:image" content="https://sinjeoncanada.com/sinjeon_og_image.jpg">
-    
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
     
-    <!-- ★ [최적화] 핵심 에셋 사전 로딩 (Preload) -->
+    <!-- ★ 핵심 에셋 사전 로딩 (Preload) -->
     <link rel="preload" href="background/base_1.JPG" as="image">
-    <link rel="preload" href="character/character_7.png" as="image">
     <link rel="preload" href="fonts/SinjeonFont.otf" as="font" type="font/otf" crossorigin>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- EmailJS SDK 비동기 로딩 -->
     <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init({ publicKey: "DITntTK9NnZLeavvX" });
+            }
+        });
+    </script>
     
     <!-- Google Fonts 비동기 연결 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,7 +80,7 @@
 
         .scroll-progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--sj-red); z-index: 1001; width: 0%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; will-change: width; transition: width 0.1s linear; }
 
-        /* 하드웨어 가속 옵저버 애니메이션 */
+        /* 하드웨어 가속 애니메이션 */
         .reveal { opacity: 0; transform: translateY(30px) translateZ(0); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -102,7 +101,7 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           2. 팝업 무결성 시스템 (데스크톱/모바일 분기)
+           2. 팝업 무결성 시스템 (좌측 슬라이딩)
            ========================================= */
         .event-popup-wrapper {
             position: fixed; top: 110px; left: 20px; right: auto; z-index: 99999; 
@@ -186,6 +185,7 @@
         
         .btn-clean-heat-sm { margin-top: 20px; padding: 12px 24px; background: transparent; color: var(--sj-red); border: 2px solid var(--sj-red); border-radius: 30px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: var(--transition-fast); width: max-content; }
         .btn-clean-heat-sm:hover { background: var(--sj-red); color: var(--bg-white); box-shadow: var(--shadow-sm); }
+
         .char-bento-1 { width: 100px; bottom: -20px; right: -10px; }
         .char-bento-2 { width: 90px; top: -30px; right: 20px; }
 
@@ -203,14 +203,16 @@
         .spice-spicy::before { background: linear-gradient(135deg, #D24B41, #a3352d); }
         .spice-level-num { font-family: 'SinjeonCustom', sans-serif; font-size: 3.5rem; font-weight: normal; opacity: 0.08; position: absolute; top: 20px; left: 30px; transition: var(--transition-normal); }
         .spice-card:hover .spice-level-num { opacity: 0.3; color: var(--bg-white); }
+        
         .spice-card h3 { font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 2.2rem; margin-top: 40px; margin-bottom: 15px; transition: color var(--transition-fast); position: relative; z-index: 2;}
         .spice-card p { font-size: 1.05rem; color: var(--text-gray); transition: color var(--transition-fast); position: relative; z-index: 2; line-height: 1.6;}
         .spice-card:hover h3, .spice-card:hover p { color: var(--bg-white); }
+        
         .char-spice { width: 130px; position: absolute; top: -65px; left: 50%; transform: translateX(-50%); z-index: 10; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); transition: transform var(--transition-fast); }
         .spice-card:hover .char-spice { transform: translateX(-50%) scale(1.15) translateY(-10px); }
 
         /* =========================================
-           7. Menu Section (★ CLS 스켈레톤 로딩 & 부드러운 탭 전환 적용)
+           7. Categorized Menu Section (스켈레톤 최적화)
            ========================================= */
         .menu-section { padding: 130px 5%; background: var(--bg-white); text-align: center; border-top: 1px solid var(--border-color); }
         .menu-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
@@ -219,33 +221,25 @@
         .menu-tab-btn.active { background: var(--sj-red); color: var(--bg-white); border-color: var(--sj-red); box-shadow: 0 6px 20px rgba(210, 75, 65, 0.25); }
 
         .menu-grid-container { max-width: 1300px; margin: 0 auto; min-height: 500px; position: relative; } 
-        
-        /* 탭 페이드 전환 효과 최적화 */
         .menu-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 35px; opacity: 0; transition: opacity 0.4s ease; }
-        .menu-grid.active { display: grid; opacity: 1; }
+        .menu-grid.active { display: grid; opacity: 1; animation: fadeInMenu 0.4s ease-in-out; }
+        @keyframes fadeInMenu { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         .menu-item { background: var(--bg-light); border-radius: var(--border-radius-md); padding: 40px 25px 30px; border: 1px solid var(--border-color); transition: var(--transition-fast); display: flex; flex-direction: column; align-items: center; justify-content: space-between; box-shadow: var(--shadow-xs); position: relative; overflow: hidden;}
         .menu-item::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); transition: left 0.7s ease; z-index: 1; pointer-events: none; }
         .menu-item:hover::after { left: 150%; }
         .menu-item:hover { transform: translateY(-10px); box-shadow: var(--shadow-md); border-color: var(--sj-green); background: var(--bg-white); }
         
-        /* ★ 스켈레톤 로딩 효과 UI (서버 부하 감소 및 유저 체감 속도 향상) */
+        /* 스켈레톤 로딩 */
         .menu-item-img { 
             width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; 
             margin-bottom: 25px; position: relative; z-index: 2;
             background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: skeletonLoading 1.5s infinite;
-            border-radius: 12px;
+            background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 12px;
         }
         @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         
-        .menu-item-img img { 
-            max-width: 100%; max-height: 100%; object-fit: contain; 
-            filter: drop-shadow(0 15px 20px rgba(0,0,0,0.1)); transition: transform var(--transition-normal), opacity 0.3s ease; 
-            opacity: 0; /* 초기엔 투명하게 숨김 */
-        }
-        /* JS에서 다운로드 완료 시 class="loaded" 추가 */
+        .menu-item-img img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 15px 20px rgba(0,0,0,0.1)); transition: transform var(--transition-normal), opacity 0.3s ease; opacity: 0; }
         .menu-item-img img.loaded { opacity: 1; }
         .menu-item:hover .menu-item-img img.loaded { transform: scale(1.15) rotate(2deg); filter: drop-shadow(0 20px 25px rgba(0,0,0,0.15));}
         
@@ -298,6 +292,7 @@
         .loc-map-wrapper { flex: 1; background: #e0e0e0; position: relative; pointer-events: auto; overflow: hidden; }
         .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; display: block; position: relative; z-index: 1; }
         
+        /* Map Hover Overlay */
         .map-info-overlay {
             position: absolute; bottom: 30px; left: 30px;
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -336,7 +331,7 @@
         .timeline-content h4 { font-size: 1.6rem; color: var(--text-dark); margin-bottom: 10px; font-weight: 800; }
         .timeline-content p { color: var(--text-gray); font-size: 1.05rem; font-weight: 500; line-height: 1.6;}
 
-        /* ★ [UX 혁신] 가맹 신청 버튼이 자연스럽게 하단 폼으로 라우팅됨 */
+        /* 버튼 및 폼 CSS */
         .btn-apply-portal { display: inline-flex; align-items: center; gap: 10px; background: var(--sj-red); color: var(--bg-white); padding: 20px 50px; font-size: 1.15rem; font-weight: 800; border-radius: 50px; text-decoration: none; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3); transition: var(--transition-fast); text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
         .btn-apply-portal:hover { background: #b83e35; transform: translateY(-3px); box-shadow: 0 15px 30px rgba(210, 75, 65, 0.4); color: var(--bg-white); }
 
@@ -375,6 +370,7 @@
         .btn-green:hover { background: #006a40; box-shadow: 0 10px 25px rgba(0, 130, 80, 0.25); transform: translateY(-3px);}
         .btn-red { background: var(--sj-red); }
         .btn-red:hover { background: #b83e35; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25); transform: translateY(-3px);}
+        .submit-btn:disabled { background: var(--text-light); cursor: not-allowed; transform: none; box-shadow: none; }
 
         .fab-container { position: fixed; bottom: 40px; right: 40px; z-index: 999; display: flex; flex-direction: column; gap: 15px; transform: translateY(100px) translateZ(0); opacity: 0; transition: var(--transition-normal); will-change: transform, opacity;}
         .fab-container.visible { transform: translateY(0) translateZ(0); opacity: 1; }
@@ -382,7 +378,7 @@
         .fab:hover { box-shadow: var(--shadow-hover); border-color: var(--sj-red); color: var(--sj-red); transform: translateY(-5px);}
 
         /* =========================================
-           11. Mega Footer & Modal
+           11. Mega Footer & Modal (성공 팝업 스타일 포함)
            ========================================= */
         footer { background: #333333; color: rgba(255,255,255,0.8); padding: 80px 5% 40px; font-size: 0.95rem; border-top: 5px solid var(--sj-red); }
         .mega-footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 60px; }
@@ -408,6 +404,10 @@
         .modal-body h4 { color: var(--text-dark); font-size: 1.4rem; margin: 30px 0 10px; font-weight: 800; }
         .modal-body::-webkit-scrollbar { width: 6px; }
         .modal-body::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+        /* 고급 성공 메시지 UI */
+        .success-checkmark { width: 90px; height: 90px; background: rgba(0, 130, 80, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: var(--sj-green); font-size: 3rem; }
+        .redirect-spinner { margin-top: 25px; padding: 18px; background: var(--bg-light); border-radius: 12px; font-weight: 700; color: var(--sj-red); display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 1.05rem;}
 
         .heat-diagram { display: flex; flex-direction: column; gap: 30px; margin-top: 25px; }
         .heat-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -520,18 +520,11 @@
             if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault();
         });
         document.addEventListener('keydown', function(e) {
-            // F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S, Ctrl+P, Ctrl+C 등 주요 도난 단축키 블락
-            if (e.key === 'F12' || 
-               (e.ctrlKey && e.shiftKey && e.key === 'I') || 
-               (e.ctrlKey && e.key === 'u') || 
-               (e.ctrlKey && e.key === 'c') || 
-               (e.ctrlKey && e.key === 's') || 
-               (e.ctrlKey && e.key === 'p')) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u') || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) {
                 e.preventDefault();
             }
         });
 
-        // DOM Element 캐싱 (메모리 누수 방지)
         let mapIframe;
         let mapOverlay;
         let scrollProgressBar;
@@ -560,7 +553,6 @@
             } catch (error) {
                 console.error("Observer Error:", error);
             } finally {
-                // 3중 Failsafe: 자바스크립트 충돌 시 1.5초 뒤 무조건 렌더링 강제 실행
                 setTimeout(() => {
                     document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
                 }, 1500);
@@ -575,11 +567,9 @@
                     const hideUntil = localStorage.getItem('hideMainPopupUntil');
                     const now = new Date().getTime();
 
-                    if (hideUntil && now < parseInt(hideUntil)) {
-                        // 팝업 숨김 상태 유지
-                    } else {
+                    if (!hideUntil || now >= parseInt(hideUntil)) {
                         const popupImgContainer = document.getElementById('popup-image-container');
-                        const activePopupFiles = ['popup_event_1.jpg', 'popup_event_2.jpg']; // 서버에 있는 파일만 명시
+                        const activePopupFiles = ['popup_event_1.jpg', 'popup_event_2.jpg']; 
                         
                         if (activePopupFiles.length > 0) {
                             let loadedImages = 0;
@@ -605,7 +595,7 @@
                                 
                                 img.onerror = function() {
                                     const emptySlot = document.getElementById(`popup-slot-${index}`);
-                                    if(emptySlot) emptySlot.remove(); // 404 발생 시 DOM 클린업
+                                    if(emptySlot) emptySlot.remove(); 
                                 };
                                 img.src = file;
                             });
@@ -630,7 +620,6 @@
                         this.parentElement.style.background = 'none';
                     });
                     img.addEventListener('error', function() {
-                        // 에러 시 대체 이미지 대신 스켈레톤 상태 유지 혹은 텍스트 박스로 우회 처리 가능
                         this.parentElement.style.background = '#f0f0f0';
                     });
                 }
@@ -652,7 +641,7 @@
         });
 
         // =========================================
-        // ★ [UX 혁신] 가맹 신청 버튼 오토-라우팅 함수
+        // ★ [UX 혁신] 가맹 신청 버튼 오토-라우팅 함수 (데드링크 해소)
         // =========================================
         function routeToFranchiseForm(e) {
             if(e) e.preventDefault();
@@ -661,19 +650,18 @@
             if(contactSection) {
                 contactSection.scrollIntoView({ behavior: 'smooth' });
             }
-            // 2. 자동으로 Franchise 탭 클릭(활성화)
+            // 2. 자동으로 Franchise 탭 활성화 및 포커스
             setTimeout(() => {
                 switchContactTab('franchise');
-                // 3. 사용자 편의를 위해 첫 번째 입력창(이름)에 포커스
                 const firstInput = document.getElementById('fra-name');
                 if(firstInput) firstInput.focus();
-            }, 600); // 스크롤이 어느정도 진행된 후 탭 전환
+            }, 600); 
         }
 
         // =========================================
         // ★ [최적화] 지도 Hover 오버레이 연동 함수 (Debounce 적용)
         // =========================================
-        let mapDebounceTimer; // 마우스 스크러빙 시 부하(Lag) 방지용 타이머
+        let mapDebounceTimer; 
 
         function triggerMapChange(element) {
             if(element.classList.contains('active')) return;
@@ -687,7 +675,6 @@
             const hours = element.getAttribute('data-hours');
             const link = element.getAttribute('data-link');
 
-            // 과도한 iframe 리로드를 막는 디바운싱(150ms)
             clearTimeout(mapDebounceTimer);
             mapDebounceTimer = setTimeout(() => {
                 if(mapIframe && mapIframe.src !== mapUrl) {
@@ -718,7 +705,6 @@
                     if (window.scrollY > 50) header.classList.add('scrolled');
                     else header.classList.remove('scrolled');
 
-                    // 프로그레스 바 고속 연산
                     if(scrollProgressBar) {
                         const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
                         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -734,7 +720,7 @@
                 });
                 ticking = true;
             }
-        }, { passive: true }); // 패시브 리스너로 스크롤 버벅임(Jank) 방지
+        }, { passive: true }); 
 
         // 메뉴 탭 스위치
         function showMenuCategory(catId) {
@@ -748,11 +734,9 @@
             document.querySelectorAll('.menu-grid').forEach(grid => {
                 grid.classList.remove('active');
             });
-            // 부드러운 CSS 페이드 효과를 위해 약간의 딜레이 활용 가능 (현재 CSS opacity transition 적용 완료)
             document.getElementById('cat-' + catId).classList.add('active');
         }
 
-        // 팝업 관련 함수
         function closeEventPopup() {
             const popup = document.getElementById('main-event-popup');
             if (popup) popup.classList.remove('show'); 
@@ -763,6 +747,208 @@
             const twentyFourHours = 24 * 60 * 60 * 1000; 
             localStorage.setItem('hideMainPopupUntil', now + twentyFourHours);
             closeEventPopup();
+        }
+
+        // =========================================
+        // ★ EmailJS 전송 및 통합 모달 라우팅 시스템
+        // =========================================
+        function showModalMessage(title, htmlContent, hideTitle = false) {
+            const modal = document.getElementById('dynamic-modal');
+            const titleEl = document.getElementById('modal-title');
+            
+            if(hideTitle) {
+                titleEl.style.display = 'none';
+            } else {
+                titleEl.style.display = 'block';
+                titleEl.innerText = title;
+            }
+            
+            document.getElementById('modal-body').innerHTML = htmlContent;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function handleInquiryEmailJS(event, type) {
+            event.preventDefault();
+            
+            const formElement = event.target;
+            const submitButton = formElement.querySelector('.submit-btn');
+            const originalButtonText = submitButton.innerHTML;
+            
+            // 로딩 스피너 UI 전환
+            submitButton.disabled = true;
+            submitButton.innerHTML = `<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> PROCESSING...`;
+
+            if (typeof emailjs === 'undefined') {
+                showModalMessage('System Notice', 'Email service is currently unavailable. Launching your default email client instead.', false);
+                setTimeout(() => {
+                    fallbackMailto(type, getFormParams(formElement, type));
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
+                }, 2000);
+                return false;
+            }
+
+            let serviceID = "service_zyn89ll"; 
+            let templateID = "template_r8gce22"; 
+            
+            const params = getFormParams(formElement, type);
+            params.target_email = "eunbeen.lee@y2choldings.co.kr"; // 대표님 전용 수신 세팅
+            params.inquiry_type = type;
+
+            emailjs.send(serviceID, templateID, params)
+                .then(() => {
+                    formElement.reset();
+                    
+                    if(type === 'Franchise') {
+                        // ★ [UX 핵심] 1차 접수 완료 후 2차 상세 폼(apply.html)으로 자동 전개
+                        showModalMessage('Application Received', `
+                            <div style="text-align:center; padding: 20px 0;">
+                                <div class="success-checkmark"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                <h4 style="margin-top:0; font-size:1.8rem; color:var(--text-dark);">1차 퀵 접수가 완료되었습니다.</h4>
+                                <p style="color:var(--text-gray); font-size:1.1rem; line-height:1.6;">Thank you for your interest in Sinjeon.<br>Your preliminary inquiry has been secured.</p>
+                                <div class="redirect-spinner">
+                                    <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> 상세 신청서(Official Portal)로 이동합니다...
+                                </div>
+                            </div>
+                        `, true);
+                        
+                        // 2.5초 뒤 apply.html로 부드럽게 화면 이동
+                        setTimeout(() => {
+                            window.location.href = 'apply.html';
+                        }, 2500);
+
+                    } else {
+                        // 일반 문의 성공 모달
+                        showModalMessage('Message Sent', `
+                            <div style="text-align:center; padding: 20px 0;">
+                                <div class="success-checkmark"><i class="fas fa-paper-plane" aria-hidden="true"></i></div>
+                                <h4 style="margin-top:0; font-size:1.8rem;">문의가 성공적으로 접수되었습니다.</h4>
+                                <p style="color:var(--text-gray); font-size:1.1rem;">We will get back to you shortly.</p>
+                            </div>
+                        `, true);
+                    }
+                })
+                .catch((error) => {
+                    console.error("EmailJS Failure:", error);
+                    showModalMessage('System Notice', 'Cloud service routing is completing configuration. Alternative mail window will open now.', false);
+                    setTimeout(() => {
+                        fallbackMailto(type, params);
+                    }, 2000);
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
+                });
+                
+            return false;
+        }
+
+        function getFormParams(formElement, type) {
+            let params = {
+                name: formElement.querySelector('[name="from_name"]').value,
+                phone: formElement.querySelector('[name="reply_phone"]').value,
+                email: formElement.querySelector('[name="reply_email"]').value,
+                message: formElement.querySelector('[name="message"]').value
+            };
+            if(type === 'Franchise') {
+                params.location = formElement.querySelector('[name="desired_location"]').value;
+                params.budget = formElement.querySelector('[name="budget"]').value;
+            }
+            return params;
+        }
+
+        function fallbackMailto(type, params) {
+            const subject = `[${type} Inquiry] from ${params.name}`;
+            let body = "";
+            if(type === 'General') {
+                body = `Name: ${params.name}%0D%0APhone: ${params.phone}%0D%0AEmail: ${params.email}%0D%0A%0D%0AInquiry:%0D%0A${params.message}`;
+            } else {
+                body = `Applicant Name: ${params.name}%0D%0AContact: ${params.phone}%0D%0AEmail: ${params.email}%0D%0ADesired Location: ${params.location}%0D%0AEstimated Budget: ${params.budget}%0D%0A%0D%0ABusiness Background / Inquiry:%0D%0A${params.message}`;
+            }
+            window.location.href = `mailto:eunbeen.lee@y2choldings.co.kr?subject=${encodeURIComponent(subject)}&body=${body}`;
+        }
+
+        function switchContactTab(target) {
+            document.querySelectorAll('.contact-wrapper .tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+            });
+            document.querySelectorAll('.contact-wrapper .form-content').forEach(form => {
+                form.classList.remove('active');
+                form.style.animation = 'none';
+                form.offsetHeight; 
+                form.style.animation = null; 
+            });
+            const targetBtn = document.querySelector(`.contact-wrapper .tab-btn[data-target="${target}"]`);
+            if(targetBtn) {
+                targetBtn.classList.add('active');
+                targetBtn.setAttribute('aria-selected', 'true');
+            }
+            const targetForm = document.getElementById(`${target}-form`);
+            if(targetForm) targetForm.classList.add('active');
+        }
+
+        function updateStoreStatuses() {
+            const storeCards = document.querySelectorAll('.store-card');
+            storeCards.forEach(card => {
+                try {
+                    const tz = card.getAttribute('data-timezone');
+                    if (!tz) return;
+
+                    const dateInTz = new Date(new Date().toLocaleString("en-US", {timeZone: tz}));
+                    let currentHour = dateInTz.getHours();
+                    const currentMin = dateInTz.getMinutes();
+                    const currentDay = dateInTz.getDay(); 
+                    
+                    const currentTimeVal = currentHour + (currentMin / 60);
+
+                    let openHour = parseFloat(card.getAttribute('data-open') || 11);
+                    let closeHour = parseFloat(card.getAttribute('data-close') || 22);
+                    
+                    if (card.hasAttribute('data-close-weekend') && (currentDay === 5 || currentDay === 6)) {
+                        closeHour = parseFloat(card.getAttribute('data-close-weekend'));
+                    }
+
+                    let isOpen = false;
+                    let adjustedCurrent = currentTimeVal;
+                    let adjustedClose = closeHour;
+                    
+                    if (closeHour <= openHour) { 
+                        adjustedClose += 24;
+                        if (currentTimeVal < openHour) {
+                            adjustedCurrent += 24;
+                        }
+                    }
+
+                    if (adjustedCurrent >= openHour && adjustedCurrent < adjustedClose) {
+                        isOpen = true;
+                    }
+
+                    function formatTime(decimalTime) {
+                        let h = Math.floor(decimalTime);
+                        let m = Math.round((decimalTime - h) * 60);
+                        let ampm = h >= 12 && h < 24 ? 'PM' : 'AM';
+                        h = h % 12;
+                        if (h === 0) h = 12;
+                        let mStr = m > 0 ? ':' + (m < 10 ? '0'+m : m) : '';
+                        return `${h}${mStr} ${ampm}`;
+                    }
+
+                    const badge = card.querySelector('.loc-status');
+                    if (badge) {
+                        if (isOpen) {
+                            badge.innerHTML = `Open Now (Closes ${formatTime(closeHour)})`;
+                            badge.className = "loc-status open";
+                        } else {
+                            badge.innerHTML = `Closed (Opens ${formatTime(openHour)})`;
+                            badge.className = "loc-status closed";
+                        }
+                    }
+                } catch(e) {
+                    console.error("Hours Error:", e);
+                }
+            });
         }
     </script>
 </head>
@@ -775,7 +961,7 @@
             <img src="sinjeon_logo_canada.png" alt="Sinjeon Canada Logo">
             <span>SINJEON CANADA</span>
         </a>
-        <nav role="navigation">
+        <nav role="navigation" aria-label="Main Navigation">
             <a href="#about">About</a>
             <a href="#menu">Menu</a>
             <a href="#locations">Locations</a>
@@ -784,8 +970,8 @@
         </nav>
     </header>
 
-    <!-- [다중 팝업 시스템] -->
-    <div class="event-popup-wrapper" id="main-event-popup" aria-hidden="true">
+    <!-- [다중 팝업 시스템] (데스크톱: 좌측 슬라이드 / 모바일: 중앙 팝업) -->
+    <div class="event-popup-wrapper" id="main-event-popup" aria-hidden="true" role="dialog">
         <div class="event-popup-content">
             <div id="popup-image-container" class="popup-image-container"></div>
             <div class="event-popup-actions">
@@ -806,7 +992,8 @@
         </h1>
         <p class="reveal delay-200">From Korea to Canada. Experience the authentic, HACCP-certified spice that captivated over 800 locations worldwide.</p>
         
-        <button class="btn-clean-heat reveal delay-300" onclick="openModal('clean-heat')">
+        <!-- 약관/안내 모달 트리거 -->
+        <button class="btn-clean-heat reveal delay-300" onclick="showModalMessage('Clean Heat', document.getElementById('template-clean-heat').innerHTML, true)">
             🌶️ Discover the Secret of Clean Heat
         </button>
 
@@ -845,7 +1032,7 @@
                 <div class="value-icon" aria-hidden="true">03</div>
                 <h3>Customized Heat</h3>
                 <p>From Mild to Extra Spicy, our unique seasoning profile offers a clean, addictive heat that caters to everyone's spice tolerance.</p>
-                <button class="btn-clean-heat-sm" onclick="openModal('clean-heat')">How we make it ➔</button>
+                <button class="btn-clean-heat-sm" onclick="showModalMessage('Clean Heat', document.getElementById('template-clean-heat').innerHTML, true)">How we make it ➔</button>
                 <img src="character/character_6.png" class="char-img char-bento-2 anim-float-3" alt="Sinjeon Golf" loading="lazy" decoding="async">
             </div>
             
@@ -903,7 +1090,6 @@
             <h2>Taste the <span>Original</span></h2>
         </div>
         
-        <!-- 웹 접근성(A11y) ARIA 태그 적용 -->
         <div class="menu-tabs reveal delay-100" role="tablist">
             <button class="menu-tab-btn active" role="tab" aria-selected="true" onclick="showMenuCategory('Main')">Main</button>
             <button class="menu-tab-btn" role="tab" aria-selected="false" onclick="showMenuCategory('DeepFried')">Deep Fried</button>
@@ -1109,13 +1295,13 @@
                     <p class="menu-eng">Flat and chewy glass noodles</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Topping/순대.png" alt="Sundae" loading="lazy" decoding="async"></div>
+                    <div class="menu-item-img"><img src="menus/Topping/순대.png" alt="Sundae" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sundae'"></div>
                     <h3>Sundae</h3>
                     <p class="menu-kor">순대</p>
                     <p class="menu-eng">Traditional Korean blood sausage</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Topping/소세지.png" alt="Sausage" loading="lazy" decoding="async"></div>
+                    <div class="menu-item-img"><img src="menus/Topping/소세지.png" alt="Sausage" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sausage'"></div>
                     <h3>Sausage</h3>
                     <p class="menu-kor">소세지</p>
                     <p class="menu-eng">Bite-sized smoked sausages</p>
@@ -1261,7 +1447,7 @@
             <div class="loc-map-wrapper">
                 <iframe id="main-map" src="about:blank" title="Google Maps" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 
-                <!-- 고급화된 정보 표시 팝업 (Map Info Overlay) -->
+                <!-- 고급화된 정보 표시 오버레이 -->
                 <div class="map-info-overlay" id="map-premium-overlay" aria-hidden="true">
                     <h4 id="overlay-title">Loading...</h4>
                     <p id="overlay-address"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> </p>
@@ -1295,7 +1481,7 @@
                 <div class="timeline-marker">1</div>
                 <div class="timeline-content">
                     <h4>Application & Consultation</h4>
-                    <p>Submit your inquiry via our form. Our team will contact you for an initial consultation regarding your desired location and investment plan.</p>
+                    <p>Submit your preliminary inquiry via our quick form. Our team will contact you for an initial consultation regarding your desired location.</p>
                 </div>
             </div>
             <div class="timeline-step reveal delay-200">
@@ -1324,7 +1510,7 @@
         <div class="reveal delay-200" style="text-align: center; margin-top: 70px;">
             <h3 style="font-size: 1.8rem; font-weight: 800; color: var(--text-dark); margin-bottom: 20px;">Ready to Start Your Journey?</h3>
             
-            <!-- ★ [UX 혁신] 죽어있던 링크를 제거하고 하단 폼으로 스무스 스크롤 + 탭 자동 전환 -->
+            <!-- ★ [UX 혁신] 1. 데드링크 해결 및 하단 폼 자동 라우팅 적용 -->
             <a href="#contact" onclick="routeToFranchiseForm(event)" class="btn-apply-portal">
                 <i class="fas fa-file-signature" aria-hidden="true"></i> Apply for Franchise
             </a>
@@ -1373,7 +1559,7 @@
 
             <div id="franchise-form" class="form-content" role="tabpanel">
                 <div class="form-header">
-                    <h3>Franchise Inquiries</h3>
+                    <h3>Franchise Inquiries (Quick Form)</h3>
                 </div>
                 <form onsubmit="return handleInquiryEmailJS(event, 'Franchise')">
                     <div class="input-row">
@@ -1416,7 +1602,7 @@
         </div>
     </section>
 
-    <!-- 플로팅 탑 버튼 접근성 강화 -->
+    <!-- 플로팅 탑 버튼 -->
     <div class="fab-container" id="fab-container">
         <div class="fab" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to Top" aria-label="Scroll to Top">↑</div>
     </div>
@@ -1453,8 +1639,9 @@
             <div class="footer-col" style="text-align: left;">
                 <h4>Legal</h4>
                 <ul>
-                    <li><a onclick="openModal('privacy')" style="cursor:pointer;">Privacy Policy</a></li>
-                    <li><a onclick="openModal('terms')" style="cursor:pointer;">Terms of Service</a></li>
+                    <!-- 약관 및 안내 모달 템플릿 호출 -->
+                    <li><a onclick="showModalMessage('Privacy Policy', document.getElementById('template-privacy').innerHTML, false)" style="cursor:pointer;">Privacy Policy</a></li>
+                    <li><a onclick="showModalMessage('Terms of Service', document.getElementById('template-terms').innerHTML, false)" style="cursor:pointer;">Terms of Service</a></li>
                     <li><a href="#contact" onclick="routeToFranchiseForm(event)">Franchise Inquiry</a></li>
                 </ul>
             </div>
@@ -1466,7 +1653,7 @@
         </div>
     </footer>
 
-    <!-- 통합 동적 모달 창 -->
+    <!-- 통합 동적 모달 창 (성공/에러/안내문 공용) -->
     <div class="modal-overlay" id="dynamic-modal" aria-hidden="true" role="dialog">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()" aria-label="Close Modal">×</button>
@@ -1476,6 +1663,57 @@
             </div>
         </div>
     </div>
+
+    <!-- =========================================
+         숨겨진 안내문 템플릿 데이터 (Clean Heat / Privacy / Terms)
+         ========================================= -->
+    <template id="template-clean-heat">
+        <h4 style="margin-top:0; font-size: 2rem; color: var(--sj-red); line-height: 1.2; font-family: 'SinjeonCustom', sans-serif; font-weight: normal;">How Cheongyang Chili Peppers Make Our Clean Heat</h4>
+        <p style="font-size: 1.1rem; color: var(--text-dark); margin-top: 15px;">At Sinjeon, we refuse to compromise on wellness. We use 100% authentic Cheongyang chili peppers instead of chemical capsaicin extracts to create our signature addictive spice that North Americans are falling in love with.</p>
+        <div class="heat-diagram">
+            <div class="heat-compare">
+                <div class="heat-box heat-bad">
+                    <h5>Artificial Capsaicin</h5>
+                    <p>❌ Chemical extracts</p>
+                    <p>❌ Lingering, painful heat</p>
+                    <p>❌ Can cause stomach discomfort</p>
+                </div>
+                <div class="heat-box heat-good">
+                    <h5>Authentic Cheongyang Chili</h5>
+                    <p>✅ 100% Natural ingredients</p>
+                    <p>✅ Sharp, clean, and refreshing heat</p>
+                    <p>✅ Dissipates quickly, leaving rich flavor</p>
+                </div>
+            </div>
+            <div class="heat-flow">
+                <div class="flow-step"><i aria-hidden="true">🌶️</i><span>Premium Chili<br>Harvesting</span></div>
+                <div class="flow-arrow">➔</div>
+                <div class="flow-step"><i aria-hidden="true">🏭</i><span>HACCP Certified<br>Processing</span></div>
+                <div class="flow-arrow">➔</div>
+                <div class="flow-step"><i aria-hidden="true">✨</i><span>Sinjeon's<br>Secret Sauce</span></div>
+            </div>
+        </div>
+    </template>
+
+    <template id="template-privacy">
+        <h4>1. Introduction</h4>
+        <p>Sinjeon Food Sys Canada ("we", "our", or "us") is committed to protecting the privacy and security of your personal information. This Privacy Policy outlines how we collect, use, and safeguard data in compliance with the Personal Information Protection and Electronic Documents Act (PIPEDA).</p>
+        <h4>2. Information We Collect</h4>
+        <p>We only collect personal information that is necessary for our business operations. This includes your name, phone number, email address, and desired location data when you voluntarily submit inquiries via our Contact Us or Franchise forms.</p>
+        <h4>3. Use of Information</h4>
+        <p>The information collected is strictly used to:<br>- Respond to your general support or franchise inquiries.<br>- Assess your franchise application and provide preliminary consulting.<br>- Communicate updates regarding our operations or your application status.</p>
+        <h4>4. Data Security and Sharing</h4>
+        <p>We implement robust, industry-standard security protocols to protect your data transmitted through our Cloud infrastructure. <strong>We do not sell, rent, or trade your personal information to any third parties.</strong></p>
+    </template>
+
+    <template id="template-terms">
+        <h4>1. Acceptance of Terms</h4>
+        <p>By accessing and using the Sinjeon Canada website, you accept and agree to be bound by the terms and provision of this agreement. These terms are governed by the laws of the Province of Ontario and the federal laws of Canada applicable therein.</p>
+        <h4>2. Intellectual Property Rights</h4>
+        <p>All content published on this website, including but not limited to brand logos, typography ('SinjeonCustom'), graphical assets, character illustrations ('Mill-tto Family'), and textual content, are the exclusive intellectual property of Sinjeon Food Sys. <strong>Unauthorized scraping, copying, reproduction, or commercial use is strictly prohibited and subject to legal action.</strong></p>
+        <h4>3. Franchise Application Disclaimer</h4>
+        <p>Submitting a franchise inquiry through this website does not constitute a binding legal contract or a guarantee of franchise approval.</p>
+    </template>
 
 </body>
 </html>
