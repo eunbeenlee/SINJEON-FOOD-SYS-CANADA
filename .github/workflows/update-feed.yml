@@ -1,0 +1,49 @@
+name: Auto-Refresh Instagram Feed
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 매일 자정 자동 실행
+  workflow_dispatch:    # 수동 실행 버튼
+
+jobs:
+  update-feed:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 파일 자동 저장을 위한 쓰기 권한
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Refresh Instagram Token
+        id: refresh_token
+        run: |
+          # 1. 메타 API를 호출해 토큰 생명 연장(갱신)
+          RESPONSE=$(curl -s "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${{ secrets.IG_ACCESS_TOKEN }}")
+          NEW_TOKEN=$(echo $RESPONSE | jq -r .access_token)
+          
+          # 2. 에러 방지 처리
+          if [ "$NEW_TOKEN" == "null" ] || [ -z "$NEW_TOKEN" ]; then
+            echo "토큰 갱신 에러 발생. 기존 토큰을 유지합니다."
+            NEW_TOKEN=${{ secrets.IG_ACCESS_TOKEN }}
+          fi
+          
+          # 3. 다음 스텝으로 새 토큰 전달
+          echo "NEW_TOKEN=$NEW_TOKEN" >> $GITHUB_ENV
+
+      - name: Update GitHub Secret
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }} # 방금 만든 GitHub PAT 권한 사용
+        run: |
+          # 4. 연장된 새 토큰을 GitHub Secrets에 자동 덮어쓰기
+          gh secret set IG_ACCESS_TOKEN -b"${{ env.NEW_TOKEN }}"
+
+      - name: Fetch Instagram Data
+        run: |
+          # 5. 새 토큰으로 인스타그램 최신 피드 가져와서 JSON 파일로 저장
+          curl -s "https://graph.instagram.com/${{ secrets.IG_USER_ID }}/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${{ env.NEW_TOKEN }}" > instagram-feed.json
+
+      - name: Commit and push JSON
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "인스타그램 피드 및 토큰 자동 업데이트 완료"
+          file_patterns: "instagram-feed.json"
