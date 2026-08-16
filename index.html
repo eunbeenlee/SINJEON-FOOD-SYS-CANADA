@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#D24B41">
     
-    <!-- Primary Meta Tags -->
+    <!-- Primary Meta Tags (SEO 최적화) -->
     <title>Sinjeon Canada | The New Standard of Topokki</title>
     <meta name="title" content="Sinjeon Canada | The New Standard of Topokki">
     <meta name="description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide.">
@@ -26,7 +26,7 @@
     
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
     
-    <!-- 에셋 사전 로딩 (Preload) -->
+    <!-- ★ 핵심 에셋 사전 로딩 (Preload) -->
     <link rel="preload" href="background/base_1.JPG" as="image">
     <link rel="preload" href="character/character_7.png" as="image">
     <link rel="preload" href="fonts/SinjeonFont.otf" as="font" type="font/otf" crossorigin>
@@ -35,20 +35,11 @@
     
     <!-- EmailJS SDK 비동기 로딩 -->
     <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof emailjs !== 'undefined') {
-                emailjs.init({ publicKey: "DITntTK9NnZLeavvX" });
-            }
-        });
-    </script>
     
     <!-- Google Fonts 비동기 연결 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- ★ 기존 Elfsight 스크립트 제거 완료 (독립 백엔드 전환) -->
 
     <style>
         /* =========================================
@@ -87,6 +78,7 @@
 
         .scroll-progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--sj-red); z-index: 1001; width: 0%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; will-change: width; transition: width 0.1s linear; }
 
+        /* 하드웨어 가속 옵저버 애니메이션 */
         .reveal { opacity: 0; transform: translateY(30px) translateZ(0); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -107,7 +99,7 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           2. 팝업 무결성 시스템
+           2. 팝업 무결성 시스템 (데스크톱/모바일 분기)
            ========================================= */
         .event-popup-wrapper {
             position: fixed; top: 110px; left: 20px; right: auto; z-index: 99999; 
@@ -215,7 +207,7 @@
         .spice-card:hover .char-spice { transform: translateX(-50%) scale(1.15) translateY(-10px); }
 
         /* =========================================
-           7. Menu Section
+           7. Categorized Menu Section (스켈레톤 최적화)
            ========================================= */
         .menu-section { padding: 130px 5%; background: var(--bg-white); text-align: center; border-top: 1px solid var(--border-color); }
         .menu-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
@@ -314,7 +306,7 @@
         .overlay-btn:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(210, 75, 65, 0.25); color: white; }
 
         /* =========================================
-           9. Instagram Feed (★ 자체 백엔드 JSON 연동 디자인)
+           9. Instagram Feed (JSON Fetcher)
            ========================================= */
         .ugc-section { padding: 130px 5%; background: var(--text-dark); color: white; text-align: center; overflow: hidden; }
         .ugc-section .section-header h2 { color: white; }
@@ -329,7 +321,6 @@
         }
         .instagram-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
         
-        /* 럭셔리 호버 오버레이 */
         .instagram-overlay { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(210, 75, 65, 0.85); display: flex; justify-content: center; align-items: center; 
@@ -341,7 +332,6 @@
         .instagram-item:hover .instagram-overlay { opacity: 1; }
         .instagram-item:hover .instagram-icon { transform: translateY(0); }
 
-        /* 피드 스켈레톤 로딩 (어두운 배경에 맞춤) */
         .instagram-item.skeleton { 
             background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%); 
             background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; 
@@ -360,7 +350,7 @@
         .timeline-content h4 { font-size: 1.6rem; color: var(--text-dark); margin-bottom: 10px; font-weight: 800; }
         .timeline-content p { color: var(--text-gray); font-size: 1.05rem; font-weight: 500; line-height: 1.6;}
 
-        /* ★ [UX 혁신] 오토-라우팅 적용 버튼 */
+        /* ★ [가맹 신청 전용 버튼] 100% 직결 이동 */
         .btn-apply-portal { display: inline-flex; align-items: center; gap: 10px; background: var(--sj-red); color: var(--bg-white); padding: 20px 50px; font-size: 1.15rem; font-weight: 800; border-radius: 50px; text-decoration: none; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3); transition: var(--transition-fast); text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
         .btn-apply-portal:hover { background: #b83e35; transform: translateY(-3px); box-shadow: 0 15px 30px rgba(210, 75, 65, 0.4); color: var(--bg-white); }
 
@@ -377,7 +367,7 @@
         
         .form-header { margin-bottom: 40px; text-align: center; }
         .form-header h3 { font-size: 2rem; margin-bottom: 12px; color: var(--text-dark); font-weight: 900; }
-        .form-header p { color: var(--text-gray); font-size: 1.05rem; }
+        .form-header p { color: var(--text-gray); font-size: 1.05rem; line-height: 1.5; }
 
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .input-wrapper { position: relative; margin-bottom: 25px; }
@@ -407,7 +397,7 @@
         .fab:hover { box-shadow: var(--shadow-hover); border-color: var(--sj-red); color: var(--sj-red); transform: translateY(-5px);}
 
         /* =========================================
-           11. Mega Footer & Modal (성공 팝업 스타일 포함)
+           11. Mega Footer & Modal (성공 팝업 스타일)
            ========================================= */
         footer { background: #333333; color: rgba(255,255,255,0.8); padding: 80px 5% 40px; font-size: 0.95rem; border-top: 5px solid var(--sj-red); }
         .mega-footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 60px; }
@@ -434,7 +424,6 @@
         .modal-body::-webkit-scrollbar { width: 6px; }
         .modal-body::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
 
-        /* 고급 성공 메시지 UI */
         .success-checkmark { width: 90px; height: 90px; background: rgba(0, 130, 80, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: var(--sj-green); font-size: 3rem; }
         .redirect-spinner { margin-top: 25px; padding: 18px; background: var(--bg-light); border-radius: 12px; font-weight: 700; color: var(--sj-red); display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 1.05rem;}
 
@@ -502,7 +491,6 @@
             .map-info-overlay { bottom: 20px; left: 50%; transform: translate(-50%, 20px); max-width: 90%; }
             .map-info-overlay.active { transform: translate(-50%, 0); }
             
-            /* 인스타그램 반응형 */
             .instagram-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
         }
         
@@ -534,7 +522,6 @@
             
             .event-popup-actions button { font-size: 0.9rem; padding: 16px 0; } 
             
-            /* 인스타그램 모바일 반응형 (2열 유지) */
             .instagram-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .instagram-feed-section { padding: 0; }
         }
@@ -546,9 +533,10 @@
         }
     </style>
     
-    <!-- ★ [최종 무결점 JS 통제 센터] -->
     <script>
-        // 보안 및 불펌 방지 모듈
+        // =========================================
+        // 1. 보안 모듈 (Anti-Theft)
+        // =========================================
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('dragstart', e => {
             if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault();
@@ -568,7 +556,7 @@
             mapOverlay = document.getElementById('map-premium-overlay');
             scrollProgressBar = document.getElementById('scroll-progress');
 
-            // 1. 스크롤 애니메이션 옵저버
+            // 렌더링 옵저버
             try {
                 const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
                 const observer = new IntersectionObserver((entries, observer) => {
@@ -588,7 +576,7 @@
                 }, 1500);
             }
 
-            // 2. 팝업 로딩 로직 (안전성 보장)
+            // 팝업 시스템
             try {
                 const popup = document.getElementById('main-event-popup');
                 if (popup) {
@@ -631,7 +619,7 @@
                 console.error("Popup Error:", error);
             }
 
-            // 3. 메뉴 스켈레톤 로딩 바인딩
+            // 메뉴 스켈레톤 로딩 바인딩
             const menuImages = document.querySelectorAll('.menu-item-img img');
             menuImages.forEach(img => {
                 if (img.complete) {
@@ -648,7 +636,6 @@
                 }
             });
             
-            // 4. 영업시간 갱신 및 첫 번째 맵 셋업
             updateStoreStatuses();
             setInterval(updateStoreStatuses, 60000);
 
@@ -660,7 +647,7 @@
                 }
             }, 500);
 
-            // 5. ★ 자체 인스타그램 피드 (JSON Fetch) 연동
+            // 자체 인스타그램 피드 연동 로직
             try {
                 const feedContainer = document.getElementById('instagram-feed');
                 if (feedContainer) {
@@ -674,7 +661,6 @@
                             let html = '';
                             
                             posts.slice(0, 6).forEach(post => {
-                                // 동영상 썸네일 예외 처리
                                 const imageUrl = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
                                 const caption = post.caption ? post.caption.substring(0, 100) : 'Sinjeon Instagram Post';
                                 
@@ -690,7 +676,6 @@
                                 `;
                             });
                             
-                            // 스켈레톤 UI를 실제 데이터로 교체
                             feedContainer.innerHTML = html;
                         })
                         .catch(error => {
@@ -703,21 +688,9 @@
             }
         });
 
-        // 가맹 신청 오토 라우팅 (데드링크 해제)
-        function routeToFranchiseForm(e) {
-            if(e) e.preventDefault();
-            const contactSection = document.getElementById('contact');
-            if(contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-            }
-            setTimeout(() => {
-                switchContactTab('franchise');
-                const firstInput = document.getElementById('fra-name');
-                if(firstInput) firstInput.focus();
-            }, 600); 
-        }
-
-        // 구글 맵 Hover 오버레이 연동 (Debounce 적용)
+        // =========================================
+        // ★ 지도 Hover 오버레이 연동 (Debounce)
+        // =========================================
         let mapDebounceTimer; 
         function triggerMapChange(element) {
             if(element.classList.contains('active')) return;
@@ -750,7 +723,9 @@
             }
         }
 
-        // 스크롤 이벤트 (requestAnimationFrame 사용)
+        // =========================================
+        // ★ 스크롤 이벤트 (requestAnimationFrame)
+        // =========================================
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
@@ -776,7 +751,6 @@
             }
         }, { passive: true }); 
 
-        // 메뉴 탭 스위치
         function showMenuCategory(catId) {
             document.querySelectorAll('.menu-tab-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -791,7 +765,6 @@
             document.getElementById('cat-' + catId).classList.add('active');
         }
 
-        // 팝업 관련 함수
         function closeEventPopup() {
             const popup = document.getElementById('main-event-popup');
             if (popup) popup.classList.remove('show'); 
@@ -804,7 +777,6 @@
             closeEventPopup();
         }
 
-        // 모달 관리
         function showModalMessage(title, htmlContent, hideTitle = false) {
             const modal = document.getElementById('dynamic-modal');
             const titleEl = document.getElementById('modal-title');
@@ -826,7 +798,9 @@
             document.body.style.overflow = ''; 
         }
 
-        // EmailJS 전송 및 자동 라우팅 시스템
+        // =========================================
+        // ★ [핵심] EmailJS 전송 및 폼 처리 로직 완벽 오류 제어
+        // =========================================
         function handleInquiryEmailJS(event, type) {
             event.preventDefault();
             
@@ -835,12 +809,12 @@
             const originalButtonText = submitButton.innerHTML;
             
             submitButton.disabled = true;
-            submitButton.innerHTML = `<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> PROCESSING...`;
+            submitButton.innerHTML = `<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> SENDING...`;
 
             if (typeof emailjs === 'undefined') {
                 showModalMessage('System Notice', 'Email service is currently unavailable. Launching your default email client instead.', false);
                 setTimeout(() => {
-                    fallbackMailto(type, getFormParams(formElement, type));
+                    fallbackMailto(type, getFormParams(formElement));
                     submitButton.disabled = false;
                     submitButton.innerHTML = originalButtonText;
                 }, 2000);
@@ -850,7 +824,8 @@
             let serviceID = "service_zyn89ll"; 
             let templateID = "template_r8gce22"; 
             
-            const params = getFormParams(formElement, type);
+            // 폼 필드가 축소되었으므로 통일된 파라미터 수집 사용 (에러 원천 방지)
+            const params = getFormParams(formElement);
             params.target_email = "eunbeen.lee@y2choldings.co.kr";
             params.inquiry_type = type;
 
@@ -858,8 +833,8 @@
                 .then(() => {
                     formElement.reset();
                     
-                    if(type === 'Franchise') {
-                        // ★ [UX 핵심] 1차 접수 완료 후 2차 상세 폼(apply.html)으로 자동 전개
+                    if(type === 'Franchise Quick Inquiry') {
+                        // ★ 1차 접수 완료 -> apply.html로 자동 전개(Redirect)
                         showModalMessage('Application Received', `
                             <div style="text-align:center; padding: 20px 0;">
                                 <div class="success-checkmark"><i class="fas fa-check" aria-hidden="true"></i></div>
@@ -871,7 +846,6 @@
                             </div>
                         `, true);
                         
-                        // 2.5초 뒤 apply.html로 부드럽게 화면 이동
                         setTimeout(() => {
                             window.location.href = 'apply.html';
                         }, 2500);
@@ -901,28 +875,18 @@
             return false;
         }
 
-        function getFormParams(formElement, type) {
-            let params = {
+        function getFormParams(formElement) {
+            return {
                 name: formElement.querySelector('[name="from_name"]').value,
                 phone: formElement.querySelector('[name="reply_phone"]').value,
                 email: formElement.querySelector('[name="reply_email"]').value,
                 message: formElement.querySelector('[name="message"]').value
             };
-            if(type === 'Franchise') {
-                params.location = formElement.querySelector('[name="desired_location"]').value;
-                params.budget = formElement.querySelector('[name="budget"]').value;
-            }
-            return params;
         }
 
         function fallbackMailto(type, params) {
-            const subject = `[${type} Inquiry] from ${params.name}`;
-            let body = "";
-            if(type === 'General') {
-                body = `Name: ${params.name}%0D%0APhone: ${params.phone}%0D%0AEmail: ${params.email}%0D%0A%0D%0AInquiry:%0D%0A${params.message}`;
-            } else {
-                body = `Applicant Name: ${params.name}%0D%0AContact: ${params.phone}%0D%0AEmail: ${params.email}%0D%0ADesired Location: ${params.location}%0D%0AEstimated Budget: ${params.budget}%0D%0A%0D%0ABusiness Background / Inquiry:%0D%0A${params.message}`;
-            }
+            const subject = `[${type}] from ${params.name}`;
+            const body = `Name: ${params.name}%0D%0APhone: ${params.phone}%0D%0AEmail: ${params.email}%0D%0A%0D%0AInquiry:%0D%0A${params.message}`;
             window.location.href = `mailto:eunbeen.lee@y2choldings.co.kr?subject=${encodeURIComponent(subject)}&body=${body}`;
         }
 
@@ -946,7 +910,6 @@
             if(targetForm) targetForm.classList.add('active');
         }
 
-        // 영업시간 체크
         function updateStoreStatuses() {
             const storeCards = document.querySelectorAll('.store-card');
             storeCards.forEach(card => {
@@ -1028,7 +991,7 @@
         </nav>
     </header>
 
-    <!-- [다중 팝업 시스템] (데스크톱: 좌측 슬라이드 / 모바일: 중앙 팝업) -->
+    <!-- [다중 팝업 시스템] -->
     <div class="event-popup-wrapper" id="main-event-popup" aria-hidden="true" role="dialog">
         <div class="event-popup-content">
             <div id="popup-image-container" class="popup-image-container"></div>
@@ -1500,11 +1463,9 @@
                 </div>
             </div>
             
-            <!-- 글로벌 스탠다드 로딩 속도 가속화 -->
             <div class="loc-map-wrapper">
                 <iframe id="main-map" src="about:blank" title="Google Maps" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 
-                <!-- 고급화된 정보 표시 오버레이 -->
                 <div class="map-info-overlay" id="map-premium-overlay" aria-hidden="true">
                     <h4 id="overlay-title">Loading...</h4>
                     <p id="overlay-address"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> </p>
@@ -1524,7 +1485,6 @@
         </div>
         
         <div class="instagram-feed-section reveal delay-100">
-            <!-- 초기 로딩 시 레이아웃 덜컹거림(CLS) 방지를 위한 스켈레톤 박스 6개 배치 -->
             <div id="instagram-feed" class="instagram-grid">
                 <div class="instagram-item skeleton"></div>
                 <div class="instagram-item skeleton"></div>
@@ -1574,9 +1534,12 @@
         
         <div class="reveal delay-200" style="text-align: center; margin-top: 70px;">
             <h3 style="font-size: 1.8rem; font-weight: 800; color: var(--text-dark); margin-bottom: 20px;">Ready to Start Your Journey?</h3>
-            <a href="#contact" onclick="routeToFranchiseForm(event)" class="btn-apply-portal">
+            
+            <!-- ★ [UX 혁신] 오토라우팅 제거 -> 진성 고객만 완벽히 apply.html로 직결 이동 -->
+            <a href="apply.html" class="btn-apply-portal">
                 <i class="fas fa-file-signature" aria-hidden="true"></i> Apply for Franchise
             </a>
+            
         </div>
     </section>
 
@@ -1592,11 +1555,12 @@
                 <button class="tab-btn" role="tab" aria-selected="false" data-target="franchise" onclick="switchContactTab('franchise')">Franchise</button>
             </div>
 
+            <!-- 일반 지원 폼 -->
             <div id="general-form" class="form-content active" role="tabpanel">
                 <div class="form-header">
                     <h3>General Support</h3>
                 </div>
-                <form onsubmit="return handleInquiryEmailJS(event, 'General')">
+                <form onsubmit="return handleInquiryEmailJS(event, 'General Inquiry')">
                     <div class="input-row">
                         <div class="input-wrapper">
                             <input type="text" id="gen-name" name="from_name" placeholder=" " required autocomplete="name">
@@ -1619,11 +1583,13 @@
                 </form>
             </div>
 
+            <!-- ★ [업그레이드] 프랜차이즈 퀵 문의 폼 (진입 장벽 낮춤) -->
             <div id="franchise-form" class="form-content" role="tabpanel">
                 <div class="form-header">
-                    <h3>Franchise Inquiries (Quick Form)</h3>
+                    <h3>Franchise Quick Inquiry</h3>
+                    <p style="color:var(--text-gray); line-height: 1.5;">간단한 가맹 문의를 남겨주시면 담당자가 연락을 드립니다.<br>For a complete application, please visit our <a href="apply.html" style="color:var(--sj-red); font-weight:800; text-decoration:underline;">Official Portal</a>.</p>
                 </div>
-                <form onsubmit="return handleInquiryEmailJS(event, 'Franchise')">
+                <form onsubmit="return handleInquiryEmailJS(event, 'Franchise Quick Inquiry')">
                     <div class="input-row">
                         <div class="input-wrapper">
                             <input type="text" id="fra-name" name="from_name" placeholder=" " required autocomplete="name">
@@ -1638,27 +1604,17 @@
                         <input type="email" id="fra-email" name="reply_email" placeholder=" " required autocomplete="email" inputmode="email">
                         <label for="fra-email">Email Address</label>
                     </div>
-                    <div class="input-row">
-                        <div class="input-wrapper">
-                            <input type="text" id="fra-location" name="desired_location" placeholder=" " required>
-                            <label for="fra-location">Desired City / Location</label>
-                        </div>
-                        <div class="input-wrapper">
-                            <select id="fra-budget" name="budget" required>
-                                <option value="" disabled selected hidden></option>
-                                <option value="Under $200k">Under $200k CAD</option>
-                                <option value="$200k - $350k">$200k - $350k CAD</option>
-                                <option value="$350k - $500k">$350k - $500k CAD</option>
-                                <option value="Over $500k">Over $500k CAD</option>
-                            </select>
-                            <label for="fra-budget">Estimated Budget</label>
-                        </div>
-                    </div>
                     <div class="input-wrapper">
                         <textarea id="fra-msg" name="message" placeholder=" " required></textarea>
-                        <label for="fra-msg">Business Background</label>
+                        <label for="fra-msg">Desired Location & Brief Inquiry (관심 지역 및 문의 내용)</label>
                     </div>
-                    <button type="submit" class="submit-btn btn-red">Submit Application</button>
+                    <button type="submit" class="submit-btn btn-red">Send Quick Inquiry</button>
+                    
+                    <div style="text-align: center; margin-top: 25px;">
+                        <a href="apply.html" style="color: var(--text-gray); font-weight: 600; text-decoration: underline; font-size: 0.95rem; transition: color var(--transition-fast);">
+                            Looking to submit a full application? Go to Official Portal
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -1685,7 +1641,8 @@
                     <li><a href="#about">Our Story</a></li>
                     <li><a href="#menu">Menu</a></li>
                     <li><a href="#locations">Locations</a></li>
-                    <li><a href="#franchise">Franchise</a></li>
+                    <!-- 푸터 가맹 신청 링크 직결 -->
+                    <li><a href="apply.html">Franchise</a></li>
                 </ul>
             </div>
             
@@ -1703,13 +1660,13 @@
                 <ul>
                     <li><a onclick="showModalMessage('Privacy Policy', document.getElementById('template-privacy').innerHTML, false)" style="cursor:pointer;">Privacy Policy</a></li>
                     <li><a onclick="showModalMessage('Terms of Service', document.getElementById('template-terms').innerHTML, false)" style="cursor:pointer;">Terms of Service</a></li>
-                    <li><a href="#contact" onclick="routeToFranchiseForm(event)">Franchise Inquiry</a></li>
+                    <li><a href="apply.html">Franchise Inquiry</a></li>
                 </ul>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <p>© 2019 Sinjeon Food Sys Canada. All Rights Reserved.</p>
+            <p>© 2026 Sinjeon Food Sys Canada. All Rights Reserved.</p>
             <p>Identity in Every Font.</p>
         </div>
     </footer>
