@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#D24B41">
     
-    <!-- Primary Meta Tags (SEO 최적화) -->
+    <!-- Primary Meta Tags -->
     <title>Sinjeon Canada | The New Standard of Topokki</title>
     <meta name="title" content="Sinjeon Canada | The New Standard of Topokki">
     <meta name="description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide.">
@@ -17,13 +17,6 @@
     <meta property="og:description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide.">
     <meta property="og:image" content="https://sinjeoncanada.com/sinjeon_og_image.jpg">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://sinjeoncanada.com/">
-    <meta property="twitter:title" content="Sinjeon Canada | The New Standard of Topokki">
-    <meta property="twitter:description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide.">
-    <meta property="twitter:image" content="https://sinjeoncanada.com/sinjeon_og_image.jpg">
-    
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
     
     <!-- ★ 핵심 에셋 사전 로딩 (Preload) -->
@@ -35,6 +28,13 @@
     
     <!-- EmailJS SDK 비동기 로딩 -->
     <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init({ publicKey: "DITntTK9NnZLeavvX" });
+            }
+        });
+    </script>
     
     <!-- Google Fonts 비동기 연결 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,7 +78,7 @@
 
         .scroll-progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--sj-red); z-index: 1001; width: 0%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; will-change: width; transition: width 0.1s linear; }
 
-        /* 하드웨어 가속 옵저버 애니메이션 */
+        /* 하드웨어 가속 애니메이션 */
         .reveal { opacity: 0; transform: translateY(30px) translateZ(0); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -99,7 +99,7 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           2. 팝업 무결성 시스템 (데스크톱/모바일 분기)
+           2. 팝업 무결성 시스템 (좌측 슬라이드)
            ========================================= */
         .event-popup-wrapper {
             position: fixed; top: 110px; left: 20px; right: auto; z-index: 99999; 
@@ -225,7 +225,6 @@
         .menu-item:hover::after { left: 150%; }
         .menu-item:hover { transform: translateY(-10px); box-shadow: var(--shadow-md); border-color: var(--sj-green); background: var(--bg-white); }
         
-        /* 스켈레톤 로딩 최적화 */
         .menu-item-img { 
             width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; 
             margin-bottom: 25px; position: relative; z-index: 2;
@@ -287,7 +286,6 @@
         .loc-map-wrapper { flex: 1; background: #e0e0e0; position: relative; pointer-events: auto; overflow: hidden; }
         .loc-map-wrapper iframe { width: 100%; height: 100%; border: none; display: block; position: relative; z-index: 1; }
         
-        /* Map Hover Overlay */
         .map-info-overlay {
             position: absolute; bottom: 30px; left: 30px;
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -315,30 +313,20 @@
         .instagram-feed-section { max-width: 1200px; margin: 0 auto; width: 100%; }
         .instagram-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         
-        .instagram-item { 
-            position: relative; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 16px; 
-            background-color: #222; transform: translateZ(0); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+        .instagram-item { position: relative; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 16px; background-color: #222; transform: translateZ(0); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .instagram-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
         
-        .instagram-overlay { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(210, 75, 65, 0.85); display: flex; justify-content: center; align-items: center; 
-            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; 
-        }
+        .instagram-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(210, 75, 65, 0.85); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; pointer-events: none; }
         .instagram-icon { font-size: 2.5rem; color: #fff; transform: translateY(20px); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
         
         .instagram-item:hover img { transform: scale(1.08); }
         .instagram-item:hover .instagram-overlay { opacity: 1; }
         .instagram-item:hover .instagram-icon { transform: translateY(0); }
 
-        .instagram-item.skeleton { 
-            background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%); 
-            background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; 
-        }
+        .instagram-item.skeleton { background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; }
 
         /* =========================================
-           10. Franchise Process & Contact Forms
+           10. Franchise Process
            ========================================= */
         .timeline-section { padding: 130px 5%; background: var(--bg-white); }
         .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
@@ -350,10 +338,13 @@
         .timeline-content h4 { font-size: 1.6rem; color: var(--text-dark); margin-bottom: 10px; font-weight: 800; }
         .timeline-content p { color: var(--text-gray); font-size: 1.05rem; font-weight: 500; line-height: 1.6;}
 
-        /* ★ [가맹 신청 전용 버튼] 100% 직결 이동 */
+        /* ★ [가맹 신청 전용 버튼] step2_apply.html 로 100% 직결 이동 */
         .btn-apply-portal { display: inline-flex; align-items: center; gap: 10px; background: var(--sj-red); color: var(--bg-white); padding: 20px 50px; font-size: 1.15rem; font-weight: 800; border-radius: 50px; text-decoration: none; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3); transition: var(--transition-fast); text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
         .btn-apply-portal:hover { background: #b83e35; transform: translateY(-3px); box-shadow: 0 15px 30px rgba(210, 75, 65, 0.4); color: var(--bg-white); }
 
+        /* =========================================
+           11. Contact Us & ★ Quick Form (디자인 완벽 일치)
+           ========================================= */
         .contact-section { padding: 130px 5%; background: var(--bg-light); position: relative; border-top: 1px solid var(--border-color); }
         .contact-wrapper { max-width: 860px; margin: 0 auto; position: relative; z-index: 2; }
         .tab-container { display: flex; justify-content: center; margin: 0 auto 50px; background: var(--bg-white); border-radius: 50px; padding: 8px; box-shadow: var(--shadow-xs); width: max-content; }
@@ -361,35 +352,44 @@
         .tab-btn.active { background: var(--sj-green); color: var(--bg-white); box-shadow: 0 6px 15px rgba(0, 130, 80, 0.25); }
         .tab-btn[data-target="franchise"].active { background: var(--sj-red); box-shadow: 0 6px 15px rgba(210, 75, 65, 0.25); }
         
-        .form-content { display: none; background: var(--bg-white); padding: 60px 70px; border-radius: var(--border-radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+        .form-content { display: none; }
         .form-content.active { display: block; animation: formFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         @keyframes formFadeIn { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
         
+        /* General Form Style */
+        .general-card { background: var(--bg-white); padding: 60px 70px; border-radius: var(--border-radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
         .form-header { margin-bottom: 40px; text-align: center; }
         .form-header h3 { font-size: 2rem; margin-bottom: 12px; color: var(--text-dark); font-weight: 900; }
-        .form-header p { color: var(--text-gray); font-size: 1.05rem; line-height: 1.5; }
+        .form-header p { color: var(--text-gray); font-size: 1.05rem; }
 
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .input-wrapper { position: relative; margin-bottom: 25px; }
-        
-        .input-wrapper input, .input-wrapper textarea, .input-wrapper select { width: 100%; padding: 26px 20px 14px; border: 2px solid var(--bg-light); border-radius: 16px; font-weight: 600; font-size: 16px !important; color: var(--text-dark); background: var(--bg-light); box-sizing: border-box; transition: var(--transition-fast); outline: none; box-shadow: 0 2px 10px rgba(0,0,0,0.01); appearance: none;}
+        .input-wrapper input, .input-wrapper textarea { width: 100%; padding: 26px 20px 14px; border: 2px solid var(--bg-light); border-radius: 16px; font-weight: 600; font-size: 16px !important; color: var(--text-dark); background: var(--bg-light); box-sizing: border-box; transition: var(--transition-fast); outline: none; appearance: none;}
         .input-wrapper textarea { resize: vertical; min-height: 140px; }
         .input-wrapper label { position: absolute; left: 22px; top: 22px; font-size: 1rem; color: var(--text-light); pointer-events: none; transition: var(--transition-fast); font-weight: 500; }
-        .input-wrapper input:focus, .input-wrapper textarea:focus, .input-wrapper select:focus { border-color: var(--sj-green); background: var(--bg-white); box-shadow: 0 4px 15px rgba(0,130,80,0.05);}
+        .input-wrapper input:focus, .input-wrapper textarea:focus { border-color: var(--sj-green); background: var(--bg-white); box-shadow: 0 4px 15px rgba(0,130,80,0.05);}
         .input-wrapper input:focus + label, .input-wrapper input:not(:placeholder-shown) + label,
-        .input-wrapper textarea:focus + label, .input-wrapper textarea:not(:placeholder-shown) + label,
-        .input-wrapper select:focus + label, .input-wrapper select:valid + label { top: 10px; font-size: 0.8rem; color: var(--sj-green); font-weight: 800; }
-        
-        #franchise-form .input-wrapper input:focus, #franchise-form .input-wrapper textarea:focus, #franchise-form .input-wrapper select:focus { border-color: var(--sj-red); box-shadow: 0 4px 15px rgba(210,75,65,0.05); }
-        #franchise-form .input-wrapper input:focus + label, #franchise-form .input-wrapper textarea:focus + label, #franchise-form .input-wrapper select:focus + label,
-        #franchise-form .input-wrapper input:not(:placeholder-shown) + label, #franchise-form .input-wrapper textarea:not(:placeholder-shown) + label, #franchise-form .input-wrapper select:valid + label { color: var(--sj-red); }
+        .input-wrapper textarea:focus + label, .input-wrapper textarea:not(:placeholder-shown) + label { top: 10px; font-size: 0.8rem; color: var(--sj-green); font-weight: 800; }
 
         .submit-btn { width: 100%; padding: 22px; border: none; border-radius: 16px; color: var(--bg-white); font-weight: 900; transition: var(--transition-fast); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; cursor: pointer;}
         .btn-green { background: var(--sj-green); }
         .btn-green:hover { background: #006a40; box-shadow: 0 10px 25px rgba(0, 130, 80, 0.25); transform: translateY(-3px);}
-        .btn-red { background: var(--sj-red); }
-        .btn-red:hover { background: #b83e35; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25); transform: translateY(-3px);}
-        .submit-btn:disabled { background: var(--text-light); cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* ★ [이미지 레퍼런스 일치] Franchise Quick Form Style (플랫 디자인) */
+        .quick-form-card { background: var(--bg-white); padding: 50px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); }
+        .quick-form-card h3 { font-size: 1.8rem; font-weight: 900; color: #333; text-align: center; margin-bottom: 30px; }
+        .qf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .qf-full { grid-column: 1 / -1; }
+        .quick-form-card input, .quick-form-card textarea {
+            width: 100%; padding: 18px; border: none; border-radius: 12px;
+            background-color: #F8FAFC; font-size: 0.95rem; font-family: 'Outfit', sans-serif;
+            color: #333; font-weight: 500; outline: none; transition: background 0.2s;
+        }
+        .quick-form-card input::placeholder, .quick-form-card textarea::placeholder { color: #9CA3AF; font-weight: 500;}
+        .quick-form-card input:focus, .quick-form-card textarea:focus { background-color: #F1F5F9; }
+        .quick-form-card textarea { resize: vertical; min-height: 140px; }
+        .btn-red-flat { background: #D24B41; color: white; padding: 20px; border: none; border-radius: 12px; width: 100%; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: background 0.2s; margin-top: 10px;}
+        .btn-red-flat:hover { background: #B83E35; }
 
         .fab-container { position: fixed; bottom: 40px; right: 40px; z-index: 999; display: flex; flex-direction: column; gap: 15px; transform: translateY(100px) translateZ(0); opacity: 0; transition: var(--transition-normal); will-change: transform, opacity;}
         .fab-container.visible { transform: translateY(0) translateZ(0); opacity: 1; }
@@ -397,7 +397,7 @@
         .fab:hover { box-shadow: var(--shadow-hover); border-color: var(--sj-red); color: var(--sj-red); transform: translateY(-5px);}
 
         /* =========================================
-           11. Mega Footer & Modal (성공 팝업 스타일)
+           12. Mega Footer & Modal
            ========================================= */
         footer { background: #333333; color: rgba(255,255,255,0.8); padding: 80px 5% 40px; font-size: 0.95rem; border-top: 5px solid var(--sj-red); }
         .mega-footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 60px; }
@@ -413,9 +413,9 @@
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 35px; text-align: left; max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
         .footer-bottom p { margin: 0; font-weight: 500; font-size: 1rem;}
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); backdrop-filter: blur(5px); }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); backdrop-filter: blur(8px); }
         .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
-        .modal-content { background: var(--bg-white); width: 90%; max-width: 750px; max-height: 85vh; border-radius: var(--border-radius-lg); padding: 50px; position: relative; transform: translateY(30px) translateZ(0); transition: transform var(--transition-normal); display: flex; flex-direction: column; cursor: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.5);}
+        .modal-content { background: var(--bg-white); width: 90%; max-width: 600px; max-height: 85vh; border-radius: var(--border-radius-lg); padding: 50px; position: relative; transform: translateY(30px) translateZ(0); transition: transform var(--transition-normal); display: flex; flex-direction: column; cursor: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.5);}
         .modal-overlay.active .modal-content { transform: translateY(0) translateZ(0); }
         .modal-close { position: absolute; top: 25px; right: 30px; font-size: 2.5rem; background: none; border: none; color: var(--text-light); transition: color var(--transition-fast); line-height: 1; cursor: pointer; z-index: 10; }
         .modal-close:hover { color: var(--sj-red); }
@@ -436,12 +436,6 @@
         .heat-box h5 { font-size: 1.25rem; font-weight: 800; margin-bottom: 15px; }
         .heat-bad h5 { color: var(--text-gray); text-decoration: line-through; opacity: 0.8;}
         .heat-good h5 { color: var(--sj-green); }
-        .heat-box p { font-size: 0.95rem; color: var(--text-dark); margin-bottom: 12px; font-weight: 600; }
-        .heat-flow { display: flex; justify-content: space-between; align-items: center; background: var(--bg-light); padding: 35px 20px; border-radius: 20px; border: 1px solid var(--border-color); }
-        .flow-step { text-align: center; flex: 1; }
-        .flow-step i { font-size: 2.5rem; display: block; margin-bottom: 12px; }
-        .flow-step span { display: block; font-weight: 800; font-size: 0.95rem; color: var(--text-dark); line-height: 1.3;}
-        .flow-arrow { color: var(--text-light); font-size: 1.5rem; font-weight: 900; }
 
         /* =========================================
            ★ 100% 모바일 & 데스크톱 완벽 반응형 제어
@@ -457,40 +451,27 @@
             .hero h1 span.highlight { font-size: 4rem; }
             header { padding: 15px 5%; }
             nav { display: none; } 
-            
             .bento-large { grid-column: span 1; grid-template-columns: 1fr 1fr; gap: 30px; padding: 40px 20px; }
             .bento-grid { grid-template-columns: 1fr; }
             .stat-item h4 { font-size: 3rem; }
-            
             .spice-grid { grid-template-columns: 1fr; }
-            
             .split-layout { flex-direction: column; height: auto; }
             .loc-list-wrapper { padding: 20px; max-height: auto; }
             .loc-map-wrapper { height: 350px; }
-            
             .mega-footer-container { grid-template-columns: 1fr; gap: 40px; text-align: left; }
             .footer-col h4::after { left: 0; transform: none; }
             .footer-bottom { flex-direction: column; justify-content: center; text-align: center; gap: 15px;}
-            
-            .form-content { padding: 40px 25px; }
+            .general-card { padding: 40px 25px; }
             .input-row { grid-template-columns: 1fr; gap: 0; }
             .fab-container { bottom: 25px; right: 25px; }
             .section-header h2 { font-size: 2.5rem; }
             .section-header h2 span { font-size: 3rem; }
             .modal-content { padding: 40px 25px; width: 95%;}
-            
             .timeline-container::before { left: 30px; }
             .timeline-step { flex-direction: column; }
             .timeline-marker { left: 8px; width: 48px; height: 48px;}
             .timeline-content { margin-left: 0; margin-top: 30px; }
-
             .heat-compare { grid-template-columns: 1fr; }
-            .heat-flow { flex-direction: column; gap: 20px; padding: 25px; }
-            .flow-arrow { transform: rotate(90deg); margin: 5px 0; }
-
-            .map-info-overlay { bottom: 20px; left: 50%; transform: translate(-50%, 20px); max-width: 90%; }
-            .map-info-overlay.active { transform: translate(-50%, 0); }
-            
             .instagram-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
         }
         
@@ -502,16 +483,15 @@
             .hero h1 span.highlight { font-size: 3rem; }
             .section-header h2 { font-size: 2.2rem; }
             .section-header h2 span { font-size: 2.8rem; }
-            
             .loc-actions .btn-sm { padding: 12px 15px; font-size: 0.9rem; }
             .tab-btn { padding: 12px 25px; font-size: 1rem; }
             .menu-tab-btn { padding: 14px 25px; font-size: 1rem; }
             .btn-apply-portal { padding: 18px 30px; font-size: 1rem; width: 100%; justify-content: center; } 
             .submit-btn { padding: 18px; font-size: 1.1rem; }
-            
             .about-section, .spice-section, .menu-section, .locations, .ugc-section, .timeline-section, .contact-section { padding: 80px 15px; }
-            .form-content { padding: 30px 20px; }
-
+            .general-card { padding: 30px 20px; }
+            .quick-form-card { padding: 30px 20px; }
+            .qf-row { grid-template-columns: 1fr; gap: 15px; margin-bottom: 15px; }
             .event-popup-wrapper { top: 50%; bottom: auto; left: 50%; right: auto; transform: translate(-50%, -45%); width: 90%; max-width: 350px; }
             .event-popup-wrapper.show { transform: translate(-50%, -50%); }
             .event-popup-content { width: 100%; }
@@ -519,9 +499,7 @@
             .popup-image-container div { flex: auto; width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); }
             .popup-image-container div:last-child { border-bottom: none; }
             .popup-image-container::-webkit-scrollbar { width: 6px; height: auto; }
-            
             .event-popup-actions button { font-size: 0.9rem; padding: 16px 0; } 
-            
             .instagram-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .instagram-feed-section { padding: 0; }
         }
@@ -533,18 +511,13 @@
         }
     </style>
     
+    <!-- ★ [최종 코어 리팩토링 JS] Zero-Lag 렌더링 및 철통 방어 -->
     <script>
-        // =========================================
-        // 1. 보안 모듈 (Anti-Theft)
-        // =========================================
+        // 보안 방어 모듈
         document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('dragstart', e => {
-            if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault();
-        });
+        document.addEventListener('dragstart', e => { if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u') || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) {
-                e.preventDefault();
-            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u') || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) e.preventDefault();
         });
 
         let mapIframe;
@@ -571,12 +544,10 @@
             } catch (error) {
                 console.error("Observer Error:", error);
             } finally {
-                setTimeout(() => {
-                    document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-                }, 1500);
+                setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('active')); }, 1500);
             }
 
-            // 팝업 시스템
+            // 팝업 로딩
             try {
                 const popup = document.getElementById('main-event-popup');
                 if (popup) {
@@ -602,9 +573,7 @@
                                     const targetSlot = document.getElementById(`popup-slot-${index}`);
                                     if(targetSlot) targetSlot.appendChild(this);
                                     loadedImages++;
-                                    if (loadedImages === 1) {
-                                        setTimeout(() => { popup.classList.add('show'); }, 300); 
-                                    }
+                                    if (loadedImages === 1) { setTimeout(() => { popup.classList.add('show'); }, 300); }
                                 };
                                 img.onerror = function() {
                                     const emptySlot = document.getElementById(`popup-slot-${index}`);
@@ -615,11 +584,9 @@
                         }
                     }
                 }
-            } catch (error) {
-                console.error("Popup Error:", error);
-            }
+            } catch (error) { console.error("Popup Error:", error); }
 
-            // 메뉴 스켈레톤 로딩 바인딩
+            // 스켈레톤 로딩
             const menuImages = document.querySelectorAll('.menu-item-img img');
             menuImages.forEach(img => {
                 if (img.complete) {
@@ -647,7 +614,7 @@
                 }
             }, 500);
 
-            // 자체 인스타그램 피드 연동 로직
+            // 자체 인스타그램 피드
             try {
                 const feedContainer = document.getElementById('instagram-feed');
                 if (feedContainer) {
@@ -659,23 +626,18 @@
                         .then(data => {
                             const posts = data.data;
                             let html = '';
-                            
                             posts.slice(0, 6).forEach(post => {
                                 const imageUrl = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
-                                const caption = post.caption ? post.caption.substring(0, 100) : 'Sinjeon Instagram Post';
-                                
                                 html += `
                                     <div class="instagram-item">
                                         <a href="${post.permalink}" target="_blank" rel="noopener noreferrer" aria-label="View on Instagram">
-                                            <img src="${imageUrl}" alt="${caption}" loading="lazy" decoding="async">
+                                            <img src="${imageUrl}" alt="Sinjeon Instagram Post" loading="lazy" decoding="async">
                                             <div class="instagram-overlay">
                                                 <span class="instagram-icon"><i class="fab fa-instagram" aria-hidden="true"></i></span>
                                             </div>
                                         </a>
-                                    </div>
-                                `;
+                                    </div>`;
                             });
-                            
                             feedContainer.innerHTML = html;
                         })
                         .catch(error => {
@@ -683,18 +645,12 @@
                             feedContainer.innerHTML = '<p style="grid-column: 1/-1; color: var(--text-light);">현재 피드를 불러올 수 없습니다. @sinjeon_Canada에서 확인해 주세요.</p>';
                         });
                 }
-            } catch (error) {
-                console.error("Instagram Module Error:", error);
-            }
+            } catch (error) { console.error("Instagram Module Error:", error); }
         });
 
-        // =========================================
-        // ★ 지도 Hover 오버레이 연동 (Debounce)
-        // =========================================
         let mapDebounceTimer; 
         function triggerMapChange(element) {
             if(element.classList.contains('active')) return;
-            
             document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
             
@@ -706,9 +662,7 @@
 
             clearTimeout(mapDebounceTimer);
             mapDebounceTimer = setTimeout(() => {
-                if(mapIframe && mapIframe.src !== mapUrl) {
-                    mapIframe.src = mapUrl;
-                }
+                if(mapIframe && mapIframe.src !== mapUrl) mapIframe.src = mapUrl;
             }, 150);
 
             if(mapOverlay) {
@@ -723,9 +677,6 @@
             }
         }
 
-        // =========================================
-        // ★ 스크롤 이벤트 (requestAnimationFrame)
-        // =========================================
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
@@ -737,8 +688,7 @@
                     if(scrollProgressBar) {
                         const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
                         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                        const scrolled = (winScroll / height) * 100;
-                        scrollProgressBar.style.width = scrolled + "%";
+                        scrollProgressBar.style.width = ((winScroll / height) * 100) + "%";
                     }
 
                     const fabContainer = document.getElementById('fab-container');
@@ -759,9 +709,7 @@
             event.target.classList.add('active');
             event.target.setAttribute('aria-selected', 'true');
 
-            document.querySelectorAll('.menu-grid').forEach(grid => {
-                grid.classList.remove('active');
-            });
+            document.querySelectorAll('.menu-grid').forEach(grid => grid.classList.remove('active'));
             document.getElementById('cat-' + catId).classList.add('active');
         }
 
@@ -772,22 +720,15 @@
 
         function hidePopupFor24Hours() {
             const now = new Date().getTime();
-            const twentyFourHours = 24 * 60 * 60 * 1000; 
-            localStorage.setItem('hideMainPopupUntil', now + twentyFourHours);
+            localStorage.setItem('hideMainPopupUntil', now + (24 * 60 * 60 * 1000));
             closeEventPopup();
         }
 
         function showModalMessage(title, htmlContent, hideTitle = false) {
             const modal = document.getElementById('dynamic-modal');
             const titleEl = document.getElementById('modal-title');
-            
-            if(hideTitle) {
-                titleEl.style.display = 'none';
-            } else {
-                titleEl.style.display = 'block';
-                titleEl.innerText = title;
-            }
-            
+            if(hideTitle) { titleEl.style.display = 'none'; } 
+            else { titleEl.style.display = 'block'; titleEl.innerText = title; }
             document.getElementById('modal-body').innerHTML = htmlContent;
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -798,58 +739,53 @@
             document.body.style.overflow = ''; 
         }
 
-        // =========================================
         // ★ [핵심] EmailJS 전송 및 폼 처리 로직 완벽 오류 제어
-        // =========================================
         function handleInquiryEmailJS(event, type) {
             event.preventDefault();
-            
             const formElement = event.target;
-            const submitButton = formElement.querySelector('.submit-btn');
+            const submitButton = formElement.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.innerHTML;
             
             submitButton.disabled = true;
-            submitButton.innerHTML = `<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> SENDING...`;
+            submitButton.innerHTML = `<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> SUBMITTING...`;
 
             if (typeof emailjs === 'undefined') {
-                showModalMessage('System Notice', 'Email service is currently unavailable. Launching your default email client instead.', false);
-                setTimeout(() => {
-                    fallbackMailto(type, getFormParams(formElement));
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = originalButtonText;
-                }, 2000);
+                alert('Network error. Falling back to email client.');
+                setTimeout(() => { submitButton.disabled = false; submitButton.innerHTML = originalButtonText; }, 2000);
                 return false;
             }
 
             let serviceID = "service_zyn89ll"; 
             let templateID = "template_r8gce22"; 
             
-            // 폼 필드가 축소되었으므로 통일된 파라미터 수집 사용 (에러 원천 방지)
-            const params = getFormParams(formElement);
-            params.target_email = "eunbeen.lee@y2choldings.co.kr";
-            params.inquiry_type = type;
+            // 옵셔널 체이닝으로 에러 원천 차단
+            const params = {
+                name: formElement.querySelector('[name="from_name"]')?.value || '',
+                phone: formElement.querySelector('[name="reply_phone"]')?.value || '',
+                email: formElement.querySelector('[name="reply_email"]')?.value || '',
+                location: formElement.querySelector('[name="desired_location"]')?.value || '',
+                budget: formElement.querySelector('[name="budget"]')?.value || '',
+                message: formElement.querySelector('[name="message"]')?.value || '',
+                target_email: "eunbeen.lee@y2choldings.co.kr",
+                inquiry_type: type
+            };
 
             emailjs.send(serviceID, templateID, params)
                 .then(() => {
                     formElement.reset();
-                    
                     if(type === 'Franchise Quick Inquiry') {
-                        // ★ 1차 접수 완료 -> apply.html로 자동 전개(Redirect)
+                        // 성공 모달 팝업 후 step2_apply.html 자동 전개 (라우팅 수정 완료)
                         showModalMessage('Application Received', `
                             <div style="text-align:center; padding: 20px 0;">
                                 <div class="success-checkmark"><i class="fas fa-check" aria-hidden="true"></i></div>
-                                <h4 style="margin-top:0; font-size:1.8rem; color:var(--text-dark);">1차 퀵 접수가 완료되었습니다.</h4>
+                                <h4 style="margin-top:0; font-size:1.8rem; color:var(--text-dark);">Step 1: Quick Inquiry Completed.</h4>
                                 <p style="color:var(--text-gray); font-size:1.1rem; line-height:1.6;">Thank you for your interest in Sinjeon.<br>Your preliminary inquiry has been secured.</p>
                                 <div class="redirect-spinner">
-                                    <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> 상세 신청서(Official Portal)로 이동합니다...
+                                    <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Moving to Step 2 (Official Application)...
                                 </div>
                             </div>
                         `, true);
-                        
-                        setTimeout(() => {
-                            window.location.href = 'apply.html';
-                        }, 2500);
-
+                        setTimeout(() => { window.location.href = 'step2_apply.html'; }, 2500);
                     } else {
                         showModalMessage('Message Sent', `
                             <div style="text-align:center; padding: 20px 0;">
@@ -862,32 +798,13 @@
                 })
                 .catch((error) => {
                     console.error("EmailJS Failure:", error);
-                    showModalMessage('System Notice', 'Cloud service routing is completing configuration. Alternative mail window will open now.', false);
-                    setTimeout(() => {
-                        fallbackMailto(type, params);
-                    }, 2000);
+                    alert("Submission failed. Please contact us directly.");
                 })
                 .finally(() => {
                     submitButton.disabled = false;
                     submitButton.innerHTML = originalButtonText;
                 });
-                
             return false;
-        }
-
-        function getFormParams(formElement) {
-            return {
-                name: formElement.querySelector('[name="from_name"]').value,
-                phone: formElement.querySelector('[name="reply_phone"]').value,
-                email: formElement.querySelector('[name="reply_email"]').value,
-                message: formElement.querySelector('[name="message"]').value
-            };
-        }
-
-        function fallbackMailto(type, params) {
-            const subject = `[${type}] from ${params.name}`;
-            const body = `Name: ${params.name}%0D%0APhone: ${params.phone}%0D%0AEmail: ${params.email}%0D%0A%0D%0AInquiry:%0D%0A${params.message}`;
-            window.location.href = `mailto:eunbeen.lee@y2choldings.co.kr?subject=${encodeURIComponent(subject)}&body=${body}`;
         }
 
         function switchContactTab(target) {
@@ -923,7 +840,6 @@
                     const currentDay = dateInTz.getDay(); 
                     
                     const currentTimeVal = currentHour + (currentMin / 60);
-
                     let openHour = parseFloat(card.getAttribute('data-open') || 11);
                     let closeHour = parseFloat(card.getAttribute('data-close') || 22);
                     
@@ -937,21 +853,16 @@
                     
                     if (closeHour <= openHour) { 
                         adjustedClose += 24;
-                        if (currentTimeVal < openHour) {
-                            adjustedCurrent += 24;
-                        }
+                        if (currentTimeVal < openHour) { adjustedCurrent += 24; }
                     }
 
-                    if (adjustedCurrent >= openHour && adjustedCurrent < adjustedClose) {
-                        isOpen = true;
-                    }
+                    if (adjustedCurrent >= openHour && adjustedCurrent < adjustedClose) { isOpen = true; }
 
                     function formatTime(decimalTime) {
                         let h = Math.floor(decimalTime);
                         let m = Math.round((decimalTime - h) * 60);
                         let ampm = h >= 12 && h < 24 ? 'PM' : 'AM';
-                        h = h % 12;
-                        if (h === 0) h = 12;
+                        h = h % 12; if (h === 0) h = 12;
                         let mStr = m > 0 ? ':' + (m < 10 ? '0'+m : m) : '';
                         return `${h}${mStr} ${ampm}`;
                     }
@@ -966,9 +877,7 @@
                             badge.className = "loc-status closed";
                         }
                     }
-                } catch(e) {
-                    console.error("Hours Error:", e);
-                }
+                } catch(e) { console.error("Hours Error:", e); }
             });
         }
     </script>
@@ -986,7 +895,8 @@
             <a href="#about">About</a>
             <a href="#menu">Menu</a>
             <a href="#locations">Locations</a>
-            <a href="#franchise">Franchise</a>
+            <!-- 네비게이션 가맹 신청 링크 직결 -->
+            <a href="step2_apply.html">Franchise</a>
             <a href="#community">Community</a>
         </nav>
     </header>
@@ -1004,13 +914,8 @@
 
     <section class="hero" id="home">
         <div class="hero-badge reveal">The Global No.1 K-Food</div>
-        
         <img src="character/character_7.png" class="char-img char-hero anim-float-1" alt="Sinjeon Character">
-        
-        <h1 class="reveal delay-100">
-            The New Standard<br>
-            <span class="highlight">of Topokki</span>
-        </h1>
+        <h1 class="reveal delay-100">The New Standard<br><span class="highlight">of Topokki</span></h1>
         <p class="reveal delay-200">From Korea to Canada. Experience the authentic, HACCP-certified spice that captivated over 800 locations worldwide.</p>
         
         <button class="btn-clean-heat reveal delay-300" onclick="showModalMessage('Clean Heat', document.getElementById('template-clean-heat').innerHTML, true)">
@@ -1019,14 +924,10 @@
 
         <div class="marquee-wrapper reveal delay-300">
             <div class="marquee" aria-hidden="true">
-                <span>🌶️ THE NEW STANDARD OF TOPOKKI</span>
-                <span>🔥 OVER 800+ STORES WORLDWIDE</span>
-                <span>🌶️ HACCP CERTIFIED</span>
-                <span>🔥 CLEAN HEAT, REAL PEPPER</span>
-                <span>🌶️ THE NEW STANDARD OF TOPOKKI</span>
-                <span>🔥 OVER 800+ STORES WORLDWIDE</span>
-                <span>🌶️ HACCP CERTIFIED</span>
-                <span>🔥 CLEAN HEAT, REAL PEPPER</span>
+                <span>🌶️ THE NEW STANDARD OF TOPOKKI</span><span>🔥 OVER 800+ STORES WORLDWIDE</span>
+                <span>🌶️ HACCP CERTIFIED</span><span>🔥 CLEAN HEAT, REAL PEPPER</span>
+                <span>🌶️ THE NEW STANDARD OF TOPOKKI</span><span>🔥 OVER 800+ STORES WORLDWIDE</span>
+                <span>🌶️ HACCP CERTIFIED</span><span>🔥 CLEAN HEAT, REAL PEPPER</span>
             </div>
         </div>
     </section>
@@ -1057,22 +958,10 @@
             </div>
             
             <div class="bento-item bento-large reveal delay-100">
-                <div class="stat-item">
-                    <h4>800+</h4>
-                    <p>Stores in Korea</p>
-                </div>
-                <div class="stat-item">
-                    <h4>20+</h4>
-                    <p>Global Locations</p>
-                </div>
-                <div class="stat-item">
-                    <h4>1999</h4>
-                    <p>Year Established</p>
-                </div>
-                <div class="stat-item">
-                    <h4>100%</h4>
-                    <p>HACCP Certified</p>
-                </div>
+                <div class="stat-item"><h4>800+</h4><p>Stores in Korea</p></div>
+                <div class="stat-item"><h4>20+</h4><p>Global Locations</p></div>
+                <div class="stat-item"><h4>1999</h4><p>Year Established</p></div>
+                <div class="stat-item"><h4>100%</h4><p>HACCP Certified</p></div>
             </div>
         </div>
     </section>
@@ -1119,74 +1008,52 @@
 
         <div class="menu-grid-container reveal delay-200">
             <!-- ==============================
-                 Main Category (신메뉴 포함)
+                 Main Category
                  ============================== -->
             <div id="cat-Main" class="menu-grid active" role="tabpanel">
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/신전 오리지널 떡볶이.png" alt="Sinjeon Original Topokki" loading="lazy" decoding="async"></div>
-                    <h3>Original Topokki</h3>
-                    <p class="menu-kor">신전 오리지널 떡볶이</p>
-                    <p class="menu-eng">Classic spicy rice cakes in signature broth</p>
+                    <h3>Original Topokki</h3><p class="menu-kor">신전 오리지널 떡볶이</p><p class="menu-eng">Classic spicy rice cakes in signature broth</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/신전 로제 떡볶이.png" alt="Rose Topokki" loading="lazy" decoding="async"></div>
-                    <h3>Rosé Topokki</h3>
-                    <p class="menu-kor">신전 로제 떡볶이</p>
-                    <p class="menu-eng">Creamy and spicy rosé sauce rice cakes</p>
+                    <h3>Rosé Topokki</h3><p class="menu-kor">신전 로제 떡볶이</p><p class="menu-eng">Creamy and spicy rosé sauce rice cakes</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/신전 마라 로제 떡볶이.png" alt="Mala Rose Topokki" loading="lazy" decoding="async"></div>
-                    <h3>Mala Rosé Topokki</h3>
-                    <p class="menu-kor">신전 마라 로제 떡볶이</p>
-                    <p class="menu-eng">Trend-setting mala flavor with rich cream</p>
+                    <h3>Mala Rosé Topokki</h3><p class="menu-kor">신전 마라 로제 떡볶이</p><p class="menu-eng">Trend-setting mala flavor with rich cream</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/신전 맵닭.png" alt="Spicy Chicken Topokki" loading="lazy" decoding="async"></div>
-                    <h3>Spicy Chicken Topokki</h3>
-                    <p class="menu-kor">신전 맵닭</p>
-                    <p class="menu-eng">Topokki topped with spicy chicken</p>
+                    <h3>Spicy Chicken Topokki</h3><p class="menu-kor">신전 맵닭</p><p class="menu-eng">Topokki topped with spicy chicken</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/신전 로제 맵닭.png" alt="Rose Spicy Chicken" loading="lazy" decoding="async"></div>
-                    <h3>Rosé Spicy Chicken</h3>
-                    <p class="menu-kor">신전 로제 맵닭</p>
-                    <p class="menu-eng">Spicy chicken in rich creamy rosé sauce</p>
+                    <h3>Rosé Spicy Chicken</h3><p class="menu-kor">신전 로제 맵닭</p><p class="menu-eng">Spicy chicken in rich creamy rosé sauce</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/크림 카레 떡볶이.jpg" alt="Cream Curry Topokki" loading="lazy" decoding="async"></div>
-                    <h3>Cream Curry Topokki</h3>
-                    <p class="menu-kor">크림 카레 떡볶이</p>
-                    <p class="menu-eng">Rich curry and cream sauce with chewy rice cakes</p>
+                    <h3>Cream Curry Topokki</h3><p class="menu-kor">크림 카레 떡볶이</p><p class="menu-eng">Rich curry and cream sauce with chewy rice cakes</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/크림 카레 우동.jpg" alt="Cream Curry Udon" loading="lazy" decoding="async"></div>
-                    <h3>Cream Curry Udon</h3>
-                    <p class="menu-kor">크림 카레 우동</p>
-                    <p class="menu-eng">Thick udon noodles in a smooth cream curry broth</p>
+                    <h3>Cream Curry Udon</h3><p class="menu-kor">크림 카레 우동</p><p class="menu-eng">Thick udon noodles in a smooth cream curry broth</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/크림 떡볶이.jpg" alt="Cream Topokki" loading="lazy" decoding="async"></div>
-                    <h3>Cream Topokki</h3>
-                    <p class="menu-kor">크림 떡볶이</p>
-                    <p class="menu-eng">Soft and savory cream sauce rice cakes</p>
+                    <h3>Cream Topokki</h3><p class="menu-kor">크림 떡볶이</p><p class="menu-eng">Soft and savory cream sauce rice cakes</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/마라 로제 우동.jpg" alt="Mala Rose Udon" loading="lazy" decoding="async"></div>
-                    <h3>Mala Rosé Udon</h3>
-                    <p class="menu-kor">마라 로제 우동</p>
-                    <p class="menu-eng">Spicy mala and creamy rosé sauce with thick udon noodles</p>
+                    <h3>Mala Rosé Udon</h3><p class="menu-kor">마라 로제 우동</p><p class="menu-eng">Spicy mala and creamy rosé sauce with thick udon noodles</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/크림 우동.jpg" alt="Cream Udon" loading="lazy" decoding="async"></div>
-                    <h3>Cream Udon</h3>
-                    <p class="menu-kor">크림 우동</p>
-                    <p class="menu-eng">Classic udon noodles in a rich creamy sauce</p>
+                    <h3>Cream Udon</h3><p class="menu-kor">크림 우동</p><p class="menu-eng">Classic udon noodles in a rich creamy sauce</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/신전 마라 떡볶이.jpg" alt="Sinjeon Mala Topokki" loading="lazy" decoding="async"></div>
-                    <h3>Sinjeon Mala Topokki</h3>
-                    <p class="menu-kor">신전 마라 떡볶이</p>
-                    <p class="menu-eng">Intense and numbing spicy mala topokki</p>
+                    <h3>Sinjeon Mala Topokki</h3><p class="menu-kor">신전 마라 떡볶이</p><p class="menu-eng">Intense and numbing spicy mala topokki</p>
                 </div>
             </div>
 
@@ -1194,51 +1061,35 @@
             <div id="cat-DeepFried" class="menu-grid" role="tabpanel">
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Deep Fried/튀김오뎅.png" alt="Fried Fishcake" loading="lazy" decoding="async"></div>
-                    <h3>Fried Fishcake</h3>
-                    <p class="menu-kor">튀김오뎅</p>
-                    <p class="menu-eng">Signature crispy fishcake sticks</p>
+                    <h3>Fried Fishcake</h3><p class="menu-kor">튀김오뎅</p><p class="menu-eng">Signature crispy fishcake sticks</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Deep Fried/튀김만두.png" alt="Fried Mandoo" loading="lazy" decoding="async"></div>
-                    <h3>Fried Mandoo</h3>
-                    <p class="menu-kor">튀김만두</p>
-                    <p class="menu-eng">Crispy glass noodle dumplings</p>
+                    <h3>Fried Mandoo</h3><p class="menu-kor">튀김만두</p><p class="menu-eng">Crispy glass noodle dumplings</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Deep Fried/김말이.png" alt="Seaweed Roll" loading="lazy" decoding="async"></div>
-                    <h3>Seaweed Roll</h3>
-                    <p class="menu-kor">김말이</p>
-                    <p class="menu-eng">Deep-fried seaweed glass noodle rolls</p>
+                    <h3>Seaweed Roll</h3><p class="menu-kor">김말이</p><p class="menu-eng">Deep-fried seaweed glass noodle rolls</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Deep Fried/잡채말이.png" alt="Glass Noodle Roll" loading="lazy" decoding="async"></div>
-                    <h3>Glass Noodle Roll</h3>
-                    <p class="menu-kor">잡채말이</p>
-                    <p class="menu-eng">Fried rolls filled with savory glass noodles</p>
+                    <h3>Glass Noodle Roll</h3><p class="menu-kor">잡채말이</p><p class="menu-eng">Fried rolls filled with savory glass noodles</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Deep Fried/치즈스틱.png" alt="Cheese Stick" loading="lazy" decoding="async"></div>
-                    <h3>Cheese Stick</h3>
-                    <p class="menu-kor">치즈스틱</p>
-                    <p class="menu-eng">Crispy sticks filled with melted mozzarella</p>
+                    <h3>Cheese Stick</h3><p class="menu-kor">치즈스틱</p><p class="menu-eng">Crispy sticks filled with melted mozzarella</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Deep Fried/통살오징어튀김.png" alt="Squid Fries" loading="lazy" decoding="async"></div>
-                    <h3>Squid Fries</h3>
-                    <p class="menu-kor">통살오징어튀김</p>
-                    <p class="menu-eng">Crispy battered thick squid</p>
+                    <h3>Squid Fries</h3><p class="menu-kor">통살오징어튀김</p><p class="menu-eng">Crispy battered thick squid</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Deep Fried/해쉬브라운.png" alt="Hash Brown" loading="lazy" decoding="async"></div>
-                    <h3>Hash Brown</h3>
-                    <p class="menu-kor">해쉬브라운</p>
-                    <p class="menu-eng">Golden crispy potato hash browns</p>
+                    <h3>Hash Brown</h3><p class="menu-kor">해쉬브라운</p><p class="menu-eng">Golden crispy potato hash browns</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Deep Fried/납작만두.png" alt="Flat Mandoo" loading="lazy" decoding="async"></div>
-                    <h3>Flat Mandoo</h3>
-                    <p class="menu-kor">납작만두</p>
-                    <p class="menu-eng">Crispy flat dumplings</p>
+                    <h3>Flat Mandoo</h3><p class="menu-kor">납작만두</p><p class="menu-eng">Crispy flat dumplings</p>
                 </div>
             </div>
 
@@ -1246,51 +1097,35 @@
             <div id="cat-Rice" class="menu-grid" role="tabpanel">
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Rice/신전치즈김밥.png" alt="Sinjeon Cheese Kimbap" loading="lazy" decoding="async"></div>
-                    <h3>Cheese Kimbap</h3>
-                    <p class="menu-kor">신전치즈김밥</p>
-                    <p class="menu-eng">Spicy rice rolled with melted cheese</p>
+                    <h3>Cheese Kimbap</h3><p class="menu-kor">신전치즈김밥</p><p class="menu-eng">Spicy rice rolled with melted cheese</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Rice/신전김밥.png" alt="Sinjeon Kimbap" loading="lazy" decoding="async"></div>
-                    <h3>Sinjeon Kimbap</h3>
-                    <p class="menu-kor">신전김밥</p>
-                    <p class="menu-eng">Signature spicy rice roll</p>
+                    <h3>Sinjeon Kimbap</h3><p class="menu-kor">신전김밥</p><p class="menu-eng">Signature spicy rice roll</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Rice/참치마요김밥.png" alt="Tuna Mayo Kimbap" loading="lazy" decoding="async"></div>
-                    <h3>Tuna Mayo Kimbap</h3>
-                    <p class="menu-kor">참치마요김밥</p>
-                    <p class="menu-eng">Tuna and mayo with spicy rice</p>
+                    <h3>Tuna Mayo Kimbap</h3><p class="menu-kor">참치마요김밥</p><p class="menu-eng">Tuna and mayo with spicy rice</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Rice/참치마요컵밥.png" alt="Tuna Mayo Cupbap" loading="lazy" decoding="async"></div>
-                    <h3>Tuna Mayo Cupbap</h3>
-                    <p class="menu-kor">참치마요컵밥</p>
-                    <p class="menu-eng">Rice bowl topped with tuna and mayo</p>
+                    <h3>Tuna Mayo Cupbap</h3><p class="menu-kor">참치마요컵밥</p><p class="menu-eng">Rice bowl topped with tuna and mayo</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Rice/스팸마요컵밥.png" alt="Spam Mayo Cupbap" loading="lazy" decoding="async"></div>
-                    <h3>Spam Mayo Cupbap</h3>
-                    <p class="menu-kor">스팸마요컵밥</p>
-                    <p class="menu-eng">Rice bowl with Spam and savory mayo</p>
+                    <h3>Spam Mayo Cupbap</h3><p class="menu-kor">스팸마요컵밥</p><p class="menu-eng">Rice bowl with Spam and savory mayo</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Rice/치킨마요컵밥.png" alt="Chicken Mayo Cupbap" loading="lazy" decoding="async"></div>
-                    <h3>Chicken Mayo Cupbap</h3>
-                    <p class="menu-kor">치킨마요컵밥</p>
-                    <p class="menu-eng">Rice bowl with crispy chicken and mayo</p>
+                    <h3>Chicken Mayo Cupbap</h3><p class="menu-kor">치킨마요컵밥</p><p class="menu-eng">Rice bowl with crispy chicken and mayo</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Rice/신전라이스.png" alt="Sinjeon Rice" loading="lazy" decoding="async"></div>
-                    <h3>Sinjeon Rice</h3>
-                    <p class="menu-kor">신전라이스</p>
-                    <p class="menu-eng">Signature spicy fried rice with cheese</p>
+                    <h3>Sinjeon Rice</h3><p class="menu-kor">신전라이스</p><p class="menu-eng">Signature spicy fried rice with cheese</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Rice/맵크림리조또.png" alt="Spicy Cream Risotto" loading="lazy" decoding="async"></div>
-                    <h3>Spicy Cream Risotto</h3>
-                    <p class="menu-kor">맵크림리조또</p>
-                    <p class="menu-eng">Creamy risotto with a spicy kick</p>
+                    <h3>Spicy Cream Risotto</h3><p class="menu-kor">맵크림리조또</p><p class="menu-eng">Creamy risotto with a spicy kick</p>
                 </div>
             </div>
 
@@ -1298,33 +1133,23 @@
             <div id="cat-Topping" class="menu-grid" role="tabpanel">
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Topping/치즈.png" alt="Cheese Topping" loading="lazy" decoding="async"></div>
-                    <h3>Cheese</h3>
-                    <p class="menu-kor">치즈 토핑</p>
-                    <p class="menu-eng">Extra melted mozzarella cheese</p>
+                    <h3>Cheese</h3><p class="menu-kor">치즈 토핑</p><p class="menu-eng">Extra melted mozzarella cheese</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Topping/분모자.png" alt="Bunmoja" loading="lazy" decoding="async"></div>
-                    <h3>Bunmoja</h3>
-                    <p class="menu-kor">분모자</p>
-                    <p class="menu-eng">Chewy potato starch noodles</p>
+                    <h3>Bunmoja</h3><p class="menu-kor">분모자</p><p class="menu-eng">Chewy potato starch noodles</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Topping/넓은당면.png" alt="Wide Glass Noodles" loading="lazy" decoding="async"></div>
-                    <h3>Wide Glass Noodles</h3>
-                    <p class="menu-kor">넓은당면</p>
-                    <p class="menu-eng">Flat and chewy glass noodles</p>
+                    <h3>Wide Glass Noodles</h3><p class="menu-kor">넓은당면</p><p class="menu-eng">Flat and chewy glass noodles</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Topping/순대.png" alt="Sundae" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sundae'"></div>
-                    <h3>Sundae</h3>
-                    <p class="menu-kor">순대</p>
-                    <p class="menu-eng">Traditional Korean blood sausage</p>
+                    <h3>Sundae</h3><p class="menu-kor">순대</p><p class="menu-eng">Traditional Korean blood sausage</p>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Topping/소세지.png" alt="Sausage" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sausage'"></div>
-                    <h3>Sausage</h3>
-                    <p class="menu-kor">소세지</p>
-                    <p class="menu-eng">Bite-sized smoked sausages</p>
+                    <h3>Sausage</h3><p class="menu-kor">소세지</p><p class="menu-eng">Bite-sized smoked sausages</p>
                 </div>
             </div>
         </div>
@@ -1353,7 +1178,7 @@
                      data-hours="Mon-Sun 11:30 AM - 11:00 PM"
                      data-link="https://maps.google.com/?q=Sinjeon+Topokki+Finch"
                      data-timezone="America/Toronto" data-open="11.5" data-close="23"
-                     onmouseenter="triggerMapChange(this)" onclick="triggerMapChange(this)">
+                     onmouseenter="triggerMapChange(this)">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star" aria-hidden="true"></i> 4.9 (314)</span>
@@ -1365,9 +1190,7 @@
                         <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Mon-Sun 11:30 AM - 11:00 PM</span></p>
                     </div>
                     <div class="feature-tags">
-                        <span class="feature-tag">Dine-in</span>
-                        <span class="feature-tag">Takeout</span>
-                        <span class="feature-tag">Delivery</span>
+                        <span class="feature-tag">Dine-in</span><span class="feature-tag">Takeout</span><span class="feature-tag">Delivery</span>
                     </div>
                     <div class="loc-actions">
                         <a href="https://maps.google.com/?q=Sinjeon+Topokki+Finch" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();" aria-label="View Finch Map"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
@@ -1382,7 +1205,7 @@
                      data-hours="Mon-Sun 12:00 PM - 1:00 AM"
                      data-link="https://maps.google.com/?q=Sinjeon+Topokki+Bloor"
                      data-timezone="America/Toronto" data-open="12" data-close="1"
-                     onmouseenter="triggerMapChange(this)" onclick="triggerMapChange(this)">
+                     onmouseenter="triggerMapChange(this)">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star" aria-hidden="true"></i> 4.8 (210)</span>
@@ -1394,9 +1217,7 @@
                         <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Mon-Sun 12:00 PM - 1:00 AM</span></p>
                     </div>
                     <div class="feature-tags">
-                        <span class="feature-tag">Dine-in</span>
-                        <span class="feature-tag">Takeout</span>
-                        <span class="feature-tag">Delivery</span>
+                        <span class="feature-tag">Dine-in</span><span class="feature-tag">Takeout</span><span class="feature-tag">Delivery</span>
                     </div>
                     <div class="loc-actions">
                         <a href="https://maps.google.com/?q=Sinjeon+Topokki+Bloor" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();" aria-label="View Christie Map"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
@@ -1411,7 +1232,7 @@
                      data-hours="Mon-Sun 11:30 AM - 9:30 PM"
                      data-link="https://maps.google.com/?q=Sinjeon+Topokki+Lougheed"
                      data-timezone="America/Vancouver" data-open="11.5" data-close="21.5"
-                     onmouseenter="triggerMapChange(this)" onclick="triggerMapChange(this)">
+                     onmouseenter="triggerMapChange(this)">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star" aria-hidden="true"></i> 4.7 (185)</span>
@@ -1423,9 +1244,7 @@
                         <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Mon-Sun 11:30 AM - 9:30 PM</span></p>
                     </div>
                     <div class="feature-tags">
-                        <span class="feature-tag">Dine-in</span>
-                        <span class="feature-tag">Takeout</span>
-                        <span class="feature-tag">Parking</span>
+                        <span class="feature-tag">Dine-in</span><span class="feature-tag">Takeout</span><span class="feature-tag">Parking</span>
                     </div>
                     <div class="loc-actions">
                         <a href="https://maps.google.com/?q=Sinjeon+Topokki+Lougheed" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();" aria-label="View Lougheed Map"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
@@ -1440,7 +1259,7 @@
                      data-hours="Sun-Thu 11am-10pm | Fri-Sat 11am-11pm"
                      data-link="https://maps.google.com/?q=Sinjeon+Topokki+Church"
                      data-timezone="America/Toronto" data-open="11" data-close="22" data-close-weekend="23"
-                     onmouseenter="triggerMapChange(this)" onclick="triggerMapChange(this)">
+                     onmouseenter="triggerMapChange(this)">
                     <div class="loc-meta">
                         <span class="loc-status">Loading Hours...</span>
                         <span class="loc-rating"><i class="fas fa-star" aria-hidden="true"></i> 4.8 (150)</span>
@@ -1452,9 +1271,7 @@
                         <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Sun-Thu 11:00 AM - 10:00 PM<br>Fri-Sat 11:00 AM - 11:00 PM</span></p>
                     </div>
                     <div class="feature-tags">
-                        <span class="feature-tag">Dine-in</span>
-                        <span class="feature-tag">Takeout</span>
-                        <span class="feature-tag">Late Night</span>
+                        <span class="feature-tag">Dine-in</span><span class="feature-tag">Takeout</span><span class="feature-tag">Late Night</span>
                     </div>
                     <div class="loc-actions">
                         <a href="https://maps.google.com/?q=Sinjeon+Topokki+Church" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();" aria-label="View Church Map"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
@@ -1465,7 +1282,6 @@
             
             <div class="loc-map-wrapper">
                 <iframe id="main-map" src="about:blank" title="Google Maps" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                
                 <div class="map-info-overlay" id="map-premium-overlay" aria-hidden="true">
                     <h4 id="overlay-title">Loading...</h4>
                     <p id="overlay-address"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> </p>
@@ -1476,22 +1292,17 @@
         </div>
     </section>
 
-    <!-- ★ 자체 인스타그램 피드 연동 (GitHub Actions API) -->
+    <!-- 자체 인스타그램 피드 연동 -->
     <section class="ugc-section" id="community">
         <div class="section-header reveal">
             <p>Social Proof</p>
             <h2>Community <span>Feed</span></h2>
             <p style="color:var(--text-light); text-transform:none; letter-spacing:0;">Follow <a href="https://www.instagram.com/sinjeon_Canada" target="_blank" style="color:var(--sj-red); text-decoration:none; font-weight:800;">@sinjeon_Canada</a></p>
         </div>
-        
         <div class="instagram-feed-section reveal delay-100">
             <div id="instagram-feed" class="instagram-grid">
-                <div class="instagram-item skeleton"></div>
-                <div class="instagram-item skeleton"></div>
-                <div class="instagram-item skeleton"></div>
-                <div class="instagram-item skeleton"></div>
-                <div class="instagram-item skeleton"></div>
-                <div class="instagram-item skeleton"></div>
+                <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
+                <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
             </div>
         </div>
     </section>
@@ -1535,8 +1346,8 @@
         <div class="reveal delay-200" style="text-align: center; margin-top: 70px;">
             <h3 style="font-size: 1.8rem; font-weight: 800; color: var(--text-dark); margin-bottom: 20px;">Ready to Start Your Journey?</h3>
             
-            <!-- ★ [UX 혁신] 오토라우팅 제거 -> 진성 고객만 완벽히 apply.html로 직결 이동 -->
-            <a href="apply.html" class="btn-apply-portal">
+            <!-- ★ [다이렉트 라우팅] 가맹 버튼 클릭 시 즉시 step2_apply.html 로 직결 이동 -->
+            <a href="step2_apply.html" class="btn-apply-portal">
                 <i class="fas fa-file-signature" aria-hidden="true"></i> Apply for Franchise
             </a>
             
@@ -1556,7 +1367,7 @@
             </div>
 
             <!-- 일반 지원 폼 -->
-            <div id="general-form" class="form-content active" role="tabpanel">
+            <div id="general-form" class="form-content general-card active" role="tabpanel">
                 <div class="form-header">
                     <h3>General Support</h3>
                 </div>
@@ -1583,35 +1394,29 @@
                 </form>
             </div>
 
-            <!-- ★ [업그레이드] 프랜차이즈 퀵 문의 폼 (진입 장벽 낮춤) -->
-            <div id="franchise-form" class="form-content" role="tabpanel">
-                <div class="form-header">
-                    <h3>Franchise Quick Inquiry</h3>
-                    <p style="color:var(--text-gray); line-height: 1.5;">간단한 가맹 문의를 남겨주시면 담당자가 연락을 드립니다.<br>For a complete application, please visit our <a href="apply.html" style="color:var(--sj-red); font-weight:800; text-decoration:underline;">Official Portal</a>.</p>
-                </div>
+            <!-- ★ [디자인 일치화] Franchise Quick Form (이미지 레퍼런스 100% 반영) -->
+            <div id="franchise-form" class="form-content quick-form-card" role="tabpanel">
+                <h3>Franchise Inquiries (Quick Form)</h3>
+                
                 <form onsubmit="return handleInquiryEmailJS(event, 'Franchise Quick Inquiry')">
-                    <div class="input-row">
-                        <div class="input-wrapper">
-                            <input type="text" id="fra-name" name="from_name" placeholder=" " required autocomplete="name">
-                            <label for="fra-name">Applicant Name</label>
-                        </div>
-                        <div class="input-wrapper">
-                            <input type="tel" id="fra-phone" name="reply_phone" placeholder=" " required autocomplete="tel" inputmode="tel">
-                            <label for="fra-phone">Contact Number</label>
-                        </div>
+                    <div class="qf-row">
+                        <input type="text" name="from_name" placeholder="Applicant Name" required autocomplete="name">
+                        <input type="tel" name="reply_phone" placeholder="Contact Number" required autocomplete="tel" inputmode="tel">
                     </div>
-                    <div class="input-wrapper">
-                        <input type="email" id="fra-email" name="reply_email" placeholder=" " required autocomplete="email" inputmode="email">
-                        <label for="fra-email">Email Address</label>
+                    <div class="qf-row qf-full">
+                        <input type="email" name="reply_email" placeholder="Email Address" required autocomplete="email" inputmode="email">
                     </div>
-                    <div class="input-wrapper">
-                        <textarea id="fra-msg" name="message" placeholder=" " required></textarea>
-                        <label for="fra-msg">Desired Location & Brief Inquiry (관심 지역 및 문의 내용)</label>
+                    <div class="qf-row">
+                        <input type="text" name="desired_location" placeholder="Desired City / Location" required>
+                        <input type="text" name="budget" placeholder="Estimated Budget" required>
                     </div>
-                    <button type="submit" class="submit-btn btn-red">Send Quick Inquiry</button>
+                    <div class="qf-row qf-full">
+                        <textarea name="message" placeholder="Business Background" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-red-flat">SUBMIT APPLICATION</button>
                     
                     <div style="text-align: center; margin-top: 25px;">
-                        <a href="apply.html" style="color: var(--text-gray); font-weight: 600; text-decoration: underline; font-size: 0.95rem; transition: color var(--transition-fast);">
+                        <a href="step2_apply.html" style="color: var(--text-gray); font-weight: 600; text-decoration: underline; font-size: 0.95rem; transition: color var(--transition-fast);">
                             Looking to submit a full application? Go to Official Portal
                         </a>
                     </div>
@@ -1642,7 +1447,7 @@
                     <li><a href="#menu">Menu</a></li>
                     <li><a href="#locations">Locations</a></li>
                     <!-- 푸터 가맹 신청 링크 직결 -->
-                    <li><a href="apply.html">Franchise</a></li>
+                    <li><a href="step2_apply.html">Franchise</a></li>
                 </ul>
             </div>
             
@@ -1660,7 +1465,7 @@
                 <ul>
                     <li><a onclick="showModalMessage('Privacy Policy', document.getElementById('template-privacy').innerHTML, false)" style="cursor:pointer;">Privacy Policy</a></li>
                     <li><a onclick="showModalMessage('Terms of Service', document.getElementById('template-terms').innerHTML, false)" style="cursor:pointer;">Terms of Service</a></li>
-                    <li><a href="apply.html">Franchise Inquiry</a></li>
+                    <li><a href="step2_apply.html">Franchise Inquiry</a></li>
                 </ul>
             </div>
         </div>
