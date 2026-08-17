@@ -117,13 +117,14 @@
         .btn-close-popup:hover { background: rgba(210, 75, 65, 0.05); }
 
         /* =========================================
-           3. 초격차 Navigation (깔끔하고 직관적인 버튼)
+           3. 초격차 Navigation (SINJEON CANADA 우선 배치)
            ========================================= */
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: rgba(255, 255, 255, 0.9); position: fixed; width: 100%; top: 0; z-index: 1000; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); transition: var(--transition-normal); border-bottom: 1px solid transparent; }
         header.scrolled { padding: 12px 5%; border-bottom: 1px solid var(--border-color); box-shadow: 0 4px 25px rgba(0,0,0,0.06); background: rgba(255, 255, 255, 0.98); }
         
         .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .logo-container img { height: 44px; transition: var(--transition-normal); }
+        /* ★ 브랜드 파워 극대화: SINJEON CANADA 전면 배치 */
         .logo-container span { font-family: 'SinjeonCustom', sans-serif; font-size: 1.6rem; font-weight: normal; color: var(--sj-green); letter-spacing: -0.5px; margin-top: 5px;}
         
         .nav-wrapper { display: flex; align-items: center; gap: 40px; }
@@ -133,7 +134,7 @@
         nav a:hover { color: var(--sj-red); }
         nav a:hover::after { width: 100%; }
 
-        /* ★ 직결 라우팅을 위한 단일 포털 버튼 */
+        /* ★ 직결 라우팅을 위한 단일 가맹 포털 버튼 (step1_proposal.html 로 이동) */
         .header-cta-group { display: flex; gap: 15px; align-items: center; }
         .header-btn-apply { background: var(--sj-red); color: white !important; font-size: 0.95rem; font-weight: 800; padding: 12px 28px; border-radius: 50px; text-decoration: none; text-transform: uppercase; transition: var(--transition-fast); box-shadow: 0 4px 15px rgba(210, 75, 65, 0.3); letter-spacing: 1px;}
         .header-btn-apply:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(210, 75, 65, 0.4);}
@@ -203,7 +204,7 @@
         .spice-card:hover .char-spice { transform: translateX(-50%) scale(1.15) translateY(-10px); }
 
         /* =========================================
-           7. Categorized Menu Section (★ 중앙 정렬 및 모바일 최적화 완벽 픽스)
+           7. Categorized Menu Section (★ 중앙 정렬 완벽 최적화)
            ========================================= */
         .menu-section { padding: 130px 5%; background: var(--bg-white); text-align: center; border-top: 1px solid var(--border-color); }
         .menu-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
@@ -213,7 +214,7 @@
 
         .menu-grid-container { max-width: 1300px; margin: 0 auto; min-height: 500px; position: relative; } 
         
-        /* ★ 왼쪽 쏠림 방지: justify-content: center 속성으로 꽉 차지 않는 줄도 정중앙에 배치 */
+        /* ★ 왼쪽 쏠림 방지: justify-content: center 속성으로 꽉 차지 않는 줄도 정중앙 배치 */
         .menu-grid { 
             display: none; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 320px)); 
@@ -310,7 +311,7 @@
         .overlay-btn:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(210, 75, 65, 0.25); color: white; }
 
         /* =========================================
-           9. Instagram Feed 
+           9. Instagram Feed (JSON Fetcher)
            ========================================= */
         .ugc-section { padding: 130px 5%; background: var(--text-dark); color: white; text-align: center; overflow: hidden; }
         .ugc-section .section-header h2 { color: white; }
@@ -332,7 +333,7 @@
         .instagram-item.skeleton { background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; }
 
         /* =========================================
-           10. Franchise Process (직결 이동)
+           10. Franchise Process
            ========================================= */
         .timeline-section { padding: 130px 5%; background: var(--bg-white); }
         .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
@@ -348,11 +349,10 @@
         .btn-apply-portal:hover { background: #b83e35; transform: translateY(-3px); box-shadow: 0 15px 30px rgba(210, 75, 65, 0.4); color: var(--bg-white); }
 
         /* =========================================
-           11. Contact Us & Step 1 Quick Form (모바일 최적화)
+           11. Contact Us & ★ Quick Form (디자인 완벽 일치화)
            ========================================= */
         .contact-section { padding: 130px 5%; background: var(--bg-light); position: relative; border-top: 1px solid var(--border-color); }
         .contact-wrapper { max-width: 860px; margin: 0 auto; position: relative; z-index: 2; }
-        
         .tab-container { display: flex; justify-content: center; margin: 0 auto 50px; background: var(--bg-white); border-radius: 50px; padding: 8px; box-shadow: var(--shadow-xs); width: max-content; }
         .tab-btn { padding: 16px 50px; border: none; background: transparent; font-family: inherit; font-size: 1.15rem; font-weight: 800; color: var(--text-gray); border-radius: 40px; cursor: pointer; transition: var(--transition-fast); }
         .tab-btn.active { background: var(--sj-green); color: var(--bg-white); box-shadow: 0 6px 15px rgba(0, 130, 80, 0.25); }
@@ -376,11 +376,12 @@
         .input-wrapper input:focus, .input-wrapper textarea:focus { border-color: var(--sj-green); background: var(--bg-white); box-shadow: 0 4px 15px rgba(0,130,80,0.05);}
         .input-wrapper input:focus + label, .input-wrapper input:not(:placeholder-shown) + label,
         .input-wrapper textarea:focus + label, .input-wrapper textarea:not(:placeholder-shown) + label { top: 10px; font-size: 0.8rem; color: var(--sj-green); font-weight: 800; }
+
         .submit-btn { width: 100%; padding: 22px; border: none; border-radius: 16px; color: var(--bg-white); font-weight: 900; transition: var(--transition-fast); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; cursor: pointer;}
         .btn-green { background: var(--sj-green); }
         .btn-green:hover { background: #006a40; box-shadow: 0 10px 25px rgba(0, 130, 80, 0.25); transform: translateY(-3px);}
 
-        /* ★ [디자인 최적화] Step 1 Quick Form */
+        /* ★ [플랫 디자인 완벽 적용] Franchise Quick Form */
         .quick-form-card { background: var(--bg-white); padding: 50px 60px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); text-align: center; border: 1px solid var(--border-color);}
         .step-badge { display: inline-block; background: rgba(210, 75, 65, 0.1); color: var(--sj-red); font-weight: 800; padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
         .quick-form-card h3 { font-size: 1.8rem; font-weight: 900; color: #333; margin-bottom: 10px; }
@@ -407,12 +408,13 @@
         .fab:hover { box-shadow: var(--shadow-hover); border-color: var(--sj-red); color: var(--sj-red); transform: translateY(-5px);}
 
         /* =========================================
-           12. Mega Footer & Modal 
+           12. Mega Footer & Modal (성공 팝업 스타일 포함)
            ========================================= */
         footer { background: #333333; color: rgba(255,255,255,0.8); padding: 80px 5% 40px; font-size: 0.95rem; border-top: 5px solid var(--sj-red); }
         .mega-footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 60px; }
         .footer-brand .footer-logo-box { display: inline-flex; align-items: center; margin-bottom: 25px; }
         .footer-logo-box img { height: 45px; display: block; object-fit: contain; } 
+        /* ★ 푸터 Y2C Holdings 법인 명시를 통해 신뢰도 부여 */
         .footer-brand p { font-size: 1.05rem; line-height: 1.8; max-width: 320px; color: rgba(255,255,255,0.9); }
         .footer-col h4 { font-family: 'Outfit', sans-serif; color: var(--bg-white); font-size: 1.3rem; font-weight: 800; margin-bottom: 30px; position: relative; display: inline-block; }
         .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: -10px; width: 35px; height: 3px; background: var(--sj-red); border-radius: 2px; }
@@ -448,7 +450,7 @@
         .heat-good h5 { color: var(--sj-green); }
 
         /* =========================================
-           ★ 모바일 & 데스크톱 완벽 반응형 제어
+           ★ 100% 모바일 & 데스크톱 완벽 반응형 제어
            ========================================= */
         @media (max-width: 1200px) {
             .bento-large { padding: 40px; }
@@ -459,6 +461,7 @@
             .char-img { display: none; }
             .hero h1 { font-size: 3.2rem; }
             .hero h1 span.highlight { font-size: 4rem; }
+            
             .nav-wrapper nav { display: none; } 
             
             .bento-large { grid-column: span 1; grid-template-columns: 1fr 1fr; gap: 30px; padding: 40px 20px; }
@@ -471,14 +474,12 @@
             .mega-footer-container { grid-template-columns: 1fr; gap: 40px; text-align: left; }
             .footer-col h4::after { left: 0; transform: none; }
             .footer-bottom { flex-direction: column; justify-content: center; text-align: center; gap: 15px;}
-            
             .general-card { padding: 40px 25px; }
             .input-row { grid-template-columns: 1fr; gap: 0; }
             .fab-container { bottom: 25px; right: 25px; }
             .section-header h2 { font-size: 2.5rem; }
             .section-header h2 span { font-size: 3rem; }
             .modal-content { padding: 40px 25px; width: 95%;}
-            
             .timeline-container::before { left: 30px; }
             .timeline-step { flex-direction: column; }
             .timeline-marker { left: 8px; width: 48px; height: 48px;}
@@ -489,13 +490,22 @@
         
         @media (max-width: 600px) {
             /* 헤더 버튼 및 탭 최적화 */
-            .header-btn-apply { padding: 10px 20px; font-size: 0.85rem;}
-            .tab-container { display: flex; width: 100%; border-radius: 12px; padding: 5px;}
+            .header-btn-proposal, .header-btn-apply { padding: 10px 18px; font-size: 0.8rem;}
+            .header-cta-group { gap: 10px; }
+            
+            /* 모바일 탭 컨테이너 50:50 정비율 완벽 최적화 */
+            .tab-container { display: flex; width: 100%; border-radius: 12px; padding: 5px; margin-bottom: 30px;}
             .tab-btn { flex: 1; padding: 14px 0; font-size: 1rem; border-radius: 8px;}
             
-            /* 메뉴 모바일 2x2 그리드 보장 */
+            /* ★ 메뉴판 모바일 2x2 완벽 정렬 보장 */
             .menu-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
             .menu-tab-btn { width: 100%; padding: 14px 0; font-size: 0.95rem; margin: 0; }
+            .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .menu-item { padding: 20px 15px; }
+            .menu-item-img { height: 100px; margin-bottom: 15px; }
+            .menu-item h3 { font-size: 1.1rem; margin-bottom: 4px; }
+            .menu-item .menu-kor { font-size: 0.95rem; margin-bottom: 6px; }
+            .menu-item .menu-eng { font-size: 0.8rem; line-height: 1.3; }
 
             .bento-large { gap: 20px; padding: 30px 15px; }
             .stat-item h4 { font-size: 2.2rem; }
@@ -539,6 +549,7 @@
         }
     </style>
     
+    <!-- ★ [최종 코어 리팩토링 JS] Zero-Lag 렌더링 및 철통 방어 -->
     <script>
         // 보안 방어 모듈
         document.addEventListener('contextmenu', e => e.preventDefault());
@@ -912,11 +923,12 @@
 
     <div class="scroll-progress" id="scroll-progress"></div>
 
-    <!-- 초격차 Navigation (B2B / B2C 분리 및 직결 연결) -->
+    <!-- 초격차 Navigation (SINJEON CANADA 절대적 전면 배치) -->
     <header id="header">
         <div class="header-top">
             <a href="#home" class="logo-container" aria-label="Go to Homepage">
                 <img src="sinjeon_logo_canada.png" alt="Sinjeon Canada Logo">
+                <!-- ★ 브랜드 우선 정책 적용 -->
                 <span>SINJEON CANADA</span>
             </a>
             
@@ -928,7 +940,10 @@
                     <a href="#community">Community</a>
                 </nav>
                 <div class="header-cta-group">
-                    <a href="step2_apply.html" class="header-btn-apply">Franchise Portal</a>
+                    <!-- ★ 제안서 뷰어로 분기 (Proposal) -->
+                    <a href="step1_proposal.html" class="header-btn-proposal" style="color: var(--sj-red); border: 2px solid var(--sj-red); padding: 8px 16px; border-radius: 50px; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; text-decoration: none;">Franchise Proposal</a>
+                    <!-- ★ 100% 가맹 신청 직결 라우팅 (Step 2) -->
+                    <a href="step2_apply.html" class="header-btn-apply">Apply Now</a>
                 </div>
             </div>
         </div>
@@ -953,7 +968,7 @@
         
         <div class="hero-btn-group reveal delay-300">
             <a href="#menu" class="btn-clean-heat">View Menu</a>
-            <a href="step2_apply.html" class="btn-hero-apply">Franchise Portal</a>
+            <a href="step1_proposal.html" class="btn-hero-apply">Franchise Portal</a>
         </div>
 
         <div class="marquee-wrapper reveal delay-300">
@@ -1027,6 +1042,7 @@
         </div>
     </section>
 
+    <!-- ★ 메뉴 정중앙 정렬 픽스 -->
     <section class="menu-section" id="menu">
         <div class="section-header reveal">
             <p>Signature Menu</p>
@@ -1040,7 +1056,6 @@
             <button class="menu-tab-btn" role="tab" aria-selected="false" onclick="showMenuCategory('Topping')">Toppings</button>
         </div>
 
-        <!-- ★ 메뉴 좌측 쏠림 방지를 위해 CSS grid justify-content: center 가 적용된 컨테이너 -->
         <div class="menu-grid-container reveal delay-200">
             <!-- Main Category -->
             <div id="cat-Main" class="menu-grid active" role="tabpanel">
@@ -1340,6 +1355,7 @@
         </div>
     </section>
 
+    <!-- ★ 가맹 퍼널 직결 이동 최적화 -->
     <section class="timeline-section" id="franchise">
         <div class="section-header reveal">
             <p>Join Us</p>
@@ -1378,16 +1394,15 @@
         
         <div class="reveal delay-200" style="text-align: center; margin-top: 50px;">
             <h3 style="font-size: 1.8rem; font-weight: 800; color: var(--text-dark); margin-bottom: 20px;">Ready to Start Your Journey?</h3>
-            
-            <!-- ★ 가맹 포털 100% 직결 버튼 -->
-            <a href="step2_apply.html" class="btn-apply-portal">
-                <i class="fas fa-file-signature" aria-hidden="true"></i> Go to Official Portal
+            <p style="font-size: 1.1rem; color: var(--text-gray); margin-bottom: 30px;">투자 조건과 0% 마진 혜택이 궁금하신가요? 공식 제안서를 확인하세요.</p>
+            <!-- ★ 제안서 뷰어로 자연스러운 유도 -->
+            <a href="step1_proposal.html" class="btn-apply-portal" style="background: var(--sj-green); box-shadow: 0 10px 25px rgba(0, 130, 80, 0.3);">
+                <i class="fas fa-file-invoice" aria-hidden="true"></i> Read Official Proposal
             </a>
-            
         </div>
     </section>
 
-    <!-- Contact Us 폼 -->
+    <!-- Contact Us & Step 1 Quick Form (모바일 최적화) -->
     <section class="contact-section" id="contact">
         <div class="section-header reveal">
             <p>Get in Touch</p>
@@ -1427,10 +1442,11 @@
                 </form>
             </div>
 
-            <!-- ★ [업그레이드] Step 1: Preliminary Application 폼 (완벽한 디자인 일치) -->
+            <!-- ★ [모바일 최적화 완벽 적용] Step 1: Preliminary Application 폼 -->
             <div id="franchise-form" class="form-content quick-form-card" role="tabpanel">
                 <div class="step-badge">Step 1 of 4</div>
-                <h3>Franchise Inquiries (Quick Form)</h3>
+                <h3>Preliminary Application</h3>
+                <p class="form-subtitle">Take the first step towards owning a Sinjeon franchise. Fill out this quick inquiry to unlock the official application portal.</p>
                 
                 <form onsubmit="return handleInquiryEmailJS(event, 'Step 1: Preliminary Application')">
                     <div class="qf-row">
@@ -1447,10 +1463,10 @@
                     <div class="qf-row qf-full">
                         <textarea name="message" placeholder="Business Background" required></textarea>
                     </div>
-                    <!-- 자동 전개를 명시하는 버튼 텍스트 -->
-                    <button type="submit" class="btn-red-flat">SUBMIT APPLICATION</button>
+                    <button type="submit" class="btn-red-flat">SUBMIT STEP 1 & PROCEED</button>
                     
                     <div style="text-align: center; margin-top: 25px;">
+                        <!-- 자동 전개를 인지한 진성 고객 전용 -->
                         <a href="step2_apply.html" style="color: var(--text-gray); font-weight: 600; text-decoration: underline; font-size: 0.95rem; transition: color var(--transition-fast);">
                             Already completed Step 1? Go to Official Portal
                         </a>
@@ -1460,6 +1476,7 @@
         </div>
     </section>
 
+    <!-- 플로팅 탑 버튼 -->
     <div class="fab-container" id="fab-container">
         <div class="fab" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to Top" aria-label="Scroll to Top">↑</div>
     </div>
@@ -1471,7 +1488,8 @@
                 <div class="footer-logo-box">
                     <img src="sinjeon_logo_canada.png" alt="Sinjeon Logo" loading="lazy" decoding="async">
                 </div>
-                <p>Bringing the authentic and uncompromising taste of K-Spice to the world since 1999.</p>
+                <!-- ★ Y2C 법인명은 푸터로 배치하여 신뢰감 극대화 -->
+                <p>Bringing the authentic and uncompromising taste of K-Spice to the world since 1999. Operated by Y2C Holdings Inc.</p>
             </div>
             
             <div class="footer-col" style="text-align: left;">
@@ -1480,8 +1498,7 @@
                     <li><a href="#about">Our Story</a></li>
                     <li><a href="#menu">Menu</a></li>
                     <li><a href="#locations">Locations</a></li>
-                    <!-- 푸터 가맹 신청 링크 직결 -->
-                    <li><a href="step2_apply.html">Franchise</a></li>
+                    <li><a href="step1_proposal.html">Franchise</a></li>
                 </ul>
             </div>
             
@@ -1499,13 +1516,13 @@
                 <ul>
                     <li><a onclick="showModalMessage('Privacy Policy', document.getElementById('template-privacy').innerHTML, false)" style="cursor:pointer;">Privacy Policy</a></li>
                     <li><a onclick="showModalMessage('Terms of Service', document.getElementById('template-terms').innerHTML, false)" style="cursor:pointer;">Terms of Service</a></li>
-                    <li><a href="step2_apply.html">Franchise Inquiry</a></li>
+                    <li><a href="step1_proposal.html">Franchise Inquiry</a></li>
                 </ul>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <p>© 2026 Sinjeon Food Sys Canada. All Rights Reserved.</p>
+            <p>© 2026 Sinjeon Food Sys Canada (Operated by Y2C Holdings Inc.). All Rights Reserved.</p>
             <p>Identity in Every Font.</p>
         </div>
     </footer>
