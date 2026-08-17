@@ -5,11 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#1A1A1A">
     
-    <title>Secure Document Portal | Step 3 - Y2C Holdings</title>
-    
+    <title>Step 2: Official Franchise Application | Y2C Holdings</title>
+    <meta name="description" content="Official Franchise Application Portal for Sinjeon Canada.">
+
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
+    
+    <link rel="preload" href="fonts/SinjeonFont.otf" as="font" type="font/otf" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- EmailJS SDK -->
+    <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init({ publicKey: "DITntTK9NnZLeavvX" });
+            }
+        });
+    </script>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -32,6 +46,9 @@
             --sj-green: #008250; --sj-red: #D24B41; --text-dark: #1A1A1A; --text-gray: #555555; --text-light: #9E9E9E;
             --bg-light: #F8FAFC; --bg-white: #FFFFFF; --border-color: #E2E8F0;
             --transition-fast: 0.2s ease-in-out;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,17 +57,18 @@
         /* =========================================
            2. Header & Progress UI
            ========================================= */
-        .header { background-color: var(--bg-white); padding: 30px 5%; text-align: center; border-bottom: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 1000;}
+        .header { background-color: var(--bg-white); padding: 30px 5%; text-align: center; border-bottom: 1px solid var(--border-color); box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 1000;}
         .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
         .logo-box { display: flex; align-items: center; gap: 15px; text-decoration: none; }
         .logo-box img { height: 40px; }
         .logo-box span { font-size: 1.4rem; font-weight: 800; color: var(--sj-green); letter-spacing: -0.5px; }
-        .security-badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--sj-green); font-size: 0.95rem; background: rgba(0, 130, 80, 0.1); padding: 8px 16px; border-radius: 50px; }
+        .security-badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: #2563eb; font-size: 0.95rem; background: rgba(37, 99, 235, 0.1); padding: 8px 16px; border-radius: 50px; }
 
         .stepper-wrapper { max-width: 900px; margin: 40px auto 0; padding: 0 20px; }
         .stepper { display: flex; justify-content: space-between; position: relative; }
         .stepper::before { content: ''; position: absolute; top: 20px; left: 0; width: 100%; height: 3px; background: var(--border-color); z-index: 1; }
-        .stepper-progress { position: absolute; top: 20px; left: 0; width: 83%; height: 3px; background: var(--sj-red); z-index: 2; transition: width 0.5s ease; }
+        /* Step 2 Progress: 50% */
+        .stepper-progress { position: absolute; top: 20px; left: 0; width: 50%; height: 3px; background: var(--sj-red); z-index: 2; transition: width 0.5s ease; }
         
         .step-item { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; width: 25%; }
         .step-circle { width: 44px; height: 44px; border-radius: 50%; background: var(--bg-white); border: 3px solid var(--border-color); display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; color: var(--text-light); transition: var(--transition-fast); }
@@ -61,57 +79,77 @@
         .step-item.active .step-circle { border-color: var(--sj-red); color: var(--sj-red); box-shadow: 0 0 0 5px rgba(210, 75, 65, 0.1); background: var(--bg-white);}
         .step-item.active .step-title { color: var(--text-dark); font-weight: 800; }
 
-        /* =========================================
-           3. Form Container & NDA Box
-           ========================================= */
         .portal-hero { max-width: 900px; margin: 60px auto 40px; padding: 0 20px; text-align: center; }
         .portal-hero h1 { font-size: 2.8rem; font-weight: 900; color: var(--text-dark); margin-bottom: 15px; letter-spacing: -1px; }
         .portal-hero p { font-size: 1.1rem; color: var(--text-gray); font-weight: 500; line-height: 1.6;}
 
-        .form-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; }
-        .form-card { background: var(--bg-white); border-radius: 20px; padding: 50px 60px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08); border: 1px solid var(--border-color); }
+        /* =========================================
+           3. Form Container & Inputs (고도화 UI)
+           ========================================= */
+        .form-container { max-width: 1000px; margin: 0 auto 100px; padding: 0 20px; }
+        .form-card { background: var(--bg-white); border-radius: 24px; padding: 60px 70px; box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.05); border: 1px solid var(--border-color); }
         
-        .form-section-title { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); margin: 40px 0 25px; padding-bottom: 15px; border-bottom: 2px solid var(--bg-light); display: flex; align-items: center; gap: 10px; }
-        .form-section-title i { color: var(--sj-red); font-size: 1.2rem;}
+        .form-section-title { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); margin: 50px 0 25px; padding-bottom: 15px; border-bottom: 2px solid var(--border-color); display: flex; align-items: center; gap: 12px; }
+        .form-section-title i { color: var(--sj-red); font-size: 1.3rem; background: rgba(210,75,65,0.1); padding: 10px; border-radius: 12px;}
         .form-section-title:first-child { margin-top: 0; }
+        .form-section-desc { font-size: 0.95rem; color: var(--text-gray); margin-top: -15px; margin-bottom: 25px; font-weight: 500; padding-left: 55px;}
 
-        /* NDA Scroll Box */
-        .nda-box { background: var(--bg-light); border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; height: 250px; overflow-y: auto; margin-bottom: 20px; font-size: 0.9rem; color: var(--text-gray); line-height: 1.7; }
-        .nda-box h4 { color: var(--text-dark); margin-bottom: 15px; font-size: 1.1rem; }
-        .nda-box p { margin-bottom: 15px; }
-        .nda-box::-webkit-scrollbar { width: 8px; }
-        .nda-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .input-row-full { grid-template-columns: 1fr; margin-bottom: 20px; }
+        .input-row-three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 20px; }
         
-        .checkbox-label { display: flex; align-items: flex-start; gap: 12px; font-weight: 600; color: var(--text-dark); cursor: pointer; padding: 20px; border: 2px solid var(--border-color); border-radius: 12px; transition: var(--transition-fast); background: var(--bg-white);}
-        .checkbox-label:hover { border-color: var(--sj-green); background: rgba(0,130,80,0.02); }
-        .checkbox-label input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--sj-green); cursor: pointer; margin-top: 2px;}
+        .input-wrapper { position: relative; }
+        .input-wrapper input, .input-wrapper textarea, .input-wrapper select { 
+            width: 100%; padding: 26px 20px 12px; border: 2px solid var(--bg-light); border-radius: 12px; 
+            font-size: 1rem; color: var(--text-dark); background: var(--bg-light); 
+            font-family: inherit; font-weight: 600; outline: none; transition: var(--transition-fast);
+            appearance: none;
+        }
+        .input-wrapper textarea { resize: vertical; min-height: 120px; }
+        .input-wrapper label { position: absolute; left: 22px; top: 20px; font-size: 0.95rem; color: var(--text-gray); pointer-events: none; transition: var(--transition-fast); font-weight: 500; }
+        
+        .input-wrapper input:focus, .input-wrapper textarea:focus, .input-wrapper select:focus { border-color: var(--sj-red); background: var(--bg-white); box-shadow: 0 4px 15px rgba(210,75,65,0.05);}
+        .input-wrapper input:focus + label, .input-wrapper input:not(:placeholder-shown) + label,
+        .input-wrapper textarea:focus + label, .input-wrapper textarea:not(:placeholder-shown) + label,
+        .input-wrapper select:focus + label, .input-wrapper select:valid + label { top: 8px; font-size: 0.75rem; color: var(--sj-red); font-weight: 800; }
+
+        .options-group { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+        .options-group.row-mode { flex-direction: row; flex-wrap: wrap; }
+        .radio-label { flex: 1; display: flex; align-items: center; gap: 12px; font-weight: 600; color: var(--text-dark); cursor: pointer; padding: 18px 20px; border: 2px solid var(--bg-light); border-radius: 12px; transition: var(--transition-fast); background: var(--bg-white);}
+        .radio-label:hover { border-color: var(--sj-green); background: rgba(0,130,80,0.02); }
+        .radio-label input[type="radio"], .radio-label input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--sj-red); cursor: pointer; flex-shrink: 0;}
+        .radio-label span { font-size: 0.95rem; line-height: 1.4; }
+        
+        .consent-box { background: #fdf5f5; border: 1px solid #fbdcde; padding: 30px; border-radius: 16px; margin-top: 50px; }
+        .consent-box h5 { color: var(--sj-red); font-size: 1.15rem; margin-bottom: 12px; font-weight: 900; display: flex; align-items: center; gap: 8px;}
+        .consent-box p { font-size: 0.95rem; color: var(--text-gray); margin-bottom: 20px; line-height: 1.6; }
+
+        .submit-btn { width: 100%; padding: 24px; background: var(--text-dark); color: white; border: none; border-radius: 16px; font-size: 1.25rem; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: var(--transition-fast); box-shadow: 0 10px 25px rgba(0,0,0,0.2); margin-top: 25px;}
+        .submit-btn:hover { background: var(--sj-red); transform: translateY(-3px); box-shadow: 0 15px 35px rgba(210, 75, 65, 0.35); }
 
         /* =========================================
-           4. Drag & Drop File Upload UI
+           4. Success Modal
            ========================================= */
-        .upload-zone { border: 2px dashed #cbd5e1; border-radius: 16px; padding: 50px 20px; text-align: center; background: var(--bg-light); cursor: pointer; transition: all 0.3s ease; position: relative; margin-bottom: 30px; }
-        .upload-zone:hover, .upload-zone.dragover { border-color: var(--sj-red); background: #fdf5f5; }
-        .upload-zone i { font-size: 3rem; color: #94a3b8; margin-bottom: 15px; transition: color 0.3s ease; }
-        .upload-zone:hover i, .upload-zone.dragover i { color: var(--sj-red); }
-        .upload-zone h5 { font-size: 1.2rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
-        .upload-zone p { font-size: 0.95rem; color: var(--text-light); }
-        .upload-zone input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); backdrop-filter: blur(8px); }
+        .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+        .modal-content { background: var(--bg-white); width: 90%; max-width: 550px; border-radius: 24px; padding: 50px 40px; text-align: center; transform: translateY(30px) translateZ(0); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 25px 60px rgba(0,0,0,0.5);}
+        .modal-overlay.active .modal-content { transform: translateY(0) translateZ(0); }
         
-        .file-list { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
-        .file-item { display: flex; align-items: center; gap: 10px; background: var(--bg-white); padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.95rem; font-weight: 600; color: var(--text-dark); box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
-        .file-item i.fa-file-pdf { color: #e11d48; }
-        .file-item i.fa-file-image { color: #2563eb; }
-        .file-item .remove-file { margin-left: auto; color: var(--text-light); cursor: pointer; transition: 0.2s; }
-        .file-item .remove-file:hover { color: var(--sj-red); }
-
-        .submit-btn { width: 100%; padding: 22px; background: var(--sj-red); color: white; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: var(--transition-fast); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25); margin-top: 20px;}
-        .submit-btn:hover { background: #b83e35; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(210, 75, 65, 0.35); }
+        .success-icon { width: 90px; height: 90px; background: rgba(0, 130, 80, 0.1); color: var(--sj-green); font-size: 3rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        .modal-content h3 { font-size: 2rem; font-weight: 900; color: var(--text-dark); margin-bottom: 15px; }
+        .modal-content p { font-size: 1.1rem; color: var(--text-gray); margin-bottom: 30px; line-height: 1.6; }
+        .btn-modal-next { display: inline-block; width: 100%; padding: 18px; background: var(--sj-red); color: white; border-radius: 12px; font-weight: 800; text-decoration: none; font-size: 1.1rem; transition: var(--transition-fast); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3);}
+        .btn-modal-next:hover { background: #b83e35; transform: translateY(-3px);}
 
         @media (max-width: 768px) {
             .stepper-wrapper { display: none; }
             .portal-hero { margin: 40px auto 20px; }
             .portal-hero h1 { font-size: 2.2rem; }
-            .form-card { padding: 30px 20px; }
+            .form-card { padding: 40px 25px; }
+            .input-row, .input-row-three { grid-template-columns: 1fr; gap: 15px; margin-bottom: 15px;}
+            .form-section-title { font-size: 1.25rem; margin: 40px 0 20px; }
+            .form-section-desc { padding-left: 0; margin-top: -10px; }
+            .options-group.row-mode { flex-direction: column; }
         }
     </style>
 </head>
@@ -123,7 +161,7 @@
                 <img src="sinjeon_logo_canada.png" alt="Sinjeon Logo">
                 <span>Y2C HOLDINGS</span>
             </a>
-            <div class="security-badge"><i class="fas fa-lock"></i> 256-bit Secure</div>
+            <div class="security-badge"><i class="fas fa-shield-check"></i> Encrypted Portal</div>
         </div>
     </header>
 
@@ -134,11 +172,11 @@
                 <div class="step-circle"><i class="fas fa-check"></i></div>
                 <div class="step-title">Step 1<br>Quick Inquiry</div>
             </div>
-            <div class="step-item completed">
-                <div class="step-circle"><i class="fas fa-check"></i></div>
+            <div class="step-item active">
+                <div class="step-circle">2</div>
                 <div class="step-title">Step 2<br>Official App</div>
             </div>
-            <div class="step-item active">
+            <div class="step-item">
                 <div class="step-circle">3</div>
                 <div class="step-title">Step 3<br>Interview / NDA</div>
             </div>
@@ -150,119 +188,310 @@
     </div>
 
     <section class="portal-hero">
-        <h1>Secure Document Portal</h1>
-        <p>Please review and sign the Non-Disclosure Agreement (NDA) and securely upload your proof of funds and identification documents to proceed to the final contract stage.</p>
+        <h1>Comprehensive Franchise Application</h1>
+        <p>This application allows our Executive Team to evaluate your operational, financial, and strategic alignment with the Sinjeon brand. All information is strictly confidential.</p>
     </section>
 
     <section class="form-container">
         <div class="form-card">
-            <form id="step3-form" onsubmit="return handleUploadSubmit(event)">
+            <form id="step2-form" onsubmit="return handleOfficialSubmit(event)">
                 
-                <!-- Section 1: NDA -->
-                <div class="form-section-title"><i class="fas fa-file-signature"></i> 1. Non-Disclosure Agreement (NDA)</div>
-                <div class="nda-box">
-                    <h4>MUTUAL NON-DISCLOSURE AGREEMENT</h4>
-                    <p>This Non-Disclosure Agreement is entered into by and between Y2C Holdings Inc. / Sinjeon Food Sys (hereinafter "Company") and the Applicant.</p>
-                    <p><strong>1. Confidential Information:</strong> The Applicant acknowledges that during the franchise evaluation process, the Company will disclose sensitive corporate data, including but not limited to financial models, proprietary recipes, operational manuals, and supply chain logistics (SCM) details.</p>
-                    <p><strong>2. Non-Disclosure:</strong> The Applicant agrees to hold all Confidential Information in strict confidence and shall not disclose, copy, reproduce, or distribute any part of the Confidential Information to any third party without the prior written consent of the Company.</p>
-                    <p><strong>3. Use of Information:</strong> The Confidential Information shall be used solely for the purpose of evaluating the potential franchise business opportunity and for no other commercial or personal purpose.</p>
-                    <p><strong>4. Return of Materials:</strong> Upon request by the Company, the Applicant shall immediately return or securely destroy all documents and data containing Confidential Information.</p>
-                    <p>By checking the box below, you electronically sign and legally bind yourself to the terms of this Agreement.</p>
+                <!-- ==========================================
+                     Section 1: Applicant Profile
+                     ========================================== -->
+                <div class="form-section-title"><i class="fas fa-user-tie"></i> 1. Applicant Profile</div>
+                <p class="form-section-desc">Please provide your exact legal details as they appear on official identification.</p>
+                
+                <div class="input-row">
+                    <div class="input-wrapper">
+                        <input type="text" id="first_name" name="first_name" placeholder=" " required autocomplete="given-name">
+                        <label for="first_name">Legal First Name</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" id="last_name" name="last_name" placeholder=" " required autocomplete="family-name">
+                        <label for="last_name">Legal Last Name</label>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-wrapper">
+                        <input type="email" id="email" name="email" placeholder=" " required autocomplete="email" inputmode="email">
+                        <label for="email">Primary Email Address</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="tel" id="phone" name="phone" placeholder=" " required autocomplete="tel" inputmode="tel">
+                        <label for="phone">Mobile Phone Number</label>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-wrapper">
+                        <input type="text" id="address" name="address" placeholder=" " required autocomplete="street-address">
+                        <label for="address">Current Residential Address</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" id="linkedin" name="linkedin" placeholder=" ">
+                        <label for="linkedin">LinkedIn Profile URL (Optional)</label>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     Section 2: Preferred Territory & Real Estate
+                     ========================================== -->
+                <div class="form-section-title"><i class="fas fa-map-marked-alt"></i> 2. Territory & Real Estate</div>
+                <p class="form-section-desc">Tell us where and how you plan to operate your Sinjeon location.</p>
+                
+                <div class="input-row">
+                    <div class="input-wrapper">
+                        <input type="text" id="target_city" name="target_city" placeholder=" " required>
+                        <label for="target_city">Primary Target City / Region</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <select id="timeline" name="timeline" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="Ready Immediately (0-3 Months)">Ready Immediately (0-3 Months)</option>
+                            <option value="Within 6 Months">Within 6 Months</option>
+                            <option value="Within 1 Year">Within 1 Year</option>
+                            <option value="Just Exploring">Just Gathering Information</option>
+                        </select>
+                        <label for="timeline">Expected Opening Timeline</label>
+                    </div>
                 </div>
                 
-                <label class="checkbox-label">
-                    <input type="checkbox" name="nda_agree" required>
-                    <span>I have read, understood, and agree to be legally bound by the terms of the Non-Disclosure Agreement. I acknowledge this acts as my digital signature.</span>
-                </label>
+                <label style="display: block; font-size: 0.95rem; color: var(--text-dark); font-weight: 700; margin: 20px 0 5px 5px;">Preferred Store Format</label>
+                <div class="options-group row-mode">
+                    <label class="radio-label"><input type="radio" name="store_format" value="Standard Dine-in" required> <span><strong>Standard:</strong> Dine-in focus (1,500+ sq.ft)</span></label>
+                    <label class="radio-label"><input type="radio" name="store_format" value="Express / Takeout"> <span><strong>Express:</strong> Delivery/Takeout focus (Under 1,000 sq.ft)</span></label>
+                </div>
 
-                <!-- Section 2: Document Upload -->
-                <div class="form-section-title"><i class="fas fa-cloud-upload-alt" style="margin-top: 30px;"></i> 2. Secure Document Upload</div>
-                <p style="font-size: 0.95rem; color: var(--text-gray); margin-bottom: 20px;">Please upload your Government-issued ID and Proof of Liquid Capital (Bank Statement or Letter of Credit). Maximum file size is 10MB per document.</p>
+                <label style="display: block; font-size: 0.95rem; color: var(--text-dark); font-weight: 700; margin: 25px 0 5px 5px;">Do you already have a leased or owned commercial space?</label>
+                <div class="options-group row-mode">
+                    <label class="radio-label"><input type="radio" name="have_lease" value="Yes" required> <span>Yes, I have a location ready.</span></label>
+                    <label class="radio-label"><input type="radio" name="have_lease" value="No"> <span>No, I need assistance finding a site.</span></label>
+                </div>
+
+                <!-- ==========================================
+                     Section 3: Financial Qualifications
+                     ========================================== -->
+                <div class="form-section-title"><i class="fas fa-coins"></i> 3. Financial Qualifications</div>
+                <p class="form-section-desc">Accurate financial data is required to ensure you meet the minimum capital requirements for a successful launch.</p>
                 
-                <div class="upload-zone" id="drop-zone">
-                    <i class="fas fa-file-invoice"></i>
-                    <h5>Drag & Drop your files here</h5>
-                    <p>or click to browse (PDF, JPG, PNG)</p>
-                    <input type="file" id="file-input" multiple accept=".pdf, .jpg, .jpeg, .png" required>
+                <div class="input-row-three">
+                    <div class="input-wrapper">
+                        <select id="liquid_capital" name="liquid_capital" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="Under $100,000">Under $100k CAD</option>
+                            <option value="$100k - $150k">$100k - $150k CAD</option>
+                            <option value="$150k - $250k">$150k - $250k CAD</option>
+                            <option value="$250k - $400k">$250k - $400k CAD</option>
+                            <option value="Over $400k">Over $400k CAD</option>
+                        </select>
+                        <label for="liquid_capital">Unencumbered Cash</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <select id="net_worth" name="net_worth" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="Under $250,000">Under $250k CAD</option>
+                            <option value="$250k - $500k">$250k - $500k CAD</option>
+                            <option value="$500k - $1M">$500k - $1M CAD</option>
+                            <option value="Over $1M">Over $1M CAD</option>
+                        </select>
+                        <label for="net_worth">Total Net Worth</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <select id="credit_score" name="credit_score" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="Excellent (750+)">Excellent (750+)</option>
+                            <option value="Good (680-749)">Good (680-749)</option>
+                            <option value="Fair (600-679)">Fair (600-679)</option>
+                            <option value="Needs Improvement">Needs Improvement</option>
+                            <option value="Not Sure">Not Sure</option>
+                        </select>
+                        <label for="credit_score">Estimated Credit Score</label>
+                    </div>
                 </div>
 
-                <div class="file-list" id="file-list">
-                    <!-- JavaScript로 첨부된 파일 이름이 여기에 추가됩니다. -->
+                <label style="display: block; font-size: 0.95rem; color: var(--text-dark); font-weight: 700; margin: 20px 0 5px 5px;">Primary Financing Strategy</label>
+                <div class="options-group">
+                    <label class="radio-label"><input type="radio" name="financing" value="100% Cash" required> <span><strong>100% Cash:</strong> Self-funded with no loans required.</span></label>
+                    <label class="radio-label"><input type="radio" name="financing" value="Bank / CSBFL Loan"> <span><strong>Bank Loan (CSBFL):</strong> Will apply for a small business loan.</span></label>
+                    <label class="radio-label"><input type="radio" name="financing" value="Investment Partners"> <span><strong>Partnership:</strong> Funded jointly with business partners/investors.</span></label>
                 </div>
 
-                <button type="submit" class="submit-btn" id="btn-submit" style="margin-top: 40px;">Submit Documents</button>
+                <!-- ==========================================
+                     Section 4: Professional Experience & Operations
+                     ========================================== -->
+                <div class="form-section-title"><i class="fas fa-cogs"></i> 4. Operational Role & Background</div>
+                <p class="form-section-desc">We look for passionate leaders. Let us know how you plan to run the business.</p>
+                
+                <div class="input-row">
+                    <div class="input-wrapper">
+                        <input type="text" id="current_occupation" name="current_occupation" placeholder=" " required>
+                        <label for="current_occupation">Current Occupation / Business</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <select id="role" name="role" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="Owner-Operator (Full-time)">Owner-Operator (Full-time presence)</option>
+                            <option value="Semi-Absentee (Hiring a Manager)">Semi-Absentee (Will hire a GM)</option>
+                            <option value="Absentee Investor">Absentee Investor (Capital only)</option>
+                        </select>
+                        <label for="role">Intended Day-to-Day Role</label>
+                    </div>
+                </div>
+
+                <label style="display: block; font-size: 0.95rem; color: var(--text-dark); font-weight: 700; margin: 20px 0 5px 5px;">F&B (Food & Beverage) Experience Level</label>
+                <div class="options-group row-mode">
+                    <label class="radio-label"><input type="radio" name="experience" value="Extensive" required> <span>Extensive (Owned/Managed restaurants)</span></label>
+                    <label class="radio-label"><input type="radio" name="experience" value="Moderate"> <span>Moderate (Worked in hospitality)</span></label>
+                    <label class="radio-label"><input type="radio" name="experience" value="None"> <span>None (First time in F&B)</span></label>
+                </div>
+
+                <div class="input-row-full" style="margin-top: 25px;">
+                    <div class="input-wrapper">
+                        <textarea id="motivation" name="motivation" placeholder=" " required></textarea>
+                        <label for="motivation">Executive Summary: Why Sinjeon? Describe your relevant strengths and vision.</label>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     Section 5: Legal & Disclosures
+                     ========================================== -->
+                <div class="consent-box">
+                    <h5><i class="fas fa-balance-scale"></i> Legal Disclosure & Verification Authorization</h5>
+                    <p>Have you ever declared bankruptcy, or been an executive officer of a company that declared bankruptcy? Have you ever been involved in litigation (lawsuits) related to business operations?</p>
+                    
+                    <div class="options-group row-mode" style="margin-bottom: 20px;">
+                        <label class="radio-label" style="border-color: rgba(0,0,0,0.1);"><input type="radio" name="legal_issue" value="No" required> <span>No, I have a clean record.</span></label>
+                        <label class="radio-label" style="border-color: rgba(0,0,0,0.1);"><input type="radio" name="legal_issue" value="Yes"> <span>Yes (Please explain in Executive Summary above)</span></label>
+                    </div>
+
+                    <label class="checkbox-label" style="border-color: rgba(0,0,0,0.1);">
+                        <input type="checkbox" name="privacy_consent" required>
+                        <span style="font-size: 0.9rem;">I certify that all information provided is true and complete. I authorize Y2C Holdings Inc. to verify the information for the purpose of evaluating my franchise application.</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn" id="btn-submit">Submit Official Application</button>
             </form>
         </div>
     </section>
 
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="success-modal" aria-hidden="true" role="dialog">
+        <div class="modal-content">
+            <div class="success-icon"><i class="fas fa-check" aria-hidden="true"></i></div>
+            <h3>Application Secured!</h3>
+            <p>Congratulations on completing Step 2. Your comprehensive profile has been encrypted and sent directly to our Executive Team.<br><br>Please proceed to Step 3 to digitally sign your NDA and upload verification documents.</p>
+            <!-- ★ Step 3 로 직결 이동 -->
+            <a href="step3_nda.html" class="btn-modal-next">Proceed to Step 3 (NDA & Upload)</a>
+        </div>
+    </div>
+
     <script>
-        // 드래그 앤 드롭 업로드 UI 제어
-        const dropZone = document.getElementById('drop-zone');
-        const fileInput = document.getElementById('file-input');
-        const fileList = document.getElementById('file-list');
-
-        // 드래그 호버 시 스타일 변경
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.add('dragover');
-            }, false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.remove('dragover');
-            }, false);
-        });
-
-        // 파일 드롭 또는 선택 시 리스트 출력
-        dropZone.addEventListener('drop', (e) => {
-            fileInput.files = e.dataTransfer.files;
-            updateFileList();
-        });
-
-        fileInput.addEventListener('change', updateFileList);
-
-        function updateFileList() {
-            fileList.innerHTML = '';
-            Array.from(fileInput.files).forEach((file, index) => {
-                let iconClass = file.type === 'application/pdf' ? 'fa-file-pdf' : 'fa-file-image';
-                fileList.innerHTML += `
-                    <div class="file-item" id="file-${index}">
-                        <i class="fas ${iconClass}"></i>
-                        <span>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
-                        <i class="fas fa-times remove-file" onclick="removeFile(${index})"></i>
-                    </div>
-                `;
-            });
-        }
-
-        // 목업: 파일 개별 삭제 기능 (실제 input.files는 읽기 전용이므로 시각적 삭제만 구현)
-        function removeFile(index) {
-            document.getElementById(`file-${index}`).style.display = 'none';
-        }
-
-        // 폼 제출 시뮬레이션
-        function handleUploadSubmit(event) {
-            event.preventDefault();
-            const submitBtn = document.getElementById('btn-submit');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ENCRYPTING & UPLOADING...`;
-
-            // 서버 통신을 가장한 3초 지연 후 알림
-            setTimeout(() => {
-                alert("Documents securely uploaded! Our executive team will review your NDA and financial proofs shortly.");
-                window.location.href = "index.html";
-            }, 3000);
-        }
-
-        // 보안 방어 모듈 (Anti-Theft)
+        // 보안 로직
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('dragstart', e => { if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u') || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) e.preventDefault();
         });
+
+        // 이메일 전송 (EmailJS) 및 데이터 포매팅 최적화
+        function handleOfficialSubmit(event) {
+            event.preventDefault();
+            
+            const formElement = event.target;
+            const submitButton = document.getElementById('btn-submit');
+            const originalButtonText = submitButton.innerHTML;
+            
+            submitButton.disabled = true;
+            submitButton.innerHTML = `<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> PROCESSING SECURELY...`;
+
+            if (typeof emailjs === 'undefined') {
+                alert("Network error. Switching to default email client.");
+                setTimeout(() => {
+                    fallbackMailto(getDetailedParams(formElement));
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
+                }, 2000);
+                return false;
+            }
+
+            let serviceID = "service_zyn89ll"; 
+            let templateID = "template_r8gce22"; 
+            
+            const params = getDetailedParams(formElement);
+
+            emailjs.send(serviceID, templateID, params)
+                .then(() => {
+                    formElement.reset();
+                    const modal = document.getElementById('success-modal');
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                })
+                .catch((error) => {
+                    console.error("EmailJS Failure:", error);
+                    alert("Submission failed due to a server error. Please use your email client to contact us.");
+                    fallbackMailto(params);
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
+                });
+                
+            return false;
+        }
+
+        // 엔터프라이즈 폼 데이터 수집
+        function getDetailedParams(formElement) {
+            // 복잡한 데이터를 읽기 좋게 문자열 템플릿으로 묶어서 message 파라미터로 전송
+            const address = formElement.querySelector('[name="address"]')?.value || '';
+            const linkedin = formElement.querySelector('[name="linkedin"]')?.value || 'N/A';
+            const storeFormat = formElement.querySelector('[name="store_format"]:checked')?.value || '';
+            const haveLease = formElement.querySelector('[name="have_lease"]:checked')?.value || '';
+            const creditScore = formElement.querySelector('[name="credit_score"]')?.value || '';
+            const role = formElement.querySelector('[name="role"]')?.value || '';
+            const currentOcc = formElement.querySelector('[name="current_occupation"]')?.value || '';
+            const legalIssue = formElement.querySelector('[name="legal_issue"]:checked')?.value || 'No';
+            const userMsg = formElement.querySelector('[name="motivation"]')?.value || '';
+
+            const compiledMessage = `
+[ADDITIONAL PROFILE]
+Address: ${address}
+LinkedIn: ${linkedin}
+Current Occupation: ${currentOcc}
+
+[BUSINESS PLAN]
+Store Format: ${storeFormat}
+Have Leased Space: ${haveLease}
+Intended Role: ${role}
+
+[FINANCIALS]
+Credit Score: ${creditScore}
+Legal/Bankruptcy Issues: ${legalIssue}
+
+[EXECUTIVE SUMMARY]
+${userMsg}
+            `.trim();
+
+            return {
+                name: (formElement.querySelector('[name="first_name"]')?.value || '') + " " + (formElement.querySelector('[name="last_name"]')?.value || ''),
+                phone: formElement.querySelector('[name="phone"]')?.value || '',
+                email: formElement.querySelector('[name="email"]')?.value || '',
+                location: formElement.querySelector('[name="target_city"]')?.value || '',
+                budget: `Cash: ${formElement.querySelector('[name="liquid_capital"]')?.value || ''} / Net: ${formElement.querySelector('[name="net_worth"]')?.value || ''}`,
+                timeframe: formElement.querySelector('[name="timeline"]')?.value || '',
+                experience: formElement.querySelector('[name="experience"]:checked')?.value || 'Not specified',
+                financing: formElement.querySelector('[name="financing"]:checked')?.value || 'Not specified',
+                message: compiledMessage,
+                inquiry_type: "Step 2: Official Comprehensive Application",
+                target_email: "eunbeen.lee@y2choldings.co.kr"
+            };
+        }
+
+        function fallbackMailto(params) {
+            const subject = `[Official Application] from ${params.name}`;
+            const body = `Name: ${params.name}%0D%0APhone: ${params.phone}%0D%0AEmail: ${params.email}%0D%0ALocation: ${params.location}%0D%0A%0D%0ACapital: ${params.budget}%0D%0AFinancing: ${params.financing}%0D%0AExperience: ${params.experience}%0D%0ATimeline: ${params.timeframe}%0D%0A%0D%0ADetails:%0D%0A${encodeURIComponent(params.message)}`;
+            window.location.href = `mailto:eunbeen.lee@y2choldings.co.kr?subject=${encodeURIComponent(subject)}&body=${body}`;
+        }
     </script>
 </body>
 </html>
