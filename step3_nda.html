@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="theme-color" content="#1A1A1A">
+    <meta name="theme-color" content="#FFFFFF">
     
-    <!-- B2B Franchise Meta Tags -->
     <title>Step 3: Secure Document Portal | Sinjeon Canada</title>
     <meta name="title" content="Step 3: Secure Document Portal | Sinjeon Canada">
     <meta name="description" content="Sign the Non-Disclosure Agreement (NDA) and securely upload your documents for the Sinjeon franchise application.">
@@ -19,7 +18,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 
     <style>
         /* =========================================
@@ -27,13 +26,12 @@
            ========================================= */
         html, body {
             width: 100%; max-width: 100vw; overflow-x: hidden !important; position: relative;
-            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
-            -webkit-touch-callout: none; scroll-behavior: smooth;
+            -webkit-user-select: none; -moz-user-select: none; user-select: none;
+            scroll-behavior: smooth; margin: 0; padding: 0; box-sizing: border-box;
         }
-        input, textarea, select { -webkit-user-select: auto; -moz-user-select: auto; -ms-user-select: auto; user-select: auto; font-family: 'Outfit', sans-serif; }
-        img { -webkit-user-drag: none; user-drag: none; max-width: 100%; height: auto; display: block; object-fit: contain; }
-        @media print { body { display: none !important; } }
-        *:focus-visible { outline: 3px solid #D24B41; outline-offset: 4px; border-radius: 8px; }
+        input, textarea, select { user-select: auto; font-family: 'Outfit', sans-serif; }
+        img { user-drag: none; -webkit-user-drag: none; max-width: 100%; height: auto; display: block; }
+        *:focus-visible { outline: 3px solid #008250; outline-offset: 2px; border-radius: 6px; }
 
         @font-face {
             font-family: 'SinjeonCustom';
@@ -42,33 +40,44 @@
         }
 
         :root {
-            --sj-green: #008250; --sj-red: #D24B41; --text-dark: #111827; --text-gray: #4B5563; --text-light: #9CA3AF;
+            --sj-green: #008250; --sj-red: #D24B41; 
+            --text-dark: #1A1A1A; --text-gray: #666666; --text-light: #A0AEC0;
             --bg-light: #F8FAFC; --bg-white: #FFFFFF; --border-color: #E2E8F0;
-            --transition-fast: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 25px 50px -12px rgba(0, 130, 80, 0.15); /* 초록빛 보안 느낌 섀도우 */
+            --transition-fast: 0.2s ease;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.03); 
+            --shadow-md: 0 10px 25px rgba(0,0,0,0.06);
+            --shadow-lg: 0 20px 50px rgba(0, 130, 80, 0.12); /* 보안 컨셉에 맞는 녹색 그림자 */
+            --border-radius-lg: 24px; --border-radius-md: 16px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Outfit', 'Noto Sans KR', sans-serif; color: var(--text-dark); background-color: #F1F5F9; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Outfit', 'Poppins', 'Noto Sans KR', sans-serif; color: var(--text-dark); background-color: var(--bg-light); line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* =========================================
-           2. B2B Header & Progress UI
+           2. B2B Header & Progress UI (SINJEON 브랜딩 최우선)
            ========================================= */
-        .header { background-color: var(--bg-white); padding: 20px 5%; text-align: center; border-bottom: 1px solid var(--border-color); box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 1000;}
-        .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-        .logo-box { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-box img { height: 44px; }
-        .logo-box span { font-size: 1.6rem; font-weight: normal; font-family: 'SinjeonCustom', sans-serif; color: var(--sj-green); letter-spacing: -0.5px; margin-top: 5px;}
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 5%; background: rgba(255, 255, 255, 0.95); 
+            position: fixed; width: 100%; top: 0; z-index: 1000; 
+            backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); 
+            transition: var(--transition-fast); box-shadow: var(--shadow-sm);
+        }
+        .header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1400px; margin: 0 auto; }
         
-        .security-badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; color: var(--sj-green); font-size: 0.95rem; background: rgba(0, 130, 80, 0.1); padding: 8px 18px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid rgba(0, 130, 80, 0.2);}
+        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0;}
+        .logo-container img { height: 40px; }
+        .logo-container span { font-family: 'SinjeonCustom', sans-serif; font-size: 1.5rem; font-weight: normal; color: var(--sj-green); letter-spacing: -0.5px; margin-top: 4px;}
+        
+        .header-right { display: flex; align-items: center; gap: 20px; }
+        .security-badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; color: var(--sj-green); font-size: 0.9rem; background: rgba(0, 130, 80, 0.1); padding: 8px 16px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid rgba(0, 130, 80, 0.2);}
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; color: var(--text-gray); text-decoration: none; transition: var(--transition-fast); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; padding: 10px 20px; border-radius: 50px; background: var(--bg-white); border: 2px solid var(--border-color);}
+        .btn-back:hover { color: var(--sj-red); border-color: var(--sj-red); background: #fdf2f2;}
 
         /* 시각적 프로그레스 바 (Step 3 활성화) */
-        .stepper-wrapper { max-width: 900px; margin: 40px auto 0; padding: 0 20px; }
+        .stepper-wrapper { max-width: 900px; margin: 120px auto 0; padding: 0 20px; }
         .stepper { display: flex; justify-content: space-between; position: relative; }
         .stepper::before { content: ''; position: absolute; top: 20px; left: 0; width: 100%; height: 3px; background: var(--border-color); z-index: 1; }
         .stepper-progress { position: absolute; top: 20px; left: 0; width: 83%; height: 3px; background: var(--sj-red); z-index: 2; transition: width 0.5s ease; }
@@ -79,35 +88,35 @@
         
         .step-item.completed .step-circle { background: var(--sj-red); border-color: var(--sj-red); color: var(--bg-white); }
         .step-item.completed .step-title { color: var(--sj-red); }
-        .step-item.active .step-circle { border-color: var(--sj-red); color: var(--sj-red); box-shadow: 0 0 0 5px rgba(210, 75, 65, 0.1); background: var(--bg-white);}
+        .step-item.active .step-circle { border-color: var(--sj-red); color: var(--sj-red); box-shadow: 0 0 0 6px rgba(210, 75, 65, 0.1); background: var(--bg-white);}
         .step-item.active .step-title { color: var(--text-dark); }
 
         /* =========================================
            3. Portal Hero
            ========================================= */
         .portal-hero { max-width: 900px; margin: 60px auto 40px; padding: 0 20px; text-align: center; }
-        .portal-hero h1 { font-size: 3.2rem; font-weight: 900; color: var(--text-dark); margin-bottom: 15px; letter-spacing: -1px; }
+        .portal-hero h1 { font-size: 3rem; font-weight: 900; color: var(--text-dark); margin-bottom: 15px; letter-spacing: -1px; text-transform: uppercase;}
         .portal-hero p { font-size: 1.1rem; color: var(--text-gray); font-weight: 500; line-height: 1.6;}
 
         /* =========================================
            4. Form Container & NDA Box
            ========================================= */
         .form-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; }
-        .form-card { background: var(--bg-white); border-radius: 20px; padding: 50px 60px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); border: 1px solid var(--border-color); }
+        .form-card { background: var(--bg-white); border-radius: var(--border-radius-lg); padding: 50px 60px; box-shadow: var(--shadow-md); border: 1px solid var(--border-color); }
         
-        .form-section-title { font-size: 1.4rem; font-weight: 900; color: var(--text-dark); margin: 40px 0 25px; padding-bottom: 15px; border-bottom: 2px solid var(--bg-light); display: flex; align-items: center; gap: 12px; }
+        .form-section-title { font-size: 1.5rem; font-weight: 900; color: var(--text-dark); margin: 40px 0 25px; padding-bottom: 15px; border-bottom: 2px solid var(--bg-light); display: flex; align-items: center; gap: 12px; }
         .form-section-title i { color: var(--sj-red); font-size: 1.3rem;}
         .form-section-title:first-child { margin-top: 0; }
 
-        /* NDA Scroll Box */
-        .nda-box { background: var(--bg-light); border: 2px solid var(--border-color); border-radius: 12px; padding: 30px; height: 300px; overflow-y: auto; margin-bottom: 20px; font-size: 0.95rem; color: var(--text-gray); line-height: 1.7; font-family: 'Outfit', 'Noto Sans KR', sans-serif;}
+        /* NDA Scroll Box (전자서명 UI) */
+        .nda-box { background: var(--bg-light); border: 1px solid var(--border-color); border-radius: 16px; padding: 30px; height: 280px; overflow-y: auto; margin-bottom: 25px; font-size: 0.95rem; color: var(--text-gray); line-height: 1.7; font-family: 'Outfit', 'Noto Sans KR', sans-serif;}
         .nda-box h4 { color: var(--text-dark); margin-bottom: 20px; font-size: 1.2rem; text-align: center; font-weight: 900;}
         .nda-box p { margin-bottom: 15px; text-align: justify;}
         .nda-box strong { color: var(--text-dark); font-weight: 800;}
         .nda-box::-webkit-scrollbar { width: 8px; }
         .nda-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         
-        .checkbox-label { display: flex; align-items: flex-start; gap: 15px; font-weight: 600; color: var(--text-dark); cursor: pointer; padding: 25px; border: 2px solid var(--border-color); border-radius: 12px; transition: var(--transition-fast); background: var(--bg-white); line-height: 1.5; font-size: 1.05rem;}
+        .checkbox-label { display: flex; align-items: flex-start; gap: 15px; font-weight: 600; color: var(--text-dark); cursor: pointer; padding: 25px; border: 2px solid var(--border-color); border-radius: 16px; transition: var(--transition-fast); background: var(--bg-white); line-height: 1.5; font-size: 1.05rem;}
         .checkbox-label:hover { border-color: var(--sj-green); background: rgba(0, 130, 80, 0.02); }
         .checkbox-label input[type="checkbox"] { width: 24px; height: 24px; accent-color: var(--sj-green); cursor: pointer; margin-top: 2px; flex-shrink: 0;}
 
@@ -117,10 +126,10 @@
         .upload-desc { font-size: 1rem; color: var(--text-gray); margin-bottom: 20px; font-weight: 500;}
         .upload-desc strong { color: var(--sj-red); font-weight: 800;}
 
-        .upload-zone { border: 2px dashed #94a3b8; border-radius: 16px; padding: 50px 20px; text-align: center; background: #F8FAFC; cursor: pointer; transition: all 0.3s ease; position: relative; margin-bottom: 30px; }
-        .upload-zone:hover, .upload-zone.dragover { border-color: var(--sj-red); background: #fef2f2; }
-        .upload-zone i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 15px; transition: color 0.3s ease; }
-        .upload-zone:hover i, .upload-zone.dragover i { color: var(--sj-red); }
+        .upload-zone { border: 2px dashed #94a3b8; border-radius: 16px; padding: 50px 20px; text-align: center; background: var(--bg-light); cursor: pointer; transition: all 0.3s ease; position: relative; margin-bottom: 30px; }
+        .upload-zone:hover, .upload-zone.dragover { border-color: var(--sj-green); background: rgba(0, 130, 80, 0.03); }
+        .upload-zone i { font-size: 3.5rem; color: #cbd5e1; margin-bottom: 15px; transition: color 0.3s ease; }
+        .upload-zone:hover i, .upload-zone.dragover i { color: var(--sj-green); }
         .upload-zone h5 { font-size: 1.3rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
         .upload-zone p { font-size: 0.95rem; color: var(--text-light); font-weight: 500;}
         .upload-zone input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
@@ -135,35 +144,37 @@
         .file-item .remove-file { color: var(--text-light); cursor: pointer; transition: 0.2s; font-size: 1.2rem;}
         .file-item .remove-file:hover { color: var(--sj-red); }
 
-        .submit-btn { display: flex; justify-content: center; align-items: center; gap: 12px; width: 100%; padding: 24px; background: var(--sj-red); color: white; border: none; border-radius: 12px; font-size: 1.15rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: var(--transition-fast); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25); margin-top: 50px;}
-        .submit-btn:hover { background: #b83e35; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(210, 75, 65, 0.35); }
+        .submit-btn { display: flex; justify-content: center; align-items: center; gap: 12px; width: 100%; padding: 24px; background: var(--sj-dark); background-color: var(--text-dark); color: white; border: none; border-radius: 16px; font-size: 1.15rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: var(--transition-fast); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); margin-top: 50px;}
+        .submit-btn:hover { background: var(--sj-green); transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0, 130, 80, 0.3); }
         .submit-btn:disabled { background: var(--text-light); cursor: not-allowed; transform: none; box-shadow: none; }
 
         /* =========================================
            6. Footer & Modal
            ========================================= */
-        footer { background: #1A1A1A; color: rgba(255,255,255,0.8); padding: 60px 5% 30px; font-size: 0.95rem; border-top: 5px solid var(--sj-red); text-align: center;}
+        footer { background: #1A1A1A; color: rgba(255,255,255,0.8); padding: 50px 5% 30px; font-size: 0.95rem; border-top: 5px solid var(--sj-green); text-align: center;}
         
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); backdrop-filter: blur(8px); }
         .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto;}
-        .modal-content { background: var(--bg-white); width: 90%; max-width: 550px; border-radius: 24px; padding: 50px 40px; text-align: center; transform: translateY(30px) translateZ(0); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 25px 60px rgba(0,0,0,0.5);}
-        .modal-overlay.active .modal-content { transform: translateY(0) translateZ(0); }
+        .modal-content { background: var(--bg-white); width: 90%; max-width: 550px; border-radius: 24px; padding: 50px 40px; text-align: center; transform: translateY(30px); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 25px 60px rgba(0,0,0,0.5);}
+        .modal-overlay.active .modal-content { transform: translateY(0); }
         
-        .success-icon { width: 90px; height: 90px; background: rgba(0, 130, 80, 0.1); color: var(--sj-green); font-size: 3rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
-        .modal-content h3 { font-size: 2rem; font-weight: 900; color: var(--text-dark); margin-bottom: 15px; letter-spacing: -0.5px;}
+        .success-icon { width: 90px; height: 90px; background: rgba(0, 130, 80, 0.1); color: var(--sj-green); font-size: 3.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        .modal-content h3 { font-size: 2.2rem; font-weight: 900; color: var(--text-dark); margin-bottom: 15px; letter-spacing: -0.5px;}
         .modal-content p { font-size: 1.1rem; color: var(--text-gray); margin-bottom: 30px; line-height: 1.6; }
-        .btn-modal-home { display: inline-block; width: 100%; padding: 20px; background: var(--text-dark); color: white; border-radius: 12px; font-weight: 800; text-decoration: none; font-size: 1.15rem; transition: var(--transition-fast); text-transform: uppercase; letter-spacing: 1px;}
-        .btn-modal-home:hover { background: var(--sj-red); }
+        .btn-modal-home { display: inline-block; width: 100%; padding: 20px; background: var(--sj-green); color: white; border-radius: 16px; font-weight: 800; text-decoration: none; font-size: 1.15rem; transition: var(--transition-fast); text-transform: uppercase; letter-spacing: 1px;}
+        .btn-modal-home:hover { background: #006a40; }
 
         @media (max-width: 768px) {
             .stepper-wrapper { display: none; }
-            .portal-hero { margin: 40px auto 20px; }
-            .portal-hero h1 { font-size: 2.4rem; }
+            .portal-hero { margin: 100px auto 20px; } /* 모바일에서 고정 헤더 고려 여백 추가 */
+            .portal-hero h1 { font-size: 2.2rem; }
             .form-card { padding: 40px 20px; }
             .checkbox-label { padding: 20px 15px; font-size: 0.95rem; }
             .upload-zone { padding: 40px 15px; }
-            .header-top { justify-content: center; position: relative;}
-            .security-badge { display: none; }
+            .header-top { position: relative;}
+            .security-badge { display: none; } /* 모바일에서 복잡함 방지 */
+            .logo-container span { font-size: 1.3rem; }
+            .btn-back { padding: 8px 16px; font-size: 0.8rem;}
         }
     </style>
 </head>
@@ -172,11 +183,14 @@
     <!-- Header (SINJEON CANADA 우선 브랜딩) -->
     <header class="header">
         <div class="header-top">
-            <a href="index.html" class="logo-box" aria-label="Go to Homepage">
+            <a href="index.html" class="logo-container" aria-label="Go to Homepage">
                 <img src="sinjeon_logo_canada.png" alt="Sinjeon Logo">
-                <span style="font-family: 'SinjeonCustom', sans-serif; font-weight: normal; margin-top: 5px;">SINJEON CANADA</span>
+                <span>SINJEON CANADA</span>
             </a>
-            <div class="security-badge"><i class="fas fa-shield-alt"></i> 256-bit Secure</div>
+            <div class="header-right">
+                <div class="security-badge"><i class="fas fa-shield-check"></i> 256-bit Secure</div>
+                <a href="index.html" class="btn-back"><i class="fas fa-times"></i> Cancel</a>
+            </div>
         </div>
     </header>
 
@@ -264,7 +278,7 @@
             <div class="success-icon"><i class="fas fa-shield-check"></i></div>
             <h3 style="font-size: 2.2rem; font-weight: 900; color: var(--text-dark); margin-bottom: 15px; letter-spacing: -0.5px;">Documents Secured</h3>
             <p style="font-size: 1.1rem; color: var(--text-gray); margin-bottom: 30px; line-height: 1.6;">Thank you. Your NDA signature and documents have been fully encrypted and processed.<br><br><strong>Step 4 (Final Contract)</strong> will proceed offline. Our executive team will review your file and contact you to schedule a face-to-face meeting.</p>
-            <a href="index.html" class="btn-modal-home">Return to Homepage</a>
+            <a href="index.html" class="btn-modal-home">Complete Process & Return Home</a>
         </div>
     </div>
 
@@ -347,7 +361,7 @@
             updateFileList();
         }
 
-        // 폼 제출 
+        // 폼 제출 완료 로직 (Step 4 오프라인 전환)
         function handleUploadSubmit(event) {
             event.preventDefault();
             const ndaChecked = document.getElementById('nda_agree').checked;
@@ -366,13 +380,12 @@
             submitBtn.disabled = true;
             submitBtn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> ENCRYPTING & UPLOADING...`;
 
-            // 파일 전송 시뮬레이션 (프론트엔드 목업)
-            // 실제 구현 시 AWS S3, Firebase 등 백엔드 API로 폼 데이터(FormData) 전송
+            // 실제 서버가 없는 프론트엔드 환경이므로, 2.5초 지연 후 암호화/업로드 완료 애니메이션 연출
             setTimeout(() => {
                 const modal = document.getElementById('success-modal');
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
-            }, 3000);
+            }, 2500);
         }
     </script>
 </body>
