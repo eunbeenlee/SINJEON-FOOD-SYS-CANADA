@@ -5,18 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#1A1A1A">
     
-    <title>Secure Document Portal | Step 3 - Y2C Holdings</title>
-    
+    <!-- B2B Franchise Meta Tags -->
+    <title>Step 3: Secure Document Portal | Sinjeon Canada</title>
+    <meta name="title" content="Step 3: Secure Document Portal | Sinjeon Canada">
+    <meta name="description" content="Sign the Non-Disclosure Agreement (NDA) and securely upload your documents for the Sinjeon franchise application.">
+
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
+    
+    <!-- Preload -->
+    <link rel="preload" href="fonts/SinjeonFont.otf" as="font" type="font/otf" crossorigin>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
 
     <style>
         /* =========================================
-           1. 보안 및 기본 설정 (Anti-Theft)
+           1. 보안 및 기본 렌더링 (Anti-Theft)
            ========================================= */
         html, body {
             width: 100%; max-width: 100vw; overflow-x: hidden !important; position: relative;
@@ -28,25 +35,39 @@
         @media print { body { display: none !important; } }
         *:focus-visible { outline: 3px solid #D24B41; outline-offset: 4px; border-radius: 8px; }
 
+        @font-face {
+            font-family: 'SinjeonCustom';
+            src: url('fonts/SinjeonFont.otf') format('opentype');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+
         :root {
-            --sj-green: #008250; --sj-red: #D24B41; --text-dark: #1A1A1A; --text-gray: #555555; --text-light: #9E9E9E;
+            --sj-green: #008250; --sj-red: #D24B41; --text-dark: #111827; --text-gray: #4B5563; --text-light: #9CA3AF;
             --bg-light: #F8FAFC; --bg-white: #FFFFFF; --border-color: #E2E8F0;
-            --transition-fast: 0.2s ease-in-out;
+            --transition-fast: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 130, 80, 0.15); /* 초록빛 보안 느낌 섀도우 */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Outfit', 'Poppins', sans-serif; color: var(--text-dark); background-color: var(--bg-light); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Outfit', 'Noto Sans KR', sans-serif; color: var(--text-dark); background-color: #F1F5F9; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; will-change: opacity, transform; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* =========================================
-           2. Header & Progress UI
+           2. B2B Header & Progress UI
            ========================================= */
-        .header { background-color: var(--bg-white); padding: 30px 5%; text-align: center; border-bottom: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 1000;}
+        .header { background-color: var(--bg-white); padding: 20px 5%; text-align: center; border-bottom: 1px solid var(--border-color); box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 1000;}
         .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-        .logo-box { display: flex; align-items: center; gap: 15px; text-decoration: none; }
-        .logo-box img { height: 40px; }
-        .logo-box span { font-size: 1.4rem; font-weight: 800; color: var(--sj-green); letter-spacing: -0.5px; }
-        .security-badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--sj-green); font-size: 0.95rem; background: rgba(0, 130, 80, 0.1); padding: 8px 16px; border-radius: 50px; }
+        .logo-box { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-box img { height: 44px; }
+        .logo-box span { font-size: 1.6rem; font-weight: normal; font-family: 'SinjeonCustom', sans-serif; color: var(--sj-green); letter-spacing: -0.5px; margin-top: 5px;}
+        
+        .security-badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; color: var(--sj-green); font-size: 0.95rem; background: rgba(0, 130, 80, 0.1); padding: 8px 18px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid rgba(0, 130, 80, 0.2);}
 
+        /* 시각적 프로그레스 바 (Step 3 활성화) */
         .stepper-wrapper { max-width: 900px; margin: 40px auto 0; padding: 0 20px; }
         .stepper { display: flex; justify-content: space-between; position: relative; }
         .stepper::before { content: ''; position: absolute; top: 20px; left: 0; width: 100%; height: 3px; background: var(--border-color); z-index: 1; }
@@ -54,80 +75,113 @@
         
         .step-item { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; width: 25%; }
         .step-circle { width: 44px; height: 44px; border-radius: 50%; background: var(--bg-white); border: 3px solid var(--border-color); display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; color: var(--text-light); transition: var(--transition-fast); }
-        .step-title { margin-top: 12px; font-size: 0.85rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+        .step-title { margin-top: 12px; font-size: 0.85rem; font-weight: 800; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; text-align: center; line-height: 1.3;}
         
         .step-item.completed .step-circle { background: var(--sj-red); border-color: var(--sj-red); color: var(--bg-white); }
         .step-item.completed .step-title { color: var(--sj-red); }
         .step-item.active .step-circle { border-color: var(--sj-red); color: var(--sj-red); box-shadow: 0 0 0 5px rgba(210, 75, 65, 0.1); background: var(--bg-white);}
-        .step-item.active .step-title { color: var(--text-dark); font-weight: 800; }
+        .step-item.active .step-title { color: var(--text-dark); }
 
         /* =========================================
-           3. Form Container & NDA Box
+           3. Portal Hero
            ========================================= */
         .portal-hero { max-width: 900px; margin: 60px auto 40px; padding: 0 20px; text-align: center; }
-        .portal-hero h1 { font-size: 2.8rem; font-weight: 900; color: var(--text-dark); margin-bottom: 15px; letter-spacing: -1px; }
+        .portal-hero h1 { font-size: 3.2rem; font-weight: 900; color: var(--text-dark); margin-bottom: 15px; letter-spacing: -1px; }
         .portal-hero p { font-size: 1.1rem; color: var(--text-gray); font-weight: 500; line-height: 1.6;}
 
+        /* =========================================
+           4. Form Container & NDA Box
+           ========================================= */
         .form-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; }
-        .form-card { background: var(--bg-white); border-radius: 20px; padding: 50px 60px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08); border: 1px solid var(--border-color); }
+        .form-card { background: var(--bg-white); border-radius: 20px; padding: 50px 60px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); border: 1px solid var(--border-color); }
         
-        .form-section-title { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); margin: 40px 0 25px; padding-bottom: 15px; border-bottom: 2px solid var(--bg-light); display: flex; align-items: center; gap: 10px; }
-        .form-section-title i { color: var(--sj-red); font-size: 1.2rem;}
+        .form-section-title { font-size: 1.4rem; font-weight: 900; color: var(--text-dark); margin: 40px 0 25px; padding-bottom: 15px; border-bottom: 2px solid var(--bg-light); display: flex; align-items: center; gap: 12px; }
+        .form-section-title i { color: var(--sj-red); font-size: 1.3rem;}
         .form-section-title:first-child { margin-top: 0; }
 
         /* NDA Scroll Box */
-        .nda-box { background: var(--bg-light); border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; height: 250px; overflow-y: auto; margin-bottom: 20px; font-size: 0.9rem; color: var(--text-gray); line-height: 1.7; }
-        .nda-box h4 { color: var(--text-dark); margin-bottom: 15px; font-size: 1.1rem; }
-        .nda-box p { margin-bottom: 15px; }
+        .nda-box { background: var(--bg-light); border: 2px solid var(--border-color); border-radius: 12px; padding: 30px; height: 300px; overflow-y: auto; margin-bottom: 20px; font-size: 0.95rem; color: var(--text-gray); line-height: 1.7; font-family: 'Outfit', 'Noto Sans KR', sans-serif;}
+        .nda-box h4 { color: var(--text-dark); margin-bottom: 20px; font-size: 1.2rem; text-align: center; font-weight: 900;}
+        .nda-box p { margin-bottom: 15px; text-align: justify;}
+        .nda-box strong { color: var(--text-dark); font-weight: 800;}
         .nda-box::-webkit-scrollbar { width: 8px; }
         .nda-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         
-        .checkbox-label { display: flex; align-items: flex-start; gap: 12px; font-weight: 600; color: var(--text-dark); cursor: pointer; padding: 20px; border: 2px solid var(--border-color); border-radius: 12px; transition: var(--transition-fast); background: var(--bg-white);}
-        .checkbox-label:hover { border-color: var(--sj-green); background: rgba(0,130,80,0.02); }
-        .checkbox-label input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--sj-green); cursor: pointer; margin-top: 2px;}
+        .checkbox-label { display: flex; align-items: flex-start; gap: 15px; font-weight: 600; color: var(--text-dark); cursor: pointer; padding: 25px; border: 2px solid var(--border-color); border-radius: 12px; transition: var(--transition-fast); background: var(--bg-white); line-height: 1.5; font-size: 1.05rem;}
+        .checkbox-label:hover { border-color: var(--sj-green); background: rgba(0, 130, 80, 0.02); }
+        .checkbox-label input[type="checkbox"] { width: 24px; height: 24px; accent-color: var(--sj-green); cursor: pointer; margin-top: 2px; flex-shrink: 0;}
 
         /* =========================================
-           4. Drag & Drop File Upload UI
+           5. Drag & Drop File Upload UI
            ========================================= */
-        .upload-zone { border: 2px dashed #cbd5e1; border-radius: 16px; padding: 50px 20px; text-align: center; background: var(--bg-light); cursor: pointer; transition: all 0.3s ease; position: relative; margin-bottom: 30px; }
-        .upload-zone:hover, .upload-zone.dragover { border-color: var(--sj-red); background: #fdf5f5; }
-        .upload-zone i { font-size: 3rem; color: #94a3b8; margin-bottom: 15px; transition: color 0.3s ease; }
+        .upload-desc { font-size: 1rem; color: var(--text-gray); margin-bottom: 20px; font-weight: 500;}
+        .upload-desc strong { color: var(--sj-red); font-weight: 800;}
+
+        .upload-zone { border: 2px dashed #94a3b8; border-radius: 16px; padding: 50px 20px; text-align: center; background: #F8FAFC; cursor: pointer; transition: all 0.3s ease; position: relative; margin-bottom: 30px; }
+        .upload-zone:hover, .upload-zone.dragover { border-color: var(--sj-red); background: #fef2f2; }
+        .upload-zone i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 15px; transition: color 0.3s ease; }
         .upload-zone:hover i, .upload-zone.dragover i { color: var(--sj-red); }
-        .upload-zone h5 { font-size: 1.2rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
-        .upload-zone p { font-size: 0.95rem; color: var(--text-light); }
+        .upload-zone h5 { font-size: 1.3rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
+        .upload-zone p { font-size: 0.95rem; color: var(--text-light); font-weight: 500;}
         .upload-zone input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
         
-        .file-list { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
-        .file-item { display: flex; align-items: center; gap: 10px; background: var(--bg-white); padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.95rem; font-weight: 600; color: var(--text-dark); box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
-        .file-item i.fa-file-pdf { color: #e11d48; }
-        .file-item i.fa-file-image { color: #2563eb; }
-        .file-item .remove-file { margin-left: auto; color: var(--text-light); cursor: pointer; transition: 0.2s; }
+        .file-list { display: flex; flex-direction: column; gap: 12px; }
+        .file-item { display: flex; align-items: center; gap: 15px; background: var(--bg-white); padding: 16px 20px; border-radius: 12px; border: 1px solid var(--border-color); font-size: 1rem; font-weight: 600; color: var(--text-dark); box-shadow: 0 2px 8px rgba(0,0,0,0.03); animation: slideIn 0.3s ease forwards;}
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .file-item i.fa-file-pdf { color: #e11d48; font-size: 1.4rem;}
+        .file-item i.fa-file-image { color: #2563eb; font-size: 1.4rem;}
+        .file-item .file-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .file-item .remove-file { color: var(--text-light); cursor: pointer; transition: 0.2s; font-size: 1.2rem;}
         .file-item .remove-file:hover { color: var(--sj-red); }
 
-        .submit-btn { width: 100%; padding: 22px; background: var(--sj-red); color: white; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: var(--transition-fast); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25); margin-top: 20px;}
+        .submit-btn { display: flex; justify-content: center; align-items: center; gap: 12px; width: 100%; padding: 24px; background: var(--sj-red); color: white; border: none; border-radius: 12px; font-size: 1.15rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: var(--transition-fast); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.25); margin-top: 50px;}
         .submit-btn:hover { background: #b83e35; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(210, 75, 65, 0.35); }
+        .submit-btn:disabled { background: var(--text-light); cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* =========================================
+           6. Footer & Modal
+           ========================================= */
+        footer { background: #1A1A1A; color: rgba(255,255,255,0.8); padding: 60px 5% 30px; font-size: 0.95rem; border-top: 5px solid var(--sj-red); text-align: center;}
+        
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); backdrop-filter: blur(8px); }
+        .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto;}
+        .modal-content { background: var(--bg-white); width: 90%; max-width: 550px; border-radius: 24px; padding: 50px 40px; text-align: center; transform: translateY(30px) translateZ(0); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 25px 60px rgba(0,0,0,0.5);}
+        .modal-overlay.active .modal-content { transform: translateY(0) translateZ(0); }
+        
+        .success-icon { width: 90px; height: 90px; background: rgba(0, 130, 80, 0.1); color: var(--sj-green); font-size: 3rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        .modal-content h3 { font-size: 2rem; font-weight: 900; color: var(--text-dark); margin-bottom: 15px; letter-spacing: -0.5px;}
+        .modal-content p { font-size: 1.1rem; color: var(--text-gray); margin-bottom: 30px; line-height: 1.6; }
+        .btn-modal-home { display: inline-block; width: 100%; padding: 20px; background: var(--text-dark); color: white; border-radius: 12px; font-weight: 800; text-decoration: none; font-size: 1.15rem; transition: var(--transition-fast); text-transform: uppercase; letter-spacing: 1px;}
+        .btn-modal-home:hover { background: var(--sj-red); }
 
         @media (max-width: 768px) {
             .stepper-wrapper { display: none; }
             .portal-hero { margin: 40px auto 20px; }
-            .portal-hero h1 { font-size: 2.2rem; }
-            .form-card { padding: 30px 20px; }
+            .portal-hero h1 { font-size: 2.4rem; }
+            .form-card { padding: 40px 20px; }
+            .checkbox-label { padding: 20px 15px; font-size: 0.95rem; }
+            .upload-zone { padding: 40px 15px; }
+            .header-top { justify-content: center; position: relative;}
+            .security-badge { display: none; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Header (SINJEON CANADA 우선 브랜딩) -->
     <header class="header">
         <div class="header-top">
             <a href="index.html" class="logo-box" aria-label="Go to Homepage">
                 <img src="sinjeon_logo_canada.png" alt="Sinjeon Logo">
-                <span>Y2C HOLDINGS</span>
+                <span style="font-family: 'SinjeonCustom', sans-serif; font-weight: normal; margin-top: 5px;">SINJEON CANADA</span>
             </a>
-            <div class="security-badge"><i class="fas fa-lock"></i> 256-bit Secure</div>
+            <div class="security-badge"><i class="fas fa-shield-alt"></i> 256-bit Secure</div>
         </div>
     </header>
 
-    <div class="stepper-wrapper">
+    <!-- 시각적 프로그레스 바 (Step 3 활성화) -->
+    <div class="stepper-wrapper reveal">
         <div class="stepper">
             <div class="stepper-progress"></div>
             <div class="step-item completed">
@@ -149,120 +203,177 @@
         </div>
     </div>
 
-    <section class="portal-hero">
+    <section class="portal-hero reveal delay-100">
         <h1>Secure Document Portal</h1>
         <p>Please review and sign the Non-Disclosure Agreement (NDA) and securely upload your proof of funds and identification documents to proceed to the final contract stage.</p>
     </section>
 
     <section class="form-container">
-        <div class="form-card">
+        <div class="form-card reveal delay-200">
             <form id="step3-form" onsubmit="return handleUploadSubmit(event)">
                 
-                <!-- Section 1: NDA -->
+                <!-- Section 1: NDA (전자 서명 스크롤 뷰) -->
                 <div class="form-section-title"><i class="fas fa-file-signature"></i> 1. Non-Disclosure Agreement (NDA)</div>
                 <div class="nda-box">
                     <h4>MUTUAL NON-DISCLOSURE AGREEMENT</h4>
-                    <p>This Non-Disclosure Agreement is entered into by and between Y2C Holdings Inc. / Sinjeon Food Sys (hereinafter "Company") and the Applicant.</p>
-                    <p><strong>1. Confidential Information:</strong> The Applicant acknowledges that during the franchise evaluation process, the Company will disclose sensitive corporate data, including but not limited to financial models, proprietary recipes, operational manuals, and supply chain logistics (SCM) details.</p>
-                    <p><strong>2. Non-Disclosure:</strong> The Applicant agrees to hold all Confidential Information in strict confidence and shall not disclose, copy, reproduce, or distribute any part of the Confidential Information to any third party without the prior written consent of the Company.</p>
-                    <p><strong>3. Use of Information:</strong> The Confidential Information shall be used solely for the purpose of evaluating the potential franchise business opportunity and for no other commercial or personal purpose.</p>
-                    <p><strong>4. Return of Materials:</strong> Upon request by the Company, the Applicant shall immediately return or securely destroy all documents and data containing Confidential Information.</p>
-                    <p>By checking the box below, you electronically sign and legally bind yourself to the terms of this Agreement.</p>
+                    <p>This Non-Disclosure Agreement (the "Agreement") is entered into by and between <strong>Y2C Holdings Inc. / Sinjeon Food Sys Canada</strong> (hereinafter "Company") and the Applicant (hereinafter "Receiving Party").</p>
+                    <p><strong>1. Definition of Confidential Information:</strong> The Receiving Party acknowledges that during the franchise evaluation process, the Company will disclose highly sensitive corporate data, including but not limited to financial models, proprietary recipes, localized ingredient sourcing, operational manuals, and supply chain logistics (SCM) details.</p>
+                    <p><strong>2. Obligations of Non-Disclosure:</strong> The Receiving Party agrees to hold all Confidential Information in strict confidence and shall not disclose, copy, reproduce, or distribute any part of the Confidential Information to any third party (including competitors, press, or public domains) without the prior written consent of the Company.</p>
+                    <p><strong>3. Permitted Use:</strong> The Confidential Information shall be used solely and exclusively for the purpose of evaluating the potential franchise business opportunity with Sinjeon Canada and for no other commercial, competitive, or personal purpose.</p>
+                    <p><strong>4. Return or Destruction of Materials:</strong> Upon written request by the Company or upon termination of franchise discussions, the Receiving Party shall immediately return or securely destroy all physical and digital documents containing Confidential Information.</p>
+                    <p><strong>5. Legal Remedies:</strong> The Receiving Party acknowledges that unauthorized disclosure may cause irreparable harm to the Company, entitling the Company to seek injunctive relief and monetary damages in the applicable jurisdiction.</p>
+                    <p>By checking the digital signature box below, you explicitly acknowledge that you have read, understood, and agreed to be bound by the terms of this legally binding Agreement.</p>
                 </div>
                 
                 <label class="checkbox-label">
-                    <input type="checkbox" name="nda_agree" required>
-                    <span>I have read, understood, and agree to be legally bound by the terms of the Non-Disclosure Agreement. I acknowledge this acts as my digital signature.</span>
+                    <input type="checkbox" name="nda_agree" id="nda_agree" required>
+                    <span>I have read and understood the Mutual Non-Disclosure Agreement. By checking this box, I electronically sign and legally bind myself to these terms.</span>
                 </label>
 
-                <!-- Section 2: Document Upload -->
-                <div class="form-section-title"><i class="fas fa-cloud-upload-alt" style="margin-top: 30px;"></i> 2. Secure Document Upload</div>
-                <p style="font-size: 0.95rem; color: var(--text-gray); margin-bottom: 20px;">Please upload your Government-issued ID and Proof of Liquid Capital (Bank Statement or Letter of Credit). Maximum file size is 10MB per document.</p>
+                <!-- Section 2: Document Upload (Drag & Drop) -->
+                <div class="form-section-title"><i class="fas fa-cloud-upload-alt" style="margin-top: 40px;"></i> 2. Secure Document Upload</div>
+                <p class="upload-desc">Please upload your <strong>Government-issued ID</strong> and <strong>Proof of Liquid Capital</strong> (e.g., Bank Statement, Letter of Credit). Maximum file size is 10MB per document.</p>
                 
                 <div class="upload-zone" id="drop-zone">
                     <i class="fas fa-file-invoice"></i>
                     <h5>Drag & Drop your files here</h5>
-                    <p>or click to browse (PDF, JPG, PNG)</p>
-                    <input type="file" id="file-input" multiple accept=".pdf, .jpg, .jpeg, .png" required>
+                    <p>or click to browse (PDF, JPG, PNG supported)</p>
+                    <input type="file" id="file-input" multiple accept=".pdf, .jpg, .jpeg, .png">
                 </div>
 
                 <div class="file-list" id="file-list">
-                    <!-- JavaScript로 첨부된 파일 이름이 여기에 추가됩니다. -->
+                    <!-- JS DOM Injected Here -->
                 </div>
 
-                <button type="submit" class="submit-btn" id="btn-submit" style="margin-top: 40px;">Submit Documents</button>
+                <button type="submit" class="submit-btn" id="btn-submit">
+                    <i class="fas fa-lock"></i> Secure & Submit Documents
+                </button>
             </form>
         </div>
     </section>
 
+    <!-- Footer -->
+    <footer>
+        <img src="sinjeon_logo_canada.png" alt="Sinjeon Logo" loading="lazy" style="height: 40px; margin: 0 auto 15px;">
+        <p style="margin: 0; font-weight: 500;">© 2026 Sinjeon Food Sys Canada (Operated by Y2C Holdings Inc.). All Rights Reserved.</p>
+    </footer>
+
+    <!-- Success Modal (Step 4 안내 및 홈페이지 복귀) -->
+    <div class="modal-overlay" id="success-modal" aria-hidden="true" role="dialog">
+        <div class="modal-content">
+            <div class="success-icon"><i class="fas fa-shield-check"></i></div>
+            <h3 style="font-size: 2.2rem; font-weight: 900; color: var(--text-dark); margin-bottom: 15px; letter-spacing: -0.5px;">Documents Secured</h3>
+            <p style="font-size: 1.1rem; color: var(--text-gray); margin-bottom: 30px; line-height: 1.6;">Thank you. Your NDA signature and documents have been fully encrypted and processed.<br><br><strong>Step 4 (Final Contract)</strong> will proceed offline. Our executive team will review your file and contact you to schedule a face-to-face meeting.</p>
+            <a href="index.html" class="btn-modal-home">Return to Homepage</a>
+        </div>
+    </div>
+
     <script>
-        // 드래그 앤 드롭 업로드 UI 제어
-        const dropZone = document.getElementById('drop-zone');
-        const fileInput = document.getElementById('file-input');
-        const fileList = document.getElementById('file-list');
-
-        // 드래그 호버 시 스타일 변경
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.add('dragover');
-            }, false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.remove('dragover');
-            }, false);
-        });
-
-        // 파일 드롭 또는 선택 시 리스트 출력
-        dropZone.addEventListener('drop', (e) => {
-            fileInput.files = e.dataTransfer.files;
-            updateFileList();
-        });
-
-        fileInput.addEventListener('change', updateFileList);
-
-        function updateFileList() {
-            fileList.innerHTML = '';
-            Array.from(fileInput.files).forEach((file, index) => {
-                let iconClass = file.type === 'application/pdf' ? 'fa-file-pdf' : 'fa-file-image';
-                fileList.innerHTML += `
-                    <div class="file-item" id="file-${index}">
-                        <i class="fas ${iconClass}"></i>
-                        <span>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
-                        <i class="fas fa-times remove-file" onclick="removeFile(${index})"></i>
-                    </div>
-                `;
-            });
-        }
-
-        // 목업: 파일 개별 삭제 기능 (실제 input.files는 읽기 전용이므로 시각적 삭제만 구현)
-        function removeFile(index) {
-            document.getElementById(`file-${index}`).style.display = 'none';
-        }
-
-        // 폼 제출 시뮬레이션
-        function handleUploadSubmit(event) {
-            event.preventDefault();
-            const submitBtn = document.getElementById('btn-submit');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ENCRYPTING & UPLOADING...`;
-
-            // 서버 통신을 가장한 3초 지연 후 알림
-            setTimeout(() => {
-                alert("Documents securely uploaded! Our executive team will review your NDA and financial proofs shortly.");
-                window.location.href = "index.html";
-            }, 3000);
-        }
-
-        // 보안 방어 모듈 (Anti-Theft)
+        // 보안 로직 (Anti-Theft)
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('dragstart', e => { if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u') || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) e.preventDefault();
         });
+
+        // 렌더링 옵저버
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('active')); }, 300);
+        });
+
+        // 드래그 앤 드롭 업로드 UI 제어
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const fileList = document.getElementById('file-list');
+        let selectedFiles = []; // 업로드된 파일 추적 배열
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => { 
+                e.preventDefault(); 
+                dropZone.classList.add('dragover'); 
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => { 
+                e.preventDefault(); 
+                dropZone.classList.remove('dragover'); 
+            }, false);
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            const newFiles = Array.from(e.dataTransfer.files);
+            selectedFiles = selectedFiles.concat(newFiles);
+            updateFileList();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const newFiles = Array.from(fileInput.files);
+            selectedFiles = selectedFiles.concat(newFiles);
+            updateFileList();
+            // Input 초기화 (동일 파일 재업로드 가능하도록)
+            fileInput.value = '';
+        });
+
+        function updateFileList() {
+            fileList.innerHTML = '';
+            selectedFiles.forEach((file, index) => {
+                let iconClass = file.type === 'application/pdf' ? 'fa-file-pdf' : 'fa-file-image';
+                const fileSize = (file.size / 1024 / 1024).toFixed(2);
+                
+                fileList.innerHTML += `
+                    <div class="file-item" id="file-${index}">
+                        <i class="fas ${iconClass}"></i>
+                        <span class="file-name">${file.name}</span>
+                        <span style="color: var(--text-light); font-size: 0.85rem; margin-right: 10px;">${fileSize} MB</span>
+                        <i class="fas fa-times-circle remove-file" onclick="removeFile(${index})"></i>
+                    </div>
+                `;
+            });
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            updateFileList();
+        }
+
+        // 폼 제출 
+        function handleUploadSubmit(event) {
+            event.preventDefault();
+            const ndaChecked = document.getElementById('nda_agree').checked;
+            
+            if (!ndaChecked) {
+                alert("Please agree to the NDA terms before submitting.");
+                return false;
+            }
+
+            if (selectedFiles.length === 0) {
+                alert("Please upload your identification and proof of funds documents.");
+                return false;
+            }
+
+            const submitBtn = document.getElementById('btn-submit');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> ENCRYPTING & UPLOADING...`;
+
+            // 파일 전송 시뮬레이션 (프론트엔드 목업)
+            // 실제 구현 시 AWS S3, Firebase 등 백엔드 API로 폼 데이터(FormData) 전송
+            setTimeout(() => {
+                const modal = document.getElementById('success-modal');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }, 3000);
+        }
     </script>
 </body>
 </html>
