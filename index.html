@@ -28,13 +28,6 @@
     
     <!-- EmailJS SDK 비동기 로딩 -->
     <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof emailjs !== 'undefined') {
-                emailjs.init({ publicKey: "DITntTK9NnZLeavvX" });
-            }
-        });
-    </script>
     
     <!-- Google Fonts 비동기 연결 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,7 +71,6 @@
 
         .scroll-progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--sj-red); z-index: 1001; width: 0%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; will-change: width; transition: width 0.1s linear; }
 
-        /* 하드웨어 가속 애니메이션 */
         .reveal { opacity: 0; transform: translateY(30px) translateZ(0); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -99,7 +91,7 @@
         .section-header p { font-size: 1.1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
         /* =========================================
-           2. 팝업 무결성 시스템 (좌측 슬라이드)
+           2. 팝업 무결성 시스템
            ========================================= */
         .event-popup-wrapper {
             position: fixed; top: 110px; left: 20px; right: auto; z-index: 99999; 
@@ -326,7 +318,7 @@
         .instagram-item.skeleton { background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; }
 
         /* =========================================
-           10. Franchise Process
+           10. Franchise Process (★ 엔터프라이즈 용어 통일)
            ========================================= */
         .timeline-section { padding: 130px 5%; background: var(--bg-white); }
         .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
@@ -343,7 +335,7 @@
         .btn-apply-portal:hover { background: #b83e35; transform: translateY(-3px); box-shadow: 0 15px 30px rgba(210, 75, 65, 0.4); color: var(--bg-white); }
 
         /* =========================================
-           11. Contact Us & ★ Quick Form (디자인 완벽 일치)
+           11. Contact Us & ★ Step 1: Preliminary Form
            ========================================= */
         .contact-section { padding: 130px 5%; background: var(--bg-light); position: relative; border-top: 1px solid var(--border-color); }
         .contact-wrapper { max-width: 860px; margin: 0 auto; position: relative; z-index: 2; }
@@ -375,10 +367,13 @@
         .btn-green { background: var(--sj-green); }
         .btn-green:hover { background: #006a40; box-shadow: 0 10px 25px rgba(0, 130, 80, 0.25); transform: translateY(-3px);}
 
-        /* ★ [이미지 레퍼런스 일치] Franchise Quick Form Style (플랫 디자인) */
-        .quick-form-card { background: var(--bg-white); padding: 50px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); }
-        .quick-form-card h3 { font-size: 1.8rem; font-weight: 900; color: #333; text-align: center; margin-bottom: 30px; }
-        .qf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        /* ★ [명시적 Step 1 폼] Franchise Preliminary Application */
+        .quick-form-card { background: var(--bg-white); padding: 50px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); text-align: center; }
+        .step-badge { display: inline-block; background: rgba(210, 75, 65, 0.1); color: var(--sj-red); font-weight: 800; padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .quick-form-card h3 { font-size: 1.8rem; font-weight: 900; color: #333; margin-bottom: 10px; }
+        .quick-form-card .form-subtitle { color: var(--text-gray); font-size: 0.95rem; line-height: 1.5; margin-bottom: 30px; }
+        
+        .qf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; text-align: left; }
         .qf-full { grid-column: 1 / -1; }
         .quick-form-card input, .quick-form-card textarea {
             width: 100%; padding: 18px; border: none; border-radius: 12px;
@@ -388,6 +383,8 @@
         .quick-form-card input::placeholder, .quick-form-card textarea::placeholder { color: #9CA3AF; font-weight: 500;}
         .quick-form-card input:focus, .quick-form-card textarea:focus { background-color: #F1F5F9; }
         .quick-form-card textarea { resize: vertical; min-height: 140px; }
+        
+        /* 버튼 텍스트 강력하게 수정 */
         .btn-red-flat { background: #D24B41; color: white; padding: 20px; border: none; border-radius: 12px; width: 100%; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: background 0.2s; margin-top: 10px;}
         .btn-red-flat:hover { background: #B83E35; }
 
@@ -397,7 +394,7 @@
         .fab:hover { box-shadow: var(--shadow-hover); border-color: var(--sj-red); color: var(--sj-red); transform: translateY(-5px);}
 
         /* =========================================
-           12. Mega Footer & Modal
+           12. Mega Footer & Modal (성공 팝업 스타일 포함)
            ========================================= */
         footer { background: #333333; color: rgba(255,255,255,0.8); padding: 80px 5% 40px; font-size: 0.95rem; border-top: 5px solid var(--sj-red); }
         .mega-footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 60px; }
@@ -586,7 +583,7 @@
                 }
             } catch (error) { console.error("Popup Error:", error); }
 
-            // 스켈레톤 로딩
+            // 메뉴 스켈레톤 로딩 바인딩
             const menuImages = document.querySelectorAll('.menu-item-img img');
             menuImages.forEach(img => {
                 if (img.complete) {
@@ -739,7 +736,7 @@
             document.body.style.overflow = ''; 
         }
 
-        // ★ [핵심] EmailJS 전송 및 폼 처리 로직 완벽 오류 제어
+        // ★ [핵심] EmailJS 전송 및 모달 제어 로직 (Step 1 -> Step 2 연결)
         function handleInquiryEmailJS(event, type) {
             event.preventDefault();
             const formElement = event.target;
@@ -758,7 +755,7 @@
             let serviceID = "service_zyn89ll"; 
             let templateID = "template_r8gce22"; 
             
-            // 옵셔널 체이닝으로 에러 원천 차단
+            // 옵셔널 체이닝으로 필드 누락 에러 방지
             const params = {
                 name: formElement.querySelector('[name="from_name"]')?.value || '',
                 phone: formElement.querySelector('[name="reply_phone"]')?.value || '',
@@ -773,15 +770,15 @@
             emailjs.send(serviceID, templateID, params)
                 .then(() => {
                     formElement.reset();
-                    if(type === 'Franchise Quick Inquiry') {
-                        // 성공 모달 팝업 후 step2_apply.html 자동 전개 (라우팅 수정 완료)
+                    if(type === 'Step 1: Preliminary Application') {
+                        // 성공 모달 팝업 후 step2_apply.html 로 완벽 이동
                         showModalMessage('Application Received', `
                             <div style="text-align:center; padding: 20px 0;">
                                 <div class="success-checkmark"><i class="fas fa-check" aria-hidden="true"></i></div>
-                                <h4 style="margin-top:0; font-size:1.8rem; color:var(--text-dark);">Step 1: Quick Inquiry Completed.</h4>
+                                <h4 style="margin-top:0; font-size:1.8rem; color:var(--text-dark);">Step 1 Completed.</h4>
                                 <p style="color:var(--text-gray); font-size:1.1rem; line-height:1.6;">Thank you for your interest in Sinjeon.<br>Your preliminary inquiry has been secured.</p>
                                 <div class="redirect-spinner">
-                                    <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Moving to Step 2 (Official Application)...
+                                    <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Launching Official Portal (Step 2)...
                                 </div>
                             </div>
                         `, true);
@@ -1007,9 +1004,7 @@
         </div>
 
         <div class="menu-grid-container reveal delay-200">
-            <!-- ==============================
-                 Main Category
-                 ============================== -->
+            <!-- Main Category -->
             <div id="cat-Main" class="menu-grid active" role="tabpanel">
                 <div class="menu-item">
                     <div class="menu-item-img"><img src="menus/Main/신전 오리지널 떡볶이.png" alt="Sinjeon Original Topokki" loading="lazy" decoding="async"></div>
@@ -1282,6 +1277,8 @@
             
             <div class="loc-map-wrapper">
                 <iframe id="main-map" src="about:blank" title="Google Maps" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                
+                <!-- 고급화된 정보 표시 오버레이 -->
                 <div class="map-info-overlay" id="map-premium-overlay" aria-hidden="true">
                     <h4 id="overlay-title">Loading...</h4>
                     <p id="overlay-address"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> </p>
@@ -1316,29 +1313,29 @@
             <div class="timeline-step reveal delay-100">
                 <div class="timeline-marker">1</div>
                 <div class="timeline-content">
-                    <h4>Application & Consultation</h4>
-                    <p>Submit your preliminary inquiry via our quick form. Our team will contact you for an initial consultation regarding your desired location.</p>
+                    <h4>Step 1: Preliminary Application</h4>
+                    <p>Submit your preliminary inquiry via our quick form. Our team will review and contact you with access to Step 2.</p>
                 </div>
             </div>
             <div class="timeline-step reveal delay-200">
                 <div class="timeline-marker">2</div>
                 <div class="timeline-content">
-                    <h4>Location Analysis</h4>
-                    <p>We provide comprehensive commercial area analysis and help you secure the optimal store location using our data-driven system.</p>
+                    <h4>Step 2: Official Application</h4>
+                    <p>Provide detailed financial qualifications and target location data through our secure official portal.</p>
                 </div>
             </div>
             <div class="timeline-step reveal delay-300">
                 <div class="timeline-marker">3</div>
                 <div class="timeline-content">
-                    <h4>Contract & Interior</h4>
-                    <p>Sign the official franchise agreement. We begin interior construction adhering strictly to Sinjeon's global brand identity.</p>
+                    <h4>Step 3: NDA & Verification</h4>
+                    <p>Sign a Non-Disclosure Agreement and securely submit your proof of funds and identification documents.</p>
                 </div>
             </div>
             <div class="timeline-step reveal delay-100">
                 <div class="timeline-marker">4</div>
                 <div class="timeline-content">
-                    <h4>Training & Grand Opening</h4>
-                    <p>Complete our rigorous training program covering operations, hygiene, and recipe mastery. Celebrate your Grand Opening with our dedicated support team!</p>
+                    <h4>Step 4: Executive Interview & Contract</h4>
+                    <p>Meet with our executive team. Upon approval, finalize the franchise agreement and begin your journey.</p>
                 </div>
             </div>
         </div>
@@ -1346,7 +1343,7 @@
         <div class="reveal delay-200" style="text-align: center; margin-top: 70px;">
             <h3 style="font-size: 1.8rem; font-weight: 800; color: var(--text-dark); margin-bottom: 20px;">Ready to Start Your Journey?</h3>
             
-            <!-- ★ [다이렉트 라우팅] 가맹 버튼 클릭 시 즉시 step2_apply.html 로 직결 이동 -->
+            <!-- ★ 가맹 버튼 클릭 시 step2_apply.html 로 직결 이동 -->
             <a href="step2_apply.html" class="btn-apply-portal">
                 <i class="fas fa-file-signature" aria-hidden="true"></i> Apply for Franchise
             </a>
@@ -1394,11 +1391,13 @@
                 </form>
             </div>
 
-            <!-- ★ [디자인 일치화] Franchise Quick Form (이미지 레퍼런스 100% 반영) -->
+            <!-- ★ [업그레이드] Step 1: Preliminary Application 폼 (레퍼런스 일치) -->
             <div id="franchise-form" class="form-content quick-form-card" role="tabpanel">
-                <h3>Franchise Inquiries (Quick Form)</h3>
+                <div class="step-badge">Step 1 of 4</div>
+                <h3>Preliminary Application</h3>
+                <p class="form-subtitle">Take the first step towards owning a Sinjeon franchise. Fill out this quick inquiry to unlock the official application portal.</p>
                 
-                <form onsubmit="return handleInquiryEmailJS(event, 'Franchise Quick Inquiry')">
+                <form onsubmit="return handleInquiryEmailJS(event, 'Step 1: Preliminary Application')">
                     <div class="qf-row">
                         <input type="text" name="from_name" placeholder="Applicant Name" required autocomplete="name">
                         <input type="tel" name="reply_phone" placeholder="Contact Number" required autocomplete="tel" inputmode="tel">
@@ -1413,11 +1412,11 @@
                     <div class="qf-row qf-full">
                         <textarea name="message" placeholder="Business Background" required></textarea>
                     </div>
-                    <button type="submit" class="btn-red-flat">SUBMIT APPLICATION</button>
+                    <button type="submit" class="btn-red-flat">SUBMIT STEP 1 & PROCEED</button>
                     
                     <div style="text-align: center; margin-top: 25px;">
                         <a href="step2_apply.html" style="color: var(--text-gray); font-weight: 600; text-decoration: underline; font-size: 0.95rem; transition: color var(--transition-fast);">
-                            Looking to submit a full application? Go to Official Portal
+                            Already completed Step 1? Go to Official Portal
                         </a>
                     </div>
                 </form>
