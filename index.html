@@ -30,10 +30,6 @@
     
     <!-- EmailJS SDK -->
     <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    
-    <!-- Leaflet.js (Map Engine) -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -282,7 +278,7 @@
 
         .menu-grid-container { max-width: 1200px; margin: 0 auto; min-height: 400px; position: relative; } 
         
-        /* ★ CSS Grid Justify Center Fix for incomplete rows */
+        /* CSS Grid Justify Center Fix for incomplete rows */
         .menu-grid { 
             display: none; 
             grid-template-columns: repeat(auto-fit, minmax(260px, 280px)); 
@@ -312,7 +308,7 @@
         .menu-disclaimer { margin-top: 40px; font-size: 0.95rem; color: var(--text-light); font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
         /* -----------------------------------------
-           9. Locations & Interactive Leaflet Map
+           9. Locations & Google Maps (100% Free Embed)
            ----------------------------------------- */
         .locations { padding: 120px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1300px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 700px; }
@@ -349,9 +345,9 @@
         .btn-fill { background: var(--uber-green); color: var(--bg-white); border: 2px solid var(--uber-green); }
         .btn-fill:hover { background: #05a659; border-color: #05a659;}
         
-        /* Map Area */
+        /* Map Area (Native Google Maps iframe wrapper) */
         .loc-map-wrapper { flex: 1; background: #e2e8f0; position: relative; pointer-events: auto; overflow: hidden; z-index: 1;}
-        #main-map { width: 100%; height: 100%; position: absolute; top:0; left:0; z-index: 1;}
+        #main-map { width: 100%; height: 100%; position: absolute; top:0; left:0; z-index: 1; border: none;}
         
         .map-info-overlay {
             position: absolute; bottom: 30px; left: 30px;
@@ -514,7 +510,7 @@
             .stat-item h4 { font-size: 3rem; }
             .spice-grid { grid-template-columns: 1fr; }
             
-            /* Map 100% Height fix */
+            /* Map Height fix for Native Google Maps Iframe */
             .split-layout { flex-direction: column; height: auto; }
             .loc-map-wrapper { height: 450px; width: 100%; border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; }
             .loc-list-wrapper { padding: 20px; max-height: 500px; border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);}
@@ -533,6 +529,7 @@
         }
         
         @media (max-width: 600px) {
+            /* Mobile Header & Single CTA */
             .header-top { padding: 0; }
             .logo-container span { font-size: 1.3rem; }
             .header-cta-group { margin-left: auto;}
@@ -900,7 +897,7 @@
         </div>
     </section>
 
-    <!-- 9. Locations Section (Original 4 Stores + Leaflet Custom Map) -->
+    <!-- 9. Locations Section (Google Maps Native Embed for 100% Accuracy) -->
     <section class="locations" id="locations">
         <div class="section-header reveal">
             <p>Find Us</p>
@@ -910,8 +907,9 @@
         <div class="split-layout reveal delay-100">
             <div class="loc-list-wrapper">
                 
+                <!-- Finch Location -->
                 <div class="loc-item active store-card" 
-                     data-lat="43.7780" data-lng="-79.4168"
+                     data-map-url="https://maps.google.com/maps?q=Sinjeon%20Topokki%20Finch,%205%20Byng%20Ave,%20North%20York&t=&z=15&ie=UTF8&iwloc=&output=embed"
                      data-title="Sinjeon Finch"
                      data-address="5 Byng Ave, North York, ON M2N 5R7"
                      data-hours="Mon-Sun 11:30 AM - 11:00 PM"
@@ -927,7 +925,6 @@
                         <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+14162188860">+1 416-218-8860</a></p>
                         <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Mon-Sun 11:30 AM - 11:00 PM</span></p>
                     </div>
-                    <!-- Quality Feature Tags -->
                     <div class="feature-tags">
                         <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
                         <span class="feature-tag"><i class="fas fa-shopping-bag"></i> Takeout</span>
@@ -939,8 +936,9 @@
                     </div>
                 </div>
 
+                <!-- Christie Location -->
                 <div class="loc-item store-card" 
-                     data-lat="43.6635" data-lng="-79.4187"
+                     data-map-url="https://maps.google.com/maps?q=Sinjeon%20Topokki,%20712%20Bloor%20St%20W,%20Toronto&t=&z=15&ie=UTF8&iwloc=&output=embed"
                      data-title="Sinjeon Christie"
                      data-address="712 Bloor St W, Toronto, ON M6G 1L4"
                      data-hours="Mon-Sun 12:00 PM - 1:00 AM"
@@ -968,8 +966,9 @@
                     </div>
                 </div>
 
+                <!-- Lougheed Location -->
                 <div class="loc-item store-card" 
-                     data-lat="49.2480" data-lng="-122.8943"
+                     data-map-url="https://maps.google.com/maps?q=Sinjeon%20Topokki,%20329%20North%20Rd%20%23455,%20Coquitlam&t=&z=15&ie=UTF8&iwloc=&output=embed"
                      data-title="Sinjeon Lougheed"
                      data-address="329 North Rd #455, Coquitlam, BC V3K 6Z8"
                      data-hours="Mon-Sun 11:30 AM - 9:30 PM"
@@ -996,8 +995,9 @@
                     </div>
                 </div>
 
+                <!-- Church Location -->
                 <div class="loc-item store-card" 
-                     data-lat="43.6590" data-lng="-79.3780"
+                     data-map-url="https://maps.google.com/maps?q=Sinjeon%20Topokki,%20377%20Church%20St,%20Toronto&t=&z=15&ie=UTF8&iwloc=&output=embed"
                      data-title="Sinjeon Church"
                      data-address="377 Church St, Toronto, ON M5B 1H9"
                      data-hours="Sun-Thu 11am-10pm | Fri-Sat 11am-11pm"
@@ -1026,20 +1026,19 @@
             </div>
             
             <div class="loc-map-wrapper">
-                <!-- Custom Leaflet Map Render Zone -->
-                <div id="main-map"></div>
+                <!-- Google Maps Native Iframe for 100% Accuracy (No API Key Required) -->
+                <iframe id="main-map" src="https://maps.google.com/maps?q=Sinjeon%20Topokki%20Finch,%205%20Byng%20Ave,%20North%20York&t=&z=15&ie=UTF8&iwloc=&output=embed" title="Google Maps" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 
                 <div class="map-info-overlay" id="map-premium-overlay" aria-hidden="true">
-                    <h4 id="overlay-title">Loading...</h4>
-                    <p id="overlay-address"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> </p>
-                    <p id="overlay-hours"><i class="fas fa-clock" aria-hidden="true"></i> </p>
-                    <a id="overlay-link" href="#" target="_blank" class="overlay-btn">Get Directions <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                    <h4 id="overlay-title">Sinjeon Finch</h4>
+                    <p id="overlay-address"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 5 Byng Ave, North York, ON M2N 5R7</p>
+                    <p id="overlay-hours"><i class="fas fa-clock" aria-hidden="true"></i> Mon-Sun 11:30 AM - 11:00 PM</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 10. Instagram Feed (Pure DOM API Error-Proof Engine) -->
+    <!-- 10. Instagram Feed (Pure JSON DOM API Error-Proof Engine) -->
     <section class="ugc-section" id="community">
         <div class="section-header reveal">
             <p>Social Proof</p>
@@ -1284,235 +1283,43 @@
     </template>
 
     <!-- =========================================
-         [Core Script Engine]
+         [Core Script Engine & Logic]
          ========================================= -->
     <script>
         // -----------------------------------------
-        // 1. Anti-Theft & Security
+        // 1. Google Maps Native Iframe Engine
         // -----------------------------------------
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('dragstart', e => { 
-            if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); 
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'F12' || 
-               (e.ctrlKey && e.shiftKey && e.key === 'I') || 
-               (e.ctrlKey && e.key === 'u') || 
-               (e.ctrlKey && e.key === 'c') || 
-               (e.ctrlKey && e.key === 's') || 
-               (e.ctrlKey && e.key === 'p')) e.preventDefault();
-        });
-
-        // -----------------------------------------
-        // 2. Global Variables
-        // -----------------------------------------
-        let map;
-        let markers = [];
-        let scrollProgressBar;
-
-        // -----------------------------------------
-        // 3. DOM Content Loaded Initialization
-        // -----------------------------------------
-        document.addEventListener('DOMContentLoaded', () => {
-            scrollProgressBar = document.getElementById('scroll-progress');
-
-            // Scroll Animation Observer (Hardware Accelerated)
-            try {
-                const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-                const observer = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('active');
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, observerOptions);
-                document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-            } catch (error) {
-                console.error("Observer Error:", error);
-            } finally {
-                // Fallback: Show all after 1.5s if observer fails
-                setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('active')); }, 1500);
-            }
-
-            // Popup Manager
-            try {
-                const popup = document.getElementById('main-event-popup');
-                if (popup) {
-                    const hideUntil = localStorage.getItem('hideMainPopupUntil');
-                    const now = new Date().getTime();
-
-                    if (!hideUntil || now >= parseInt(hideUntil)) {
-                        const popupImgContainer = document.getElementById('popup-image-container');
-                        const activePopupFiles = ['popup_event_1.jpg', 'popup_event_2.jpg']; 
-                        
-                        if (activePopupFiles.length > 0) {
-                            let loadedImages = 0;
-                            activePopupFiles.forEach((file, index) => {
-                                const slot = document.createElement('div');
-                                slot.id = `popup-slot-${index}`;
-                                popupImgContainer.appendChild(slot);
-                            });
-
-                            activePopupFiles.forEach((file, index) => {
-                                const img = new Image();
-                                img.alt = `Sinjeon Event Notice ${index + 1}`;
-                                img.onload = function() {
-                                    const targetSlot = document.getElementById(`popup-slot-${index}`);
-                                    if(targetSlot) targetSlot.appendChild(this);
-                                    loadedImages++;
-                                    if (loadedImages === 1) { setTimeout(() => { popup.classList.add('show'); }, 300); }
-                                };
-                                img.onerror = function() {
-                                    const emptySlot = document.getElementById(`popup-slot-${index}`);
-                                    if(emptySlot) emptySlot.remove(); 
-                                };
-                                img.src = file;
-                            });
-                        }
-                    }
-                }
-            } catch (error) { console.error("Popup Error:", error); }
-
-            // Menu Image Skeleton Loader
-            const menuImages = document.querySelectorAll('.menu-item-img img');
-            menuImages.forEach(img => {
-                if (img.complete) {
-                    img.classList.add('loaded');
-                    img.parentElement.style.background = 'none';
-                } else {
-                    img.addEventListener('load', function() {
-                        this.classList.add('loaded');
-                        this.parentElement.style.background = 'none';
-                    });
-                    img.addEventListener('error', function() {
-                        this.parentElement.style.background = '#f8fafc';
-                    });
-                }
-            });
-            
-            // Store Hours Updater
-            updateStoreStatuses();
-            setInterval(updateStoreStatuses, 60000);
-
-            // Init Map Observer
-            const locEl = document.querySelector('.locations');
-            if(locEl) mapObserver.observe(locEl);
-        });
-
-        // -----------------------------------------
-        // 4. Scroll Performance (Throttling with rAF)
-        // -----------------------------------------
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const header = document.getElementById('header');
-                    if(header) {
-                        if (window.scrollY > 50) header.classList.add('scrolled');
-                        else header.classList.remove('scrolled');
-                    }
-
-                    if(scrollProgressBar) {
-                        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                        scrollProgressBar.style.width = ((winScroll / height) * 100) + "%";
-                    }
-
-                    const fabContainer = document.getElementById('fab-container');
-                    if(fabContainer) {
-                        if (window.scrollY > 500) fabContainer.classList.add('visible');
-                        else fabContainer.classList.remove('visible');
-                    }
-                    
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, { passive: true }); 
-
-        // -----------------------------------------
-        // 5. Leaflet Custom Map Engine (Hardware Accelerated & Mobile Fix)
-        // -----------------------------------------
-        function initMap() {
-            try {
-                map = L.map('main-map', {zoomControl: false}).setView([43.7780, -79.4168], 15);
-                
-                L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors',
-                    maxZoom: 19
-                }).addTo(map);
-
-                L.control.zoom({ position: 'bottomright' }).addTo(map);
-
-                const sinjeonIcon = L.icon({
-                    iconUrl: 'sinjeon_logo_canada.png',
-                    iconSize: [40, 40],
-                    iconAnchor: [20, 40],
-                    popupAnchor: [0, -40]
-                });
-
-                const locationsData = [
-                    { lat: 43.7780, lng: -79.4168, title: "Sinjeon Finch" },
-                    { lat: 43.6635, lng: -79.4187, title: "Sinjeon Christie" },
-                    { lat: 49.2480, lng: -122.8943, title: "Sinjeon Lougheed" },
-                    { lat: 43.6590, lng: -79.3780, title: "Sinjeon Church" }
-                ];
-
-                locationsData.forEach((loc) => {
-                    const marker = L.marker([loc.lat, loc.lng], {icon: sinjeonIcon}).addTo(map);
-                    marker.bindPopup(`<b>${loc.title}</b>`);
-                    markers.push(marker);
-                });
-            } catch(e) {
-                console.error("Map Initialization Error:", e);
-            }
-        }
-
-        const mapObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !map) {
-                    initMap();
-                }
-            });
-        }, { threshold: 0.1 });
-
-        // Map Resize Bug Fix (Crucial for mobile rendering)
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                if(map) {
-                    map.invalidateSize();
-                }
-            }, 200);
-        });
-
         function triggerMapChange(element) {
-            if(element.classList.contains('active')) return;
+            if(!element || element.classList.contains('active')) return;
+            
+            // Highlight active item
             document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
             
-            const lat = parseFloat(element.getAttribute('data-lat'));
-            const lng = parseFloat(element.getAttribute('data-lng'));
+            const mapUrl = element.getAttribute('data-map-url');
             const title = element.getAttribute('data-title');
             const address = element.getAttribute('data-address');
             const hours = element.getAttribute('data-hours');
 
-            if(map) {
-                map.flyTo([lat, lng], 15, {
-                    animate: true,
-                    duration: 1.5
-                });
+            // Iframe source update
+            const mapIframe = document.getElementById('main-map');
+            if(mapIframe && mapUrl) {
+                mapIframe.src = mapUrl;
             }
 
+            // Overlay update
             const mapOverlay = document.getElementById('map-premium-overlay');
             if(mapOverlay) {
                 mapOverlay.classList.remove('active'); 
                 setTimeout(() => {
-                    document.getElementById('overlay-title').innerText = title;
-                    document.getElementById('overlay-address').innerHTML = `<i class="fas fa-map-marker-alt" aria-hidden="true"></i> ${address}`;
-                    document.getElementById('overlay-hours').innerHTML = `<i class="fas fa-clock" aria-hidden="true"></i> ${hours}`;
+                    const titleEl = document.getElementById('overlay-title');
+                    const addressEl = document.getElementById('overlay-address');
+                    const hoursEl = document.getElementById('overlay-hours');
+                    
+                    if(titleEl) titleEl.innerText = title;
+                    if(addressEl) addressEl.innerHTML = `<i class="fas fa-map-marker-alt" aria-hidden="true"></i> ${address}`;
+                    if(hoursEl) hoursEl.innerHTML = `<i class="fas fa-clock" aria-hidden="true"></i> ${hours}`;
+                    
                     mapOverlay.classList.add('active'); 
                 }, 300);
             }
@@ -1533,10 +1340,11 @@
         }
 
         // -----------------------------------------
-        // 6. UI Interactions (Tabs, Menus, Modals)
+        // 2. UI Interactions & Modals
         // -----------------------------------------
         function toggleMobileMenu() {
             const overlay = document.getElementById('mobile-menu');
+            if(!overlay) return;
             if (overlay.classList.contains('active')) {
                 overlay.classList.remove('active');
                 document.body.style.overflow = '';
@@ -1551,9 +1359,10 @@
                 btn.classList.remove('active');
                 btn.setAttribute('aria-selected', 'false');
             });
-            event.target.classList.add('active');
-            event.target.setAttribute('aria-selected', 'true');
-
+            if(event && event.target) {
+                event.target.classList.add('active');
+                event.target.setAttribute('aria-selected', 'true');
+            }
             document.querySelectorAll('.menu-grid').forEach(grid => grid.classList.remove('active'));
             const targetCat = document.getElementById('cat-' + catId);
             if(targetCat) targetCat.classList.add('active');
@@ -1574,9 +1383,13 @@
             const modal = document.getElementById('dynamic-modal');
             if(!modal) return;
             const titleEl = document.getElementById('modal-title');
-            if(hideTitle) { titleEl.style.display = 'none'; } 
-            else { titleEl.style.display = 'block'; titleEl.innerText = title; }
-            document.getElementById('modal-body').innerHTML = htmlContent;
+            if(titleEl) {
+                if(hideTitle) { titleEl.style.display = 'none'; } 
+                else { titleEl.style.display = 'block'; titleEl.innerText = title; }
+            }
+            const bodyEl = document.getElementById('modal-body');
+            if(bodyEl) bodyEl.innerHTML = htmlContent;
+            
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -1597,7 +1410,7 @@
             document.querySelectorAll('.contact-wrapper .form-content').forEach(form => {
                 form.classList.remove('active');
                 form.style.animation = 'none';
-                form.offsetHeight; // trigger reflow
+                form.offsetHeight; 
                 form.style.animation = null; 
             });
             const targetBtn = document.querySelector(`.contact-wrapper .tab-btn[data-target="${target}"]`);
@@ -1609,69 +1422,16 @@
             if(targetForm) targetForm.classList.add('active');
         }
 
-        function updateStoreStatuses() {
-            const storeCards = document.querySelectorAll('.store-card');
-            storeCards.forEach(card => {
-                try {
-                    const tz = card.getAttribute('data-timezone');
-                    if (!tz) return;
-
-                    const dateInTz = new Date(new Date().toLocaleString("en-US", {timeZone: tz}));
-                    let currentHour = dateInTz.getHours();
-                    const currentMin = dateInTz.getMinutes();
-                    const currentDay = dateInTz.getDay(); 
-                    
-                    const currentTimeVal = currentHour + (currentMin / 60);
-                    let openHour = parseFloat(card.getAttribute('data-open') || 11);
-                    let closeHour = parseFloat(card.getAttribute('data-close') || 22);
-                    
-                    if (card.hasAttribute('data-close-weekend') && (currentDay === 5 || currentDay === 6)) {
-                        closeHour = parseFloat(card.getAttribute('data-close-weekend'));
-                    }
-
-                    let isOpen = false;
-                    let adjustedCurrent = currentTimeVal;
-                    let adjustedClose = closeHour;
-                    
-                    if (closeHour <= openHour) { 
-                        adjustedClose += 24;
-                        if (currentTimeVal < openHour) { adjustedCurrent += 24; }
-                    }
-
-                    if (adjustedCurrent >= openHour && adjustedCurrent < adjustedClose) { isOpen = true; }
-
-                    function formatTime(decimalTime) {
-                        let h = Math.floor(decimalTime);
-                        let m = Math.round((decimalTime - h) * 60);
-                        let ampm = h >= 12 && h < 24 ? 'PM' : 'AM';
-                        h = h % 12; if (h === 0) h = 12;
-                        let mStr = m > 0 ? ':' + (m < 10 ? '0'+m : m) : '';
-                        return `${h}${mStr} ${ampm}`;
-                    }
-
-                    const badge = card.querySelector('.loc-status');
-                    if (badge) {
-                        if (isOpen) {
-                            badge.innerHTML = `Open Now (Closes ${formatTime(closeHour)})`;
-                            badge.className = "loc-status open";
-                        } else {
-                            badge.innerHTML = `Closed (Opens ${formatTime(openHour)})`;
-                            badge.className = "loc-status closed";
-                        }
-                    }
-                } catch(e) { console.error("Hours Error:", e); }
-            });
-        }
-
         // -----------------------------------------
-        // 7. EmailJS Form Submission Engine
+        // 3. EmailJS Form Submission Engine
         // -----------------------------------------
         function handleInquiryEmailJS(event, type) {
             event.preventDefault();
             const formElement = event.target;
             const submitButton = formElement.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.innerHTML;
+            if(!submitButton) return false;
             
+            const originalButtonText = submitButton.innerHTML;
             submitButton.disabled = true;
             submitButton.innerHTML = `<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> SUBMITTING...`;
 
@@ -1729,6 +1489,63 @@
                     submitButton.innerHTML = originalButtonText;
                 });
             return false;
+        }
+
+        // -----------------------------------------
+        // 4. Store Status Update Loop
+        // -----------------------------------------
+        function updateStoreStatuses() {
+            const storeCards = document.querySelectorAll('.store-card');
+            storeCards.forEach(card => {
+                try {
+                    const tz = card.getAttribute('data-timezone');
+                    if (!tz) return;
+
+                    const dateInTz = new Date(new Date().toLocaleString("en-US", {timeZone: tz}));
+                    let currentHour = dateInTz.getHours();
+                    const currentMin = dateInTz.getMinutes();
+                    const currentDay = dateInTz.getDay(); 
+                    
+                    const currentTimeVal = currentHour + (currentMin / 60);
+                    let openHour = parseFloat(card.getAttribute('data-open') || 11);
+                    let closeHour = parseFloat(card.getAttribute('data-close') || 22);
+                    
+                    if (card.hasAttribute('data-close-weekend') && (currentDay === 5 || currentDay === 6)) {
+                        closeHour = parseFloat(card.getAttribute('data-close-weekend'));
+                    }
+
+                    let isOpen = false;
+                    let adjustedCurrent = currentTimeVal;
+                    let adjustedClose = closeHour;
+                    
+                    if (closeHour <= openHour) { 
+                        adjustedClose += 24;
+                        if (currentTimeVal < openHour) { adjustedCurrent += 24; }
+                    }
+
+                    if (adjustedCurrent >= openHour && adjustedCurrent < adjustedClose) { isOpen = true; }
+
+                    function formatTime(decimalTime) {
+                        let h = Math.floor(decimalTime);
+                        let m = Math.round((decimalTime - h) * 60);
+                        let ampm = h >= 12 && h < 24 ? 'PM' : 'AM';
+                        h = h % 12; if (h === 0) h = 12;
+                        let mStr = m > 0 ? ':' + (m < 10 ? '0'+m : m) : '';
+                        return `${h}${mStr} ${ampm}`;
+                    }
+
+                    const badge = card.querySelector('.loc-status');
+                    if (badge) {
+                        if (isOpen) {
+                            badge.innerHTML = `Open Now (Closes ${formatTime(closeHour)})`;
+                            badge.className = "loc-status open";
+                        } else {
+                            badge.innerHTML = `Closed (Opens ${formatTime(openHour)})`;
+                            badge.className = "loc-status closed";
+                        }
+                    }
+                } catch(e) { console.error("Hours Error:", e); }
+            });
         }
     </script>
 
