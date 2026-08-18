@@ -90,10 +90,11 @@
         }
 
         /* -----------------------------------------
-           2. Global UI Components
+           2. Global UI Components (Reveal & Float)
            ----------------------------------------- */
         .scroll-progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--sj-red); z-index: 1001; width: 0%; transition: width 0.1s linear; will-change: width; }
 
+        /* ★ Reveal CSS */
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -160,6 +161,7 @@
         
         .nav-wrapper { display: flex; align-items: center; gap: 35px; justify-content: flex-end; flex: 1; }
         
+        /* ★ Nav Links with #franchise fix */
         .desktop-nav { display: flex; gap: 25px; align-items: center; }
         .desktop-nav a { text-decoration: none; color: var(--text-dark); font-weight: 700; font-size: 0.9rem; position: relative; padding: 5px 0; transition: color var(--transition-fast); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;}
         .desktop-nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: var(--sj-red); transition: width var(--transition-fast); }
@@ -313,6 +315,7 @@
         .btn-fill { background: var(--uber-green); color: var(--bg-white); border: 2px solid var(--uber-green); }
         .btn-fill:hover { background: #05a659; border-color: #05a659;}
         
+        /* Map Area */
         .loc-map-wrapper { flex: 1; background: #e2e8f0; position: relative; pointer-events: auto; overflow: hidden; z-index: 1;}
         .loc-map-wrapper iframe { width: 100%; height: 100%; position: absolute; top:0; left:0; z-index: 1; border: none; transition: opacity 0.3s ease; }
         .map-loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; color: var(--sj-red); font-size: 2.5rem; animation: spin 1s linear infinite;}
@@ -526,7 +529,6 @@
             .section-header h2 { font-size: 2rem; }
             .section-header h2 span { font-size: 2.5rem; }
             
-            /* Map Mobile Height & Overlay Compression */
             .loc-map-wrapper { height: 350px; }
             .map-info-overlay { padding: 15px; bottom: 15px; left: 15px; width: calc(100% - 30px); max-width: none; }
             .map-info-overlay h4 { font-size: 1.1rem; }
@@ -860,7 +862,7 @@
         </div>
     </section>
 
-    <!-- 9. Locations Section (Google Maps Native Embed for 100% Accuracy) -->
+    <!-- 9. Locations Section (Google Maps Native Embed) -->
     <section class="locations" id="locations">
         <div class="section-header reveal">
             <p>Find Us</p>
@@ -1011,6 +1013,7 @@
         </div>
         <div class="instagram-feed-section reveal delay-100">
             <div id="instagram-feed" class="instagram-grid">
+                <!-- Skeletons -->
                 <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
                 <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
             </div>
@@ -1245,7 +1248,208 @@
          ========================================= -->
     <script>
         // -----------------------------------------
-        // 1. Google Maps Native Iframe Engine
+        // 1. Initial Load & Critical Fixes (Store Hours & Reveal)
+        // -----------------------------------------
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // [1A] Store Hours Initialization
+            updateStoreStatuses();
+            if (!window.__sinjeonStoreStatusInterval) {
+                window.__sinjeonStoreStatusInterval = setInterval(updateStoreStatuses, 60000);
+            }
+
+            // [1B] Reveal Animation System Repair (CRITICAL FIX)
+            const revealElements = document.querySelectorAll('.reveal');
+            if (revealElements.length > 0) {
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver(
+                        function (entries, observer) {
+                            entries.forEach(function (entry) {
+                                if (entry.isIntersecting) {
+                                    entry.target.classList.add('active');
+                                    observer.unobserve(entry.target);
+                                }
+                            });
+                        },
+                        { root: null, rootMargin: '0px 0px -50px 0px', threshold: 0.05 }
+                    );
+
+                    revealElements.forEach(function (element) {
+                        observer.observe(element);
+                    });
+
+                    setTimeout(function () {
+                        revealElements.forEach(function (element) {
+                            const rect = element.getBoundingClientRect();
+                            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                                element.classList.add('active');
+                                observer.unobserve(element);
+                            }
+                        });
+                    }, 100);
+
+                    // Fallback to prevent infinite white screen
+                    setTimeout(function () {
+                        revealElements.forEach(function (element) {
+                            element.classList.add('active');
+                        });
+                    }, 1500);
+                } else {
+                    revealElements.forEach(function (element) {
+                        element.classList.add('active');
+                    });
+                }
+            }
+
+            // [1C] Event Popup System
+            try {
+                const popup = document.getElementById('main-event-popup');
+                if (popup) {
+                    const hideUntil = localStorage.getItem('hideMainPopupUntil');
+                    const now = new Date().getTime();
+
+                    if (!hideUntil || now >= parseInt(hideUntil)) {
+                        const popupImgContainer = document.getElementById('popup-image-container');
+                        const activePopupFiles = ['popup_event_1.jpg', 'popup_event_2.jpg']; 
+                        
+                        if (activePopupFiles.length > 0) {
+                            let loadedImages = 0;
+                            activePopupFiles.forEach((file, index) => {
+                                const slot = document.createElement('div');
+                                slot.id = `popup-slot-${index}`;
+                                popupImgContainer.appendChild(slot);
+                            });
+
+                            activePopupFiles.forEach((file, index) => {
+                                const img = new Image();
+                                img.alt = `Sinjeon Event Notice ${index + 1}`;
+                                img.onload = function() {
+                                    const targetSlot = document.getElementById(`popup-slot-${index}`);
+                                    if(targetSlot) targetSlot.appendChild(this);
+                                    loadedImages++;
+                                    if (loadedImages === 1) { setTimeout(() => { popup.classList.add('show'); }, 300); }
+                                };
+                                img.onerror = function() {
+                                    const emptySlot = document.getElementById(`popup-slot-${index}`);
+                                    if(emptySlot) emptySlot.remove(); 
+                                };
+                                img.src = file;
+                            });
+                        }
+                    }
+                }
+            } catch (error) { console.error("Popup Error:", error); }
+
+            // [1D] Menu Image Skeleton Loader
+            const menuImages = document.querySelectorAll('.menu-item-img img');
+            menuImages.forEach(img => {
+                if (img.complete) {
+                    img.classList.add('loaded');
+                    img.parentElement.style.background = 'none';
+                } else {
+                    img.addEventListener('load', function() {
+                        this.classList.add('loaded');
+                        this.parentElement.style.background = 'none';
+                    });
+                    img.addEventListener('error', function() {
+                        this.parentElement.style.background = '#f8fafc';
+                    });
+                }
+            });
+        });
+
+        // -----------------------------------------
+        // 2. Store Status Update Engine
+        // -----------------------------------------
+        function updateStoreStatuses() {
+            const storeCards = document.querySelectorAll('.store-card');
+            if(storeCards.length === 0) return;
+            
+            storeCards.forEach(card => {
+                try {
+                    const tz = card.getAttribute('data-timezone');
+                    if (!tz) return;
+
+                    const dateInTz = new Date(new Date().toLocaleString("en-US", {timeZone: tz}));
+                    let currentHour = dateInTz.getHours();
+                    const currentMin = dateInTz.getMinutes();
+                    const currentDay = dateInTz.getDay(); 
+                    
+                    const currentTimeVal = currentHour + (currentMin / 60);
+                    let openHour = parseFloat(card.getAttribute('data-open') || 11);
+                    let closeHour = parseFloat(card.getAttribute('data-close') || 22);
+                    
+                    if (card.hasAttribute('data-close-weekend') && (currentDay === 5 || currentDay === 6)) {
+                        closeHour = parseFloat(card.getAttribute('data-close-weekend'));
+                    }
+
+                    let isOpen = false;
+                    let adjustedCurrent = currentTimeVal;
+                    let adjustedClose = closeHour;
+                    
+                    if (closeHour <= openHour) { 
+                        adjustedClose += 24;
+                        if (currentTimeVal < openHour) { adjustedCurrent += 24; }
+                    }
+
+                    if (adjustedCurrent >= openHour && adjustedCurrent < adjustedClose) { isOpen = true; }
+
+                    function formatTime(decimalTime) {
+                        let h = Math.floor(decimalTime);
+                        let m = Math.round((decimalTime - h) * 60);
+                        let ampm = h >= 12 && h < 24 ? 'PM' : 'AM';
+                        h = h % 12; if (h === 0) h = 12;
+                        let mStr = m > 0 ? ':' + (m < 10 ? '0'+m : m) : '';
+                        return `${h}${mStr} ${ampm}`;
+                    }
+
+                    const badge = card.querySelector('.loc-status');
+                    if (badge) {
+                        if (isOpen) {
+                            badge.innerHTML = `Open Now (Closes ${formatTime(closeHour)})`;
+                            badge.className = "loc-status open";
+                        } else {
+                            badge.innerHTML = `Closed (Opens ${formatTime(openHour)})`;
+                            badge.className = "loc-status closed";
+                        }
+                    }
+                } catch(e) { console.error("Hours Error:", e); }
+            });
+        }
+
+        // -----------------------------------------
+        // 3. UI & Scroll Interactions (Throttled)
+        // -----------------------------------------
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const header = document.getElementById('header');
+                    if(header) {
+                        if (window.scrollY > 50) header.classList.add('scrolled');
+                        else header.classList.remove('scrolled');
+                    }
+
+                    const scrollProgressBar = document.getElementById('scroll-progress');
+                    if(scrollProgressBar) {
+                        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                        scrollProgressBar.style.width = ((winScroll / height) * 100) + "%";
+                    }
+
+                    const fabContainer = document.getElementById('fab-container');
+                    if(fabContainer) {
+                        if (window.scrollY > 500) fabContainer.classList.add('visible');
+                        else fabContainer.classList.remove('visible');
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // -----------------------------------------
+        // 4. Google Maps Native Iframe Updater
         // -----------------------------------------
         function triggerMapChange(element) {
             if(!element || element.classList.contains('active')) return;
@@ -1286,7 +1490,6 @@
                 }, 300);
             }
             
-            // Mobile Auto-Scroll UX
             if(window.innerWidth <= 1000) {
                 const mapSection = document.querySelector('.loc-map-wrapper');
                 if(mapSection) {
@@ -1299,7 +1502,7 @@
         }
 
         // -----------------------------------------
-        // 2. UI Interactions & Modals
+        // 5. Utility Functions (Menu, Popup, Modal, Tab)
         // -----------------------------------------
         function toggleMobileMenu() {
             const overlay = document.getElementById('mobile-menu');
@@ -1382,77 +1585,7 @@
         }
 
         // -----------------------------------------
-        // 3. Store Status Update Loop (Memory-Leak Free)
-        // -----------------------------------------
-        function updateStoreStatuses() {
-            const storeCards = document.querySelectorAll('.store-card');
-            if(storeCards.length === 0) return;
-            
-            storeCards.forEach(card => {
-                try {
-                    const tz = card.getAttribute('data-timezone');
-                    if (!tz) return;
-
-                    const dateInTz = new Date(new Date().toLocaleString("en-US", {timeZone: tz}));
-                    let currentHour = dateInTz.getHours();
-                    const currentMin = dateInTz.getMinutes();
-                    const currentDay = dateInTz.getDay(); 
-                    
-                    const currentTimeVal = currentHour + (currentMin / 60);
-                    let openHour = parseFloat(card.getAttribute('data-open') || 11);
-                    let closeHour = parseFloat(card.getAttribute('data-close') || 22);
-                    
-                    if (card.hasAttribute('data-close-weekend') && (currentDay === 5 || currentDay === 6)) {
-                        closeHour = parseFloat(card.getAttribute('data-close-weekend'));
-                    }
-
-                    let isOpen = false;
-                    let adjustedCurrent = currentTimeVal;
-                    let adjustedClose = closeHour;
-                    
-                    if (closeHour <= openHour) { 
-                        adjustedClose += 24;
-                        if (currentTimeVal < openHour) { adjustedCurrent += 24; }
-                    }
-
-                    if (adjustedCurrent >= openHour && adjustedCurrent < adjustedClose) { isOpen = true; }
-
-                    function formatTime(decimalTime) {
-                        let h = Math.floor(decimalTime);
-                        let m = Math.round((decimalTime - h) * 60);
-                        let ampm = h >= 12 && h < 24 ? 'PM' : 'AM';
-                        h = h % 12; if (h === 0) h = 12;
-                        let mStr = m > 0 ? ':' + (m < 10 ? '0'+m : m) : '';
-                        return `${h}${mStr} ${ampm}`;
-                    }
-
-                    const badge = card.querySelector('.loc-status');
-                    if (badge) {
-                        if (isOpen) {
-                            badge.innerHTML = `Open Now (Closes ${formatTime(closeHour)})`;
-                            badge.className = "loc-status open";
-                        } else {
-                            badge.innerHTML = `Closed (Opens ${formatTime(openHour)})`;
-                            badge.className = "loc-status closed";
-                        }
-                    }
-                } catch(e) { console.error("Hours Error:", e); }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            updateStoreStatuses();
-            
-            if (!window.__sinjeonStoreStatusInterval) {
-                window.__sinjeonStoreStatusInterval = setInterval(
-                    updateStoreStatuses,
-                    60000
-                );
-            }
-        });
-
-        // -----------------------------------------
-        // 4. EmailJS Form Submission Engine
+        // 6. EmailJS Form Submission Engine
         // -----------------------------------------
         function handleInquiryEmailJS(event, type) {
             event.preventDefault();
@@ -1519,12 +1652,10 @@
                 });
             return false;
         }
-    </script>
 
-    <!-- =========================================
-         [Instagram Feed Loader (DOM API)]
-         ========================================= -->
-    <script>
+        // -----------------------------------------
+        // 7. Instagram Feed Loader (DOM API Engine)
+        // -----------------------------------------
         document.addEventListener('DOMContentLoaded', function () {
             const feedContainer = document.getElementById('instagram-feed');
 
@@ -1554,7 +1685,6 @@
                     jsonData = JSON.parse(text);
                 } catch (error) {
                     console.error('Instagram JSON Parse Error:', error);
-                    console.error('Received content:', text.substring(0, 500));
                     throw new Error('Instagram JSON parsing failed.');
                 }
 
@@ -1570,11 +1700,9 @@
                     throw new Error('Instagram JSON structure is invalid.');
                 }
 
-                const validPosts = posts
-                    .filter(function (post) {
-                        return post && (post.media_url || post.thumbnail_url || post.image);
-                    })
-                    .slice(0, 6);
+                const validPosts = posts.filter(function (post) {
+                    return post && (post.media_url || post.thumbnail_url || post.image);
+                }).slice(0, 6);
 
                 if (validPosts.length === 0) {
                     throw new Error('No valid Instagram posts found.');
@@ -1583,21 +1711,14 @@
                 const fragment = document.createDocumentFragment();
 
                 validPosts.forEach(function (post) {
-                    let imageUrl =
-                        post.media_url ||
-                        post.image ||
-                        post.thumbnail_url ||
-                        '';
+                    let imageUrl = post.media_url || post.image || post.thumbnail_url || '';
 
                     if (post.media_type === 'VIDEO' && post.thumbnail_url) {
                         imageUrl = post.thumbnail_url;
                     }
 
-                    const permalink =
-                        typeof post.permalink === 'string' &&
-                        post.permalink.startsWith('http')
-                            ? post.permalink
-                            : 'https://www.instagram.com/sinjeon_Canada/';
+                    const permalink = typeof post.permalink === 'string' && post.permalink.startsWith('http')
+                        ? post.permalink : 'https://www.instagram.com/sinjeon_Canada/';
 
                     const card = document.createElement('div');
                     card.className = 'instagram-item';
@@ -1642,63 +1763,19 @@
                 });
 
                 feedContainer.replaceChildren(fragment);
-
-                console.log(
-                    'Instagram Feed Loaded Successfully:',
-                    validPosts.length,
-                    'posts'
-                );
+                console.log('Instagram Feed Loaded Successfully:', validPosts.length, 'posts');
             })
             .catch(function (error) {
                 console.error('Instagram Feed Error:', error);
-
                 feedContainer.innerHTML = `
-                    <div style="
-                        grid-column: 1 / -1;
-                        padding: 40px 20px;
-                        background: #1f2937;
-                        border-radius: 16px;
-                        border: 1px dashed #374151;
-                    ">
-                        <i
-                            class="fab fa-instagram"
-                            style="
-                                font-size: 2.5rem;
-                                color: var(--sj-red);
-                                margin-bottom: 15px;
-                            "
-                        ></i>
-                        <h4 style="
-                            font-size: 1.2rem;
-                            color: white;
-                            margin-bottom: 5px;
-                            font-weight: 800;
-                        ">
-                            Feed Temporarily Unavailable
-                        </h4>
-                        <p style="
-                            color: var(--text-light);
-                            font-size: 0.95rem;
-                            margin: 0;
-                            font-weight: 500;
-                        ">
-                            Instagram feed is temporarily unavailable.
-                            Please visit
-                            <a
-                                href="https://www.instagram.com/sinjeon_Canada"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style="
-                                    color: var(--sj-red);
-                                    text-decoration: underline;
-                                "
-                            >
-                                @sinjeon_Canada
-                            </a>
-                            for the latest updates.
+                    <div style="grid-column: 1 / -1; padding: 40px 20px; background: #1f2937; border-radius: 16px; border: 1px dashed #374151;">
+                        <i class="fab fa-instagram" style="font-size: 2.5rem; color: var(--sj-red); margin-bottom: 15px;"></i>
+                        <h4 style="font-size: 1.2rem; color: white; margin-bottom: 5px; font-weight: 800;">Feed Temporarily Unavailable</h4>
+                        <p style="color: var(--text-light); font-size: 0.95rem; margin: 0; font-weight: 500;">
+                            Instagram feed is temporarily unavailable. Please visit
+                            <a href="https://www.instagram.com/sinjeon_Canada" target="_blank" rel="noopener noreferrer" style="color: var(--sj-red); text-decoration: underline;">@sinjeon_Canada</a> for the latest updates.
                         </p>
-                    </div>
-                `;
+                    </div>`;
             });
         });
     </script>
