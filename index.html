@@ -2,26 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <meta name="theme-color" content="#FFFFFF">
     
-    <!-- Primary Meta Tags -->
+    <!-- =========================================
+         [SEO & Meta Tags]
+         ========================================= -->
     <title>Sinjeon Canada | The New Standard of Topokki</title>
     <meta name="title" content="Sinjeon Canada | The New Standard of Topokki">
     <meta name="description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide.">
+    <meta name="robots" content="index, follow">
 
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
     
-    <!-- ★ 핵심 에셋 사전 로딩 -->
+    <!-- =========================================
+         [Preload Assets for Performance]
+         ========================================= -->
     <link rel="preload" href="background/base_1.JPG" as="image">
     <link rel="preload" href="character/character_7.png" as="image">
     <link rel="preload" href="fonts/SinjeonFont.otf" as="font" type="font/otf" crossorigin>
     
-    <!-- FontAwesome & EmailJS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- =========================================
+         [External Libraries]
+         ========================================= -->
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- EmailJS SDK -->
     <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     
-    <!-- ★ Leaflet.js -->
+    <!-- Leaflet.js (Map Engine) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
@@ -30,60 +40,106 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 
+    <!-- =========================================
+         [Main Stylesheet (Kernel-Level Robustness)]
+         ========================================= -->
     <style>
-        /* =========================================
-           1. Core Reset & Typography
-           ========================================= */
-        html, body {
-            width: 100%; max-width: 100vw; overflow-x: hidden !important; position: relative;
-            -webkit-user-select: none; -moz-user-select: none; user-select: none;
-            scroll-behavior: smooth; margin: 0; padding: 0; box-sizing: border-box;
+        /* -----------------------------------------
+           1. CSS Variables & Reset
+           ----------------------------------------- */
+        :root {
+            /* Brand Colors */
+            --sj-green: #008250; 
+            --sj-red: #D24B41; 
+            
+            /* UI Colors */
+            --text-dark: #1A1A1A; 
+            --text-gray: #666666; 
+            --text-light: #A0AEC0;
+            --bg-light: #F8FAFC; 
+            --bg-white: #FFFFFF; 
+            --bg-dark: #111827;
+            --border-color: #E2E8F0;
+            
+            /* Status Colors */
+            --uber-green: #06C167; 
+            --google-yellow: #FBBC04;
+            
+            /* Animations & Shadows */
+            --transition-fast: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --transition-normal: 0.4s ease;
+            --shadow-xs: 0 1px 3px rgba(0,0,0,0.02);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 25px 50px -12px rgba(210, 75, 65, 0.15);
+            
+            /* Border Radii */
+            --border-radius-lg: 24px; 
+            --border-radius-md: 16px;
+            --border-radius-sm: 12px;
         }
-        input, textarea, select { user-select: auto; font-family: 'Outfit', sans-serif; }
-        img { user-drag: none; -webkit-user-drag: none; max-width: 100%; height: auto; display: block; object-fit: contain;}
-        *:focus-visible { outline: 3px solid #D24B41; outline-offset: 2px; border-radius: 6px; }
+
+        html, body {
+            width: 100%; 
+            max-width: 100vw; 
+            overflow-x: hidden !important; 
+            position: relative;
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-family: 'Outfit', 'Poppins', 'Noto Sans KR', sans-serif; 
+            color: var(--text-dark); 
+            background-color: var(--bg-white); 
+            line-height: 1.6;
+        }
+
+        *, *::before, *::after {
+            box-sizing: inherit;
+        }
+
+        /* Anti-theft & Accessibility */
+        body { -webkit-user-select: none; -moz-user-select: none; user-select: none; }
+        input, textarea, select { user-select: auto; font-family: inherit; }
+        img { user-drag: none; -webkit-user-drag: none; max-width: 100%; height: auto; display: block; object-fit: contain; }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; font-family: inherit; }
+        *:focus-visible { outline: 3px solid var(--sj-red); outline-offset: 2px; border-radius: 6px; }
 
         @font-face {
             font-family: 'SinjeonCustom';
             src: url('fonts/SinjeonFont.otf') format('opentype');
-            font-weight: normal; font-style: normal; font-display: swap;
+            font-weight: normal; 
+            font-style: normal; 
+            font-display: swap;
         }
 
-        :root {
-            --sj-green: #008250; --sj-red: #D24B41; 
-            --text-dark: #1A1A1A; --text-gray: #666666; --text-light: #A0AEC0;
-            --bg-light: #F8FAFC; --bg-white: #FFFFFF; --border-color: #E2E8F0;
-            --uber-green: #06C167; --google-yellow: #FBBC04;
-            --transition-fast: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 25px 50px -12px rgba(210, 75, 65, 0.15);
-            --border-radius-lg: 24px; --border-radius-md: 16px;
-        }
-
-        * { box-sizing: inherit; }
-        body { font-family: 'Outfit', 'Poppins', 'Noto Sans KR', sans-serif; color: var(--text-dark); background-color: var(--bg-white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-
-        .scroll-progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--sj-red); z-index: 1001; width: 0%; transition: width 0.1s linear; }
+        /* -----------------------------------------
+           2. Global UI Components
+           ----------------------------------------- */
+        .scroll-progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--sj-red); z-index: 1001; width: 0%; transition: width 0.1s linear; will-change: width; }
 
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         .section-header { text-align: center; margin-bottom: 50px; padding: 0 20px; }
-        .section-header h2 { font-size: 3rem; font-weight: 900; color: var(--text-dark); letter-spacing: -1px; margin-bottom: 10px; text-transform: uppercase;}
-        .section-header h2 span { color: var(--sj-red); font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 3.5rem; }
-        .section-header p { font-size: 1rem; color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+        .section-header h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: var(--text-dark); letter-spacing: -1px; margin-bottom: 10px; text-transform: uppercase; word-break: keep-all;}
+        .section-header h2 span { color: var(--sj-red); font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: clamp(2.5rem, 6vw, 3.5rem); }
+        .section-header p { font-size: clamp(0.9rem, 2vw, 1rem); color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* 플로팅 애니메이션 */
-        @keyframes float-normal { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-12px) rotate(2deg); } }
-        @keyframes float-slow { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-8px) rotate(-2deg); } }
-        @keyframes float-fast { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-16px) rotate(3deg); } }
-        .char-img { position: absolute; z-index: 5; pointer-events: auto; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.12)); transition: transform var(--transition-fast); }
-        .char-img:hover { transform: scale(1.1) translateY(-5px) !important; cursor: pointer; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.2)); }
+        /* Hardware Accelerated Floating Animations */
+        @keyframes float-normal { 0%, 100% { transform: translateY(0px) rotate(0deg) translateZ(0); } 50% { transform: translateY(-12px) rotate(2deg) translateZ(0); } }
+        @keyframes float-slow { 0%, 100% { transform: translateY(0px) rotate(0deg) translateZ(0); } 50% { transform: translateY(-8px) rotate(-2deg) translateZ(0); } }
+        @keyframes float-fast { 0%, 100% { transform: translateY(0px) rotate(0deg) translateZ(0); } 50% { transform: translateY(-16px) rotate(3deg) translateZ(0); } }
+        
+        .char-img { position: absolute; z-index: 5; pointer-events: auto; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.12)); transition: transform var(--transition-fast); will-change: transform; }
+        .char-img:hover { transform: scale(1.1) translateY(-5px) translateZ(0) !important; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.2)); }
 
-        /* =========================================
-           2. Popup System
-           ========================================= */
+        /* -----------------------------------------
+           3. Popup Integrity System
+           ----------------------------------------- */
         .event-popup-wrapper {
             position: fixed; top: 110px; left: 20px; z-index: 99999; 
             opacity: 0; visibility: hidden; transform: translateX(-30px); 
@@ -92,9 +148,9 @@
         }
         .event-popup-wrapper.show { opacity: 1; visibility: visible; transform: translateX(0); pointer-events: auto; }
         .event-popup-content {
-            background: var(--bg-white); border-radius: 16px; width: fit-content; 
+            background: var(--bg-white); border-radius: var(--border-radius-md); width: fit-content; 
             max-width: calc(100vw - 40px); overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);
             display: flex; flex-direction: column;
         }
         .popup-image-container {
@@ -105,7 +161,7 @@
         .popup-image-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .popup-image-container div { flex: 0 0 320px; width: 320px; border-right: 1px solid var(--border-color); }
         .popup-image-container div:last-child { border-right: none; }
-        .popup-image-container img { width: 100%; height: auto; display: block; min-height: 100px;}
+        .popup-image-container img { width: 100%; height: auto; display: block; min-height: 100px; object-fit: cover;}
         
         .event-popup-actions { display: flex; border-top: 1px solid var(--border-color); width: 100%; }
         .event-popup-actions button { flex: 1; padding: 14px 0; border: none; background: var(--bg-light); font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: var(--transition-fast); font-family: 'Noto Sans KR', sans-serif; }
@@ -114,37 +170,41 @@
         .btn-close-popup { color: var(--sj-red); }
         .btn-close-popup:hover { background: #fdf2f2; }
 
-        /* =========================================
-           3. Header & Navigation
-           ========================================= */
+        /* -----------------------------------------
+           4. Header & Navigation (Right Aligned)
+           ----------------------------------------- */
         header { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 15px 5%; background: rgba(255, 255, 255, 0.95); 
             position: fixed; width: 100%; top: 0; z-index: 1000; 
-            backdrop-filter: blur(10px); border-bottom: 1px solid transparent; 
-            transition: var(--transition-fast); 
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid transparent; transition: all var(--transition-fast); 
+            will-change: padding, box-shadow, background;
         }
         header.scrolled { padding: 10px 5%; border-bottom: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0,0,0,0.04); background: rgba(255, 255, 255, 0.98); }
         
         .header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1400px; margin: 0 auto; }
         
         .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; position: relative; z-index: 1002;}
-        .logo-container img { height: 40px; transition: var(--transition-fast); }
-        .logo-container span { font-family: 'SinjeonCustom', sans-serif; font-size: 1.5rem; font-weight: normal; color: var(--sj-green); letter-spacing: -0.5px; margin-top: 4px;}
+        .logo-container img { height: clamp(32px, 4vw, 40px); transition: var(--transition-fast); }
+        .logo-container span { font-family: 'SinjeonCustom', sans-serif; font-size: clamp(1.2rem, 3vw, 1.5rem); font-weight: normal; color: var(--sj-green); letter-spacing: -0.5px; margin-top: 4px;}
         
         .nav-wrapper { display: flex; align-items: center; gap: 35px; justify-content: flex-end; flex: 1; }
         
+        /* GNB: Order perfectly aligned */
         .desktop-nav { display: flex; gap: 25px; align-items: center; }
         .desktop-nav a { text-decoration: none; color: var(--text-dark); font-weight: 700; font-size: 0.9rem; position: relative; padding: 5px 0; transition: color var(--transition-fast); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;}
         .desktop-nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: var(--sj-red); transition: width var(--transition-fast); }
         .desktop-nav a:hover { color: var(--sj-red); }
         .desktop-nav a:hover::after { width: 100%; }
 
+        /* Unified CTA Button */
         .header-cta-group { display: flex; align-items: center; flex-shrink: 0; margin-left: 10px; position: relative; z-index: 1002;}
         .header-btn-apply { background: var(--sj-red); color: white !important; font-size: 0.9rem; font-weight: 800; padding: 12px 28px; border-radius: 50px; text-decoration: none; text-transform: uppercase; transition: var(--transition-fast); box-shadow: 0 4px 15px rgba(210, 75, 65, 0.3); white-space: nowrap; letter-spacing: 0.5px;}
         .header-btn-apply:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(210, 75, 65, 0.4);}
         .header-btn-apply::after { display: none !important; }
 
+        /* Mobile Hamburger */
         .mobile-menu-btn { display: none; font-size: 1.8rem; color: var(--text-dark); background: none; border: none; cursor: pointer; z-index: 1002; position: relative; padding: 5px; margin-left: 15px;}
         .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-white); z-index: 1001; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); transform: translateY(-20px); }
         .mobile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
@@ -152,28 +212,34 @@
         .mobile-nav-links a { font-size: 1.8rem; font-weight: 800; color: var(--text-dark); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; transition: color var(--transition-fast); }
         .mobile-nav-links a:hover { color: var(--sj-red); }
 
-        /* =========================================
-           4. Hero Section
-           ========================================= */
+        /* -----------------------------------------
+           5. Hero Section
+           ----------------------------------------- */
         .hero { padding: 200px 5% 100px; text-align: center; position: relative; background: radial-gradient(circle at center, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.98) 100%), url('background/base_1.JPG') center/cover no-repeat, var(--bg-light); background-attachment: fixed; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
         .hero-badge { display: inline-block; padding: 8px 24px; background: rgba(0, 130, 80, 0.08); color: var(--sj-green); border-radius: 50px; font-size: 0.85rem; font-weight: 800; margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; }
-        .hero h1 { font-family: 'Outfit', sans-serif; font-size: 4.5rem; margin: 0; letter-spacing: -2px; line-height: 1.1; font-weight: 900; color: var(--text-dark); text-transform: uppercase; position: relative; z-index: 2;}
-        .hero h1 span.highlight { color: var(--sj-red); display: block; font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 5.5rem; letter-spacing: -1px; margin-top: 5px;}
-        .hero > p { font-size: 1.15rem; color: var(--text-gray); margin-top: 20px; font-weight: 500; max-width: 600px; position: relative; z-index: 2;}
+        .hero h1 { font-family: 'Outfit', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); margin: 0; letter-spacing: -2px; line-height: 1.1; font-weight: 900; color: var(--text-dark); text-transform: uppercase; position: relative; z-index: 2;}
+        .hero h1 span.highlight { color: var(--sj-red); display: block; font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: clamp(3.2rem, 7vw, 5.5rem); letter-spacing: -1px; margin-top: 5px;}
+        .hero > p { font-size: clamp(1rem, 2vw, 1.15rem); color: var(--text-gray); margin-top: 20px; font-weight: 500; max-width: 600px; position: relative; z-index: 2;}
         
-        .char-hero { width: 160px; right: 15%; top: 25%; animation: float-normal 4.5s ease-in-out infinite;} 
+        .char-hero { width: clamp(100px, 15vw, 160px); right: 10%; top: 25%; animation: float-normal 4.5s ease-in-out infinite;} 
 
-        /* =========================================
-           5. About & Core Values
-           ========================================= */
+        /* Marquee Strip */
+        .marquee-wrapper { width: 100%; background: var(--sj-green); color: var(--bg-white); padding: 15px 0; overflow: hidden; position: relative; display: flex; transform: rotate(-1.5deg) scale(1.05) translateZ(0); margin-top: 70px; z-index: 1; box-shadow: 0 10px 20px rgba(0,130,80,0.15); will-change: transform;}
+        .marquee { display: flex; white-space: nowrap; animation: marquee 25s linear infinite; will-change: transform; }
+        .marquee span { font-size: clamp(1rem, 2vw, 1.4rem); font-weight: 800; margin: 0 30px; text-transform: uppercase; letter-spacing: 1px; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* -----------------------------------------
+           6. About & Core Values
+           ----------------------------------------- */
         .about-section { padding: 120px 5%; background: var(--bg-white); }
         .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1200px; margin: 0 auto; }
         .bento-item { background: var(--bg-light); border-radius: var(--border-radius-lg); padding: 40px 35px; border: 1px solid var(--border-color); position: relative; overflow: visible; transition: var(--transition-fast); display: flex; flex-direction: column; justify-content: center; text-align: left; }
         .bento-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--sj-green); background: var(--bg-white); }
-        .bento-large { grid-column: span 3; background: var(--text-dark); color: var(--bg-white); display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; align-items: center; padding: 40px; border: none;}
+        .bento-large { grid-column: span 3; background: var(--bg-dark); color: var(--bg-white); display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; align-items: center; padding: 40px; border: none;}
         
         .stat-item { padding: 10px; }
-        .stat-item h4 { font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: 3.5rem; color: var(--sj-red); margin-bottom: 5px; line-height: 1; }
+        .stat-item h4 { font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--sj-red); margin-bottom: 5px; line-height: 1; }
         .stat-item p { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.7); margin: 0; }
         .value-icon { width: 60px; height: 60px; background: rgba(210, 75, 65, 0.1); color: var(--sj-red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; }
         .bento-item h3 { font-size: 1.5rem; font-weight: 800; color: var(--sj-green); margin-bottom: 12px; }
@@ -184,9 +250,9 @@
         .char-bento-1 { width: 90px; bottom: -20px; right: -10px; animation: float-slow 6s ease-in-out infinite 0.5s;}
         .char-bento-2 { width: 80px; top: -30px; right: 20px; animation: float-fast 3.5s ease-in-out infinite 1s;}
 
-        /* =========================================
-           6. Spice Guide
-           ========================================= */
+        /* -----------------------------------------
+           7. Spice Guide
+           ----------------------------------------- */
         .spice-section { padding: 120px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .spice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1100px; margin: 0 auto; }
         .spice-card { padding: 50px 30px; border-radius: var(--border-radius-lg); text-align: center; position: relative; overflow: visible; background: var(--bg-white); border: 1px solid var(--border-color); transition: var(--transition-fast); z-index: 1; cursor: pointer; }
@@ -205,9 +271,9 @@
         .char-spice { width: 110px; position: absolute; top: -55px; left: 50%; transform: translateX(-50%); z-index: 10; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); transition: transform var(--transition-fast); }
         .spice-card:hover .char-spice { transform: translateX(-50%) scale(1.1) translateY(-10px); }
 
-        /* =========================================
-           7. Categorized Menu Section
-           ========================================= */
+        /* -----------------------------------------
+           8. Menu Section (Center Alignment Fix)
+           ----------------------------------------- */
         .menu-section { padding: 120px 5%; background: var(--bg-white); text-align: center; border-top: 1px solid var(--border-color); }
         .menu-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
         .menu-tab-btn { background: var(--bg-light); border: 1px solid var(--border-color); color: var(--text-gray); padding: 12px 30px; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: var(--transition-fast); text-transform: uppercase; }
@@ -216,6 +282,7 @@
 
         .menu-grid-container { max-width: 1200px; margin: 0 auto; min-height: 400px; position: relative; } 
         
+        /* ★ CSS Grid Justify Center Fix for incomplete rows */
         .menu-grid { 
             display: none; 
             grid-template-columns: repeat(auto-fit, minmax(260px, 280px)); 
@@ -224,7 +291,7 @@
             opacity: 0; 
             transition: opacity 0.4s ease; 
         }
-        .menu-grid.active { display: grid; opacity: 1; animation: fadeInMenu 0.3s ease-in-out; }
+        .menu-grid.active { display: grid; opacity: 1; animation: fadeInMenu 0.3s ease-in-out forwards; }
         @keyframes fadeInMenu { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .menu-item { background: var(--bg-white); border-radius: var(--border-radius-md); padding: 30px 20px 25px; border: 1px solid var(--border-color); transition: var(--transition-fast); display: flex; flex-direction: column; align-items: center; justify-content: space-between; width: 100%;}
@@ -232,7 +299,8 @@
         
         .menu-item-img { 
             width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; 
-            margin-bottom: 20px; background: #f8fafc; border-radius: 12px;
+            margin-bottom: 20px; background: #f8fafc; border-radius: var(--border-radius-sm);
+            position: relative; overflow: hidden;
         }
         .menu-item-img img { max-width: 90%; max-height: 90%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.08)); transition: transform var(--transition-fast); }
         .menu-item:hover .menu-item-img img { transform: scale(1.1) rotate(2deg); filter: drop-shadow(0 15px 20px rgba(0,0,0,0.12));}
@@ -243,16 +311,16 @@
 
         .menu-disclaimer { margin-top: 40px; font-size: 0.95rem; color: var(--text-light); font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        /* =========================================
-           8. Locations & Feature Tags
-           ========================================= */
+        /* -----------------------------------------
+           9. Locations & Interactive Leaflet Map
+           ----------------------------------------- */
         .locations { padding: 120px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1300px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 700px; }
         .loc-list-wrapper { flex: 0 0 42%; overflow-y: auto; padding: 30px; }
         .loc-list-wrapper::-webkit-scrollbar { width: 6px; }
         .loc-list-wrapper::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         
-        .loc-item { background: var(--bg-light); border-radius: 16px; padding: 30px 25px; margin-bottom: 20px; border: 2px solid transparent; cursor: pointer; transition: var(--transition-fast); display: flex; flex-direction: column;}
+        .loc-item { background: var(--bg-light); border-radius: var(--border-radius-md); padding: 30px 25px; margin-bottom: 20px; border: 2px solid transparent; cursor: pointer; transition: var(--transition-fast); display: flex; flex-direction: column;}
         .loc-item:hover { background: var(--bg-white); border-color: #e2e8f0; }
         .loc-item.active { border-color: var(--sj-red); box-shadow: var(--shadow-md); background: var(--bg-white); }
         
@@ -268,6 +336,7 @@
         .loc-info-list p { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--text-gray); line-height: 1.5; font-weight: 500; margin: 0;}
         .loc-info-list i { color: var(--sj-red); font-size: 1rem; width: 16px; text-align: center; margin-top: 3px; }
         
+        /* Premium Feature Tags */
         .feature-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
         .feature-tag { font-size: 0.8rem; padding: 6px 14px; background: rgba(0, 130, 80, 0.05); color: var(--sj-green); font-weight: 800; border-radius: 50px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(0, 130, 80, 0.1); transition: var(--transition-fast);}
         .feature-tag i { font-size: 0.9rem; }
@@ -280,13 +349,14 @@
         .btn-fill { background: var(--uber-green); color: var(--bg-white); border: 2px solid var(--uber-green); }
         .btn-fill:hover { background: #05a659; border-color: #05a659;}
         
+        /* Map Area */
         .loc-map-wrapper { flex: 1; background: #e2e8f0; position: relative; pointer-events: auto; overflow: hidden; z-index: 1;}
         #main-map { width: 100%; height: 100%; position: absolute; top:0; left:0; z-index: 1;}
         
         .map-info-overlay {
             position: absolute; bottom: 30px; left: 30px;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            padding: 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding: 20px; border-radius: var(--border-radius-md); box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             z-index: 10; width: calc(100% - 60px); max-width: 300px;
             transform: translateY(20px); opacity: 0;
             transition: var(--transition-fast); pointer-events: none; border: 1px solid rgba(0,0,0,0.05);
@@ -298,16 +368,16 @@
         .overlay-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: var(--sj-red); color: white; text-decoration: none; font-weight: 700; padding: 10px 0; border-radius: 10px; width: 100%; margin-top: 8px; transition: var(--transition-fast); font-size: 0.95rem;}
         .overlay-btn:hover { background: #b83e35; }
 
-        /* =========================================
-           9. Instagram Feed 
-           ========================================= */
-        .ugc-section { padding: 120px 5%; background: #111827; color: white; text-align: center; }
+        /* -----------------------------------------
+           10. Instagram Feed (Pure JSON DOM API)
+           ----------------------------------------- */
+        .ugc-section { padding: 120px 5%; background: var(--bg-dark); color: white; text-align: center; }
         .ugc-section .section-header h2 { color: white; }
         
-        .instagram-feed-section { max-width: 1200px; margin: 0 auto; width: 100%; }
+        .instagram-feed-section { max-width: 1200px; margin: 0 auto; width: 100%; min-height: 300px;}
         .instagram-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
         
-        .instagram-item { position: relative; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 16px; background-color: #1f2937; }
+        .instagram-item { position: relative; aspect-ratio: 1 / 1; overflow: hidden; border-radius: var(--border-radius-md); background-color: #1f2937; }
         .instagram-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         
         .instagram-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(210, 75, 65, 0.85); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
@@ -318,16 +388,17 @@
         .instagram-item:hover .instagram-icon { transform: translateY(0); }
 
         .instagram-item.skeleton { background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; }
+        @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        /* =========================================
-           10. Franchise Process
-           ========================================= */
+        /* -----------------------------------------
+           11. Franchise Process (Single Funnel)
+           ----------------------------------------- */
         .timeline-section { padding: 120px 5%; background: var(--bg-white); }
         .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
         .timeline-container::before { content: ''; position: absolute; top: 0; left: 45px; width: 3px; height: 100%; background: var(--border-color); border-radius: 3px; }
         .timeline-step { display: flex; align-items: flex-start; margin-bottom: 50px; position: relative; }
         .timeline-marker { position: absolute; left: 21px; width: 50px; height: 50px; background: var(--sj-red); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; color: var(--bg-white); font-size: 1.2rem; box-shadow: 0 0 0 6px var(--bg-white); z-index: 2; }
-        .timeline-content { margin-left: 100px; background: var(--bg-light); padding: 35px 40px; border-radius: 16px; border: 1px solid var(--border-color); width: 100%; }
+        .timeline-content { margin-left: 100px; background: var(--bg-light); padding: 35px 40px; border-radius: var(--border-radius-md); border: 1px solid var(--border-color); width: 100%; }
         .timeline-content h4 { font-size: 1.4rem; color: var(--text-dark); margin-bottom: 8px; font-weight: 800; }
         .timeline-content p { color: var(--text-gray); font-size: 1rem; font-weight: 500; line-height: 1.6; font-family: 'Noto Sans KR', sans-serif;}
 
@@ -336,9 +407,9 @@
         .btn-timeline-apply { display: inline-flex; align-items: center; gap: 10px; background: var(--sj-green); color: white; padding: 16px 35px; font-size: 1.05rem; font-weight: 800; border-radius: 50px; text-decoration: none; box-shadow: 0 8px 20px rgba(0, 130, 80, 0.2); transition: var(--transition-fast); text-transform: uppercase; letter-spacing: 1px; }
         .btn-timeline-apply:hover { background: #006a40; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0, 130, 80, 0.3); }
 
-        /* =========================================
-           11. Contact Us & Quick Form
-           ========================================= */
+        /* -----------------------------------------
+           12. Contact Us & Quick Form (Flat UI)
+           ----------------------------------------- */
         .contact-section { padding: 120px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .contact-wrapper { max-width: 860px; margin: 0 auto; position: relative; }
         
@@ -351,49 +422,51 @@
         .form-content.active { display: block; animation: formFadeIn 0.3s ease-out forwards; }
         @keyframes formFadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        .general-card { background: var(--bg-white); padding: 50px 60px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-md); }
+        .general-card { background: var(--bg-white); padding: 50px 60px; border-radius: var(--border-radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-md); }
         .form-header { margin-bottom: 30px; text-align: center; }
         .form-header h3 { font-size: 1.8rem; margin-bottom: 10px; color: var(--text-dark); font-weight: 900; }
         .form-header p { color: var(--text-gray); font-size: 1rem; }
 
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .input-wrapper { position: relative; margin-bottom: 20px; }
-        .input-wrapper input, .input-wrapper textarea { width: 100%; padding: 22px 20px 12px; border: 1px solid var(--border-color); border-radius: 12px; font-weight: 500; font-size: 1rem; color: var(--text-dark); background: #F8FAFC; box-sizing: border-box; transition: var(--transition-fast); outline: none; appearance: none;}
+        .input-wrapper input, .input-wrapper textarea { width: 100%; padding: 22px 20px 12px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); font-weight: 500; font-size: 1rem; color: var(--text-dark); background: var(--bg-light); box-sizing: border-box; transition: var(--transition-fast); outline: none; appearance: none;}
         .input-wrapper textarea { resize: vertical; min-height: 120px; }
         .input-wrapper label { position: absolute; left: 20px; top: 18px; font-size: 0.95rem; color: #94a3b8; pointer-events: none; transition: var(--transition-fast); font-weight: 500; }
         .input-wrapper input:focus, .input-wrapper textarea:focus { border-color: var(--sj-green); background: var(--bg-white); box-shadow: 0 0 0 3px rgba(0,130,80,0.1);}
         .input-wrapper input:focus + label, .input-wrapper input:not(:placeholder-shown) + label,
         .input-wrapper textarea:focus + label, .input-wrapper textarea:not(:placeholder-shown) + label { top: 8px; font-size: 0.75rem; color: var(--sj-green); font-weight: 700; }
 
-        .submit-btn { width: 100%; padding: 20px; border: none; border-radius: 12px; color: var(--bg-white); font-weight: 900; transition: var(--transition-fast); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; cursor: pointer;}
+        .submit-btn { width: 100%; padding: 20px; border: none; border-radius: var(--border-radius-sm); color: var(--bg-white); font-weight: 900; transition: var(--transition-fast); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; cursor: pointer;}
         .btn-green { background: var(--sj-green); }
         .btn-green:hover { background: #006a40; }
 
-        .quick-form-card { background: var(--bg-white); padding: 50px 60px; border-radius: 20px; box-shadow: var(--shadow-md); text-align: center; border: 1px solid var(--border-color);}
+        .quick-form-card { background: var(--bg-white); padding: 50px 60px; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); text-align: center; border: 1px solid var(--border-color);}
         .step-badge { display: inline-block; background: rgba(210, 75, 65, 0.1); color: var(--sj-red); font-weight: 800; padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
         .quick-form-card h3 { font-size: 1.8rem; font-weight: 900; color: var(--text-dark); margin-bottom: 10px; }
         .quick-form-card .form-subtitle { color: var(--text-gray); font-size: 0.95rem; line-height: 1.5; margin-bottom: 30px; font-family: 'Noto Sans KR', sans-serif;}
         
         .qf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; text-align: left; }
         .qf-full { grid-column: 1 / -1; }
-        .quick-form-card input, .quick-form-card textarea { width: 100%; padding: 18px 20px; border: 1px solid var(--border-color); border-radius: 12px; background-color: #F8FAFC; font-size: 0.95rem; font-family: 'Outfit', sans-serif; color: var(--text-dark); font-weight: 500; outline: none; transition: var(--transition-fast); }
+        .quick-form-card input, .quick-form-card textarea { width: 100%; padding: 18px 20px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); background-color: var(--bg-light); font-size: 0.95rem; font-family: 'Outfit', sans-serif; color: var(--text-dark); font-weight: 500; outline: none; transition: var(--transition-fast); }
         .quick-form-card input::placeholder, .quick-form-card textarea::placeholder { color: #9CA3AF; font-weight: 500;}
         .quick-form-card input:focus, .quick-form-card textarea:focus { background-color: var(--bg-white); border-color: var(--sj-red); box-shadow: 0 0 0 3px rgba(210, 75, 65, 0.1); }
         .quick-form-card textarea { resize: vertical; min-height: 120px; }
         
-        .btn-red-flat { background: var(--sj-red); color: white; padding: 20px; border: none; border-radius: 12px; width: 100%; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: var(--transition-fast); margin-top: 10px; box-shadow: 0 8px 20px rgba(210, 75, 65, 0.2);}
+        .btn-red-flat { background: var(--sj-red); color: white; padding: 20px; border: none; border-radius: var(--border-radius-sm); width: 100%; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: var(--transition-fast); margin-top: 10px; box-shadow: 0 8px 20px rgba(210, 75, 65, 0.2);}
         .btn-red-flat:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3);}
 
         .direct-link { display: block; text-align: center; margin-top: 25px; color: var(--text-gray); font-weight: 600; text-decoration: underline; font-size: 0.9rem; transition: color var(--transition-fast); }
         .direct-link:hover { color: var(--sj-red); }
 
+        /* -----------------------------------------
+           13. Floating Action & Footer
+           ----------------------------------------- */
         .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; display: flex; flex-direction: column; gap: 15px; transform: translateY(100px); opacity: 0; transition: var(--transition-normal); pointer-events: none;}
         .fab-container.visible { transform: translateY(0); opacity: 1; pointer-events: auto;}
         .fab { width: 55px; height: 55px; border-radius: 50%; background: var(--bg-white); color: var(--text-dark); display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-md); transition: var(--transition-fast); text-decoration: none; font-size: 1.4rem; border: 1px solid var(--border-color); cursor: pointer;}
         .fab:hover { border-color: var(--sj-red); color: var(--sj-red); transform: translateY(-3px);}
 
-        /* Footer */
-        footer { background: #111827; color: rgba(255,255,255,0.7); padding: 80px 5% 40px; font-size: 0.9rem; border-top: 4px solid var(--sj-red); }
+        footer { background: var(--bg-dark); color: rgba(255,255,255,0.7); padding: 80px 5% 40px; font-size: 0.9rem; border-top: 4px solid var(--sj-red); }
         .mega-footer-container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
         .footer-brand .footer-logo-box { display: inline-flex; align-items: center; margin-bottom: 20px; }
         .footer-logo-box img { height: 40px; } 
@@ -402,24 +475,27 @@
         .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: -8px; width: 30px; height: 2px; background: var(--sj-red); border-radius: 2px; }
         .footer-col ul { list-style: none; padding: 0; }
         .footer-col ul li { margin-bottom: 15px; }
-        .footer-col ul li a { color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; transition: var(--transition-fast); display: inline-block;}
+        .footer-col ul li a { color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; transition: var(--transition-fast); display: inline-block; cursor: pointer;}
         .footer-col ul li a:hover { color: var(--bg-white); transform: translateX(5px); }
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; text-align: left; max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .footer-bottom p { margin: 0; }
 
-        /* Modal */
+        /* -----------------------------------------
+           14. Dynamic Modal
+           ----------------------------------------- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); backdrop-filter: blur(5px); }
         .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto;}
-        .modal-content { background: var(--bg-white); width: 90%; max-width: 500px; border-radius: 24px; padding: 40px; text-align: center; transform: translateY(30px); transition: transform 0.3s ease; box-shadow: 0 25px 50px rgba(0,0,0,0.3);}
+        .modal-content { background: var(--bg-white); width: 90%; max-width: 500px; border-radius: var(--border-radius-lg); padding: 40px; text-align: center; transform: translateY(30px); transition: transform 0.3s ease; box-shadow: 0 25px 50px rgba(0,0,0,0.3);}
         .modal-overlay.active .modal-content { transform: translateY(0); }
         .modal-close { position: absolute; top: 20px; right: 25px; font-size: 2rem; background: none; border: none; color: var(--text-light); transition: var(--transition-fast); line-height: 1; cursor: pointer; z-index: 10; }
         .modal-close:hover { color: var(--sj-red); }
         .modal-body { overflow-y: auto; padding-right: 10px; margin-top: 10px; color: var(--text-gray); font-size: 1rem; line-height: 1.6; text-align: left; }
+        
         .success-checkmark { width: 80px; height: 80px; background: rgba(0, 130, 80, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: var(--sj-green); font-size: 2.5rem; }
-        .redirect-spinner { margin-top: 20px; padding: 15px; background: var(--bg-light); border-radius: 12px; font-weight: 700; color: var(--sj-red); display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1rem;}
+        .redirect-spinner { margin-top: 20px; padding: 15px; background: var(--bg-light); border-radius: var(--border-radius-sm); font-weight: 700; color: var(--sj-red); display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1rem;}
 
         /* =========================================
-           12. Responsive & Mobile UI Fixes
+           15. Media Queries (Mobile Full Optimization)
            ========================================= */
         @media (max-width: 1200px) {
             .bento-large { padding: 40px; }
@@ -428,9 +504,8 @@
         @media (max-width: 1000px) {
             .hero { padding: 180px 5% 80px;}
             .char-img { display: none; }
-            .hero h1 { font-size: 3.2rem; }
-            .hero h1 span.highlight { font-size: 4rem; }
             
+            /* Hamburger Menu Activation */
             .desktop-nav { display: none; } 
             .mobile-menu-btn { display: block; }
             
@@ -439,9 +514,10 @@
             .stat-item h4 { font-size: 3rem; }
             .spice-grid { grid-template-columns: 1fr; }
             
+            /* Map 100% Height fix */
             .split-layout { flex-direction: column; height: auto; }
-            .loc-map-wrapper { height: 450px; width: 100%; border-radius: 24px 24px 0 0; }
-            .loc-list-wrapper { padding: 20px; max-height: 500px; border-radius: 0 0 24px 24px;}
+            .loc-map-wrapper { height: 450px; width: 100%; border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; }
+            .loc-list-wrapper { padding: 20px; max-height: 500px; border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);}
             
             .mega-footer-container { grid-template-columns: 1fr; gap: 40px; text-align: left; }
             .footer-col h4::after { left: 0; transform: none; }
@@ -462,9 +538,11 @@
             .header-cta-group { margin-left: auto;}
             .header-btn-apply { padding: 10px 18px; font-size: 0.8rem; box-shadow: none;}
             
+            /* 50:50 Tab Ratio */
             .tab-container { display: flex; width: 100%; border-radius: 12px; padding: 4px; margin-bottom: 30px;}
             .tab-btn { flex: 1; padding: 12px 0; font-size: 0.95rem; border-radius: 8px;}
             
+            /* 2x2 Menu Grid Perfect Fit */
             .menu-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; margin-bottom: 30px;}
             .menu-tab-btn { width: 100%; padding: 12px 0; font-size: 0.9rem; margin: 0; }
             .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -479,13 +557,14 @@
             .stat-item p { font-size: 0.8rem; }
             
             .hero { padding: 150px 5% 60px;}
-            .hero h1 { font-size: 2.4rem; }
-            .hero h1 span.highlight { font-size: 3rem; }
+            .hero-btn-group { flex-direction: column; width: 100%; padding: 0; gap: 10px;}
+            .btn-clean-heat, .btn-hero-apply { width: 100%; justify-content: center; padding: 14px 0;}
             
             .section-header { margin-bottom: 40px; }
             .section-header h2 { font-size: 2rem; }
             .section-header h2 span { font-size: 2.5rem; }
             
+            /* Map Mobile Height & Overlay Compression */
             .loc-map-wrapper { height: 350px; }
             .map-info-overlay { padding: 15px; bottom: 15px; left: 15px; width: calc(100% - 30px); max-width: none; }
             .map-info-overlay h4 { font-size: 1.1rem; }
@@ -496,11 +575,13 @@
             
             .about-section, .spice-section, .menu-section, .locations, .ugc-section, .contact-section, .timeline-section { padding: 70px 5%; }
             
+            /* Quick Form Mobile Full-width */
             .general-card, .quick-form-card { padding: 35px 20px; border-radius: 16px;}
             .quick-form-card h3 { font-size: 1.5rem; }
             .input-wrapper input, .input-wrapper textarea, .quick-form-card input, .quick-form-card textarea { padding: 16px; font-size: 0.95rem; }
             .btn-green, .btn-red-flat { padding: 18px; font-size: 1rem; }
             
+            /* Popup Centralization */
             .event-popup-wrapper { top: 50%; bottom: auto; left: 50%; right: auto; transform: translate(-50%, -45%); width: 90%; max-width: 320px; }
             .event-popup-wrapper.show { transform: translate(-50%, -50%); }
             .event-popup-content { width: 100%; }
@@ -512,32 +593,730 @@
             .instagram-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .fab-container { bottom: 20px; right: 20px;}
         }
-        
-        @media (max-width: 350px) {
-            .hero h1 { font-size: 2rem; }
-            .hero h1 span.highlight { font-size: 2.4rem; }
-            .bento-large .stat-item { grid-column: span 2; } 
-        }
     </style>
-    
+</head>
+<body>
+
+    <!-- 1. Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- 2. Header (Right Aligned, Single CTA, Hamburger) -->
+    <header id="header">
+        <div class="header-top">
+            <a href="#home" class="logo-container" aria-label="Go to Homepage">
+                <img src="sinjeon_logo_canada.png" alt="Sinjeon Canada Logo">
+                <span>SINJEON CANADA</span>
+            </a>
+            
+            <div class="nav-wrapper">
+                <nav role="navigation" class="desktop-nav" aria-label="Main Navigation">
+                    <a href="#about">About</a>
+                    <a href="#menu">Menu</a>
+                    <a href="#locations">Locations</a>
+                    <a href="#community">Community</a>
+                    <a href="#contact">Franchise</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+                
+                <div class="header-cta-group">
+                    <a href="step1_proposal.html" class="header-btn-apply">Apply Now</a>
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Open Mobile Menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. Mobile Fullscreen Overlay Menu -->
+    <div class="mobile-overlay" id="mobile-menu">
+        <button class="mobile-menu-btn" style="position: absolute; top: 20px; right: 20px;" onclick="toggleMobileMenu()" aria-label="Close Mobile Menu">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="mobile-nav-links">
+            <a href="#about" onclick="toggleMobileMenu()">About</a>
+            <a href="#menu" onclick="toggleMobileMenu()">Menu</a>
+            <a href="#locations" onclick="toggleMobileMenu()">Locations</a>
+            <a href="#community" onclick="toggleMobileMenu()">Community</a>
+            <a href="step1_proposal.html" onclick="toggleMobileMenu()">Franchise</a>
+            <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+        </div>
+    </div>
+
+    <!-- 4. Event Popup System -->
+    <div class="event-popup-wrapper" id="main-event-popup" aria-hidden="true" role="dialog">
+        <div class="event-popup-content">
+            <div id="popup-image-container" class="popup-image-container"></div>
+            <div class="event-popup-actions">
+                <button class="btn-hide-24h" onclick="hidePopupFor24Hours()">24시간 보지 않기</button>
+                <button class="btn-close-popup" onclick="closeEventPopup()">닫기 (Close)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-badge reveal">The Global No.1 K-Food</div>
+        <img src="character/character_7.png" class="char-img char-hero" alt="Sinjeon Character">
+        <h1 class="reveal delay-100">The New Standard<br><span class="highlight">of Topokki</span></h1>
+        <p class="reveal delay-200">From Korea to Canada. Experience the authentic, HACCP-certified spice that captivated over 800 locations worldwide.</p>
+        
+        <div class="marquee-wrapper reveal delay-300">
+            <div class="marquee" aria-hidden="true">
+                <span>🌶️ THE NEW STANDARD OF TOPOKKI</span><span>🔥 OVER 800+ STORES WORLDWIDE</span>
+                <span>🌶️ HACCP CERTIFIED</span><span>🔥 CLEAN HEAT, REAL PEPPER</span>
+                <span>🌶️ THE NEW STANDARD OF TOPOKKI</span><span>🔥 OVER 800+ STORES WORLDWIDE</span>
+                <span>🌶️ HACCP CERTIFIED</span><span>🔥 CLEAN HEAT, REAL PEPPER</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. About Section -->
+    <section class="about-section" id="about">
+        <div class="section-header reveal">
+            <p>Brand Story</p>
+            <h2>Why <span>Sinjeon?</span></h2>
+        </div>
+        <div class="bento-grid">
+            <div class="bento-item reveal delay-100">
+                <div class="value-icon" aria-hidden="true">01</div>
+                <h3>Sanitary Seasoning</h3>
+                <p>Manufactured in our HACCP-certified facility in Korea. We strictly control quality to deliver the exact same authentic taste globally.</p>
+                <img src="character/character_4.png" class="char-img char-bento-1" alt="Sinjeon Mandoo" loading="lazy">
+            </div>
+            <div class="bento-item reveal delay-200">
+                <div class="value-icon" aria-hidden="true">02</div>
+                <h3>The Perfect Dip</h3>
+                <p>Sinjeon's signature broth is designed perfectly for dipping. Pair our legendary fried menu items with the spicy sauce.</p>
+            </div>
+            <div class="bento-item reveal delay-300">
+                <div class="value-icon" aria-hidden="true">03</div>
+                <h3>Customized Heat</h3>
+                <p>From Mild to Extra Spicy, our unique seasoning profile offers a clean, addictive heat that caters to everyone's spice tolerance.</p>
+                <button class="btn-clean-heat-sm" onclick="showModalMessage('Clean Heat', document.getElementById('template-clean-heat').innerHTML, true)">How we make it ➔</button>
+                <img src="character/character_6.png" class="char-img char-bento-2" alt="Sinjeon Golf" loading="lazy">
+            </div>
+            
+            <div class="bento-item bento-large reveal delay-100">
+                <div class="stat-item"><h4>800+</h4><p>Stores in Korea</p></div>
+                <div class="stat-item"><h4>20+</h4><p>Global Locations</p></div>
+                <div class="stat-item"><h4>1999</h4><p>Year Established</p></div>
+                <div class="stat-item"><h4>100%</h4><p>HACCP Certified</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Spice Level Section -->
+    <section class="spice-section" id="spice">
+        <div class="section-header reveal">
+            <p>Spice Level</p>
+            <h2>Choose Your <span>Heat</span></h2>
+        </div>
+        <div class="spice-grid">
+            <div class="spice-card spice-mild reveal delay-100">
+                <span class="spice-level-num" aria-hidden="true">01</span>
+                <img src="character/character_1.png" class="char-spice anim-float-2" alt="Mild Character" loading="lazy">
+                <h3>MILD</h3>
+                <p>Sweet and gently warming. Perfect for beginners to enjoy K-Spice.</p>
+            </div>
+            <div class="spice-card spice-medium reveal delay-200">
+                <span class="spice-level-num" aria-hidden="true">02</span>
+                <img src="character/character_2.png" class="char-spice anim-float-1" alt="Normal Character" loading="lazy">
+                <h3>NORMAL</h3>
+                <p>The authentic original heat. A balanced kick that keeps you wanting more.</p>
+            </div>
+            <div class="spice-card spice-spicy reveal delay-300">
+                <span class="spice-level-num" aria-hidden="true">03</span>
+                <img src="character/character_3.png" class="char-spice anim-float-3" alt="Spicy Character" loading="lazy">
+                <h3>SPICY</h3>
+                <p>For the brave. Intense, sweat-inducing heat using pure Cheongyang Chili.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Menu Section (Center Aligned, Mobile 2x2) -->
+    <section class="menu-section" id="menu">
+        <div class="section-header reveal">
+            <p>Signature Menu</p>
+            <h2>Taste the <span>Original</span></h2>
+        </div>
+        
+        <div class="menu-tabs reveal delay-100" role="tablist">
+            <button class="menu-tab-btn active" role="tab" aria-selected="true" onclick="showMenuCategory('Main')">Main</button>
+            <button class="menu-tab-btn" role="tab" aria-selected="false" onclick="showMenuCategory('DeepFried')">Deep Fried</button>
+            <button class="menu-tab-btn" role="tab" aria-selected="false" onclick="showMenuCategory('Rice')">Rice & Cupbap</button>
+            <button class="menu-tab-btn" role="tab" aria-selected="false" onclick="showMenuCategory('Topping')">Toppings</button>
+        </div>
+
+        <div class="menu-grid-container reveal delay-200">
+            <!-- Main Category -->
+            <div id="cat-Main" class="menu-grid active" role="tabpanel">
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/신전 오리지널 떡볶이.png" alt="Sinjeon Original Topokki" loading="lazy"></div>
+                    <h3>Original Topokki</h3><p class="menu-kor">신전 오리지널 떡볶이</p><p class="menu-eng">Classic spicy rice cakes in signature broth</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/신전 로제 떡볶이.png" alt="Rose Topokki" loading="lazy"></div>
+                    <h3>Rosé Topokki</h3><p class="menu-kor">신전 로제 떡볶이</p><p class="menu-eng">Creamy and spicy rosé sauce rice cakes</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/신전 마라 로제 떡볶이.png" alt="Mala Rose Topokki" loading="lazy"></div>
+                    <h3>Mala Rosé Topokki</h3><p class="menu-kor">신전 마라 로제 떡볶이</p><p class="menu-eng">Trend-setting mala flavor with rich cream</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/신전 맵닭.png" alt="Spicy Chicken Topokki" loading="lazy"></div>
+                    <h3>Spicy Chicken Topokki</h3><p class="menu-kor">신전 맵닭</p><p class="menu-eng">Topokki topped with spicy chicken</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/신전 로제 맵닭.png" alt="Rose Spicy Chicken" loading="lazy"></div>
+                    <h3>Rosé Spicy Chicken</h3><p class="menu-kor">신전 로제 맵닭</p><p class="menu-eng">Spicy chicken in rich creamy rosé sauce</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/크림 카레 떡볶이.jpg" alt="Cream Curry Topokki" loading="lazy"></div>
+                    <h3>Cream Curry Topokki</h3><p class="menu-kor">크림 카레 떡볶이</p><p class="menu-eng">Rich curry and cream sauce with chewy rice cakes</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/크림 카레 우동.jpg" alt="Cream Curry Udon" loading="lazy"></div>
+                    <h3>Cream Curry Udon</h3><p class="menu-kor">크림 카레 우동</p><p class="menu-eng">Thick udon noodles in a smooth cream curry broth</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/크림 떡볶이.jpg" alt="Cream Topokki" loading="lazy"></div>
+                    <h3>Cream Topokki</h3><p class="menu-kor">크림 떡볶이</p><p class="menu-eng">Soft and savory cream sauce rice cakes</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/마라 로제 우동.jpg" alt="Mala Rose Udon" loading="lazy"></div>
+                    <h3>Mala Rosé Udon</h3><p class="menu-kor">마라 로제 우동</p><p class="menu-eng">Spicy mala and creamy rosé sauce with thick udon noodles</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/크림 우동.jpg" alt="Cream Udon" loading="lazy"></div>
+                    <h3>Cream Udon</h3><p class="menu-kor">크림 우동</p><p class="menu-eng">Classic udon noodles in a rich creamy sauce</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Main/신전 마라 떡볶이.jpg" alt="Sinjeon Mala Topokki" loading="lazy"></div>
+                    <h3>Sinjeon Mala Topokki</h3><p class="menu-kor">신전 마라 떡볶이</p><p class="menu-eng">Intense and numbing spicy mala topokki</p>
+                </div>
+            </div>
+
+            <!-- Deep Fried Category -->
+            <div id="cat-DeepFried" class="menu-grid" role="tabpanel">
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/튀김오뎅.png" alt="Fried Fishcake" loading="lazy"></div>
+                    <h3>Fried Fishcake</h3><p class="menu-kor">튀김오뎅</p><p class="menu-eng">Signature crispy fishcake sticks</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/튀김만두.png" alt="Fried Mandoo" loading="lazy"></div>
+                    <h3>Fried Mandoo</h3><p class="menu-kor">튀김만두</p><p class="menu-eng">Crispy glass noodle dumplings</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/김말이.png" alt="Seaweed Roll" loading="lazy"></div>
+                    <h3>Seaweed Roll</h3><p class="menu-kor">김말이</p><p class="menu-eng">Deep-fried seaweed glass noodle rolls</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/잡채말이.png" alt="Glass Noodle Roll" loading="lazy"></div>
+                    <h3>Glass Noodle Roll</h3><p class="menu-kor">잡채말이</p><p class="menu-eng">Fried rolls filled with savory glass noodles</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/치즈스틱.png" alt="Cheese Stick" loading="lazy"></div>
+                    <h3>Cheese Stick</h3><p class="menu-kor">치즈스틱</p><p class="menu-eng">Crispy sticks filled with melted mozzarella</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/통살오징어튀김.png" alt="Squid Fries" loading="lazy"></div>
+                    <h3>Squid Fries</h3><p class="menu-kor">통살오징어튀김</p><p class="menu-eng">Crispy battered thick squid</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/해쉬브라운.png" alt="Hash Brown" loading="lazy"></div>
+                    <h3>Hash Brown</h3><p class="menu-kor">해쉬브라운</p><p class="menu-eng">Golden crispy potato hash browns</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Deep Fried/납작만두.png" alt="Flat Mandoo" loading="lazy"></div>
+                    <h3>Flat Mandoo</h3><p class="menu-kor">납작만두</p><p class="menu-eng">Crispy flat dumplings</p>
+                </div>
+            </div>
+
+            <!-- Rice Category -->
+            <div id="cat-Rice" class="menu-grid" role="tabpanel">
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/신전치즈김밥.png" alt="Sinjeon Cheese Kimbap" loading="lazy"></div>
+                    <h3>Cheese Kimbap</h3><p class="menu-kor">신전치즈김밥</p><p class="menu-eng">Spicy rice rolled with melted cheese</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/신전김밥.png" alt="Sinjeon Kimbap" loading="lazy"></div>
+                    <h3>Sinjeon Kimbap</h3><p class="menu-kor">신전김밥</p><p class="menu-eng">Signature spicy rice roll</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/참치마요김밥.png" alt="Tuna Mayo Kimbap" loading="lazy"></div>
+                    <h3>Tuna Mayo Kimbap</h3><p class="menu-kor">참치마요김밥</p><p class="menu-eng">Tuna and mayo with spicy rice</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/참치마요컵밥.png" alt="Tuna Mayo Cupbap" loading="lazy"></div>
+                    <h3>Tuna Mayo Cupbap</h3><p class="menu-kor">참치마요컵밥</p><p class="menu-eng">Rice bowl topped with tuna and mayo</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/스팸마요컵밥.png" alt="Spam Mayo Cupbap" loading="lazy"></div>
+                    <h3>Spam Mayo Cupbap</h3><p class="menu-kor">스팸마요컵밥</p><p class="menu-eng">Rice bowl with Spam and savory mayo</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/치킨마요컵밥.png" alt="Chicken Mayo Cupbap" loading="lazy"></div>
+                    <h3>Chicken Mayo Cupbap</h3><p class="menu-kor">치킨마요컵밥</p><p class="menu-eng">Rice bowl with crispy chicken and mayo</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/신전라이스.png" alt="Sinjeon Rice" loading="lazy"></div>
+                    <h3>Sinjeon Rice</h3><p class="menu-kor">신전라이스</p><p class="menu-eng">Signature spicy fried rice with cheese</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Rice/맵크림리조또.png" alt="Spicy Cream Risotto" loading="lazy"></div>
+                    <h3>Spicy Cream Risotto</h3><p class="menu-kor">맵크림리조또</p><p class="menu-eng">Creamy risotto with a spicy kick</p>
+                </div>
+            </div>
+
+            <!-- Topping Category -->
+            <div id="cat-Topping" class="menu-grid" role="tabpanel">
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Topping/치즈.png" alt="Cheese Topping" loading="lazy"></div>
+                    <h3>Cheese</h3><p class="menu-kor">치즈 토핑</p><p class="menu-eng">Extra melted mozzarella cheese</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Topping/분모자.png" alt="Bunmoja" loading="lazy"></div>
+                    <h3>Bunmoja</h3><p class="menu-kor">분모자</p><p class="menu-eng">Chewy potato starch noodles</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Topping/넓은당면.png" alt="Wide Glass Noodles" loading="lazy"></div>
+                    <h3>Wide Glass Noodles</h3><p class="menu-kor">넓은당면</p><p class="menu-eng">Flat and chewy glass noodles</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Topping/순대.png" alt="Sundae" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sundae'"></div>
+                    <h3>Sundae</h3><p class="menu-kor">순대</p><p class="menu-eng">Traditional Korean blood sausage</p>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-img"><img src="menus/Topping/소세지.png" alt="Sausage" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sausage'"></div>
+                    <h3>Sausage</h3><p class="menu-kor">소세지</p><p class="menu-eng">Bite-sized smoked sausages</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-disclaimer reveal delay-300">
+            <i class="fas fa-info-circle" aria-hidden="true"></i>
+            <span>메뉴 구성 및 제공 여부는 지점별 상황에 따라 상이할 수 있습니다. (Menu availability may vary by location.)</span>
+        </div>
+    </section>
+
+    <!-- 9. Locations Section (Original 4 Stores + Leaflet Custom Map) -->
+    <section class="locations" id="locations">
+        <div class="section-header reveal">
+            <p>Find Us</p>
+            <h2>Our <span>Locations</span></h2>
+        </div>
+        
+        <div class="split-layout reveal delay-100">
+            <div class="loc-list-wrapper">
+                
+                <div class="loc-item active store-card" 
+                     data-lat="43.7780" data-lng="-79.4168"
+                     data-title="Sinjeon Finch"
+                     data-address="5 Byng Ave, North York, ON M2N 5R7"
+                     data-hours="Mon-Sun 11:30 AM - 11:00 PM"
+                     data-timezone="America/Toronto" data-open="11.5" data-close="23"
+                     onclick="triggerMapChange(this)">
+                    <div class="loc-meta">
+                        <span class="loc-status">Loading Hours...</span>
+                        <span class="loc-rating"><i class="fas fa-star" aria-hidden="true"></i> 4.9 (314)</span>
+                    </div>
+                    <h3>Sinjeon Finch</h3>
+                    <div class="loc-info-list">
+                        <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 5 Byng Ave, North York, ON M2N 5R7</p>
+                        <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+14162188860">+1 416-218-8860</a></p>
+                        <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Mon-Sun 11:30 AM - 11:00 PM</span></p>
+                    </div>
+                    <!-- Quality Feature Tags -->
+                    <div class="feature-tags">
+                        <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
+                        <span class="feature-tag"><i class="fas fa-shopping-bag"></i> Takeout</span>
+                        <span class="feature-tag"><i class="fas fa-motorcycle"></i> Delivery</span>
+                    </div>
+                    <div class="loc-actions">
+                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Finch" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-finch/LMMptGifXsOnJBVSXsoFuQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle" aria-hidden="true"></i> Uber Eats</a>
+                    </div>
+                </div>
+
+                <div class="loc-item store-card" 
+                     data-lat="43.6635" data-lng="-79.4187"
+                     data-title="Sinjeon Christie"
+                     data-address="712 Bloor St W, Toronto, ON M6G 1L4"
+                     data-hours="Mon-Sun 12:00 PM - 1:00 AM"
+                     data-timezone="America/Toronto" data-open="12" data-close="1"
+                     onclick="triggerMapChange(this)">
+                    <div class="loc-meta">
+                        <span class="loc-status">Loading Hours...</span>
+                        <span class="loc-rating"><i class="fas fa-star" aria-hidden="true"></i> 4.8 (210)</span>
+                    </div>
+                    <h3>Sinjeon Christie</h3>
+                    <div class="loc-info-list">
+                        <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 712 Bloor St W, Toronto, ON M6G 1L4</p>
+                        <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+14165380676">+1 416-538-0676</a></p>
+                        <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Mon-Sun 12:00 PM - 1:00 AM</span></p>
+                    </div>
+                    <div class="feature-tags">
+                        <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
+                        <span class="feature-tag"><i class="fas fa-shopping-bag"></i> Takeout</span>
+                        <span class="feature-tag"><i class="fas fa-motorcycle"></i> Delivery</span>
+                        <span class="feature-tag"><i class="fas fa-moon"></i> Late Night</span>
+                    </div>
+                    <div class="loc-actions">
+                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Bloor" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-bloor/SXFYVKNMX12RbmYzYsXF5w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle" aria-hidden="true"></i> Uber Eats</a>
+                    </div>
+                </div>
+
+                <div class="loc-item store-card" 
+                     data-lat="49.2480" data-lng="-122.8943"
+                     data-title="Sinjeon Lougheed"
+                     data-address="329 North Rd #455, Coquitlam, BC V3K 6Z8"
+                     data-hours="Mon-Sun 11:30 AM - 9:30 PM"
+                     data-timezone="America/Vancouver" data-open="11.5" data-close="21.5"
+                     onclick="triggerMapChange(this)">
+                    <div class="loc-meta">
+                        <span class="loc-status">Loading Hours...</span>
+                        <span class="loc-rating"><i class="fas fa-star" aria-hidden="true"></i> 4.7 (185)</span>
+                    </div>
+                    <h3>Sinjeon Lougheed</h3>
+                    <div class="loc-info-list">
+                        <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 329 North Rd #455, Coquitlam, BC V3K 6Z8</p>
+                        <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+12365532222">+1 236-553-2222</a></p>
+                        <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Mon-Sun 11:30 AM - 9:30 PM</span></p>
+                    </div>
+                    <div class="feature-tags">
+                        <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
+                        <span class="feature-tag"><i class="fas fa-shopping-bag"></i> Takeout</span>
+                        <span class="feature-tag"><i class="fas fa-car"></i> Parking</span>
+                    </div>
+                    <div class="loc-actions">
+                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Lougheed" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-lougheed/rEGaT6FoWKuCNfwSGIWy8w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle" aria-hidden="true"></i> Uber Eats</a>
+                    </div>
+                </div>
+
+                <div class="loc-item store-card" 
+                     data-lat="43.6590" data-lng="-79.3780"
+                     data-title="Sinjeon Church"
+                     data-address="377 Church St, Toronto, ON M5B 1H9"
+                     data-hours="Sun-Thu 11am-10pm | Fri-Sat 11am-11pm"
+                     data-timezone="America/Toronto" data-open="11" data-close="22" data-close-weekend="23"
+                     onclick="triggerMapChange(this)">
+                    <div class="loc-meta">
+                        <span class="loc-status">Loading Hours...</span>
+                        <span class="loc-rating"><i class="fas fa-star" aria-hidden="true"></i> 4.8 (150)</span>
+                    </div>
+                    <h3>Sinjeon Church</h3>
+                    <div class="loc-info-list">
+                        <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 377 Church St, Toronto, ON M5B 1H9</p>
+                        <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+14165910676">+1 416-591-0676</a></p>
+                        <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Sun-Thu 11:00 AM - 10:00 PM<br>Fri-Sat 11:00 AM - 11:00 PM</span></p>
+                    </div>
+                    <div class="feature-tags">
+                        <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
+                        <span class="feature-tag"><i class="fas fa-shopping-bag"></i> Takeout</span>
+                        <span class="feature-tag"><i class="fas fa-moon"></i> Late Night</span>
+                    </div>
+                    <div class="loc-actions">
+                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Church" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-downtown-toronto/fK_ps-eeWiWycUrGuC-TIQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle" aria-hidden="true"></i> Uber Eats</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="loc-map-wrapper">
+                <!-- Custom Leaflet Map Render Zone -->
+                <div id="main-map"></div>
+                
+                <div class="map-info-overlay" id="map-premium-overlay" aria-hidden="true">
+                    <h4 id="overlay-title">Loading...</h4>
+                    <p id="overlay-address"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> </p>
+                    <p id="overlay-hours"><i class="fas fa-clock" aria-hidden="true"></i> </p>
+                    <a id="overlay-link" href="#" target="_blank" class="overlay-btn">Get Directions <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Instagram Feed (Pure DOM API Error-Proof Engine) -->
+    <section class="ugc-section" id="community">
+        <div class="section-header reveal">
+            <p>Social Proof</p>
+            <h2>Community <span>Feed</span></h2>
+            <p style="color:var(--text-light); text-transform:none; letter-spacing:0;">Follow <a href="https://www.instagram.com/sinjeon_Canada" target="_blank" style="color:var(--sj-red); text-decoration:none; font-weight:800;">@sinjeon_Canada</a></p>
+        </div>
+        <div class="instagram-feed-section reveal delay-100">
+            <div id="instagram-feed" class="instagram-grid">
+                <!-- Skeletons (Will be replaced by JS) -->
+                <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
+                <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. Franchise Process (Single Funnel Routing) -->
+    <section class="timeline-section" id="franchise">
+        <div class="section-header reveal">
+            <p>Join Us</p>
+            <h2>Franchise <span>Process</span></h2>
+        </div>
+        <div class="timeline-container">
+            <div class="timeline-step reveal delay-100">
+                <div class="timeline-marker">1</div>
+                <div class="timeline-content">
+                    <h4>Step 1: Preliminary Application</h4>
+                    <p>Submit your preliminary inquiry via our quick form. Our team will review and contact you with access to Step 2.</p>
+                </div>
+            </div>
+            <div class="timeline-step reveal delay-200">
+                <div class="timeline-marker">2</div>
+                <div class="timeline-content">
+                    <h4>Step 2: Official Application</h4>
+                    <p>Provide detailed financial qualifications and target location data through our secure official portal.</p>
+                </div>
+            </div>
+            <div class="timeline-step reveal delay-300">
+                <div class="timeline-marker">3</div>
+                <div class="timeline-content">
+                    <h4>Step 3: NDA & Verification</h4>
+                    <p>Sign a Non-Disclosure Agreement and securely submit your proof of funds and identification documents.</p>
+                </div>
+            </div>
+            <div class="timeline-step reveal delay-100">
+                <div class="timeline-marker">4</div>
+                <div class="timeline-content">
+                    <h4>Step 4: Executive Interview & Contract</h4>
+                    <p>Meet with our executive team. Upon approval, finalize the franchise agreement and begin your journey.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline-cta-box reveal delay-200">
+            <h3>Ready to Start Your Journey?</h3>
+            <p style="font-size: 1.1rem; color: var(--text-gray); margin-bottom: 25px;">투자 조건과 0% 마진 혜택이 궁금하신가요? 공식 제안서를 먼저 확인하세요.</p>
+            <!-- Single Direct Routing Button -->
+            <a href="step1_proposal.html" class="btn-timeline-apply">
+                <i class="fas fa-file-invoice" aria-hidden="true"></i> Read Official Proposal
+            </a>
+        </div>
+    </section>
+
+    <!-- 12. Contact Us & Quick Form -->
+    <section class="contact-section" id="contact">
+        <div class="section-header reveal">
+            <p>Get in Touch</p>
+            <h2>Connect <span>With Us</span></h2>
+        </div>
+        <div class="contact-wrapper reveal delay-200">
+            <div class="tab-container" role="tablist">
+                <button class="tab-btn active" role="tab" aria-selected="true" data-target="general" onclick="switchContactTab('general')">General</button>
+                <button class="tab-btn" role="tab" aria-selected="false" data-target="franchise" onclick="switchContactTab('franchise')">Franchise</button>
+            </div>
+
+            <!-- General Form -->
+            <div id="general-form" class="form-content general-card active" role="tabpanel">
+                <div class="form-header">
+                    <h3>General Support</h3>
+                </div>
+                <form onsubmit="return handleInquiryEmailJS(event, 'General Inquiry')">
+                    <div class="input-row">
+                        <div class="input-wrapper">
+                            <input type="text" id="gen-name" name="from_name" placeholder=" " required autocomplete="name">
+                            <label for="gen-name">Full Name</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="tel" id="gen-phone" name="reply_phone" placeholder=" " required autocomplete="tel" inputmode="tel">
+                            <label for="gen-phone">Phone Number</label>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="email" id="gen-email" name="reply_email" placeholder=" " required autocomplete="email" inputmode="email">
+                        <label for="gen-email">Email Address</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <textarea id="gen-msg" name="message" placeholder=" " required></textarea>
+                        <label for="gen-msg">Message</label>
+                    </div>
+                    <button type="submit" class="submit-btn btn-green">Send Message</button>
+                </form>
+            </div>
+
+            <!-- Franchise Quick Form (Flat UI) -->
+            <div id="franchise-form" class="form-content quick-form-card" role="tabpanel">
+                <div class="step-badge">Step 1 of 4</div>
+                <h3>Preliminary Application</h3>
+                <p class="form-subtitle">Take the first step towards owning a Sinjeon franchise.<br>Fill out this quick inquiry to unlock the official application portal.</p>
+                
+                <form onsubmit="return handleInquiryEmailJS(event, 'Step 1: Preliminary Application')">
+                    <div class="qf-row">
+                        <input type="text" name="from_name" placeholder="Applicant Name (이름)" required autocomplete="name">
+                        <input type="tel" name="reply_phone" placeholder="Contact Number (연락처)" required autocomplete="tel" inputmode="tel">
+                    </div>
+                    <div class="qf-row qf-full">
+                        <input type="email" name="reply_email" placeholder="Email Address (이메일)" required autocomplete="email" inputmode="email">
+                    </div>
+                    <div class="qf-row">
+                        <input type="text" name="desired_location" placeholder="Desired City / Location (관심 지역)" required>
+                        <input type="text" name="budget" placeholder="Estimated Budget (예상 자본금)" required>
+                    </div>
+                    <div class="qf-row qf-full">
+                        <textarea name="message" placeholder="Business Background (비즈니스 경험 및 문의사항)" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-red-flat">SUBMIT STEP 1 & PROCEED</button>
+                    
+                    <div style="text-align: center; margin-top: 25px;">
+                        <a href="step2_apply.html" class="direct-link">
+                            Already completed Step 1? Go to Official Portal
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Top Button -->
+    <div class="fab-container" id="fab-container">
+        <div class="fab" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to Top" aria-label="Scroll to Top">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+
+    <!-- Mega Footer -->
+    <footer>
+        <div class="mega-footer-container reveal delay-100">
+            <div class="footer-brand" style="text-align: left;">
+                <div class="footer-logo-box">
+                    <img src="sinjeon_logo_canada.png" alt="Sinjeon Logo" loading="lazy" decoding="async">
+                </div>
+                <p>Bringing the authentic and uncompromising taste of K-Spice to the world since 1999.</p>
+            </div>
+            
+            <div class="footer-col" style="text-align: left;">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">Our Story</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#locations">Locations</a></li>
+                    <li><a href="step1_proposal.html">Franchise</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col" style="text-align: left;">
+                <h4>Social</h4>
+                <ul>
+                    <li><a href="https://instagram.com/sinjeon_Canada" target="_blank">Instagram</a></li>
+                    <li><a href="#community">Community Feed</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col" style="text-align: left;">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a onclick="showModalMessage('Privacy Policy', document.getElementById('template-privacy').innerHTML, false)" style="cursor:pointer;">Privacy Policy</a></li>
+                    <li><a onclick="showModalMessage('Terms of Service', document.getElementById('template-terms').innerHTML, false)" style="cursor:pointer;">Terms of Service</a></li>
+                    <li><a href="step1_proposal.html">Franchise Inquiry</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2026 Sinjeon Food Sys Canada (Operated by Y2C Holdings Inc.). All Rights Reserved.</p>
+            <p>Identity in Every Font.</p>
+        </div>
+    </footer>
+
+    <!-- Dynamic Modal System -->
+    <div class="modal-overlay" id="dynamic-modal" aria-hidden="true" role="dialog">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()" aria-label="Close Modal">×</button>
+            <h3 id="modal-title" style="font-size: 2rem; font-weight: 900; color: var(--text-dark); margin-top: 0; line-height: 1.2;"></h3>
+            <div class="modal-body" id="modal-body">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================
+         [Templates Zone]
+         ========================================= -->
+    <template id="template-clean-heat">
+        <h4 style="margin-top:0; font-size: 2rem; color: var(--sj-red); line-height: 1.2; font-family: 'SinjeonCustom', sans-serif; font-weight: normal;">How Cheongyang Chili Peppers Make Our Clean Heat</h4>
+        <p style="font-size: 1.1rem; color: var(--text-dark); margin-top: 15px;">At Sinjeon, we refuse to compromise on wellness. We use 100% authentic Cheongyang chili peppers instead of chemical capsaicin extracts to create our signature addictive spice that North Americans are falling in love with.</p>
+        <div style="display: flex; flex-direction: column; gap: 30px; margin-top: 25px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="padding: 30px 25px; border-radius: 20px; text-align: center; background: #fdf5f5; border: 1px solid #fbdcde;">
+                    <h5 style="color: var(--text-gray); text-decoration: line-through; opacity: 0.8; font-size: 1.25rem; font-weight: 800; margin-bottom: 15px;">Artificial Capsaicin</h5>
+                    <p>❌ Chemical extracts</p>
+                    <p>❌ Lingering, painful heat</p>
+                    <p>❌ Can cause stomach discomfort</p>
+                </div>
+                <div style="padding: 30px 25px; border-radius: 20px; text-align: center; background: #f4f9f6; border: 1px solid #dcf0e7; position: relative; box-shadow: 0 10px 25px rgba(0,130,80,0.1); transform: scale(1.02);">
+                    <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--sj-green); color: white; font-size: 0.75rem; font-weight: 900; padding: 4px 12px; border-radius: 20px; letter-spacing: 1px;">OUR SECRET</div>
+                    <h5 style="color: var(--sj-green); font-size: 1.25rem; font-weight: 800; margin-bottom: 15px;">Authentic Cheongyang Chili</h5>
+                    <p>✅ 100% Natural ingredients</p>
+                    <p>✅ Sharp, clean, and refreshing heat</p>
+                    <p>✅ Dissipates quickly, leaving rich flavor</p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="template-privacy">
+        <h4>1. Introduction</h4>
+        <p>Sinjeon Food Sys Canada ("we", "our", or "us") is committed to protecting the privacy and security of your personal information. This Privacy Policy outlines how we collect, use, and safeguard data in compliance with the Personal Information Protection and Electronic Documents Act (PIPEDA).</p>
+        <h4>2. Information We Collect</h4>
+        <p>We only collect personal information that is necessary for our business operations. This includes your name, phone number, email address, and desired location data when you voluntarily submit inquiries via our Contact Us or Franchise forms.</p>
+        <h4>3. Use of Information</h4>
+        <p>The information collected is strictly used to:<br>- Respond to your general support or franchise inquiries.<br>- Assess your franchise application and provide preliminary consulting.<br>- Communicate updates regarding our operations or your application status.</p>
+        <h4>4. Data Security and Sharing</h4>
+        <p>We implement robust, industry-standard security protocols to protect your data transmitted through our Cloud infrastructure. <strong>We do not sell, rent, or trade your personal information to any third parties.</strong></p>
+    </template>
+
+    <template id="template-terms">
+        <h4>1. Acceptance of Terms</h4>
+        <p>By accessing and using the Sinjeon Canada website, you accept and agree to be bound by the terms and provision of this agreement. These terms are governed by the laws of the Province of Ontario and the federal laws of Canada applicable therein.</p>
+        <h4>2. Intellectual Property Rights</h4>
+        <p>All content published on this website, including but not limited to brand logos, typography ('SinjeonCustom'), graphical assets, character illustrations ('Mill-tto Family'), and textual content, are the exclusive intellectual property of Sinjeon Food Sys. <strong>Unauthorized scraping, copying, reproduction, or commercial use is strictly prohibited and subject to legal action.</strong></p>
+        <h4>3. Franchise Application Disclaimer</h4>
+        <p>Submitting a franchise inquiry through this website does not constitute a binding legal contract or a guarantee of franchise approval.</p>
+    </template>
+
+    <!-- =========================================
+         [Core Script Engine]
+         ========================================= -->
     <script>
-        // 보안 방어 모듈
+        // -----------------------------------------
+        // 1. Anti-Theft & Security
+        // -----------------------------------------
         document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('dragstart', e => { if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); });
+        document.addEventListener('dragstart', e => { 
+            if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); 
+        });
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u') || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) e.preventDefault();
+            if (e.key === 'F12' || 
+               (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+               (e.ctrlKey && e.key === 'u') || 
+               (e.ctrlKey && e.key === 'c') || 
+               (e.ctrlKey && e.key === 's') || 
+               (e.ctrlKey && e.key === 'p')) e.preventDefault();
         });
 
-        let mapIframe;
-        let mapOverlay;
+        // -----------------------------------------
+        // 2. Global Variables
+        // -----------------------------------------
+        let map;
+        let markers = [];
         let scrollProgressBar;
 
+        // -----------------------------------------
+        // 3. DOM Content Loaded Initialization
+        // -----------------------------------------
         document.addEventListener('DOMContentLoaded', () => {
-            mapIframe = document.getElementById('main-map');
-            mapOverlay = document.getElementById('map-premium-overlay');
             scrollProgressBar = document.getElementById('scroll-progress');
 
-            // 렌더링 옵저버
+            // Scroll Animation Observer (Hardware Accelerated)
             try {
                 const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
                 const observer = new IntersectionObserver((entries, observer) => {
@@ -552,10 +1331,11 @@
             } catch (error) {
                 console.error("Observer Error:", error);
             } finally {
+                // Fallback: Show all after 1.5s if observer fails
                 setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('active')); }, 1500);
             }
 
-            // 팝업 로딩
+            // Popup Manager
             try {
                 const popup = document.getElementById('main-event-popup');
                 if (popup) {
@@ -594,7 +1374,7 @@
                 }
             } catch (error) { console.error("Popup Error:", error); }
 
-            // 스켈레톤 로딩
+            // Menu Image Skeleton Loader
             const menuImages = document.querySelectorAll('.menu-item-img img');
             menuImages.forEach(img => {
                 if (img.complete) {
@@ -611,18 +1391,27 @@
                 }
             });
             
+            // Store Hours Updater
             updateStoreStatuses();
             setInterval(updateStoreStatuses, 60000);
+
+            // Init Map Observer
+            const locEl = document.querySelector('.locations');
+            if(locEl) mapObserver.observe(locEl);
         });
 
-        // 스크롤 성능 최적화
+        // -----------------------------------------
+        // 4. Scroll Performance (Throttling with rAF)
+        // -----------------------------------------
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
                 window.requestAnimationFrame(() => {
                     const header = document.getElementById('header');
-                    if (window.scrollY > 50) header.classList.add('scrolled');
-                    else header.classList.remove('scrolled');
+                    if(header) {
+                        if (window.scrollY > 50) header.classList.add('scrolled');
+                        else header.classList.remove('scrolled');
+                    }
 
                     if(scrollProgressBar) {
                         const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -631,14 +1420,131 @@
                     }
 
                     const fabContainer = document.getElementById('fab-container');
-                    if (window.scrollY > 500) fabContainer.classList.add('visible');
-                    else fabContainer.classList.remove('visible');
+                    if(fabContainer) {
+                        if (window.scrollY > 500) fabContainer.classList.add('visible');
+                        else fabContainer.classList.remove('visible');
+                    }
                     
                     ticking = false;
                 });
                 ticking = true;
             }
         }, { passive: true }); 
+
+        // -----------------------------------------
+        // 5. Leaflet Custom Map Engine (Hardware Accelerated & Mobile Fix)
+        // -----------------------------------------
+        function initMap() {
+            try {
+                map = L.map('main-map', {zoomControl: false}).setView([43.7780, -79.4168], 15);
+                
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors',
+                    maxZoom: 19
+                }).addTo(map);
+
+                L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+                const sinjeonIcon = L.icon({
+                    iconUrl: 'sinjeon_logo_canada.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 40],
+                    popupAnchor: [0, -40]
+                });
+
+                const locationsData = [
+                    { lat: 43.7780, lng: -79.4168, title: "Sinjeon Finch" },
+                    { lat: 43.6635, lng: -79.4187, title: "Sinjeon Christie" },
+                    { lat: 49.2480, lng: -122.8943, title: "Sinjeon Lougheed" },
+                    { lat: 43.6590, lng: -79.3780, title: "Sinjeon Church" }
+                ];
+
+                locationsData.forEach((loc) => {
+                    const marker = L.marker([loc.lat, loc.lng], {icon: sinjeonIcon}).addTo(map);
+                    marker.bindPopup(`<b>${loc.title}</b>`);
+                    markers.push(marker);
+                });
+            } catch(e) {
+                console.error("Map Initialization Error:", e);
+            }
+        }
+
+        const mapObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !map) {
+                    initMap();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Map Resize Bug Fix (Crucial for mobile rendering)
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                if(map) {
+                    map.invalidateSize();
+                }
+            }, 200);
+        });
+
+        function triggerMapChange(element) {
+            if(element.classList.contains('active')) return;
+            document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            
+            const lat = parseFloat(element.getAttribute('data-lat'));
+            const lng = parseFloat(element.getAttribute('data-lng'));
+            const title = element.getAttribute('data-title');
+            const address = element.getAttribute('data-address');
+            const hours = element.getAttribute('data-hours');
+
+            if(map) {
+                map.flyTo([lat, lng], 15, {
+                    animate: true,
+                    duration: 1.5
+                });
+            }
+
+            const mapOverlay = document.getElementById('map-premium-overlay');
+            if(mapOverlay) {
+                mapOverlay.classList.remove('active'); 
+                setTimeout(() => {
+                    document.getElementById('overlay-title').innerText = title;
+                    document.getElementById('overlay-address').innerHTML = `<i class="fas fa-map-marker-alt" aria-hidden="true"></i> ${address}`;
+                    document.getElementById('overlay-hours').innerHTML = `<i class="fas fa-clock" aria-hidden="true"></i> ${hours}`;
+                    mapOverlay.classList.add('active'); 
+                }, 300);
+            }
+            
+            // Mobile Auto-Scroll UX
+            if(window.innerWidth <= 1000) {
+                const mapSection = document.querySelector('.loc-map-wrapper');
+                if(mapSection) {
+                    const headerOffset = 70;
+                    const elementPosition = mapSection.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            }
+        }
+
+        // -----------------------------------------
+        // 6. UI Interactions (Tabs, Menus, Modals)
+        // -----------------------------------------
+        function toggleMobileMenu() {
+            const overlay = document.getElementById('mobile-menu');
+            if (overlay.classList.contains('active')) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            } else {
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
 
         function showMenuCategory(catId) {
             document.querySelectorAll('.menu-tab-btn').forEach(btn => {
@@ -649,7 +1555,8 @@
             event.target.setAttribute('aria-selected', 'true');
 
             document.querySelectorAll('.menu-grid').forEach(grid => grid.classList.remove('active'));
-            document.getElementById('cat-' + catId).classList.add('active');
+            const targetCat = document.getElementById('cat-' + catId);
+            if(targetCat) targetCat.classList.add('active');
         }
 
         function closeEventPopup() {
@@ -665,6 +1572,7 @@
 
         function showModalMessage(title, htmlContent, hideTitle = false) {
             const modal = document.getElementById('dynamic-modal');
+            if(!modal) return;
             const titleEl = document.getElementById('modal-title');
             if(hideTitle) { titleEl.style.display = 'none'; } 
             else { titleEl.style.display = 'block'; titleEl.innerText = title; }
@@ -674,74 +1582,11 @@
         }
 
         function closeModal() {
-            document.getElementById('dynamic-modal').classList.remove('active');
-            document.body.style.overflow = ''; 
-        }
-
-        // EmailJS 퀵 폼 전송 후 Step 2로 자동 전환
-        function handleInquiryEmailJS(event, type) {
-            event.preventDefault();
-            const formElement = event.target;
-            const submitButton = formElement.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.innerHTML;
-            
-            submitButton.disabled = true;
-            submitButton.innerHTML = `<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> SUBMITTING...`;
-
-            if (typeof emailjs === 'undefined') {
-                alert('Network error. Falling back to email client.');
-                setTimeout(() => { submitButton.disabled = false; submitButton.innerHTML = originalButtonText; }, 2000);
-                return false;
+            const modal = document.getElementById('dynamic-modal');
+            if(modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; 
             }
-
-            let serviceID = "service_zyn89ll"; 
-            let templateID = "template_r8gce22"; 
-            
-            const params = {
-                name: formElement.querySelector('[name="from_name"]')?.value || '',
-                phone: formElement.querySelector('[name="reply_phone"]')?.value || '',
-                email: formElement.querySelector('[name="reply_email"]')?.value || '',
-                location: formElement.querySelector('[name="desired_location"]')?.value || '',
-                budget: formElement.querySelector('[name="budget"]')?.value || '',
-                message: formElement.querySelector('[name="message"]')?.value || '',
-                target_email: "eunbeen.lee@y2choldings.co.kr",
-                inquiry_type: type
-            };
-
-            emailjs.send(serviceID, templateID, params)
-                .then(() => {
-                    formElement.reset();
-                    if(type === 'Step 1: Preliminary Application') {
-                        showModalMessage('Application Received', `
-                            <div style="text-align:center; padding: 20px 0;">
-                                <div class="success-checkmark"><i class="fas fa-check" aria-hidden="true"></i></div>
-                                <h4 style="margin-top:0; font-size:1.6rem; color:var(--text-dark); font-weight:900;">Step 1 Completed.</h4>
-                                <p style="color:var(--text-gray); font-size:1.05rem; line-height:1.6;">Thank you for your interest in Sinjeon.<br>Your preliminary inquiry has been secured.</p>
-                                <div class="redirect-spinner">
-                                    <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Launching Official Portal...
-                                </div>
-                            </div>
-                        `, true);
-                        setTimeout(() => { window.location.href = 'step2_apply.html'; }, 2500);
-                    } else {
-                        showModalMessage('Message Sent', `
-                            <div style="text-align:center; padding: 20px 0;">
-                                <div class="success-checkmark"><i class="fas fa-paper-plane" aria-hidden="true"></i></div>
-                                <h4 style="margin-top:0; font-size:1.6rem;">문의가 성공적으로 접수되었습니다.</h4>
-                                <p style="color:var(--text-gray); font-size:1.05rem;">We will get back to you shortly.</p>
-                            </div>
-                        `, true);
-                    }
-                })
-                .catch((error) => {
-                    console.error("EmailJS Failure:", error);
-                    alert("Submission failed. Please contact us directly.");
-                })
-                .finally(() => {
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = originalButtonText;
-                });
-            return false;
         }
 
         function switchContactTab(target) {
@@ -752,7 +1597,7 @@
             document.querySelectorAll('.contact-wrapper .form-content').forEach(form => {
                 form.classList.remove('active');
                 form.style.animation = 'none';
-                form.offsetHeight; 
+                form.offsetHeight; // trigger reflow
                 form.style.animation = null; 
             });
             const targetBtn = document.querySelector(`.contact-wrapper .tab-btn[data-target="${target}"]`);
@@ -817,120 +1662,79 @@
                 } catch(e) { console.error("Hours Error:", e); }
             });
         }
-    </script>
-</head>
-<body>
 
-    <!-- Leaflet Map Initialization & Controls -->
-    <script>
-        let map;
-        let markers = [];
-        
-        function initMap() {
-            map = L.map('main-map', {zoomControl: false}).setView([43.7780, -79.4168], 15);
+        // -----------------------------------------
+        // 7. EmailJS Form Submission Engine
+        // -----------------------------------------
+        function handleInquiryEmailJS(event, type) {
+            event.preventDefault();
+            const formElement = event.target;
+            const submitButton = formElement.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
             
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors',
-                maxZoom: 19
-            }).addTo(map);
+            submitButton.disabled = true;
+            submitButton.innerHTML = `<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> SUBMITTING...`;
 
-            L.control.zoom({ position: 'bottomright' }).addTo(map);
-
-            const sinjeonIcon = L.icon({
-                iconUrl: 'sinjeon_logo_canada.png',
-                iconSize: [40, 40],
-                iconAnchor: [20, 40],
-                popupAnchor: [0, -40]
-            });
-
-            const locationsData = [
-                { lat: 43.7780, lng: -79.4168, title: "Sinjeon Finch" },
-                { lat: 43.6635, lng: -79.4187, title: "Sinjeon Christie" },
-                { lat: 49.2480, lng: -122.8943, title: "Sinjeon Lougheed" },
-                { lat: 43.6590, lng: -79.3780, title: "Sinjeon Church" }
-            ];
-
-            locationsData.forEach((loc) => {
-                const marker = L.marker([loc.lat, loc.lng], {icon: sinjeonIcon}).addTo(map);
-                marker.bindPopup(`<b>${loc.title}</b>`);
-                markers.push(marker);
-            });
-        }
-
-        const mapObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !map) {
-                    initMap();
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const locEl = document.querySelector('.locations');
-            if(locEl) mapObserver.observe(locEl);
-        });
-
-        window.addEventListener('resize', () => {
-            if(map) {
-                setTimeout(() => { map.invalidateSize(); }, 200);
+            if (typeof emailjs === 'undefined') {
+                alert('Network error. Falling back to email client.');
+                setTimeout(() => { submitButton.disabled = false; submitButton.innerHTML = originalButtonText; }, 2000);
+                return false;
             }
-        });
 
-        function triggerMapChange(element) {
-            if(element.classList.contains('active')) return;
-            document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
+            let serviceID = "service_zyn89ll"; 
+            let templateID = "template_r8gce22"; 
             
-            const lat = parseFloat(element.getAttribute('data-lat'));
-            const lng = parseFloat(element.getAttribute('data-lng'));
-            const title = element.getAttribute('data-title');
-            const address = element.getAttribute('data-address');
-            const hours = element.getAttribute('data-hours');
+            const params = {
+                name: formElement.querySelector('[name="from_name"]')?.value || '',
+                phone: formElement.querySelector('[name="reply_phone"]')?.value || '',
+                email: formElement.querySelector('[name="reply_email"]')?.value || '',
+                location: formElement.querySelector('[name="desired_location"]')?.value || '',
+                budget: formElement.querySelector('[name="budget"]')?.value || '',
+                message: formElement.querySelector('[name="message"]')?.value || '',
+                target_email: "eunbeen.lee@y2choldings.co.kr",
+                inquiry_type: type
+            };
 
-            if(map) {
-                map.flyTo([lat, lng], 15, {
-                    animate: true,
-                    duration: 1.5
+            emailjs.send(serviceID, templateID, params)
+                .then(() => {
+                    formElement.reset();
+                    if(type === 'Step 1: Preliminary Application') {
+                        showModalMessage('Application Received', `
+                            <div style="text-align:center; padding: 20px 0;">
+                                <div class="success-checkmark"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                <h4 style="margin-top:0; font-size:1.6rem; color:var(--text-dark); font-weight:900;">Step 1 Completed.</h4>
+                                <p style="color:var(--text-gray); font-size:1.05rem; line-height:1.6;">Thank you for your interest in Sinjeon.<br>Your preliminary inquiry has been secured.</p>
+                                <div class="redirect-spinner">
+                                    <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Launching Official Portal...
+                                </div>
+                            </div>
+                        `, true);
+                        setTimeout(() => { window.location.href = 'step2_apply.html'; }, 2500);
+                    } else {
+                        showModalMessage('Message Sent', `
+                            <div style="text-align:center; padding: 20px 0;">
+                                <div class="success-checkmark"><i class="fas fa-paper-plane" aria-hidden="true"></i></div>
+                                <h4 style="margin-top:0; font-size:1.6rem;">문의가 성공적으로 접수되었습니다.</h4>
+                                <p style="color:var(--text-gray); font-size:1.05rem;">We will get back to you shortly.</p>
+                            </div>
+                        `, true);
+                    }
+                })
+                .catch((error) => {
+                    console.error("EmailJS Failure:", error);
+                    alert("Submission failed. Please contact us directly.");
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
                 });
-            }
-
-            const mapOverlay = document.getElementById('map-premium-overlay');
-            if(mapOverlay) {
-                mapOverlay.classList.remove('active'); 
-                setTimeout(() => {
-                    document.getElementById('overlay-title').innerText = title;
-                    document.getElementById('overlay-address').innerHTML = `<i class="fas fa-map-marker-alt" aria-hidden="true"></i> ${address}`;
-                    document.getElementById('overlay-hours').innerHTML = `<i class="fas fa-clock" aria-hidden="true"></i> ${hours}`;
-                    mapOverlay.classList.add('active'); 
-                }, 300);
-            }
-            
-            if(window.innerWidth <= 1000) {
-                const mapSection = document.querySelector('.loc-map-wrapper');
-                const headerOffset = 70;
-                const elementPosition = mapSection.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: "smooth"
-                });
-            }
-        }
-        
-        function toggleMobileMenu() {
-            const overlay = document.getElementById('mobile-menu');
-            if (overlay.classList.contains('active')) {
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            } else {
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
+            return false;
         }
     </script>
 
-    <!-- ★ Instagram Feed Loader (RSS.app -> GitHub Actions -> instagram-feed.json) -->
+    <!-- =========================================
+         [Instagram Feed Loader (DOM API)]
+         ========================================= -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const feedContainer = document.getElementById('instagram-feed');
@@ -952,7 +1756,6 @@
                 if (!response.ok) {
                     throw new Error('Instagram JSON HTTP Error: ' + response.status);
                 }
-
                 return response.text();
             })
             .then(function (text) {
@@ -968,6 +1771,7 @@
 
                 let posts = [];
 
+                // 다중 규격 방어 로직
                 if (Array.isArray(jsonData)) {
                     posts = jsonData;
                 } else if (jsonData && Array.isArray(jsonData.data)) {
@@ -980,8 +1784,7 @@
 
                 const validPosts = posts
                     .filter(function (post) {
-                        return post &&
-                            (post.media_url || post.thumbnail_url || post.image);
+                        return post && (post.media_url || post.thumbnail_url || post.image);
                     })
                     .slice(0, 6);
 
@@ -989,6 +1792,7 @@
                     throw new Error('No valid Instagram posts found.');
                 }
 
+                // XSS 및 렌더링 부하 방지를 위한 DocumentFragment 사용
                 const fragment = document.createDocumentFragment();
 
                 validPosts.forEach(function (post) {
@@ -1023,6 +1827,7 @@
                     image.loading = 'lazy';
                     image.decoding = 'async';
 
+                    // Fallback 처리
                     image.onerror = function () {
                         this.onerror = null;
                         this.src = 'sinjeon_logo_canada.png';
@@ -1050,7 +1855,7 @@
                     fragment.appendChild(card);
                 });
 
-                // 기존 skeleton 제거 후 실제 게시물 삽입
+                // 기존 skeleton 완벽 제거 후 교체
                 feedContainer.replaceChildren(fragment);
 
                 console.log(
@@ -1062,6 +1867,7 @@
             .catch(function (error) {
                 console.error('Instagram Feed Error:', error);
 
+                // 안전한 에러 Fallback UI 렌더링
                 feedContainer.innerHTML = `
                     <div style="
                         grid-column: 1 / -1;
@@ -1078,7 +1884,6 @@
                                 margin-bottom: 15px;
                             "
                         ></i>
-
                         <h4 style="
                             font-size: 1.2rem;
                             color: white;
@@ -1087,7 +1892,6 @@
                         ">
                             Feed Temporarily Unavailable
                         </h4>
-
                         <p style="
                             color: var(--text-light);
                             font-size: 0.95rem;
