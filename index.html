@@ -238,7 +238,7 @@
         .spice-card:hover .char-spice { transform: translateX(-50%) scale(1.1) translateY(-10px); }
 
         /* -----------------------------------------
-           8. Menu Section (Center Alignment Fix)
+           8. Menu Section
            ----------------------------------------- */
         .menu-section { padding: 120px 5%; background: var(--bg-white); text-align: center; border-top: 1px solid var(--border-color); }
         .menu-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
@@ -277,7 +277,7 @@
         .menu-disclaimer { margin-top: 40px; font-size: 0.95rem; color: var(--text-light); font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
         /* -----------------------------------------
-           9. Locations & Google Maps (Native Embed with Flicker-Fix)
+           9. Locations & Google Maps (Native Embed)
            ----------------------------------------- */
         .locations { padding: 120px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1300px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 700px; }
@@ -313,7 +313,6 @@
         .btn-fill { background: var(--uber-green); color: var(--bg-white); border: 2px solid var(--uber-green); }
         .btn-fill:hover { background: #05a659; border-color: #05a659;}
         
-        /* Map Area */
         .loc-map-wrapper { flex: 1; background: #e2e8f0; position: relative; pointer-events: auto; overflow: hidden; z-index: 1;}
         .loc-map-wrapper iframe { width: 100%; height: 100%; position: absolute; top:0; left:0; z-index: 1; border: none; transition: opacity 0.3s ease; }
         .map-loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; color: var(--sj-red); font-size: 2.5rem; animation: spin 1s linear infinite;}
@@ -335,7 +334,7 @@
         .overlay-btn:hover { background: #b83e35; }
 
         /* -----------------------------------------
-           10. Instagram Feed (Pure DOM API Error-Proof Engine)
+           10. Instagram Feed 
            ----------------------------------------- */
         .ugc-section { padding: 120px 5%; background: var(--bg-dark); color: white; text-align: center; }
         .ugc-section .section-header h2 { color: white; }
@@ -357,7 +356,7 @@
         @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
         /* -----------------------------------------
-           11. Franchise Process (Single Funnel Routing)
+           11. Franchise Process
            ----------------------------------------- */
         .timeline-section { padding: 120px 5%; background: var(--bg-white); }
         .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
@@ -374,7 +373,7 @@
         .btn-timeline-apply:hover { background: #006a40; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0, 130, 80, 0.3); }
 
         /* -----------------------------------------
-           12. Contact Us & Quick Form (Flat UI)
+           12. Contact Us & Quick Form
            ----------------------------------------- */
         .contact-section { padding: 120px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .contact-wrapper { max-width: 860px; margin: 0 auto; position: relative; }
@@ -471,7 +470,6 @@
             .hero { padding: 180px 5% 80px;}
             .char-img { display: none; }
             
-            /* Hamburger Menu Activation */
             .desktop-nav { display: none; } 
             .mobile-menu-btn { display: block; }
             
@@ -480,7 +478,7 @@
             .stat-item h4 { font-size: 3rem; }
             .spice-grid { grid-template-columns: 1fr; }
             
-            /* Map Height fix for Native Google Maps Iframe */
+            /* Map Mobile Split Fix */
             .split-layout { flex-direction: column; height: auto; }
             .loc-map-wrapper { height: 450px; width: 100%; border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; }
             .loc-list-wrapper { padding: 20px; max-height: 500px; border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);}
@@ -499,17 +497,14 @@
         }
         
         @media (max-width: 600px) {
-            /* Mobile Header & Single CTA */
             .header-top { padding: 0; }
             .logo-container span { font-size: 1.3rem; }
             .header-cta-group { margin-left: auto;}
             .header-btn-apply { padding: 10px 18px; font-size: 0.8rem; box-shadow: none;}
             
-            /* 50:50 Tab Ratio */
             .tab-container { display: flex; width: 100%; border-radius: 12px; padding: 4px; margin-bottom: 30px;}
             .tab-btn { flex: 1; padding: 12px 0; font-size: 0.95rem; border-radius: 8px;}
             
-            /* 2x2 Menu Grid Perfect Fit */
             .menu-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; margin-bottom: 30px;}
             .menu-tab-btn { width: 100%; padding: 12px 0; font-size: 0.9rem; margin: 0; }
             .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -542,13 +537,11 @@
             
             .about-section, .spice-section, .menu-section, .locations, .ugc-section, .contact-section, .timeline-section { padding: 70px 5%; }
             
-            /* Quick Form Mobile Full-width */
             .general-card, .quick-form-card { padding: 35px 20px; border-radius: 16px;}
             .quick-form-card h3 { font-size: 1.5rem; }
             .input-wrapper input, .input-wrapper textarea, .quick-form-card input, .quick-form-card textarea { padding: 16px; font-size: 0.95rem; }
             .btn-green, .btn-red-flat { padding: 18px; font-size: 1rem; }
             
-            /* Popup Centralization */
             .event-popup-wrapper { top: 50%; bottom: auto; left: 50%; right: auto; transform: translate(-50%, -45%); width: 90%; max-width: 320px; }
             .event-popup-wrapper.show { transform: translate(-50%, -50%); }
             .event-popup-content { width: 100%; }
@@ -560,12 +553,6 @@
             .instagram-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .fab-container { bottom: 20px; right: 20px;}
         }
-        
-        @media (max-width: 350px) {
-            .hero h1 { font-size: 2rem; }
-            .hero h1 span.highlight { font-size: 2.4rem; }
-            .bento-large .stat-item { grid-column: span 2; } 
-        }
     </style>
 </head>
 <body>
@@ -573,7 +560,7 @@
     <!-- 1. Progress Bar -->
     <div class="scroll-progress" id="scroll-progress"></div>
 
-    <!-- 2. Header (Right Aligned, Single CTA, Hamburger) -->
+    <!-- 2. Header -->
     <header id="header">
         <div class="header-top">
             <a href="#home" class="logo-container" aria-label="Go to Homepage">
@@ -601,7 +588,7 @@
         </div>
     </header>
 
-    <!-- 3. Mobile Fullscreen Overlay Menu -->
+    <!-- 3. Mobile Fullscreen Menu -->
     <div class="mobile-overlay" id="mobile-menu">
         <button class="mobile-menu-btn" style="position: absolute; top: 20px; right: 20px;" onclick="toggleMobileMenu()" aria-label="Close Mobile Menu">
             <i class="fas fa-times"></i>
@@ -707,7 +694,7 @@
         </div>
     </section>
 
-    <!-- 8. Menu Section (Center Aligned, Mobile 2x2) -->
+    <!-- 8. Menu Section -->
     <section class="menu-section" id="menu">
         <div class="section-header reveal">
             <p>Signature Menu</p>
@@ -883,9 +870,8 @@
         <div class="split-layout reveal delay-100">
             <div class="loc-list-wrapper">
                 
-                <!-- Finch Location -->
                 <div class="loc-item active store-card" 
-                     data-map-url="https://maps.google.com/maps?q=Sinjeon%20Topokki%20Finch,%205%20Byng%20Ave,%20North%20York&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                     data-map-url="https://maps.google.com/maps?q=5%20Byng%20Ave,%20North%20York,%20ON%20M2N%205R7&t=&z=15&ie=UTF8&iwloc=&output=embed"
                      data-title="Sinjeon Finch"
                      data-address="5 Byng Ave, North York, ON M2N 5R7"
                      data-hours="Mon-Sun 11:30 AM - 11:00 PM"
@@ -913,9 +899,8 @@
                     </div>
                 </div>
 
-                <!-- Christie Location -->
                 <div class="loc-item store-card" 
-                     data-map-url="https://maps.google.com/maps?q=Sinjeon%20Topokki,%20712%20Bloor%20St%20W,%20Toronto&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                     data-map-url="https://maps.google.com/maps?q=712%20Bloor%20St%20W,%20Toronto,%20ON%20M6G%201L4&t=&z=15&ie=UTF8&iwloc=&output=embed"
                      data-title="Sinjeon Christie"
                      data-address="712 Bloor St W, Toronto, ON M6G 1L4"
                      data-hours="Mon-Sun 12:00 PM - 1:00 AM"
@@ -944,9 +929,8 @@
                     </div>
                 </div>
 
-                <!-- Lougheed Location -->
                 <div class="loc-item store-card" 
-                     data-map-url="https://maps.google.com/maps?q=Sinjeon%20Topokki,%20329%20North%20Rd%20%23455,%20Coquitlam&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                     data-map-url="https://maps.google.com/maps?q=329%20North%20Rd%20%23455,%20Coquitlam,%20BC%20V3K%206Z8&t=&z=15&ie=UTF8&iwloc=&output=embed"
                      data-title="Sinjeon Lougheed"
                      data-address="329 North Rd #455, Coquitlam, BC V3K 6Z8"
                      data-hours="Mon-Sun 11:30 AM - 9:30 PM"
@@ -974,9 +958,8 @@
                     </div>
                 </div>
 
-                <!-- Church Location -->
                 <div class="loc-item store-card" 
-                     data-map-url="https://maps.google.com/maps?q=Sinjeon%20Topokki,%20377%20Church%20St,%20Toronto&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                     data-map-url="https://maps.google.com/maps?q=377%20Church%20St,%20Toronto,%20ON%20M5B%201H9&t=&z=15&ie=UTF8&iwloc=&output=embed"
                      data-title="Sinjeon Church"
                      data-address="377 Church St, Toronto, ON M5B 1H9"
                      data-hours="Sun-Thu 11am-10pm | Fri-Sat 11am-11pm"
@@ -1006,8 +989,7 @@
             </div>
             
             <div class="loc-map-wrapper">
-                <!-- Native Google Maps iframe with fade transition logic -->
-                <iframe id="main-map" src="https://maps.google.com/maps?q=Sinjeon%20Topokki%20Finch,%205%20Byng%20Ave,%20North%20York&t=&z=15&ie=UTF8&iwloc=&output=embed" title="Google Maps" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe id="main-map" src="https://maps.google.com/maps?q=5%20Byng%20Ave,%20North%20York,%20ON%20M2N%205R7&t=&z=15&ie=UTF8&iwloc=&output=embed" title="Google Maps" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 <div class="map-loading" aria-hidden="true"><i class="fas fa-circle-notch fa-spin"></i></div>
                 
                 <div class="map-info-overlay" id="map-premium-overlay" aria-hidden="true">
@@ -1029,14 +1011,13 @@
         </div>
         <div class="instagram-feed-section reveal delay-100">
             <div id="instagram-feed" class="instagram-grid">
-                <!-- Skeletons -->
                 <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
                 <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
             </div>
         </div>
     </section>
 
-    <!-- 11. Franchise Process (Single Funnel Routing) -->
+    <!-- 11. Franchise Process -->
     <section class="timeline-section" id="franchise">
         <div class="section-header reveal">
             <p>Join Us</p>
@@ -1076,7 +1057,6 @@
         <div class="timeline-cta-box reveal delay-200">
             <h3>Ready to Start Your Journey?</h3>
             <p style="font-size: 1.1rem; color: var(--text-gray); margin-bottom: 25px;">투자 조건과 0% 마진 혜택이 궁금하신가요? 공식 제안서를 먼저 확인하세요.</p>
-            <!-- Single Direct Routing Button -->
             <a href="step1_proposal.html" class="btn-timeline-apply">
                 <i class="fas fa-file-invoice" aria-hidden="true"></i> Read Official Proposal
             </a>
@@ -1123,7 +1103,7 @@
                 </form>
             </div>
 
-            <!-- Franchise Quick Form (Flat UI) -->
+            <!-- Franchise Quick Form -->
             <div id="franchise-form" class="form-content quick-form-card" role="tabpanel">
                 <div class="step-badge">Step 1 of 4</div>
                 <h3>Preliminary Application</h3>
@@ -1147,9 +1127,7 @@
                     <button type="submit" class="btn-red-flat">SUBMIT STEP 1 & PROCEED</button>
                     
                     <div style="text-align: center; margin-top: 25px;">
-                        <a href="step2_apply.html" class="direct-link">
-                            Already completed Step 1? Go to Official Portal
-                        </a>
+                        <a href="step2_apply.html" class="direct-link">Already completed Step 1? Go to Official Portal</a>
                     </div>
                 </form>
             </div>
@@ -1213,9 +1191,7 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()" aria-label="Close Modal">×</button>
             <h3 id="modal-title" style="font-size: 2rem; font-weight: 900; color: var(--text-dark); margin-top: 0; line-height: 1.2;"></h3>
-            <div class="modal-body" id="modal-body">
-                <!-- Content injected via JS -->
-            </div>
+            <div class="modal-body" id="modal-body"></div>
         </div>
     </div>
 
@@ -1274,7 +1250,6 @@
         function triggerMapChange(element) {
             if(!element || element.classList.contains('active')) return;
             
-            // Highlight active item
             document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
             
@@ -1284,7 +1259,6 @@
             const hours = element.getAttribute('data-hours');
             const linkUrl = element.getAttribute('data-link');
 
-            // Iframe source update with transition logic
             const mapIframe = document.getElementById('main-map');
             if(mapIframe && mapUrl) {
                 mapIframe.style.opacity = '0.5'; 
@@ -1294,7 +1268,6 @@
                 }, 150);
             }
 
-            // Overlay update
             const mapOverlay = document.getElementById('map-premium-overlay');
             if(mapOverlay) {
                 mapOverlay.classList.remove('active'); 
@@ -1313,17 +1286,14 @@
                 }, 300);
             }
             
-            // ★ Mobile Auto-Scroll UX (모바일에서 지도 잘림 및 답답함 방지)
+            // Mobile Auto-Scroll UX
             if(window.innerWidth <= 1000) {
                 const mapSection = document.querySelector('.loc-map-wrapper');
                 if(mapSection) {
                     const headerOffset = 70;
                     const elementPosition = mapSection.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
+                    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
                 }
             }
         }
@@ -1412,10 +1382,12 @@
         }
 
         // -----------------------------------------
-        // 3. Store Status Update Loop (Critical Fix Applied)
+        // 3. Store Status Update Loop (Memory-Leak Free)
         // -----------------------------------------
         function updateStoreStatuses() {
             const storeCards = document.querySelectorAll('.store-card');
+            if(storeCards.length === 0) return;
+            
             storeCards.forEach(card => {
                 try {
                     const tz = card.getAttribute('data-timezone');
@@ -1468,7 +1440,6 @@
             });
         }
 
-        // Initialize Store Statuses safely on load
         document.addEventListener('DOMContentLoaded', () => {
             updateStoreStatuses();
             
