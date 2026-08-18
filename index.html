@@ -12,7 +12,7 @@
 
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
     
-    <!-- ★ 핵심 에셋 사전 로딩 -->
+    <!-- ★ 핵심 에셋 사전 로딩 (Preload) -->
     <link rel="preload" href="background/base_1.JPG" as="image">
     <link rel="preload" href="character/character_7.png" as="image">
     <link rel="preload" href="fonts/SinjeonFont.otf" as="font" type="font/otf" crossorigin>
@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     
-    <!-- ★ Leaflet.js (모바일 지도 깨짐 방지 렌더링 엔진) -->
+    <!-- ★ Leaflet.js (모바일 지도 깨짐 방지 & 커스텀 마커 렌더링 엔진) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
@@ -40,7 +40,7 @@
             scroll-behavior: smooth; margin: 0; padding: 0; box-sizing: border-box;
         }
         input, textarea, select { user-select: auto; font-family: 'Outfit', sans-serif; }
-        img { user-drag: none; -webkit-user-drag: none; max-width: 100%; height: auto; display: block; }
+        img { user-drag: none; -webkit-user-drag: none; max-width: 100%; height: auto; display: block; object-fit: contain;}
         *:focus-visible { outline: 3px solid #D24B41; outline-offset: 2px; border-radius: 6px; }
 
         @font-face {
@@ -147,7 +147,7 @@
         .header-btn-apply:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(210, 75, 65, 0.4);}
         .header-btn-apply::after { display: none !important; }
 
-        /* 모바일 햄버거 메뉴 */
+        /* ★ 모바일 햄버거 메뉴 및 풀오버레이 */
         .mobile-menu-btn { display: none; font-size: 1.8rem; color: var(--text-dark); background: none; border: none; cursor: pointer; z-index: 1002; position: relative; padding: 5px; margin-left: 15px;}
         .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-white); z-index: 1001; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); transform: translateY(-20px); }
         .mobile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
@@ -182,6 +182,8 @@
         .bento-item h3 { font-size: 1.5rem; font-weight: 800; color: var(--sj-green); margin-bottom: 12px; }
         .bento-item p { font-size: 1rem; color: var(--text-gray); line-height: 1.6; font-weight: 500; }
         
+        .btn-clean-heat-sm { margin-top: 20px; padding: 12px 24px; background: transparent; color: var(--sj-red); border: 2px solid var(--sj-red); border-radius: 30px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: var(--transition-fast); width: max-content; }
+        .btn-clean-heat-sm:hover { background: var(--sj-red); color: var(--bg-white); box-shadow: var(--shadow-sm); }
         .char-bento-1 { width: 90px; bottom: -20px; right: -10px; animation: float-slow 6s ease-in-out infinite 0.5s;}
         .char-bento-2 { width: 80px; top: -30px; right: 20px; animation: float-fast 3.5s ease-in-out infinite 1s;}
 
@@ -221,7 +223,7 @@
         .menu-grid { 
             display: none; 
             grid-template-columns: repeat(auto-fit, minmax(260px, 280px)); 
-            justify-content: center; 
+            justify-content: center; /* 핵심: 항목이 부족해도 중앙 정렬 */
             gap: 30px; 
             opacity: 0; 
             transition: opacity 0.4s ease; 
@@ -303,7 +305,7 @@
         .overlay-btn:hover { background: #b83e35; }
 
         /* =========================================
-           9. Instagram Feed 
+           ★ 9. Instagram Feed (최종 무결성 안정화 엔진)
            ========================================= */
         .ugc-section { padding: 120px 5%; background: #111827; color: white; text-align: center; }
         .ugc-section .section-header h2 { color: white; }
@@ -432,7 +434,7 @@
         .redirect-spinner { margin-top: 20px; padding: 15px; background: var(--bg-light); border-radius: 12px; font-weight: 700; color: var(--sj-red); display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1rem;}
 
         /* =========================================
-           ★ 12. 모바일 최적화 완벽 제어 (지도 깨짐 방지 포함)
+           ★ 12. 모바일 최적화 완벽 제어 (지도 깨짐/짤림 방지 포함)
            ========================================= */
         @media (max-width: 1200px) {
             .bento-large { padding: 40px; }
@@ -453,7 +455,7 @@
             .stat-item h4 { font-size: 3rem; }
             .spice-grid { grid-template-columns: 1fr; }
             
-            /* ★ 모바일 지도/리스트 레이아웃 분리 및 지도 크기 보장 */
+            /* ★ 모바일 지도/리스트 레이아웃 분리 및 지도 크기 100% 보장 */
             .split-layout { flex-direction: column; height: auto; }
             .loc-map-wrapper { height: 450px; width: 100%; border-radius: 24px 24px 0 0; }
             .loc-list-wrapper { padding: 20px; max-height: 500px; border-radius: 0 0 24px 24px;}
@@ -472,7 +474,7 @@
         }
         
         @media (max-width: 600px) {
-            /* ★ 모바일 헤더 1줄 보장 & 햄버거 메뉴 */
+            /* ★ 모바일 헤더 1줄 보장 & 1개의 CTA 버튼 */
             .header-top { padding: 0; }
             .logo-container span { font-size: 1.3rem; }
             .header-cta-group { margin-left: auto;}
@@ -499,8 +501,6 @@
             .hero { padding: 150px 5% 60px;}
             .hero h1 { font-size: 2.4rem; }
             .hero h1 span.highlight { font-size: 3rem; }
-            .hero-btn-group { flex-direction: column; width: 100%; padding: 0; gap: 10px;}
-            .btn-clean-heat, .btn-hero-apply { width: 100%; justify-content: center; padding: 14px 0;}
             
             .section-header { margin-bottom: 40px; }
             .section-header h2 { font-size: 2rem; }
@@ -545,9 +545,10 @@
 </head>
 <body>
 
+    <!-- 프로그레스 바 -->
     <div class="scroll-progress" id="scroll-progress"></div>
 
-    <!-- ★ 초격차 Navigation (우측 정렬 완벽화 & 모바일 햄버거 메뉴) -->
+    <!-- ★ 초격차 Navigation (우측 정렬 완벽화 & 모바일 햄버거 메뉴 & 단일 APPLY NOW) -->
     <header id="header">
         <div class="header-top">
             <a href="#home" class="logo-container" aria-label="Go to Homepage">
@@ -850,7 +851,7 @@
         </div>
     </section>
 
-    <!-- ★ Locations (커스텀 브랜드 맵 적용 및 모바일 지도 깨짐/짤림 완벽 방지) -->
+    <!-- ★ Locations (핵심 4개점 원복 유지 & 커스텀 마커 맵 연동) -->
     <section class="locations" id="locations">
         <div class="section-header reveal">
             <p>Find Us</p>
@@ -877,7 +878,6 @@
                         <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+14162188860">+1 416-218-8860</a></p>
                         <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Mon-Sun 11:30 AM - 11:00 PM</span></p>
                     </div>
-                    <!-- ★ 고퀄리티 태그 UI 적용 -->
                     <div class="feature-tags">
                         <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
                         <span class="feature-tag"><i class="fas fa-shopping-bag"></i> Takeout</span>
@@ -976,19 +976,20 @@
             </div>
             
             <div class="loc-map-wrapper">
-                <!-- ★ 커스텀 브랜드 마커 지도가 그려질 영역 -->
+                <!-- 커스텀 브랜드 마커 맵 렌더링 존 -->
                 <div id="main-map"></div>
                 
                 <div class="map-info-overlay" id="map-premium-overlay" aria-hidden="true">
                     <h4 id="overlay-title">Loading...</h4>
                     <p id="overlay-address"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> </p>
                     <p id="overlay-hours"><i class="fas fa-clock" aria-hidden="true"></i> </p>
+                    <a id="overlay-link" href="#" target="_blank" class="overlay-btn">Get Directions <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 자체 인스타그램 피드 연동 -->
+    <!-- ★ 자체 인스타그램 피드 연동 (견고한 JSON Fetch 엔진) -->
     <section class="ugc-section" id="community">
         <div class="section-header reveal">
             <p>Social Proof</p>
@@ -997,6 +998,7 @@
         </div>
         <div class="instagram-feed-section reveal delay-100">
             <div id="instagram-feed" class="instagram-grid">
+                <!-- 초기 스켈레톤 UI 6개 (로딩 성공 시 자동 교체) -->
                 <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
                 <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
             </div>
@@ -1043,7 +1045,7 @@
         <div class="timeline-cta-box reveal delay-200">
             <h3>Ready to Start Your Journey?</h3>
             <p style="font-size: 1.1rem; color: var(--text-gray); margin-bottom: 25px;">투자 조건과 0% 마진 혜택이 궁금하신가요? 공식 제안서를 먼저 확인하세요.</p>
-            <!-- ★ 오직 1개의 명확한 직결 라우팅 버튼 -->
+            <!-- 오직 1개의 명확한 직결 라우팅 버튼 -->
             <a href="step1_proposal.html" class="btn-timeline-apply">
                 <i class="fas fa-file-invoice" aria-hidden="true"></i> Read Official Proposal
             </a>
@@ -1090,7 +1092,7 @@
                 </form>
             </div>
 
-            <!-- ★ Franchise Quick Form -->
+            <!-- Franchise Quick Form -->
             <div id="franchise-form" class="form-content quick-form-card" role="tabpanel">
                 <div class="step-badge">Step 1 of 4</div>
                 <h3>Preliminary Application</h3>
@@ -1294,7 +1296,7 @@
             }
         });
 
-        // 커스텀 맵 제어 로직 (클릭 시 이동 및 모바일 스크롤링 적용)
+        // 커스텀 맵 제어 로직 (클릭 시 이동 및 모바일 스크롤링 자동화)
         function triggerMapChange(element) {
             if(element.classList.contains('active')) return;
             document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
@@ -1349,6 +1351,71 @@
                 overlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
+        }
+
+        // ★ Instagram JSON 파싱 안정화 엔진 (RSS.app 다중 규격 완벽 대응)
+        try {
+            const feedContainer = document.getElementById('instagram-feed');
+            if (feedContainer) {
+                fetch('instagram-feed.json', { cache: 'no-store' })
+                    .then(response => {
+                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                        return response.json();
+                    })
+                    .then(jsonData => {
+                        let posts = [];
+                        if (Array.isArray(jsonData)) {
+                            posts = jsonData;
+                        } else if (jsonData && Array.isArray(jsonData.data)) {
+                            posts = jsonData.data;
+                        } else if (jsonData && Array.isArray(jsonData.items)) {
+                            posts = jsonData.items;
+                        } else {
+                            throw new Error('Invalid JSON structure.');
+                        }
+
+                        const validPosts = posts.filter(post => post && (post.media_url || post.thumbnail_url || post.image)).slice(0, 6);
+
+                        if (validPosts.length === 0) {
+                            throw new Error('No posts with valid images found.');
+                        }
+
+                        let html = '';
+                        validPosts.forEach(post => {
+                            let imageUrl = post.media_url || post.image || post.thumbnail_url || '';
+                            if (post.media_type === 'VIDEO' && post.thumbnail_url) {
+                                imageUrl = post.thumbnail_url;
+                            }
+                            
+                            const rawLink = post.permalink || post.url || '';
+                            const safeLink = rawLink.startsWith('http') ? rawLink : 'https://www.instagram.com/sinjeon_Canada/';
+                            const imgFallback = `onerror="this.onerror=null; this.src='sinjeon_logo_canada.png'; this.style.objectFit='contain'; this.style.padding='20px';"`;
+
+                            html += `
+                                <div class="instagram-item">
+                                    <a href="${safeLink}" target="_blank" rel="noopener noreferrer" aria-label="View on Instagram">
+                                        <img src="${imageUrl}" alt="Sinjeon Instagram Post" loading="lazy" decoding="async" ${imgFallback}>
+                                        <div class="instagram-overlay">
+                                            <span class="instagram-icon"><i class="fab fa-instagram" aria-hidden="true"></i></span>
+                                        </div>
+                                    </a>
+                                </div>`;
+                        });
+                        
+                        feedContainer.innerHTML = html;
+                    })
+                    .catch(error => {
+                        console.warn('Instagram Feed Warning:', error.message);
+                        feedContainer.innerHTML = `
+                            <div style="grid-column: 1/-1; padding: 40px 20px; background: #1f2937; border-radius: 16px; border: 1px dashed #374151;">
+                                <i class="fab fa-instagram" style="font-size: 2.5rem; color: var(--sj-red); margin-bottom: 15px;"></i>
+                                <h4 style="font-size: 1.2rem; color: white; margin-bottom: 5px; font-weight: 800;">Feed Syncing...</h4>
+                                <p style="color: var(--text-light); font-size: 0.95rem; margin: 0; font-weight: 500;">인스타그램 데이터를 동기화 중입니다. 최신 소식은 <a href="https://www.instagram.com/sinjeon_Canada" target="_blank" rel="noopener noreferrer" style="color: var(--sj-red); text-decoration: underline;">@sinjeon_Canada</a>에서 확인해 주세요.</p>
+                            </div>`;
+                    });
+            }
+        } catch (error) { 
+            console.error("Instagram Module Critical Error:", error); 
         }
     </script>
 </body>
