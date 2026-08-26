@@ -94,7 +94,6 @@
            ----------------------------------------- */
         .scroll-progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--sj-red); z-index: 1001; width: 0%; transition: width 0.1s linear; will-change: width; }
 
-        /* ★ Reveal CSS */
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -111,7 +110,7 @@
         .char-img:hover { transform: scale(1.1) translateY(-5px) translateZ(0) !important; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.2)); }
 
         /* -----------------------------------------
-           3. Popup Integrity System
+           3. Individual Popup Cards System (CRITICAL FIX)
            ----------------------------------------- */
         .event-popup-wrapper {
             position: fixed; top: 110px; left: 20px; z-index: 99999; 
@@ -119,20 +118,26 @@
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none;
         }
         .event-popup-wrapper.show { opacity: 1; visibility: visible; transform: translateX(0); pointer-events: auto; }
-        .event-popup-content {
-            background: var(--bg-white); border-radius: var(--border-radius-md); width: fit-content; 
-            max-width: calc(100vw - 40px); overflow: hidden; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);
-            display: flex; flex-direction: column;
-        }
-        .popup-image-container {
-            display: flex; flex-direction: row; overflow-x: auto; overflow-y: hidden; background: var(--bg-white); max-width: 100%; -webkit-overflow-scrolling: touch;
-        }
-        .popup-image-container::-webkit-scrollbar { height: 6px; }
-        .popup-image-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .popup-image-container div { flex: 0 0 320px; width: 320px; border-right: 1px solid var(--border-color); }
-        .popup-image-container div:last-child { border-right: none; }
-        .popup-image-container img { width: 100%; height: auto; display: block; min-height: 100px; object-fit: cover;}
         
+        .popup-flex-container {
+            display: flex; flex-direction: row; gap: 15px; max-width: calc(100vw - 40px); overflow-x: auto; 
+            padding-bottom: 15px; /* For box-shadow */
+            -webkit-overflow-scrolling: touch;
+        }
+        .popup-flex-container::-webkit-scrollbar { height: 6px; }
+        .popup-flex-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        /* 개별 팝업 카드 스타일 */
+        .event-popup-card {
+            background: var(--bg-white); border-radius: var(--border-radius-md); 
+            width: 320px; flex: 0 0 320px; overflow: hidden; 
+            box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);
+            display: flex; flex-direction: column;
+            animation: formFadeIn 0.4s ease-out forwards;
+        }
+        .event-popup-card img { width: 100%; height: auto; display: block; min-height: 100px; object-fit: cover; }
+        
+        /* 팝업 하단 버튼 패널 */
         .event-popup-actions { display: flex; border-top: 1px solid var(--border-color); width: 100%; }
         .event-popup-actions button { flex: 1; padding: 14px 0; border: none; background: var(--bg-light); font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: var(--transition-fast); font-family: 'Noto Sans KR', sans-serif; }
         .btn-hide-24h { color: var(--text-gray); border-right: 1px solid var(--border-color) !important; }
@@ -161,7 +166,6 @@
         
         .nav-wrapper { display: flex; align-items: center; gap: 35px; justify-content: flex-end; flex: 1; }
         
-        /* ★ Nav Links with #franchise fix */
         .desktop-nav { display: flex; gap: 25px; align-items: center; }
         .desktop-nav a { text-decoration: none; color: var(--text-dark); font-weight: 700; font-size: 0.9rem; position: relative; padding: 5px 0; transition: color var(--transition-fast); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;}
         .desktop-nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: var(--sj-red); transition: width var(--transition-fast); }
@@ -317,7 +321,7 @@
         
         /* Map Area */
         .loc-map-wrapper { flex: 1; background: #e2e8f0; position: relative; pointer-events: auto; overflow: hidden; z-index: 1;}
-        .loc-map-wrapper iframe { width: 100%; height: 100%; position: absolute; top:0; left:0; z-index: 1; border: none; transition: opacity 0.3s ease; }
+        .loc-map-wrapper iframe { width: 100%; height: 100%; position: absolute; top:0; left:0; z-index: 1; border: none; transition: opacity 0.4s ease; }
         .map-loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; color: var(--sj-red); font-size: 2.5rem; animation: spin 1s linear infinite;}
         @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
         
@@ -481,7 +485,6 @@
             .stat-item h4 { font-size: 3rem; }
             .spice-grid { grid-template-columns: 1fr; }
             
-            /* Map Mobile Split Fix */
             .split-layout { flex-direction: column; height: auto; }
             .loc-map-wrapper { height: 450px; width: 100%; border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; }
             .loc-list-wrapper { padding: 20px; max-height: 500px; border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);}
@@ -544,16 +547,21 @@
             .input-wrapper input, .input-wrapper textarea, .quick-form-card input, .quick-form-card textarea { padding: 16px; font-size: 0.95rem; }
             .btn-green, .btn-red-flat { padding: 18px; font-size: 1rem; }
             
-            .event-popup-wrapper { top: 50%; bottom: auto; left: 50%; right: auto; transform: translate(-50%, -45%); width: 90%; max-width: 320px; }
+            /* ★ 개별 팝업 카드 모바일 스와이프 UI */
+            .event-popup-wrapper { top: 50%; bottom: auto; left: 50%; right: auto; transform: translate(-50%, -45%); width: 90%; max-width: 400px; }
             .event-popup-wrapper.show { transform: translate(-50%, -50%); }
-            .event-popup-content { width: 100%; }
-            .popup-image-container { flex-direction: column; max-height: 60vh; overflow-y: auto; overflow-x: hidden; }
-            .popup-image-container div { flex: auto; width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); }
-            .popup-image-container div:last-child { border-bottom: none; }
-            .event-popup-actions button { font-size: 0.9rem; padding: 14px 0; } 
+            .popup-flex-container { scroll-snap-type: x mandatory; padding-bottom: 0; gap: 10px; }
+            .event-popup-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; }
+            .event-popup-card img { max-height: 60vh; object-fit: contain; background: var(--bg-light); }
             
             .instagram-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .fab-container { bottom: 20px; right: 20px;}
+        }
+        
+        @media (max-width: 350px) {
+            .hero h1 { font-size: 2rem; }
+            .hero h1 span.highlight { font-size: 2.4rem; }
+            .bento-large .stat-item { grid-column: span 2; } 
         }
     </style>
 </head>
@@ -605,14 +613,10 @@
         </div>
     </div>
 
-    <!-- 4. Event Popup System -->
+    <!-- 4. Event Popup System (Individual Cards Host) -->
     <div class="event-popup-wrapper" id="main-event-popup" aria-hidden="true" role="dialog">
-        <div class="event-popup-content">
-            <div id="popup-image-container" class="popup-image-container"></div>
-            <div class="event-popup-actions">
-                <button class="btn-hide-24h" onclick="hidePopupFor24Hours()">24시간 보지 않기</button>
-                <button class="btn-close-popup" onclick="closeEventPopup()">닫기 (Close)</button>
-            </div>
+        <div class="popup-flex-container" id="popup-image-container">
+            <!-- Cards will be dynamically injected here by JS -->
         </div>
     </div>
 
@@ -862,7 +866,7 @@
         </div>
     </section>
 
-    <!-- 9. Locations Section (Google Maps Native Embed) -->
+    <!-- 9. Locations Section (Google Maps Native Embed for 100% Accuracy) -->
     <section class="locations" id="locations">
         <div class="section-header reveal">
             <p>Find Us</p>
@@ -1013,7 +1017,6 @@
         </div>
         <div class="instagram-feed-section reveal delay-100">
             <div id="instagram-feed" class="instagram-grid">
-                <!-- Skeletons -->
                 <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
                 <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
             </div>
@@ -1248,7 +1251,7 @@
          ========================================= -->
     <script>
         // -----------------------------------------
-        // 1. Initial Load & Critical Fixes (Store Hours & Reveal)
+        // 1. Initial Load & Critical Fixes
         // -----------------------------------------
         document.addEventListener('DOMContentLoaded', function () {
             
@@ -1258,7 +1261,7 @@
                 window.__sinjeonStoreStatusInterval = setInterval(updateStoreStatuses, 60000);
             }
 
-            // [1B] Reveal Animation System Repair (CRITICAL FIX)
+            // [1B] Reveal Animation System Repair
             const revealElements = document.querySelectorAll('.reveal');
             if (revealElements.length > 0) {
                 if ('IntersectionObserver' in window) {
@@ -1288,7 +1291,6 @@
                         });
                     }, 100);
 
-                    // Fallback to prevent infinite white screen
                     setTimeout(function () {
                         revealElements.forEach(function (element) {
                             element.classList.add('active');
@@ -1301,42 +1303,46 @@
                 }
             }
 
-            // [1C] Event Popup System
+            // [1C] Event Popup System (3 Individual Cards)
             try {
-                const popup = document.getElementById('main-event-popup');
-                if (popup) {
-                    const hideUntil = localStorage.getItem('hideMainPopupUntil');
-                    const now = new Date().getTime();
+                const popupWrapper = document.getElementById('main-event-popup');
+                const popupContainer = document.getElementById('popup-image-container');
+                if (popupWrapper && popupContainer) {
+                    const activePopupFiles = ['popup_event_1.jpg', 'popup_event_2.jpg', 'popup_event_3.jpg']; 
+                    let activeCount = 0;
 
-                    if (!hideUntil || now >= parseInt(hideUntil)) {
-                        const popupImgContainer = document.getElementById('popup-image-container');
-                        const activePopupFiles = ['popup_event_1.jpg', 'popup_event_2.jpg']; 
-                        
-                        if (activePopupFiles.length > 0) {
-                            let loadedImages = 0;
-                            activePopupFiles.forEach((file, index) => {
-                                const slot = document.createElement('div');
-                                slot.id = `popup-slot-${index}`;
-                                popupImgContainer.appendChild(slot);
-                            });
+                    activePopupFiles.forEach((file, index) => {
+                        const hideUntil = localStorage.getItem('hidePopup_' + file);
+                        const now = new Date().getTime();
 
-                            activePopupFiles.forEach((file, index) => {
-                                const img = new Image();
-                                img.alt = `Sinjeon Event Notice ${index + 1}`;
-                                img.onload = function() {
-                                    const targetSlot = document.getElementById(`popup-slot-${index}`);
-                                    if(targetSlot) targetSlot.appendChild(this);
-                                    loadedImages++;
-                                    if (loadedImages === 1) { setTimeout(() => { popup.classList.add('show'); }, 300); }
-                                };
-                                img.onerror = function() {
-                                    const emptySlot = document.getElementById(`popup-slot-${index}`);
-                                    if(emptySlot) emptySlot.remove(); 
-                                };
-                                img.src = file;
-                            });
+                        if (!hideUntil || now >= parseInt(hideUntil)) {
+                            const img = new Image();
+                            img.alt = `Sinjeon Event Notice ${index + 1}`;
+                            img.onload = function() {
+                                const cardId = `popup-card-${index}`;
+                                const card = document.createElement('div');
+                                card.className = 'event-popup-card';
+                                card.id = cardId;
+
+                                const actions = document.createElement('div');
+                                actions.className = 'event-popup-actions';
+                                actions.innerHTML = `
+                                    <button class="btn-hide-24h" onclick="closeIndividualPopup('${file}', '${cardId}', true)">24시간 보지 않기</button>
+                                    <button class="btn-close-popup" onclick="closeIndividualPopup('${file}', '${cardId}', false)">닫기 (Close)</button>
+                                `;
+
+                                card.appendChild(this);
+                                card.appendChild(actions);
+                                popupContainer.appendChild(card);
+                                
+                                activeCount++;
+                                if (activeCount > 0) {
+                                    popupWrapper.classList.add('show');
+                                }
+                            };
+                            img.src = file;
                         }
-                    }
+                    });
                 }
             } catch (error) { console.error("Popup Error:", error); }
 
@@ -1359,7 +1365,28 @@
         });
 
         // -----------------------------------------
-        // 2. Store Status Update Engine
+        // 2. Global UI Functions (Popup Close)
+        // -----------------------------------------
+        window.closeIndividualPopup = function(fileName, cardId, hide24h) {
+            if (hide24h) {
+                const now = new Date().getTime();
+                localStorage.setItem('hidePopup_' + fileName, now + (24 * 60 * 60 * 1000));
+            }
+            const card = document.getElementById(cardId);
+            if (card) {
+                card.style.display = 'none'; 
+                card.remove();
+            }
+            
+            const remaining = document.querySelectorAll('.event-popup-card');
+            if (remaining.length === 0) {
+                const wrapper = document.getElementById('main-event-popup');
+                if (wrapper) wrapper.classList.remove('show');
+            }
+        };
+
+        // -----------------------------------------
+        // 3. Store Status Update Engine
         // -----------------------------------------
         function updateStoreStatuses() {
             const storeCards = document.querySelectorAll('.store-card');
@@ -1418,7 +1445,7 @@
         }
 
         // -----------------------------------------
-        // 3. UI & Scroll Interactions (Throttled)
+        // 4. Scroll Tracking & Optimizations
         // -----------------------------------------
         let ticking = false;
         window.addEventListener('scroll', () => {
@@ -1449,7 +1476,23 @@
         }, { passive: true });
 
         // -----------------------------------------
-        // 4. Google Maps Native Iframe Updater
+        // 5. Anti-Theft Protection
+        // -----------------------------------------
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('dragstart', e => { 
+            if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); 
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+               (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+               (e.ctrlKey && e.key === 'u') || 
+               (e.ctrlKey && e.key === 'c') || 
+               (e.ctrlKey && e.key === 's') || 
+               (e.ctrlKey && e.key === 'p')) e.preventDefault();
+        });
+
+        // -----------------------------------------
+        // 6. Google Maps Native Iframe Updater
         // -----------------------------------------
         function triggerMapChange(element) {
             if(!element || element.classList.contains('active')) return;
@@ -1502,20 +1545,8 @@
         }
 
         // -----------------------------------------
-        // 5. Utility Functions (Menu, Popup, Modal, Tab)
+        // 7. Modals & Tabs
         // -----------------------------------------
-        function toggleMobileMenu() {
-            const overlay = document.getElementById('mobile-menu');
-            if(!overlay) return;
-            if (overlay.classList.contains('active')) {
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            } else {
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
         function showMenuCategory(catId) {
             document.querySelectorAll('.menu-tab-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -1528,17 +1559,6 @@
             document.querySelectorAll('.menu-grid').forEach(grid => grid.classList.remove('active'));
             const targetCat = document.getElementById('cat-' + catId);
             if(targetCat) targetCat.classList.add('active');
-        }
-
-        function closeEventPopup() {
-            const popup = document.getElementById('main-event-popup');
-            if (popup) popup.classList.remove('show'); 
-        }
-
-        function hidePopupFor24Hours() {
-            const now = new Date().getTime();
-            localStorage.setItem('hideMainPopupUntil', now + (24 * 60 * 60 * 1000));
-            closeEventPopup();
         }
 
         function showModalMessage(title, htmlContent, hideTitle = false) {
@@ -1585,7 +1605,7 @@
         }
 
         // -----------------------------------------
-        // 6. EmailJS Form Submission Engine
+        // 8. EmailJS Form Submission Engine
         // -----------------------------------------
         function handleInquiryEmailJS(event, type) {
             event.preventDefault();
@@ -1652,10 +1672,12 @@
                 });
             return false;
         }
+    </script>
 
-        // -----------------------------------------
-        // 7. Instagram Feed Loader (DOM API Engine)
-        // -----------------------------------------
+    <!-- =========================================
+         [Instagram Feed Loader (DOM API)]
+         ========================================= -->
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             const feedContainer = document.getElementById('instagram-feed');
 
@@ -1700,9 +1722,11 @@
                     throw new Error('Instagram JSON structure is invalid.');
                 }
 
-                const validPosts = posts.filter(function (post) {
-                    return post && (post.media_url || post.thumbnail_url || post.image);
-                }).slice(0, 6);
+                const validPosts = posts
+                    .filter(function (post) {
+                        return post && (post.media_url || post.thumbnail_url || post.image);
+                    })
+                    .slice(0, 6);
 
                 if (validPosts.length === 0) {
                     throw new Error('No valid Instagram posts found.');
@@ -1711,14 +1735,21 @@
                 const fragment = document.createDocumentFragment();
 
                 validPosts.forEach(function (post) {
-                    let imageUrl = post.media_url || post.image || post.thumbnail_url || '';
+                    let imageUrl =
+                        post.media_url ||
+                        post.image ||
+                        post.thumbnail_url ||
+                        '';
 
                     if (post.media_type === 'VIDEO' && post.thumbnail_url) {
                         imageUrl = post.thumbnail_url;
                     }
 
-                    const permalink = typeof post.permalink === 'string' && post.permalink.startsWith('http')
-                        ? post.permalink : 'https://www.instagram.com/sinjeon_Canada/';
+                    const permalink =
+                        typeof post.permalink === 'string' &&
+                        post.permalink.startsWith('http')
+                            ? post.permalink
+                            : 'https://www.instagram.com/sinjeon_Canada/';
 
                     const card = document.createElement('div');
                     card.className = 'instagram-item';
@@ -1763,19 +1794,63 @@
                 });
 
                 feedContainer.replaceChildren(fragment);
-                console.log('Instagram Feed Loaded Successfully:', validPosts.length, 'posts');
+
+                console.log(
+                    'Instagram Feed Loaded Successfully:',
+                    validPosts.length,
+                    'posts'
+                );
             })
             .catch(function (error) {
                 console.error('Instagram Feed Error:', error);
+
                 feedContainer.innerHTML = `
-                    <div style="grid-column: 1 / -1; padding: 40px 20px; background: #1f2937; border-radius: 16px; border: 1px dashed #374151;">
-                        <i class="fab fa-instagram" style="font-size: 2.5rem; color: var(--sj-red); margin-bottom: 15px;"></i>
-                        <h4 style="font-size: 1.2rem; color: white; margin-bottom: 5px; font-weight: 800;">Feed Temporarily Unavailable</h4>
-                        <p style="color: var(--text-light); font-size: 0.95rem; margin: 0; font-weight: 500;">
-                            Instagram feed is temporarily unavailable. Please visit
-                            <a href="https://www.instagram.com/sinjeon_Canada" target="_blank" rel="noopener noreferrer" style="color: var(--sj-red); text-decoration: underline;">@sinjeon_Canada</a> for the latest updates.
+                    <div style="
+                        grid-column: 1 / -1;
+                        padding: 40px 20px;
+                        background: #1f2937;
+                        border-radius: 16px;
+                        border: 1px dashed #374151;
+                    ">
+                        <i
+                            class="fab fa-instagram"
+                            style="
+                                font-size: 2.5rem;
+                                color: var(--sj-red);
+                                margin-bottom: 15px;
+                            "
+                        ></i>
+                        <h4 style="
+                            font-size: 1.2rem;
+                            color: white;
+                            margin-bottom: 5px;
+                            font-weight: 800;
+                        ">
+                            Feed Temporarily Unavailable
+                        </h4>
+                        <p style="
+                            color: var(--text-light);
+                            font-size: 0.95rem;
+                            margin: 0;
+                            font-weight: 500;
+                        ">
+                            Instagram feed is temporarily unavailable.
+                            Please visit
+                            <a
+                                href="https://www.instagram.com/sinjeon_Canada"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style="
+                                    color: var(--sj-red);
+                                    text-decoration: underline;
+                                "
+                            >
+                                @sinjeon_Canada
+                            </a>
+                            for the latest updates.
                         </p>
-                    </div>`;
+                    </div>
+                `;
             });
         });
     </script>
