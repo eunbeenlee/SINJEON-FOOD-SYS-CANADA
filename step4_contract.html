@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Secure Document Portal | Step 4 Contract</title>
+    <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
+    
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 오픈소스 라이브러리 (Zero-Cost PDF & Signature) -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.5/dist/signature_pad.umd.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    
+    <style>
+        :root {
+            --sj-green: #008250; 
+            --sj-red: #D24B41;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            margin: 0; padding: 0; background-color: #ffffff; color: var(--text-dark);
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* -----------------------------------------
+           1. Header (매칭된 UI)
+           ----------------------------------------- */
+        .portal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 40px; border-bottom: 1px solid var(--border-color);
+        }
+        .logo-group { display: flex; align-items: center; gap: 10px; }
+        .logo-group img { height: 28px; }
+        .logo-group span { font-weight: 800; font-size: 1.4rem; color: var(--sj-green); letter-spacing: -0.5px; margin-top: 3px;}
+        
+        .header-actions { display: flex; gap: 10px; align-items: center; }
+        .badge-secure { background: #e6f4ea; color: var(--sj-green); padding: 8px 16px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; border: 1px solid #cce8d6; }
+        .btn-cancel { background: white; color: var(--text-gray); border: 1px solid var(--border-color); padding: 8px 20px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .btn-cancel:hover { background: #f1f5f9; color: var(--text-dark); }
+
+        /* -----------------------------------------
+           2. Progress Bar (Step 4 Active)
+           ----------------------------------------- */
+        .progress-wrapper { max-width: 800px; margin: 50px auto 40px; position: relative; padding: 0 20px;}
+        .progress-track { position: absolute; top: 20px; left: 10%; right: 10%; height: 3px; background: #e2e8f0; z-index: 1; }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: var(--sj-red); z-index: 1; }
+        
+        .progress-steps { display: flex; justify-content: space-between; position: relative; z-index: 2; }
+        .step { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 120px;}
+        .step-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; background: white; border: 3px solid #e2e8f0; color: #94a3b8; transition: 0.3s; }
+        .step.completed .step-icon { background: var(--sj-red); border-color: var(--sj-red); color: white; }
+        .step.active .step-icon { background: white; border-color: var(--sj-red); color: var(--sj-red); box-shadow: 0 0 0 5px rgba(210, 75, 65, 0.1); }
+        
+        .step-text { text-align: center; font-size: 0.75rem; font-weight: 800; color: #94a3b8; letter-spacing: 0.5px; }
+        .step.completed .step-text, .step.active .step-text { color: var(--sj-red); }
+
+        /* -----------------------------------------
+           3. Title & Content Area
+           ----------------------------------------- */
+        .content-container { max-width: 800px; margin: 0 auto 100px; padding: 0 20px; text-align: center; }
+        .page-title { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 15px; color: #0f172a; }
+        .page-desc { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 50px; font-weight: 500; }
+
+        /* 패널 공통 */
+        .panel { background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); margin-bottom: 30px; text-align: left; position: relative; overflow: hidden; }
+        .panel-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid var(--bg-light); padding-bottom: 20px; }
+        .panel-icon { width: 45px; height: 45px; background: #fef2f2; color: var(--sj-red); border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.3rem; }
+        .panel-title { font-size: 1.4rem; font-weight: 800; margin: 0; }
+        
+        .btn-primary { background: var(--sj-red); color: white; border: none; padding: 18px 30px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(210, 75, 65, 0.2);}
+        .btn-primary:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(210, 75, 65, 0.3);}
+        .btn-primary:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; transform: none; color: white;}
+
+        /* 타이머 UI */
+        .timer-box { text-align: center; background: #f8fafc; border: 1px solid var(--border-color); padding: 30px; border-radius: 12px; margin-bottom: 25px; }
+        .timer-display { font-size: 2.8rem; font-weight: 900; color: var(--sj-red); letter-spacing: 2px; font-variant-numeric: tabular-nums; }
+        .timer-label { font-size: 0.85rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; font-weight: 700;}
+
+        /* 서명 영역 (Lock) */
+        .signature-pad-wrapper { background: #f8fafc; border-radius: 12px; padding: 10px; border: 2px dashed #cbd5e1; margin-bottom: 15px; }
+        canvas { width: 100%; height: 250px; border-radius: 8px; cursor: crosshair; touch-action: none; background: white; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+        
+        .btn-clear { background: white; color: var(--text-gray); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 700; margin-bottom: 25px;}
+        .btn-clear:hover { background: #f1f5f9; color: var(--text-dark);}
+
+        /* 락업 오버레이 (블러) */
+        .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; border-radius: 16px; }
+        .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
+        .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.6;}
+        
+        /* 알림 메시지 배너 */
+        .alert-box { padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; font-size: 0.95rem; font-weight: 600; display: flex; align-items: flex-start; gap: 10px; }
+        .alert-warning { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+
+        /* 개발자 우회 버튼 */
+        .dev-bypass { position: fixed; bottom: 20px; right: 20px; background: #e2e8f0; border: none; color: var(--text-gray); padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; cursor: pointer; opacity: 0.5; transition: 0.2s; z-index: 9999;}
+        .dev-bypass:hover { opacity: 1; background: var(--sj-red); color: white;}
+
+        @media (max-width: 600px) {
+            .portal-header { padding: 15px 20px; }
+            .badge-secure { display: none; }
+            .page-title { font-size: 2rem; }
+            .panel { padding: 25px 20px; }
+            .timer-display { font-size: 2.2rem; }
+            .step-text { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="portal-header">
+        <div class="logo-group">
+            <img src="sinjeon_logo_canada.png" alt="Sinjeon Logo">
+            <span>SINJEON CANADA</span>
+        </div>
+        <div class="header-actions">
+            <div class="badge-secure">256-BIT SECURE</div>
+            <button class="btn-cancel" onclick="history.back()">✕ CANCEL</button>
+        </div>
+    </header>
+
+    <!-- Progress Tracker -->
+    <div class="progress-wrapper">
+        <div class="progress-track">
+            <div class="progress-fill"></div> 
+        </div>
+        <div class="progress-steps">
+            <div class="step completed"><div class="step-icon"><i class="fas fa-check"></i></div><div class="step-text">STEP 1<br>QUICK INQUIRY</div></div>
+            <div class="step completed"><div class="step-icon"><i class="fas fa-check"></i></div><div class="step-text">STEP 2<br>OFFICIAL APP</div></div>
+            <div class="step completed"><div class="step-icon"><i class="fas fa-check"></i></div><div class="step-text">STEP 3<br>INTERVIEW / NDA</div></div>
+            <div class="step active"><div class="step-icon">4</div><div class="step-text">STEP 4<br>CONTRACT</div></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-container">
+        <h1 class="page-title">SECURE DOCUMENT PORTAL</h1>
+        <p class="page-desc">
+            캐나다 B.C.주 프랜차이즈법에 따른 정보공개서(FDD) 열람 및 본계약 서명 포털입니다.<br>
+            법적 보호를 위해 서명은 14일의 숙고 기간(Cooling-off Period) 이후 활성화됩니다.
+        </p>
+
+        <!-- 패널 1: FDD 열람 및 로깅 -->
+        <div class="panel" id="fdd-panel">
+            <div class="panel-header">
+                <div class="panel-icon"><i class="fas fa-file-contract"></i></div>
+                <h2 class="panel-title">1. Franchise Disclosure Document</h2>
+            </div>
+            
+            <div class="alert-box alert-warning">
+                <i class="fas fa-exclamation-triangle" style="margin-top: 3px;"></i>
+                <span>아래 버튼을 클릭하여 문서를 열람하는 즉시 <b>접속 IP 및 타임스탬프가 법적 수령증으로 DB에 영구 기록</b>되며, 본계약을 위한 14일의 대기 기간 타이머가 강제 시작됩니다.</span>
+            </div>
+
+            <button class="btn-primary" id="btn-read-fdd" onclick="startCoolingOff()">
+                <i class="fas fa-book-open"></i> Read FDD & Start 14-Day Timer
+            </button>
+        </div>
+
+        <!-- 패널 2: 전자 서명 및 문서 병합 -->
+        <div class="panel" id="signature-panel" style="margin-bottom: 0;">
+            
+            <!-- ★ 락업 오버레이 (정확한 문구 적용) -->
+            <div class="lock-overlay" id="lock-overlay">
+                <i class="fas fa-lock"></i>
+                <p id="lock-text">가맹법에 따른 14일 대기 기간이 경과하지 않았습니다.<br>상단의 FDD 열람을 먼저 진행해 주세요.</p>
+            </div>
+
+            <div class="panel-header">
+                <div class="panel-icon" style="background: #e0f2fe; color: #3b82f6;"><i class="fas fa-signature"></i></div>
+                <h2 class="panel-title">2. Executive Signature</h2>
+            </div>
+            <p style="color: var(--text-gray); margin-bottom: 25px;">
+                대기 기간이 종료되었습니다. 아래 영역에 직접 마우스나 터치로 서명해 주십시오. 
+                제출된 서명은 가맹 계약서 원본(PDF)과 합성되어 최종 문서로 서버에 아카이빙됩니다.
+            </p>
+
+            <div class="timer-box" id="timer-box" style="display: none;">
+                <div class="timer-display" id="timer-display">14:00:00:00</div>
+                <div class="timer-label">Days : Hours : Minutes : Seconds remaining</div>
+            </div>
+
+            <div class="signature-pad-wrapper">
+                <canvas id="signature-pad"></canvas>
+            </div>
+            <button class="btn-clear" onclick="signaturePad.clear()"><i class="fas fa-eraser"></i> Clear Signature</button>
+
+            <button class="btn-primary" id="btn-submit-sign" onclick="submitSignature()" disabled>
+                <i class="fas fa-paper-plane"></i> Finalize & Merge PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- 개발자 테스트용 우회 버튼 -->
+    <button class="dev-bypass" onclick="bypassTimer()">[Dev] Bypass 14 Days</button>
+
+    <script>
+        // =========================================================
+        // [백엔드 연동 설정] 추후 생성할 구글 앱스 스크립트 웹앱 URL 입력
+        // =========================================================
+        const GOOGLE_APPS_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL"; 
+
+        // ---------------------------------------------------------
+        // 1. Signature Pad 초기화
+        // ---------------------------------------------------------
+        const canvas = document.getElementById('signature-pad');
+        const signaturePad = new SignaturePad(canvas, {
+            penColor: "rgb(30, 41, 59)", 
+            backgroundColor: "rgba(255, 255, 255, 0)", 
+            minWidth: 1.5, maxWidth: 3.5
+        });
+
+        function resizeCanvas() {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+            signaturePad.clear(); 
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        // ---------------------------------------------------------
+        // 2. 14일 락업 타이머 로직 (Cooling-off Period)
+        // ---------------------------------------------------------
+        let timerInterval;
+        const LOCK_DAYS = 14; 
+        const LOCK_MS = LOCK_DAYS * 24 * 60 * 60 * 1000;
+
+        function checkTimerStatus() {
+            const startTime = localStorage.getItem('sinjeon_fdd_timestamp');
+            
+            if (!startTime) {
+                document.getElementById('lock-overlay').style.display = 'flex';
+                document.getElementById('timer-box').style.display = 'none';
+                return;
+            }
+
+            // FDD 버튼 비활성화 (이미 열람함)
+            const fddBtn = document.getElementById('btn-read-fdd');
+            fddBtn.innerHTML = '<i class="fas fa-check-circle"></i> FDD Accessed (Audit Logged)';
+            fddBtn.style.background = '#e2e8f0';
+            fddBtn.style.color = '#64748b';
+            fddBtn.style.cursor = 'default';
+            fddBtn.style.boxShadow = 'none';
+            fddBtn.onclick = null; 
+
+            const startMs = parseInt(startTime);
+            const now = new Date().getTime();
+            const elapsed = now - startMs;
+            const remaining = LOCK_MS - elapsed;
+
+            document.getElementById('lock-overlay').style.display = 'flex';
+            document.getElementById('timer-box').style.display = 'block';
+
+            if (remaining <= 0) {
+                unlockSignature();
+            } else {
+                updateTimerDisplay(remaining, startMs);
+                timerInterval = setInterval(() => {
+                    const r = LOCK_MS - (new Date().getTime() - startMs);
+                    if (r <= 0) {
+                        clearInterval(timerInterval);
+                        unlockSignature();
+                    } else {
+                        updateTimerDisplay(r, startMs);
+                    }
+                }, 1000);
+            }
+        }
+
+        // ★ PRD 요구사항: 정확한 안내 문구 및 카운트다운
+        function updateTimerDisplay(ms, startMs) {
+            const d = Math.floor(ms / (1000 * 60 * 60 * 24));
+            const h = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((ms % (1000 * 60)) / 1000);
+
+            document.getElementById('timer-display').innerText = 
+                `${d.toString().padStart(2, '0')}:${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            
+            // 언락 시점 계산
+            const unlockDate = new Date(startMs + LOCK_MS);
+            const unlockMonth = unlockDate.getMonth() + 1;
+            const unlockDay = unlockDate.getDate();
+            const unlockHour = unlockDate.getHours();
+
+            document.getElementById('lock-text').innerHTML = 
+                `캐나다 가맹법에 따라 정보공개서 열람 후 14일의 대기 기간이 필요합니다.<br>` +
+                `<strong style="color: var(--sj-red);">[${unlockMonth}월 ${unlockDay}일 ${unlockHour}시]</strong>부터 본계약 서명이 가능합니다.`;
+        }
+
+        function unlockSignature() {
+            document.getElementById('lock-overlay').style.display = 'none';
+            document.getElementById('timer-box').style.display = 'none';
+            const submitBtn = document.getElementById('btn-submit-sign');
+            submitBtn.disabled = false;
+        }
+
+        // ---------------------------------------------------------
+        // 3. FDD 열람 및 DB 로깅 (Audit Trail)
+        // ---------------------------------------------------------
+        async function startCoolingOff() {
+            if (!confirm("정보공개서(FDD)를 열람하시겠습니까?\n동의 시 즉시 법적 증빙용 IP 및 타임스탬프가 로깅되며 14일 락업이 시작됩니다.")) return;
+            
+            const now = new Date().getTime();
+            localStorage.setItem('sinjeon_fdd_timestamp', now);
+            
+            // 무료 IP 추적기(ipify)를 통해 IP 획득 후 구글 앱스 스크립트로 전송
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                
+                const auditData = {
+                    action: "FDD_ACCESSED",
+                    timestamp: new Date(now).toISOString(),
+                    ip: ipData.ip,
+                    userAgent: navigator.userAgent
+                };
+
+                // 구글 시트로 POST 요청 전송
+                if(GOOGLE_APPS_SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL") {
+                    fetch(GOOGLE_APPS_SCRIPT_URL, {
+                        method: "POST",
+                        body: JSON.stringify(auditData)
+                    });
+                }
+                console.log("Audit Log Logged:", auditData);
+                
+            } catch(error) {
+                console.error("Audit Logging Error:", error);
+            }
+            
+            // 실제 다운로드 링크 (수정 필요)
+            // window.open('YOUR_FDD_PDF_LINK_HERE', '_blank');
+            
+            checkTimerStatus();
+        }
+
+        // [개발자 테스트용] 14일 스킵
+        function bypassTimer() {
+            const fakeTime = new Date().getTime() - LOCK_MS - 1000;
+            localStorage.setItem('sinjeon_fdd_timestamp', fakeTime);
+            clearInterval(timerInterval);
+            checkTimerStatus();
+        }
+
+        // ---------------------------------------------------------
+        // 4. 서명 제출 및 브라우저 PDF 합성 (pdf-lib)
+        // ---------------------------------------------------------
+        async function submitSignature() {
+            if (signaturePad.isEmpty()) {
+                alert("서명란이 비어있습니다. 서명 후 제출해 주세요.");
+                return;
+            }
+
+            const btn = document.getElementById('btn-submit-sign');
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
+            btn.disabled = true;
+
+            try {
+                // 1. 서명 이미지 추출
+                const dataURL = signaturePad.toDataURL("image/png");
+                const { PDFDocument } = PDFLib;
+
+                // 2. 서버의 원본 계약서 템플릿 로드 (경로 확인 필요)
+                const templateResponse = await fetch('contract_template.pdf');
+                if (!templateResponse.ok) throw new Error("Contract template not found.");
+                const existingPdfBytes = await templateResponse.arrayBuffer();
+                
+                const pdfDoc = await PDFDocument.load(existingPdfBytes);
+
+                // 3. 서명 이미지 삽입
+                const pngImage = await pdfDoc.embedPng(dataURL);
+                const pngDims = pngImage.scale(0.4); 
+
+                const pages = pdfDoc.getPages();
+                const lastPage = pages[pages.length - 1]; 
+                
+                // ★ 실제 계약서 서명란에 맞춰 좌표 수정 필요
+                lastPage.drawImage(pngImage, {
+                    x: 100, 
+                    y: 150, 
+                    width: pngDims.width,
+                    height: pngDims.height,
+                });
+
+                // 4. 합성된 최종 PDF 추출
+                const pdfBytes = await pdfDoc.save();
+                const base64Pdf = await pdfDoc.saveAsBase64({ dataUri: true });
+
+                // 5. 백엔드(구글 드라이브) 저장 및 자동 이메일 발송 트리거
+                if(GOOGLE_APPS_SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL") {
+                    fetch(GOOGLE_APPS_SCRIPT_URL, {
+                        method: "POST",
+                        body: JSON.stringify({
+                            action: "CONTRACT_SIGNED",
+                            timestamp: new Date().toISOString(),
+                            pdfData: base64Pdf
+                        })
+                    });
+                }
+
+                // 6. 점주 로컬 PC에 사본 다운로드
+                const blob = new Blob([pdfBytes], { type: "application/pdf" });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "Sinjeon_Franchise_Agreement_Signed.pdf";
+                link.click();
+
+                btn.innerHTML = '<i class="fas fa-check"></i> Contract Successfully Submitted';
+                btn.style.background = 'var(--sj-green)';
+                alert("전자 서명 및 계약 체결이 완료되었습니다.\n사본이 다운로드되며, 본사 관리자에게 알림이 전송되었습니다.");
+
+            } catch (error) {
+                console.error("Contract Error:", error);
+                alert("[테스트 환경 안내] 'contract_template.pdf' 파일이 없어 문서를 합성할 수 없습니다.");
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Finalize & Merge PDF';
+                btn.disabled = false;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkTimerStatus);
+    </script>
+</body>
+</html>
