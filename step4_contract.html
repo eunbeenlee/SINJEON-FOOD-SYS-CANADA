@@ -188,7 +188,6 @@
                     <h2>Item 2. Business Experience of Directors and Officers</h2>
                     <p><strong>Yoon-ji Lee, Director:</strong> Ms. Lee oversees global franchise expansion and operations. She brings extensive professional experience in global Supply Chain Management (SCM) and North American business operations. Her expertise ensures that overseas franchisees receive robust logistical support, optimal ingredient sourcing, and localized operational strategies.</p>
 
-                    <!-- PDF 페이지 넘김 보장 속성 -->
                     <div class="html2pdf__page-break"></div>
 
                     <h2>Item 3. Litigation and Bankruptcy</h2>
@@ -342,18 +341,19 @@
         </div>
     </div>
 
-    <!-- ★ 상태 충돌 해결을 위한 개발자 강력 도구 -->
+    <!-- ★ 상태 충돌 해결을 위한 개발자 도구 -->
     <div class="dev-tools">
         <button class="dev-btn danger" onclick="resetPortal()"><i class="fas fa-trash-alt"></i> 시스템 초기화(Reset)</button>
         <button class="dev-btn" onclick="bypassTimer()"><i class="fas fa-forward"></i> Bypass 14 Days</button>
     </div>
 
     <script>
-        // 백엔드 API
-        const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylb9lJJZsLCD0atEa_EF7WTi366VZGvNH9fAJFCxSY2AWTRNrwi6uPb_Z0JchWbUmO/exec"; 
+        // =========================================================================
+        // ★ 최신 백엔드 배포 URL 
+        // =========================================================================
+        const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyixVvPndcv8oYpT8hk3y0GrtDs-PcnP_WPcjzugb7QSPNDjMvuBr7YRBckJs-KQOp-/exec"; 
 
         document.addEventListener('DOMContentLoaded', () => {
-            // 오늘 날짜 기본 세팅
             const fddDateEl = document.getElementById('fdd_date');
             if(fddDateEl && !fddDateEl.value) {
                 fddDateEl.value = new Date().toISOString().slice(0, 10);
@@ -364,7 +364,7 @@
         let timerInterval;
         const LOCK_MS = 14 * 24 * 60 * 60 * 1000;
 
-        // ★ [핵심 로직] 시스템 완전 초기화 기능 (버그 원천 차단)
+        // [핵심 로직] 시스템 완전 초기화 기능 
         function resetPortal() {
             if(confirm("모든 로컬 테스트 기록을 지우고 포털을 초기 상태로 되돌리시겠습니까?")) {
                 localStorage.removeItem('sinjeon_fdd_timestamp');
@@ -372,7 +372,7 @@
                 localStorage.removeItem('sj_corp');
                 localStorage.removeItem('sj_title');
                 localStorage.removeItem('sj_name');
-                location.reload(); // 강력 새로고침
+                location.reload(); 
             }
         }
 
@@ -405,13 +405,11 @@
         function checkStateAndRender() {
             const startTime = localStorage.getItem('sinjeon_fdd_timestamp');
             
-            // 상태 1: 미서명 상태 (아무 처리 안함, 폼 오픈)
             if (!startTime) return; 
 
-            // 상태 2: 서명 완료 상태 (FDD 폼 강제 잠금 및 오토필)
+            // 서명 완료 상태 복원
             const fddDoc = document.getElementById('fdd-doc-content');
             if(fddDoc && fddDoc.querySelector('input')) {
-                // 이전 입력값 복원
                 document.getElementById('fdd_province').value = localStorage.getItem('sj_province') || '';
                 document.getElementById('fdd_corp').value = localStorage.getItem('sj_corp') || '';
                 document.getElementById('fdd_name').value = localStorage.getItem('sj_name') || '';
@@ -419,7 +417,6 @@
                 lockInputsToText('fdd-doc-content'); 
             }
             
-            // FDD UI 완료 처리
             const fddBtn = document.getElementById('btn-submit-fdd');
             if(fddBtn) {
                 fddBtn.innerHTML = '<i class="fas fa-check-circle"></i> FDD 문서 교부 및 시스템 로깅 완료';
@@ -428,7 +425,6 @@
                 fddBtn.onclick = null; 
             }
             
-            // 본계약서 Auto-fill 처리
             const cProv = document.getElementById('contract_province');
             if(cProv) {
                 cProv.value = localStorage.getItem('sj_province') || '';
@@ -436,7 +432,6 @@
                 document.getElementById('contract_title').value = localStorage.getItem('sj_title') || '';
             }
 
-            // 타이머 계산
             const startMs = parseInt(startTime);
             const remaining = LOCK_MS - (new Date().getTime() - startMs);
 
@@ -509,21 +504,18 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 서류 생성 및 구글 드라이브 전송 중...';
             btn.disabled = true;
 
-            // 1. 로컬 데이터 저장 (중요: lock 전에 값 저장)
             localStorage.setItem('sinjeon_fdd_timestamp', new Date().getTime());
             localStorage.setItem('sj_province', province);
             localStorage.setItem('sj_corp', corpName);
             localStorage.setItem('sj_name', repName);
             localStorage.setItem('sj_title', repTitle);
 
-            // 2. 입력 폼 잠금 (텍스트화)
             lockInputsToText('fdd-doc-content');
 
             try {
                 const element = document.getElementById('fdd-doc-content');
                 const opt = pdfOptions(`Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
 
-                // 3. 백엔드(구글 드라이브) 발송용 Base64 추출
                 const pdfBase64String = await html2pdf().set(opt).from(element).outputPdf('datauristring');
                 const ipData = await fetch('https://api.ipify.org?format=json').then(r => r.json()).catch(() => ({ip: 'N/A'}));
 
@@ -540,7 +532,6 @@
                     redirect: "follow"
                 });
 
-                // 4. 점주 PC 다운로드 실행 (교부)
                 html2pdf().set(opt).from(element).save();
                 
                 checkStateAndRender();
@@ -551,7 +542,6 @@
                 alert("오류가 발생했습니다. 네트워크 상태를 확인해주세요.");
                 btn.innerHTML = '<i class="fas fa-file-download"></i> 문서 서명 및 FDD 수령본 발급';
                 btn.disabled = false;
-                // 에러 복구를 위한 리셋 안내
                 localStorage.removeItem('sinjeon_fdd_timestamp');
                 location.reload();
             }
