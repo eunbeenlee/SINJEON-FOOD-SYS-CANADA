@@ -66,30 +66,31 @@
         .document-wrapper::-webkit-scrollbar { width: 10px; }
         .document-wrapper::-webkit-scrollbar-thumb { background-color: #94a3b8; border-radius: 5px; }
 
-        .document-paper { background: var(--doc-bg); width: 100%; max-width: 800px; margin: 0 auto; padding: 50px 45px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #1e293b; position: relative;}
+        .document-paper { background: var(--doc-bg); width: 100%; max-width: 800px; margin: 0 auto; padding: 50px 45px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: 'Noto Sans KR', Arial, sans-serif; line-height: 1.6; color: #1e293b; position: relative;}
         
         .document-paper h1 { text-align: center; font-size: 1.8rem; text-transform: uppercase; margin-bottom: 5px; color: #0f172a;}
         .document-paper h3 { text-align: center; font-size: 1.1rem; color: #64748b; font-weight: 400; margin-top: 0; margin-bottom: 30px;}
-        .document-paper h2 { font-size: 1.1rem; color: var(--sj-green); border-bottom: 1.5px solid #e2e8f0; padding-bottom: 5px; margin-top: 25px;}
-        .document-paper p { font-size: 0.95rem; margin-bottom: 10px; text-align: justify;}
-        .document-paper ul { margin-top: 5px; margin-bottom: 15px; font-size: 0.95rem; padding-left: 20px;}
-        .document-paper li { margin-bottom: 6px; }
         
-        /* [에러 방어] 글자 반갈림 방지 CSS */
-        .document-paper p, .document-paper ul, .document-paper h2, .document-paper h3, .sig-block { page-break-inside: avoid; }
+        /* 계약서 조항 디자인 (이중 언어 최적화) */
+        .clause { margin-bottom: 25px; page-break-inside: avoid; }
+        .clause h2 { font-size: 1.1rem; color: var(--sj-green); border-bottom: 1.5px solid #e2e8f0; padding-bottom: 5px; margin-top: 0; margin-bottom: 10px;}
+        .clause p { font-size: 0.95rem; margin-bottom: 5px; text-align: justify; font-weight: 500;}
+        .clause .en-text { font-size: 0.85rem; color: #64748b; font-weight: 400; display: block; margin-bottom: 10px; line-height: 1.4; font-family: 'Outfit', sans-serif;}
+        .clause ul { margin-top: 5px; margin-bottom: 10px; padding-left: 20px;}
+        .clause li { margin-bottom: 8px; font-size: 0.95rem; font-weight: 500;}
+        .clause li .en-text { display: inline; margin-left: 5px;}
 
-        /* 동적 텍스트 자동 삽입용 강조 스타일 */
-        .auto-fill-text { font-weight: bold; color: var(--sj-red); border-bottom: 1px solid var(--sj-red); padding: 0 4px; }
-
-        /* 세련된 입력 폼 (문서 빈칸) */
-        .doc-input { border: none; border-bottom: 1.5px solid #0f172a; background: #f0fdf4; border-radius: 2px 2px 0 0; padding: 2px 6px; font-family: inherit; font-size: 1rem; color: var(--sj-red); font-weight: 700; outline: none; transition: 0.2s; width: 100%; max-width: 250px;}
+        /* 스마트 인라인 폼 */
+        .doc-input { border: none; border-bottom: 1.5px solid #0f172a; background: #f0fdf4; border-radius: 2px 2px 0 0; padding: 2px 6px; font-family: inherit; font-size: 0.95rem; color: var(--sj-red); font-weight: 700; outline: none; transition: 0.2s; width: auto; min-width: 150px; text-align: center;}
+        .doc-input.large { min-width: 250px; }
         .doc-input:focus { background: #fef2f2; border-bottom-color: var(--sj-red); box-shadow: 0 2px 0 rgba(210, 75, 65, 0.2);}
         .doc-input::placeholder { color: #94a3b8; font-weight: normal; font-size: 0.85rem;}
-        .type-signature { font-family: 'Caveat', cursive !important; font-size: 1.6rem !important; color: #1e3a8a !important; border-bottom: 2px solid #1e3a8a; }
-
-        /* 문서 잠금(제출) 시 적용될 텍스트 스타일 */
+        .doc-input[readonly] { background: transparent; border-bottom-style: dashed; color: #0f172a; cursor: not-allowed;}
+        
+        .type-signature { font-family: 'Caveat', cursive !important; font-size: 1.8rem !important; color: #1e3a8a !important; border-bottom: 2px solid #1e3a8a; }
         .locked-text { font-weight: bold; color: #0f172a; padding: 0 5px; display: inline-block; border-bottom: 1px solid #0f172a;}
 
+        /* 서명 블록 */
         .sig-block { border: 2px solid #cbd5e1; padding: 25px; margin-top: 30px; background: #ffffff; page-break-inside: avoid; border-radius: 8px;}
         .sig-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; color: #0f172a; text-align: center; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;}
         .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;}
@@ -104,18 +105,9 @@
         .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
         .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.6;}
 
-        /* [핵심 방어] PDF 변환 시 스크롤 제약을 완전히 해제하기 위한 특수 클래스 */
-        .pdf-exporting {
-            max-height: none !important;
-            overflow: visible !important;
-            border: none !important;
-            box-shadow: none !important;
-            padding: 0 !important;
-            background: white !important;
-            border-radius: 0 !important;
-        }
+        /* PDF 렌더링 해제 유틸 */
+        .pdf-exporting { max-height: none !important; overflow: visible !important; border: none !important; box-shadow: none !important; padding: 0 !important; background: white !important; border-radius: 0 !important;}
 
-        /* 개발자 도구 (플로팅 버튼) */
         .dev-tools { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 9999; }
         .dev-btn { background: #e2e8f0; border: 1px solid #cbd5e1; color: var(--text-gray); padding: 8px 14px; font-size: 0.8rem; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 700;}
         .dev-btn:hover { background: var(--text-dark); color: white;}
@@ -154,8 +146,8 @@
     <div class="content-container">
         <h1 class="page-title">Digital Signature Portal</h1>
         <p class="page-desc">
-            캐나다 프랜차이즈법에 따른 스마트 계약 포털입니다.<br>
-            문서를 꼼꼼히 확인하신 후, 하단 빈칸을 클릭하여 정보 입력 및 전자 서명을 진행해 주세요.
+            가맹사업법에 따른 정보공개서(FDD) 열람 및 본계약 전자 서명 포털입니다.<br>
+            문서를 꼼꼼히 확인하신 후, 하단 빈칸을 클릭하여 타이핑을 진행해 주세요.
         </p>
 
         <!-- ==========================================
@@ -172,13 +164,13 @@
                 <span>법적 교부 의무에 따라 화면의 원문을 확인해야 합니다. 서명 즉시 14일 락업이 적용되며 원본 PDF가 구글 서버에 자동 저장됩니다.</span>
             </div>
 
-            <!-- ★ FDD 스마트 문서 -->
+            <!-- FDD 스마트 문서 -->
             <div class="document-wrapper" id="fdd-scroll-wrapper">
                 <div class="document-paper" id="fdd-doc-content">
                     <h1>Franchise Disclosure Document</h1>
                     <h3>(Master Pan-Canadian Template)</h3>
                     
-                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+                    <div class="clause" style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                         <p><strong>Franchisor:</strong> Y2C Holdings Inc. (주식회사 와이투씨홀딩스)</p>
                         <p><strong>Corporate Address:</strong> Gwang-an Daewoo I-Vill, Busan, Republic of Korea</p>
                         <p style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
@@ -195,57 +187,75 @@
                         </p>
                     </div>
 
-                    <div style="border: 2px solid #D24B41; padding: 15px; background: #fef2f2; border-radius: 8px;">
+                    <div class="clause" style="border: 2px solid #D24B41; padding: 15px; background: #fef2f2; border-radius: 8px;">
                         <h3 style="color: #D24B41; text-align: left; font-weight: bold; font-size: 1rem; margin-bottom: 5px;">RISK WARNING / NOTICE TO PROSPECTIVE FRANCHISEES</h3>
                         <p style="font-size: 0.9rem;"><strong>A commercial franchise is a business investment. A franchise agreement is a legally binding contract that may pose significant financial risks.</strong></p>
                         <p style="font-size: 0.9rem;">Before you sign a franchise agreement or pay any money, you should carefully read this Franchise Disclosure Document (FDD). You are strongly advised to seek independent legal and financial advice.</p>
                         <p style="font-size: 0.9rem; margin-bottom: 0;">Under applicable Canadian provincial franchise legislation, Y2C Holdings Inc. must provide you with this document at least <strong>14 days</strong> before you sign any contract or pay any money to the franchisor or its affiliates.</p>
                     </div>
 
-                    <h2>Item 1. The Franchisor</h2>
-                    <p>The Franchisor is Y2C Holdings Inc., a corporation established under the laws of the Republic of Korea ("Franchisor", "we", "us", or "our"). We operate directly from South Korea without a local Canadian subsidiary or branch. We have been granted the Master Franchise Rights by Sinjeon Food Sys (the original trademark owner in Korea) to establish, operate, and grant sub-franchises for "Sinjeon Tteok-bokki" restaurants in Canada.</p>
+                    <div class="clause">
+                        <h2>Item 1. The Franchisor</h2>
+                        <p>The Franchisor is Y2C Holdings Inc., a corporation established under the laws of the Republic of Korea ("Franchisor", "we", "us", or "our"). We operate directly from South Korea without a local Canadian subsidiary or branch. We have been granted the Master Franchise Rights by Sinjeon Food Sys (the original trademark owner in Korea) to establish, operate, and grant sub-franchises for "Sinjeon Tteok-bokki" restaurants in Canada.</p>
+                    </div>
 
-                    <h2>Item 2. Business Experience of Directors and Officers</h2>
-                    <p><strong>Yoon-ji Lee, Director:</strong> Ms. Lee oversees global franchise expansion and operations. She brings extensive professional experience in global Supply Chain Management (SCM) and North American business operations. Her expertise ensures that overseas franchisees receive robust logistical support, optimal ingredient sourcing, and localized operational strategies.</p>
-
-                    <div class="html2pdf__page-break"></div>
-
-                    <h2>Item 3. Litigation and Bankruptcy</h2>
-                    <p>Neither Y2C Holdings Inc. nor any of its directors or officers are currently involved in any material litigation, arbitration, or bankruptcy proceedings in Canada, the Republic of Korea, or any other jurisdiction.</p>
-
-                    <h2>Item 4. Initial Franchise Fee and Initial Investment</h2>
-                    <p>The Franchisee is required to pay the following initial fees directly to the Franchisor via international wire transfer.</p>
-                    <p><strong>[Gross-up / Net Payment Clause]:</strong> All payments must be made free and clear of, and without deduction or withholding for, any taxes, bank fees, or foreign exchange losses. If Canadian tax law requires any withholding (such as Part XIII tax), the Franchisee must gross up the payment so that the Franchisor receives the exact Net amount stated below.</p>
-                    <ul>
-                        <li><strong>Initial Franchise Fee:</strong> KRW 40,000,000 (Non-refundable except in the case of Franchisor's material breach).</li>
-                        <li><strong>Initial Education Fee:</strong> KRW 5,000,000 (Non-refundable).</li>
-                        <li><strong>Logistics Security Deposit:</strong> CAD $5,000 to $20,000 (Refundable). Depending on the designated regional supply chain structure, this deposit will be collected directly by the Franchisor or requested by an authorized local B2B logistics distributor.</li>
-                    </ul>
-
-                    <h2>Item 5. Ongoing Fees (Management Services)</h2>
-                    <p><strong>Management & Support Fee: 4% of Gross Sales per month.</strong><br>This fee is strictly designated as a Management Services Fee (Business Income) and not a trademark royalty. It compensates the Franchisor for remote professional services provided directly from South Korea.</p>
-
-                    <h2>Item 6. Territory</h2>
-                    <p>The Franchisee is granted an exclusive territory from the specific "Approved Location" designated in the Franchise Agreement. The Franchisor will not establish or grant a franchise to another party within this exclusive territory during the term of the agreement.</p>
-
-                    <h2>Item 7. Obligation to Purchase</h2>
-                    <p>To maintain the brand's uniformity and quality standards, the Franchisee must purchase designated proprietary ingredients and supplies exclusively from the Franchisor or suppliers approved by the Franchisor.</p>
+                    <div class="clause">
+                        <h2>Item 2. Business Experience of Directors and Officers</h2>
+                        <p><strong>Yoon-ji Lee, Director:</strong> Ms. Lee oversees global franchise expansion and operations. She brings extensive professional experience in global Supply Chain Management (SCM) and North American business operations. Her expertise ensures that overseas franchisees receive robust logistical support, optimal ingredient sourcing, and localized operational strategies.</p>
+                    </div>
 
                     <div class="html2pdf__page-break"></div>
 
-                    <h2>Item 8. Term, Renewal, and Dispute Resolution</h2>
-                    <ul>
-                        <li><strong>Initial Term:</strong> 3 Years.</li>
-                        <li><strong>Renewal:</strong> The agreement does not automatically renew. A new agreement may be negotiated with a potential 20% discount on the new initial franchise fee.</li>
-                        <li><strong>Dispute Resolution & Governing Law:</strong> The Franchise Agreement is governed by the laws of the Republic of Korea. All disputes shall be finally settled by binding arbitration in Seoul, Republic of Korea, in accordance with the International Arbitration Rules of the Korean Commercial Arbitration Board (KCAB).</li>
-                    </ul>
+                    <div class="clause">
+                        <h2>Item 3. Litigation and Bankruptcy</h2>
+                        <p>Neither Y2C Holdings Inc. nor any of its directors or officers are currently involved in any material litigation, arbitration, or bankruptcy proceedings in Canada, the Republic of Korea, or any other jurisdiction.</p>
+                    </div>
 
-                    <h2>Item 9. Financial Statements</h2>
-                    <p>Below is the summary of Y2C Holdings Inc. financial status for the fiscal year ended Dec 31, 2025:</p>
-                    <ul>
-                        <li>Total Assets: KRW 297,931,073 | Total Liabilities: KRW 206,083,177</li>
-                        <li>Total Equity: KRW 91,847,896 | Net Income: KRW 5,914,229</li>
-                    </ul>
+                    <div class="clause">
+                        <h2>Item 4. Initial Franchise Fee and Initial Investment</h2>
+                        <p>The Franchisee is required to pay the following initial fees directly to the Franchisor via international wire transfer.</p>
+                        <p><strong>[Gross-up / Net Payment Clause]:</strong> All payments must be made free and clear of, and without deduction or withholding for, any taxes, bank fees, or foreign exchange losses. If Canadian tax law requires any withholding (such as Part XIII tax), the Franchisee must gross up the payment so that the Franchisor receives the exact Net amount stated below.</p>
+                        <ul>
+                            <li><strong>Initial Franchise Fee:</strong> KRW 40,000,000 (Non-refundable except in the case of Franchisor's material breach).</li>
+                            <li><strong>Initial Education Fee:</strong> KRW 5,000,000 (Non-refundable).</li>
+                            <li><strong>Logistics Security Deposit:</strong> CAD $5,000 to $20,000 (Refundable). Depending on the designated regional supply chain structure, this deposit will be collected directly by the Franchisor or requested by an authorized local B2B logistics distributor.</li>
+                        </ul>
+                    </div>
+
+                    <div class="clause">
+                        <h2>Item 5. Ongoing Fees (Management Services)</h2>
+                        <p><strong>Management & Support Fee: 4% of Gross Sales per month.</strong><br>This fee is strictly designated as a Management Services Fee (Business Income) and not a trademark royalty. It compensates the Franchisor for remote professional services provided directly from South Korea.</p>
+                    </div>
+
+                    <div class="clause">
+                        <h2>Item 6. Territory</h2>
+                        <p>The Franchisee is granted an exclusive territory from the specific "Approved Location" designated in the Franchise Agreement. The Franchisor will not establish or grant a franchise to another party within this exclusive territory during the term of the agreement.</p>
+                    </div>
+
+                    <div class="html2pdf__page-break"></div>
+
+                    <div class="clause">
+                        <h2>Item 7. Obligation to Purchase</h2>
+                        <p>To maintain the brand's uniformity and quality standards, the Franchisee must purchase designated proprietary ingredients and supplies exclusively from the Franchisor or suppliers approved by the Franchisor.</p>
+                    </div>
+
+                    <div class="clause">
+                        <h2>Item 8. Term, Renewal, and Dispute Resolution</h2>
+                        <ul>
+                            <li><strong>Initial Term:</strong> 3 Years.</li>
+                            <li><strong>Renewal:</strong> The agreement does not automatically renew. A new agreement may be negotiated with a potential 20% discount on the new initial franchise fee.</li>
+                            <li><strong>Dispute Resolution & Governing Law:</strong> The Franchise Agreement is governed by the laws of the Republic of Korea. All disputes shall be finally settled by binding arbitration in Seoul, Republic of Korea, in accordance with the International Arbitration Rules of the Korean Commercial Arbitration Board (KCAB).</li>
+                        </ul>
+                    </div>
+
+                    <div class="clause">
+                        <h2>Item 9. Financial Statements</h2>
+                        <p>Below is the summary of Y2C Holdings Inc. financial status for the fiscal year ended Dec 31, 2025:</p>
+                        <ul>
+                            <li>Total Assets: KRW 297,931,073 | Total Liabilities: KRW 206,083,177</li>
+                            <li>Total Equity: KRW 91,847,896 | Net Income: KRW 5,914,229</li>
+                        </ul>
+                    </div>
 
                     <!-- 본사 인증 및 서명 (Y2C Holdings 도장 삽입) -->
                     <div class="sig-block" style="border-color: #0f172a; margin-top: 40px; background: #ffffff;">
@@ -254,7 +264,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px;">
                             <div style="font-size: 1.1rem;"><strong>Y2C Holdings Inc.</strong></div>
                             <div style="text-align: center; position: relative;">
-                                <!-- 본사 서명 이미지 (배경 없는 PNG) -->
+                                <!-- 본사 서명 이미지 -->
                                 <img src="y2c_director_sign.png" alt="Y2C Signature" style="height: 60px; display: block; margin: 0 auto; position: relative; z-index: 2;" onerror="this.style.display='none'">
                                 <div style="position: relative; z-index: 1; margin-top: -15px;">
                                     <strong>By:</strong> Yoon-ji Lee <br> <strong>Title:</strong> Director
@@ -296,7 +306,7 @@
         </div>
 
         <!-- ==========================================
-             PANEL 2: FINAL CONTRACT (본계약서 풀버전)
+             PANEL 2: FINAL CONTRACT (본계약서 풀버전 탑재)
              ========================================== -->
         <div class="panel" id="signature-panel" style="margin-bottom: 0;">
             <div class="lock-overlay" id="lock-overlay">
@@ -310,7 +320,7 @@
             </div>
             
             <p style="color: var(--text-gray); margin-bottom: 25px;">
-                14일의 대기 기간이 경과했습니다. 계약서 원문을 확인하신 후 하단의 최종 서명을 진행해 주십시오. <b>제출 즉시 본사 인장이 포함된 계약서 원본(PDF)이 생성되어 구글 드라이브로 자동 저장됩니다.</b>
+                14일의 대기 기간이 경과했습니다. 계약서 원문의 빈칸을 마저 입력하시고 최종 서명을 진행해 주십시오. <b>제출 즉시 본사 인장이 포함된 계약서 원본(PDF)이 생성되어 구글 드라이브로 자동 저장됩니다.</b>
             </p>
 
             <div class="timer-box" id="timer-box" style="display: none;">
@@ -318,44 +328,104 @@
                 <div class="timer-label">Days : Hours : Minutes : Seconds remaining</div>
             </div>
 
-            <!-- ★ 본계약서 풀버전 스마트 문서 (Auto-fill 적용) -->
+            <!-- ★ 본계약서 풀버전 스마트 문서 -->
             <div class="document-wrapper" id="contract-scroll-wrapper" style="max-height: max-content;">
                 <div class="document-paper" id="contract-doc-content">
-                    <h1 style="font-size: 2rem; margin-bottom: 10px;">Franchise Agreement</h1>
-                    <p style="text-align: center; font-size: 1rem; color: var(--text-gray); margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 20px;">
-                        This Franchise Agreement (the "Agreement") is formally entered into by and between <strong>Y2C Holdings Inc.</strong> and the Franchisee listed below.
-                    </p>
+                    <h1 style="font-size: 1.6rem; margin-bottom: 0;">주식회사 와이투씨홀딩스 신전떡볶이 가맹계약서</h1>
+                    <h3 style="font-size: 1.1rem; color: #64748b; margin-bottom: 40px; margin-top: 5px;">Y2C Holdings Inc. Sinjeon Tteok-bokki Franchise Agreement (Master)</h3>
+                    
+                    <div class="clause">
+                        <h2>전 문 / Preamble</h2>
+                        <p>“가맹본부”는 대한민국 법에 의하여 적법하게 설립되어 부산광역시에 본점의 사무소를 두고 있는 주식회사 와이투씨홀딩스이다.</p>
+                        <span class="en-text">The "Franchisor" is Y2C Holdings Inc., a corporation duly established under the laws of the Republic of Korea, with its principal office in Busan, Republic of Korea.</span>
+                        
+                        <p>“가맹점사업자”는 캐나다 법령에 의해 설립되어, 캐나다 <input type="text" class="doc-input auto-prov" readonly> 주(Province)에 본점의 사무소를 두고 있는 <input type="text" class="doc-input auto-corp" readonly> 이다.</p>
+                        <span class="en-text">The "Franchisee" is a corporation duly established under the laws of Canada, with its principal office in the above Province, Canada.</span>
+                        
+                        <p>“가맹본부”는 “가맹점사업자”에게 “신전떡볶이” 캐나다 <input type="text" id="c_location" class="doc-input" placeholder="지점명 입력 (예: Toronto)" required> 점포의 프랜차이즈 가맹점 계약을 실행하고, 양측은 진지한 협의를 거쳐서 <input type="date" id="c_date" class="doc-input" required> 일자로 아래와 같이 계약을 체결한다.</p>
+                        <span class="en-text">The Franchisor desires to grant to the Franchisee the right to operate a "Sinjeon Tteok-bokki" franchise store at the above location. The parties agree to enter into this Agreement on the date above.</span>
+                    </div>
 
-                    <!-- 본문 내용: 자동완성(Auto-fill) 데이터가 텍스트 속에 녹아듦 -->
-                    <p>
-                        <strong>THIS AGREEMENT</strong> is made and executed effectively upon the final signature date, by and between:
-                    </p>
-                    <ul style="list-style-type: none; padding-left: 10px; margin-bottom: 25px;">
-                        <li><strong>FRANCHISOR:</strong> Y2C Holdings Inc., a corporation organized under the laws of the Republic of Korea.</li>
-                        <li><strong>FRANCHISEE:</strong> <span class="auto-fill-text" id="auto_contract_corp">[Franchisee Entity]</span>, operating within the jurisdiction of <span class="auto-fill-text" id="auto_contract_province">[Province]</span>, Canada.</li>
-                    </ul>
-
-                    <h2>Article 1. Grant of Franchise</h2>
-                    <p>The Franchisor hereby grants to the Franchisee the right and license to operate a "Sinjeon Tteok-bokki" franchised business. The Franchisee accepts such grant and agrees to operate the business strictly in accordance with the Franchisor's standard operational systems, manuals, and brand guidelines.</p>
-
-                    <h2>Article 2. Territory and Location</h2>
-                    <p>The Franchisee is authorized to operate the franchised business exclusively within the agreed territory within <strong><span class="auto-fill-text" id="auto_contract_province_2">[Province]</span></strong>. The Franchisor agrees not to grant another franchise within the exact localized radius specified in the supplemental site agreement.</p>
-
-                    <h2>Article 3. Fees and Payments</h2>
-                    <p>The Franchisee agrees to pay the Franchisor the following fees:</p>
-                    <ul>
-                        <li><strong>Initial Franchise & Education Fee:</strong> As fully disclosed in the FDD, non-refundable upon execution.</li>
-                        <li><strong>Ongoing Management & Support Fee:</strong> 4% of the monthly Gross Sales, payable monthly, to compensate the Franchisor for ongoing global operational consulting, SCM support, and menu localization.</li>
-                        <li><strong>Gross-up Requirement:</strong> All ongoing payments must be made free and clear of any Canadian withholding taxes (e.g., Part XIII tax). The Franchisee must gross up the payments to ensure the Franchisor receives the net amount.</li>
-                    </ul>
-
-                    <h2>Article 4. Supply Chain and Quality Control</h2>
-                    <p>To maintain global brand standards, the Franchisee must purchase all proprietary ingredients (including but not limited to Tteok-bokki sauce powders and frozen items) exclusively from the Franchisor or its designated authorized B2B distributors in North America.</p>
+                    <div class="clause">
+                        <h2>진술과 보증 / Representations and Warranties</h2>
+                        <p>1. <strong>"가맹본부"의 보증:</strong> 원천 상표권자인 대한민국 '신전푸드시스'로부터 캐나다 지역 내 가맹점 개설 및 영업 관리에 관한 마스터 프랜차이즈 권한을 적법하게 부여받은 권리자로서 본 계약을 체결한다.</p>
+                        <span class="en-text">1. The Franchisor executes this Agreement directly as the legitimate holder of the Master Franchise rights granted by Sinjeon Food Sys, the original trademark owner in Korea.</span>
+                        <p>2. <strong>"가맹점사업자"의 보증:</strong> 타 글로벌 프랜차이즈 또는 경쟁 브랜드와 이해상충(Conflict of Interest)이 발생하는 어떠한 계약 관계에도 얽혀 있지 아니하다.</p>
+                        <span class="en-text">2. The Franchisee is not currently involved in any contractual relationship with competing brands that may cause a Conflict of Interest.</span>
+                    </div>
 
                     <div class="html2pdf__page-break"></div>
 
-                    <h2>Article 5. Term and Governing Law</h2>
-                    <p>The initial term of this Agreement is Three (3) years. This Agreement shall be governed by and construed in accordance with the laws of the Republic of Korea. Any disputes shall be finally resolved by binding arbitration under the International Arbitration Rules of the Korean Commercial Arbitration Board (KCAB) in Seoul, Republic of Korea.</p>
+                    <div class="clause">
+                        <h2>제 1 장 가맹점의 표시 및 권리 부여 (Article 1 & 2)</h2>
+                        <p><strong>제 1 조 [가맹점의 표시 / Store Indication]</strong></p>
+                        <ul>
+                            <li>상호 (Corporate Name): <input type="text" class="doc-input auto-corp large" readonly></li>
+                            <li>점포 소재지 (Address): <input type="text" id="c_address" class="doc-input large" placeholder="점포 전체 주소 입력" required></li>
+                            <li>영업지역 (Territory): 상기 점포 소재지로부터 반경 <strong>1.5 km</strong> 이내 <span class="en-text">(Within a 1.5 km radius from the above address)</span></li>
+                        </ul>
+                        
+                        <p><strong>제 2 조 [권리 부여 및 지식재산권 보호 / Grant of Rights and IP]</strong></p>
+                        <p>가맹본부가 제공하는 브랜드 컨셉, 인테리어 디자인(Trade Dress), 레시피 등 일체의 무형 자산은 가맹본부에 독점적으로 귀속되며, 가맹점사업자는 이를 타 브랜드에 절대 유용할 수 없다.</p>
+                        <span class="en-text">All intangible assets belong exclusively to the Franchisor. The Franchisee shall never misappropriate them.</span>
+                        
+                        <p><strong>제 3 조 [계약기간 / Term of Agreement]</strong></p>
+                        <p>이 계약은 <input type="date" id="c_start_date" class="doc-input"> 부터 <input type="date" id="c_end_date" class="doc-input"> 까지 총 <strong>3년</strong>간으로 한다. 본 계약은 자동 갱신되지 아니한다.</p>
+                        <span class="en-text">This Agreement shall be effective for a period of 3 years. It is not automatically renewed.</span>
+                    </div>
+
+                    <div class="clause">
+                        <h2>제 2 장 가맹점사업자의 부담 및 비용 (Article 3)</h2>
+                        <p><strong>제 4 조 [최초가맹금 / Initial Fees]</strong></p>
+                        <ul>
+                            <li>가맹비 (Franchise Fee): KRW 40,000,000 (반환 불가 / Non-refundable)</li>
+                            <li>교육비 (Education Fee): KRW 5,000,000 (반환 불가 / Non-refundable)</li>
+                            <li>물류 보증금 (Security Deposit): KRW 20,000,000 (계약 해지 시 정산 후 반환 / Refundable)</li>
+                        </ul>
+
+                        <p><strong>제 5 조 [경영지도 및 운영지원 수수료 / Management & Support Fee]</strong></p>
+                        <p>매월 총 매출액의 <strong>4%</strong>를 익월 5일까지 가맹본부에게 전액 입금하여야 한다.</p>
+                        <span class="en-text">The Franchisee shall remit 4% of Monthly Gross Sales to the Franchisor by the 5th day of the following month.</span>
+
+                        <p><strong>제 6 조 [환율 변동 및 세금 대납 강제 / Gross-up & Currency Protection]</strong></p>
+                        <p>일체의 금원은 원화(KRW)로 산정된다. 캐나다 과세관청(CRA) 규정에 의하여 원천징수세(Withholding Tax)가 부과될 경우, 가맹점사업자는 해당 세금을 자비로 대납(Gross-up)하여야 하며, 가맹본부의 실 수령액은 삭감되지 아니한다.</p>
+                        <span class="en-text">If any withholding tax is imposed under Canadian laws, the Franchisee MUST gross up the payment at its own expense so the Franchisor's net received amount is not reduced.</span>
+                    </div>
+
+                    <div class="html2pdf__page-break"></div>
+
+                    <div class="clause">
+                        <h2>제 3 장 영업활동 및 통제 (Article 4)</h2>
+                        <p><strong>제 7 조 [필수 물류 조달 / Mandatory SCM Procurement]</strong></p>
+                        <p>가맹점사업자는 가맹본부가 지정한 필수 원·부재료를 가맹본부 또는 공식 벤더를 통해서만 독점 조달해야 한다.</p>
+                        
+                        <p><strong>제 8 조 [듀얼 브랜딩 및 공유주방 원천 금지 / Anti-Dual Branding]</strong></p>
+                        <p>가맹점사업자는 승인된 본 건 매장의 주방을 이용하여 타 브랜드의 음식을 조리, 판매, 배달(공유주방 형태 포함)하는 행위를 절대 할 수 없다.</p>
+                        <span class="en-text">The Franchisee is strictly prohibited from cooking, selling, or delivering food of any other brand (including ghost kitchens) using the approved store's kitchen.</span>
+                    </div>
+
+                    <div class="clause">
+                        <h2>제 4 장 양도, 해지 및 경업금지 (Article 5)</h2>
+                        <p><strong>제 9 조 [우선매수권 / Right of First Refusal]</strong></p>
+                        <p>매장 양도 시, 타 글로벌 프랜차이즈 기업으로의 양도는 금지되며 가맹본부는 우선매수권을 가진다.</p>
+                        
+                        <p><strong>제 10 조 [계약의 해지 / Termination]</strong></p>
+                        <p>수수료를 2개월 이상 연체하거나, 매출 축소 보고, 비승인 식자재 사용 시 즉시 계약을 해지할 수 있다.</p>
+                        
+                        <p><strong>제 11 조 [경업금지 / Non-Compete]</strong></p>
+                        <p>계약 종료 후 5년간 캐나다 내 타 외식 프랜차이즈(한국식 분식 등)에 관여할 수 없다.</p>
+                        <span class="en-text">For 5 years post-termination, the Franchisee shall not invest or manage any competing food franchise in Canada.</span>
+                    </div>
+
+                    <div class="clause">
+                        <h2>제 5 장 준거법 및 관할 (Article 6)</h2>
+                        <p><strong>제 12 조 [준거법 및 국제중재 / Governing Law & KCAB Arbitration]</strong></p>
+                        <p>본 계약의 해석은 대한민국 법률을 따르며, 관련된 모든 분쟁은 대한민국 서울에 소재하는 <strong>대한상사중재원(KCAB)</strong>의 국제중재규칙에 따라 중재로 최종 해결한다. 패소자는 중재 비용 및 변호사 수임료 일체를 배상하여야 한다.</p>
+                        <span class="en-text">All disputes shall be finally settled by arbitration in Seoul, Korea, in accordance with the International Arbitration Rules of the KCAB.</span>
+                        
+                        <p><strong>제 13 조 [언어 조항 / Language Clause]</strong></p>
+                        <p>두 언어 본 간에 해석상 차이가 발생할 경우, 항상 한국어 원문이 우선하여 적용된다.</p>
+                    </div>
 
                     <!-- 본계약 최종 서명 블록 -->
                     <div class="sig-block" style="border-color: #0f172a; margin-top: 40px; background: white;">
@@ -364,8 +434,8 @@
                         
                         <!-- 본사 서명 (Y2C Holdings 도장 삽입) -->
                         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0;">
-                            <div style="font-size: 1.1rem;"><strong>Franchisor: Y2C Holdings Inc.</strong></div>
-                            <div style="text-align: center; position: relative;">
+                            <div style="font-size: 1.1rem; color: #0f172a;"><strong>Franchisor: Y2C Holdings Inc.</strong><br><span style="font-size: 0.85rem; font-weight: 400;">Business Reg No: 216-86-02475</span></div>
+                            <div style="text-align: center; position: relative; color: #0f172a;">
                                 <img src="y2c_director_sign.png" alt="Y2C Signature" style="height: 60px; display: block; margin: 0 auto; position: relative; z-index: 2;" onerror="this.style.display='none'">
                                 <div style="position: relative; z-index: 1; margin-top: -15px;">
                                     <strong>By:</strong> Yoon-ji Lee <br> <strong>Title:</strong> Director
@@ -377,18 +447,18 @@
                         <div class="sig-grid" style="margin-top: 25px;">
                             <div class="sig-field">
                                 <label>Target Province</label>
-                                <input type="text" id="contract_province" class="doc-input" readonly style="color: #64748b; background: transparent; border-bottom-style: dashed;">
+                                <input type="text" class="doc-input auto-prov" readonly>
                             </div>
                             <div class="sig-field">
                                 <label>Franchisee Entity</label>
-                                <input type="text" id="contract_corp" class="doc-input" readonly style="color: #64748b; background: transparent; border-bottom-style: dashed;">
+                                <input type="text" class="doc-input auto-corp" readonly>
                             </div>
                             <div class="sig-field">
-                                <label>Title</label>
-                                <input type="text" id="contract_title" class="doc-input" readonly style="color: #64748b; background: transparent; border-bottom-style: dashed;">
+                                <label>Business Number (법인번호)</label>
+                                <input type="text" id="contract_biznum" class="doc-input" placeholder="법인번호 입력" required>
                             </div>
                             <div class="sig-field full">
-                                <label>Final Signature (최종 승인 서명 타이핑)</label>
+                                <label>Final Signature (대표자 최종 서명 타이핑)</label>
                                 <input type="text" id="contract_name" class="doc-input type-signature" placeholder="영문 이름을 한 번 더 타이핑하여 본계약을 최종 승인합니다." style="max-width: 100%; background: #f0fdf4; border-color: var(--sj-green);" required autocomplete="off">
                             </div>
                         </div>
@@ -397,25 +467,22 @@
             </div>
 
             <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()" disabled>
-                <i class="fas fa-paper-plane"></i> 본계약 최종 서명 완료 및 문서 발급
+                <i class="fas fa-paper-plane"></i> 본계약서 서명 완료 및 서버 발송
             </button>
         </div>
     </div>
 
     <!-- ★ 에러 방지용 시스템 초기화 도구 -->
     <div class="dev-tools">
-        <button class="dev-btn danger" onclick="resetPortal()"><i class="fas fa-power-off"></i> 시스템 초기화(Reset)</button>
+        <button class="dev-btn danger" onclick="resetPortal()"><i class="fas fa-power-off"></i> 시스템 리셋(초기화)</button>
         <button class="dev-btn" onclick="bypassTimer()"><i class="fas fa-forward"></i> Bypass 14 Days</button>
     </div>
 
     <script>
-        // =========================================================================
-        // ★ 백엔드 API (Google Apps Script)
-        // =========================================================================
+        // 백엔드 API (Google Apps Script)
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyixVvPndcv8oYpT8hk3y0GrtDs-PcnP_WPcjzugb7QSPNDjMvuBr7YRBckJs-KQOp-/exec"; 
 
         document.addEventListener('DOMContentLoaded', () => {
-            // 오늘 날짜 세팅
             const fddDateEl = document.getElementById('fdd_date');
             if(fddDateEl && !fddDateEl.value) {
                 fddDateEl.value = new Date().toISOString().slice(0, 10);
@@ -424,21 +491,17 @@
         });
 
         let timerInterval;
-        const LOCK_MS = 14 * 24 * 60 * 60 * 1000; // 14일
+        const LOCK_MS = 14 * 24 * 60 * 60 * 1000; 
 
-        // [방어 로직 1] 시스템 완전 초기화 
+        // 시스템 초기화
         function resetPortal() {
             if(confirm("모든 로컬 테스트 기록을 지우고 포털을 초기 백지 상태로 되돌리시겠습니까?")) {
-                localStorage.removeItem('sinjeon_fdd_timestamp');
-                localStorage.removeItem('sj_province');
-                localStorage.removeItem('sj_corp');
-                localStorage.removeItem('sj_title');
-                localStorage.removeItem('sj_name');
+                localStorage.clear();
                 location.reload(); 
             }
         }
 
-        // [방어 로직 2] 입력 폼을 플랫한 텍스트로 영구 변환 (문서 위변조 방지)
+        // 입력 폼을 플랫한 텍스트로 영구 변환
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -461,13 +524,13 @@
             });
         }
 
-        // [핵심] 렌더링 상태 복원 및 Auto-fill 로직
+        // Auto-fill (자동완성) 렌더링 로직
         function checkStateAndRender() {
             const startTime = localStorage.getItem('sinjeon_fdd_timestamp');
             
-            if (!startTime) return; // 미서명 상태면 종료
+            if (!startTime) return; 
 
-            // 1. FDD 문서 상태 복원
+            // FDD 상태 복원
             const fddDoc = document.getElementById('fdd-doc-content');
             if(fddDoc && fddDoc.querySelector('input')) {
                 document.getElementById('fdd_province').value = localStorage.getItem('sj_province') || '';
@@ -485,24 +548,13 @@
                 fddBtn.onclick = null; 
             }
             
-            // 2. 본계약서 Auto-fill (자동완성) 처리
-            const cProv = document.getElementById('contract_province');
-            if(cProv) {
-                const savedProv = localStorage.getItem('sj_province') || '';
-                const savedCorp = localStorage.getItem('sj_corp') || '';
-                
-                // 본계약서 폼 채우기
-                cProv.value = savedProv;
-                document.getElementById('contract_corp').value = savedCorp;
-                document.getElementById('contract_title').value = localStorage.getItem('sj_title') || '';
+            // ★ 본계약서 Auto-fill 
+            const savedProv = localStorage.getItem('sj_province') || '';
+            const savedCorp = localStorage.getItem('sj_corp') || '';
+            
+            document.querySelectorAll('.auto-prov').forEach(el => el.value = savedProv);
+            document.querySelectorAll('.auto-corp').forEach(el => el.value = savedCorp);
 
-                // 본계약서 본문 속 동적 텍스트 채우기
-                document.getElementById('auto_contract_corp').innerText = savedCorp || '[Franchisee Entity]';
-                document.getElementById('auto_contract_province').innerText = savedProv || '[Province]';
-                document.getElementById('auto_contract_province_2').innerText = savedProv || '[Province]';
-            }
-
-            // 3. 타이머 연산
             const startMs = parseInt(startTime);
             const remaining = LOCK_MS - (new Date().getTime() - startMs);
 
@@ -548,9 +600,9 @@
             checkStateAndRender();
         }
 
-        // [핵심] 완벽한 PDF 변환 옵션 (글자 잘림 원천 차단)
+        // PDF 렌더링 옵션 
         const getPdfOptions = (filename) => ({
-            margin:       [15, 15, 15, 15], // 상 우 하 좌 마진
+            margin:       [15, 15, 15, 15], 
             filename:     filename,
             image:        { type: 'jpeg', quality: 1.0 },
             html2canvas:  { scale: 2, useCORS: true, scrollY: 0, windowWidth: 800 },
@@ -577,7 +629,6 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 서류 생성 및 구글 드라이브 전송 중...';
             btn.disabled = true;
 
-            // 로컬 데이터 선 저장 (오류 나도 복원되도록)
             localStorage.setItem('sinjeon_fdd_timestamp', new Date().getTime());
             localStorage.setItem('sj_province', province);
             localStorage.setItem('sj_corp', corpName);
@@ -586,7 +637,6 @@
 
             lockInputsToText('fdd-doc-content');
 
-            // ★ PDF 캡처 시 스크롤 제한 100% 해제
             const wrapper = document.getElementById('fdd-scroll-wrapper');
             wrapper.classList.add('pdf-exporting');
 
@@ -594,18 +644,15 @@
                 const element = document.getElementById('fdd-doc-content');
                 const opt = getPdfOptions(`Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
 
-                // Base64 생성
                 const pdfBase64String = await html2pdf().set(opt).from(element).outputPdf('datauristring');
                 
-                // IP 추출 (오류 무시 방어코드)
                 let ipAddress = 'N/A';
                 try {
                     const ipRes = await fetch('https://api.ipify.org?format=json');
                     const ipData = await ipRes.json();
                     ipAddress = ipData.ip;
-                } catch(e) { console.log("IP fetch failed, proceeding with N/A"); }
+                } catch(e) {}
 
-                // 구글 백엔드 발송
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -619,10 +666,8 @@
                     redirect: "follow"
                 });
 
-                // 점주 PC 다운로드 (교부)
                 html2pdf().set(opt).from(element).save();
                 
-                // CSS 원상복구 및 화면 리렌더링
                 wrapper.classList.remove('pdf-exporting');
                 checkStateAndRender();
                 alert("정보공개서(FDD) 전자 서명이 완료되어 서버로 전송되었습니다.\n14일 락업 타이머가 가동됩니다.");
@@ -642,25 +687,29 @@
         // Action 2: 본계약서 제출 및 구글 드라이브 전송
         // ---------------------------------------------------------
         async function signAndSubmitContract() {
-            const corpName = document.getElementById('contract_corp').value;
-            const province = document.getElementById('contract_province').value;
+            const locName = document.getElementById('c_location').value.trim();
             const repName = document.getElementById('contract_name').value.trim();
-
-            if (!repName) { alert("본계약 승인을 위해 서명란에 영문 성함을 타이핑해 주세요."); return; }
+            const bizNum = document.getElementById('contract_biznum').value.trim();
+            
+            if (!locName || !repName || !bizNum) { 
+                alert("문서 본문의 빈칸(지점명, 주소, 계약일자 등) 및 하단 서명란을 모두 채워주세요."); return; 
+            }
 
             const btn = document.getElementById('btn-submit-contract');
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> 문서 생성 및 구글 드라이브 전송 중...';
             btn.disabled = true;
 
+            const corpName = localStorage.getItem('sj_corp') || 'Franchisee';
+            const province = localStorage.getItem('sj_province') || 'Canada';
+
             lockInputsToText('contract-doc-content');
 
-            // 스크롤 제한 해제
             const wrapper = document.getElementById('contract-scroll-wrapper');
             wrapper.classList.add('pdf-exporting');
 
             try {
                 const element = document.getElementById('contract-doc-content');
-                const opt = getPdfOptions(`Sinjeon_Contract_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
+                const opt = getPdfOptions(`Sinjeon_Master_Agreement_${corpName.replace(/\s+/g, '_')}.pdf`);
 
                 const pdfBase64String = await html2pdf().set(opt).from(element).outputPdf('datauristring');
 
@@ -682,13 +731,13 @@
                 wrapper.classList.remove('pdf-exporting');
                 btn.innerHTML = '<i class="fas fa-check"></i> 계약 완료 및 교부 성공';
                 btn.style.background = 'var(--sj-green)';
-                alert("본계약 전자 서명이 최종 완료되었습니다!\n서명된 계약서 원본이 구글 드라이브로 저장되고 점주님 PC에 교부(다운로드)되었습니다.");
+                alert("본계약 전자 서명이 최종 완료되었습니다!\n서명된 계약서 원본이 구글 드라이브로 저장되고 점주님 PC에 다운로드 되었습니다.");
 
             } catch (err) {
                 console.error(err);
                 wrapper.classList.remove('pdf-exporting');
                 alert("오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 본계약 최종 서명 완료 및 문서 발급';
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 본계약서 서명 완료 및 서버 발송';
                 btn.disabled = false;
             }
         }
