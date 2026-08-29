@@ -19,106 +19,130 @@
             --sj-green: #008250; 
             --sj-red: #D24B41;
             --bg-light: #f8fafc;
-            --text-dark: #1e293b;
+            --text-dark: #0f172a;
             --text-gray: #64748b;
-            --border-color: #e2e8f0;
+            --border-light: #e2e8f0;
+            --border-focus: #94a3b8;
         }
 
+        * { box-sizing: border-box; }
         body {
             margin: 0; padding: 0; background-color: #ffffff; color: var(--text-dark);
             font-family: 'Outfit', 'Noto Sans KR', sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Header & Progress Bar */
+        /* -----------------------------------------
+           1. Header
+           ----------------------------------------- */
         .portal-header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 40px; border-bottom: 1px solid var(--border-color);
-            background: white; position: sticky; top: 0; z-index: 100;
+            padding: 16px 40px; border-bottom: 1px solid var(--border-light);
+            background: rgba(255, 255, 255, 0.98); position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         }
-        .logo-group { display: flex; align-items: center; gap: 10px; }
-        .logo-group img { height: 28px; }
-        .logo-group span { font-weight: 800; font-size: 1.4rem; color: var(--sj-green); letter-spacing: -0.5px; margin-top: 3px;}
+        .logo-group { display: flex; align-items: center; gap: 12px; }
+        .logo-group img { height: 30px; }
+        .logo-group span { font-weight: 800; font-size: 1.45rem; color: var(--sj-green); letter-spacing: -0.5px; margin-top: 2px;}
         
-        .header-actions { display: flex; gap: 10px; align-items: center; }
-        .badge-secure { background: #e6f4ea; color: var(--sj-green); padding: 8px 16px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; border: 1px solid #cce8d6; display: flex; align-items: center; gap: 6px;}
-        .btn-cancel { background: white; color: var(--text-gray); border: 1px solid var(--border-color); padding: 8px 20px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-        .btn-cancel:hover { background: #f1f5f9; color: var(--text-dark); }
+        .header-actions { display: flex; gap: 12px; align-items: center; }
+        .badge-secure { background: #ecfdf5; color: #059669; padding: 8px 18px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; border: 1px solid #a7f3d0; display: flex; align-items: center; gap: 6px; letter-spacing: 0.5px;}
+        .btn-cancel { background: white; color: var(--text-gray); border: 1px solid var(--border-light); padding: 8px 22px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.2s; font-family: inherit;}
+        .btn-cancel:hover { background: #f1f5f9; color: var(--text-dark); border-color: var(--border-focus);}
 
-        .progress-wrapper { max-width: 800px; margin: 50px auto 40px; position: relative; padding: 0 20px;}
-        .progress-track { position: absolute; top: 20px; left: 10%; right: 10%; height: 3px; background: #e2e8f0; z-index: 1; }
-        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: var(--sj-red); z-index: 1; }
+        /* -----------------------------------------
+           2. Progress Bar
+           ----------------------------------------- */
+        .progress-wrapper { max-width: 850px; margin: 60px auto 50px; position: relative; padding: 0 20px;}
+        .progress-track { position: absolute; top: 20px; left: 10%; right: 10%; height: 4px; background: #e2e8f0; z-index: 1; border-radius: 2px;}
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: var(--sj-red); z-index: 1; border-radius: 2px;}
         
         .progress-steps { display: flex; justify-content: space-between; position: relative; z-index: 2; }
-        .step { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 120px;}
-        .step-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; background: white; border: 3px solid #e2e8f0; color: #94a3b8; transition: 0.3s; }
+        .step { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 130px;}
+        .step-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; background: white; border: 3px solid #e2e8f0; color: #94a3b8; transition: 0.3s; }
         .step.completed .step-icon { background: var(--sj-red); border-color: var(--sj-red); color: white; }
-        .step.active .step-icon { background: white; border-color: var(--sj-red); color: var(--sj-red); box-shadow: 0 0 0 5px rgba(210, 75, 65, 0.1); }
-        .step-text { text-align: center; font-size: 0.75rem; font-weight: 800; color: #94a3b8; letter-spacing: 0.5px; }
+        .step.active .step-icon { background: white; border-color: var(--sj-red); color: var(--sj-red); box-shadow: 0 0 0 6px rgba(210, 75, 65, 0.1); }
+        .step-text { text-align: center; font-size: 0.8rem; font-weight: 800; color: #94a3b8; letter-spacing: 0.5px; line-height: 1.3;}
         .step.completed .step-text, .step.active .step-text { color: var(--sj-red); }
 
-        /* Content Area */
-        .content-container { max-width: 800px; margin: 0 auto 100px; padding: 0 20px; text-align: center; }
-        .page-title { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 15px; color: #0f172a; }
-        .page-desc { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 50px; font-weight: 500; }
+        /* -----------------------------------------
+           3. Main Content Area
+           ----------------------------------------- */
+        .content-container { max-width: 850px; margin: 0 auto 100px; padding: 0 20px; text-align: center; }
+        .page-title { font-size: 3rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 15px; color: var(--text-dark); text-transform: uppercase;}
+        .page-desc { font-size: 1.1rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 50px; font-weight: 500; }
 
-        .panel { background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); margin-bottom: 30px; text-align: left; position: relative; overflow: hidden; }
-        .panel-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid var(--bg-light); padding-bottom: 20px; }
-        .panel-icon { width: 45px; height: 45px; background: #fef2f2; color: var(--sj-red); border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.3rem; }
-        .panel-title { font-size: 1.4rem; font-weight: 800; margin: 0; color: var(--text-dark);}
+        /* Panel UI */
+        .panel { background: white; border: 1px solid var(--border-light); border-radius: 20px; padding: 45px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); margin-bottom: 35px; text-align: left; position: relative; overflow: hidden; transition: 0.3s;}
+        .panel:hover { box-shadow: 0 15px 40px rgba(0,0,0,0.06); }
+        .panel-header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; border-bottom: 1px solid var(--bg-light); padding-bottom: 20px; }
+        .panel-icon { width: 50px; height: 50px; background: #fef2f2; color: var(--sj-red); border-radius: 14px; display: flex; justify-content: center; align-items: center; font-size: 1.4rem; }
+        .panel-title { font-size: 1.5rem; font-weight: 800; margin: 0; color: var(--text-dark); letter-spacing: -0.5px;}
+
+        /* Document Box */
+        .document-box { border: 1px solid var(--border-light); border-radius: 14px; padding: 20px 25px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; margin-bottom: 25px; transition: 0.2s;}
+        .document-box:hover { border-color: var(--border-focus); background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.02);}
+        .doc-info { display: flex; align-items: center; gap: 18px; }
+        .doc-icon { font-size: 2rem; color: var(--sj-red); }
+        .doc-details h4 { margin: 0 0 6px 0; font-size: 1.1rem; font-weight: 800; color: var(--text-dark); }
+        .doc-details p { margin: 0; font-size: 0.9rem; color: var(--text-gray); font-weight: 500; }
         
-        .document-box { border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; margin-bottom: 25px; transition: 0.2s;}
-        .document-box:hover { border-color: #94a3b8; }
-        .doc-info { display: flex; align-items: center; gap: 15px; }
-        .doc-icon { font-size: 1.8rem; color: var(--sj-red); }
-        .doc-details h4 { margin: 0 0 5px 0; font-size: 1.05rem; font-weight: 800; color: var(--text-dark); }
-        .doc-details p { margin: 0; font-size: 0.85rem; color: var(--text-gray); font-weight: 500; }
-        .btn-download { background: white; border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 8px; font-weight: 700; color: var(--text-dark); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem;}
-        .btn-download:hover { background: #e2e8f0; }
+        .btn-download { background: white; border: 1px solid var(--border-light); padding: 10px 20px; border-radius: 10px; font-weight: 700; color: var(--text-dark); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; transition: 0.2s;}
+        .btn-download:hover { background: #f1f5f9; border-color: var(--border-focus); transform: translateY(-2px);}
+        .btn-download.accessed { background: #f8fafc; border-color: #cbd5e1; color: #64748b; box-shadow: none; transform: none;}
 
-        .alert-box { padding: 15px 20px; border-radius: 12px; margin-bottom: 25px; font-size: 0.95rem; font-weight: 600; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+        /* Alert Box */
+        .alert-box { padding: 16px 20px; border-radius: 12px; margin-bottom: 25px; font-size: 0.95rem; font-weight: 600; display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; }
         .alert-warning { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
         .alert-info { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
 
-        .timer-box { text-align: center; background: #f8fafc; border: 1px dashed #cbd5e1; padding: 30px; border-radius: 12px; margin-bottom: 25px; }
-        .timer-display { font-size: 2.8rem; font-weight: 900; color: var(--sj-red); letter-spacing: 2px; font-variant-numeric: tabular-nums; }
-        .timer-label { font-size: 0.85rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; font-weight: 700;}
+        /* Timer UI */
+        .timer-box { text-align: center; background: #f8fafc; border: 2px dashed #cbd5e1; padding: 35px 20px; border-radius: 16px; margin-bottom: 30px; }
+        .timer-display { font-size: 3.2rem; font-weight: 900; color: var(--sj-red); letter-spacing: 2px; font-variant-numeric: tabular-nums; line-height: 1;}
+        .timer-label { font-size: 0.9rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; font-weight: 700;}
 
-        /* 계약자 정보 폼 */
-        .signer-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        /* Signer Input Form */
+        .signer-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
         .form-group.full { grid-column: 1 / -1; }
-        .form-group label { font-size: 0.85rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase;}
-        .form-group input { padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px; font-family: inherit; font-size: 1rem; color: var(--text-dark); outline: none; transition: 0.2s;}
-        .form-group input:focus { border-color: var(--sj-red); box-shadow: 0 0 0 3px rgba(210, 75, 65, 0.1); }
+        .form-group label { font-size: 0.85rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px;}
+        .form-group input { padding: 14px 18px; border: 1px solid var(--border-light); border-radius: 10px; font-family: inherit; font-size: 1.05rem; color: var(--text-dark); outline: none; transition: 0.2s; background: #f8fafc;}
+        .form-group input:focus { border-color: var(--sj-red); background: white; box-shadow: 0 0 0 4px rgba(210, 75, 65, 0.1); }
+        .form-group input::placeholder { color: #cbd5e1; }
 
-        .signature-pad-wrapper { background: #f8fafc; border-radius: 12px; padding: 10px; border: 2px dashed #cbd5e1; margin-bottom: 15px; }
-        canvas { width: 100%; height: 250px; border-radius: 8px; cursor: crosshair; touch-action: none; background: white; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+        /* Signature Pad */
+        .signature-pad-wrapper { background: #f8fafc; border-radius: 14px; padding: 10px; border: 2px dashed #cbd5e1; margin-bottom: 15px; transition: 0.2s;}
+        .signature-pad-wrapper:hover { border-color: var(--border-focus); }
+        canvas { width: 100%; height: 260px; border-radius: 8px; cursor: crosshair; touch-action: none; background: white; box-shadow: inset 0 2px 6px rgba(0,0,0,0.03);}
         
-        .btn-clear { background: white; color: var(--text-gray); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 700; margin-bottom: 25px;}
+        .btn-clear { background: transparent; color: var(--text-gray); border: 1px solid var(--border-light); padding: 10px 20px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; font-weight: 700; margin-bottom: 30px; transition: 0.2s; font-family: inherit;}
         .btn-clear:hover { background: #f1f5f9; color: var(--text-dark);}
 
-        .btn-primary { background: var(--sj-red); color: white; border: none; padding: 18px 30px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(210, 75, 65, 0.2);}
-        .btn-primary:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(210, 75, 65, 0.3);}
+        /* Submit Button */
+        .btn-primary { background: var(--sj-red); color: white; border: none; padding: 20px 30px; border-radius: 14px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(210, 75, 65, 0.2); font-family: inherit;}
+        .btn-primary:hover:not(:disabled) { background: #b83e35; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(210, 75, 65, 0.3);}
         .btn-primary:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; transform: none; color: white;}
 
-        .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; border-radius: 16px; }
+        /* Lock Overlay (Blur Effect) */
+        .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; border-radius: 20px; }
         .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
-        .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.5;}
+        .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.6;}
 
-        .dev-bypass { position: fixed; bottom: 20px; right: 20px; background: #e2e8f0; border: none; color: var(--text-gray); padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; cursor: pointer; opacity: 0.5; transition: 0.2s; z-index: 9999;}
+        /* Developer Bypass Button */
+        .dev-bypass { position: fixed; bottom: 20px; right: 20px; background: #e2e8f0; border: none; color: var(--text-gray); padding: 8px 14px; font-size: 0.8rem; border-radius: 8px; cursor: pointer; opacity: 0.4; transition: 0.2s; z-index: 9999; font-weight: 700; font-family: inherit;}
         .dev-bypass:hover { opacity: 1; background: var(--sj-red); color: white;}
 
+        /* Responsive */
         @media (max-width: 600px) {
             .portal-header { padding: 15px 20px; }
             .badge-secure { display: none; }
-            .page-title { font-size: 2rem; }
-            .panel { padding: 25px 20px; }
+            .page-title { font-size: 2.2rem; }
+            .panel { padding: 30px 20px; }
             .timer-display { font-size: 2.2rem; }
             .step-text { display: none; }
             .document-box { flex-direction: column; align-items: flex-start; gap: 15px; }
             .btn-download { width: 100%; justify-content: center; }
-            .signer-form { grid-template-columns: 1fr; }
+            .signer-form { grid-template-columns: 1fr; gap: 15px;}
         }
     </style>
 </head>
@@ -149,7 +173,7 @@
         <h1 class="page-title">SECURE DOCUMENT PORTAL</h1>
         <p class="page-desc">
             캐나다 B.C.주 프랜차이즈법에 따른 정보공개서(FDD) 열람 및 본계약 서명 포털입니다.<br>
-            법적 보호를 위해 서명은 14일의 숙고 기간(Cooling-off Period) 이후 활성화됩니다.
+            법적 보호를 위해 최종 서명은 14일의 숙고 기간(Cooling-off Period) 이후 활성화됩니다.
         </p>
 
         <!-- 패널 1: FDD 열람 -->
@@ -167,16 +191,17 @@
                     <i class="fas fa-file-pdf doc-icon"></i>
                     <div class="doc-details">
                         <h4>신전 떡볶이 정보공개서 원본</h4>
-                        <p>Sinjeon_FDD_Canada_Version.pdf (2.4MB)</p>
+                        <p>Sinjeon_FDD_Pan_Canada_Master.pdf</p>
                     </div>
                 </div>
-                <a href="dummy_fdd.pdf" target="_blank" class="btn-download" id="btn-read-fdd" onclick="startCoolingOff()">
+                <!-- ★ 실제 FDD 파일명 적용 및 재열람 버그 픽스 -->
+                <a href="Sinjeon_FDD_Pan_Canada_Master.pdf" target="_blank" class="btn-download" id="btn-read-fdd" onclick="startCoolingOff(event)">
                     <i class="fas fa-download"></i> 열람 및 14일 대기 시작
                 </a>
             </div>
             <div class="alert-box alert-warning" id="fdd-alert">
                 <i class="fas fa-exclamation-triangle" style="margin-top: 3px;"></i>
-                <span>주의: 문서를 다운로드/열람하는 순간부터 가맹법에 따른 14일의 쿨링오프(Cooling-off) 타이머가 시작됩니다.</span>
+                <span>주의: 문서를 다운로드/열람하는 순간부터 가맹법에 따른 14일의 쿨링오프(Cooling-off) 타이머가 작동합니다.</span>
             </div>
         </div>
 
@@ -192,20 +217,20 @@
                 <h2 class="panel-title">2. Franchise Agreement (가맹계약서)</h2>
             </div>
             
-            <p style="color: var(--text-gray); margin-bottom: 20px;">
-                14일의 대기 기간이 종료되었습니다. 아래 가맹계약서 원본 내용을 최종 확인하신 후, 계약자 정보와 서명을 입력해 주십시오. 제출 시 계약서 파일(PDF)에 정보가 디지털 병합됩니다.
+            <p style="color: var(--text-gray); margin-bottom: 25px;">
+                14일의 대기 기간이 종료되었습니다. 아래 가맹계약서 초안을 최종 확인하신 후, 계약자 정보와 서명을 입력해 주십시오. 제출 시 계약서 원본(PDF)에 입력 정보가 디지털 병합됩니다.
             </p>
 
             <div class="document-box" style="background: white;">
                 <div class="doc-info">
                     <i class="fas fa-file-signature doc-icon" style="color: #3b82f6;"></i>
                     <div class="doc-details">
-                        <h4>신전 떡볶이 가맹계약서 원본</h4>
-                        <p>Sinjeon_Franchise_Agreement.pdf</p>
+                        <h4>신전 떡볶이 가맹계약서 초안</h4>
+                        <p>contract_template.pdf</p>
                     </div>
                 </div>
                 <a href="contract_template.pdf" target="_blank" class="btn-download">
-                    <i class="fas fa-eye"></i> 계약서 초안 확인
+                    <i class="fas fa-eye"></i> 계약서 내용 확인
                 </a>
             </div>
 
@@ -218,25 +243,25 @@
             <div class="signer-form">
                 <div class="form-group full">
                     <label>Franchisee Entity (가맹점 법인명/상호명)</label>
-                    <input type="text" id="signer_corp" placeholder="e.g., Sinjeon Toronto Inc." required>
+                    <input type="text" id="signer_corp" placeholder="e.g., Sinjeon Toronto Inc." required autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label>Representative Name (대표자 성함)</label>
-                    <input type="text" id="signer_name" placeholder="e.g., John Doe" required>
+                    <input type="text" id="signer_name" placeholder="e.g., John Doe" required autocomplete="name">
                 </div>
                 <div class="form-group">
                     <label>Title (직책)</label>
-                    <input type="text" id="signer_title" placeholder="e.g., President / CEO" required>
+                    <input type="text" id="signer_title" placeholder="e.g., President / CEO" required autocomplete="organization-title">
                 </div>
             </div>
 
             <div class="signature-pad-wrapper">
                 <canvas id="signature-pad"></canvas>
             </div>
-            <button class="btn-clear" onclick="signaturePad.clear()"><i class="fas fa-eraser"></i> 서명 다시하기 (Clear)</button>
+            <button class="btn-clear" onclick="signaturePad.clear()"><i class="fas fa-eraser"></i> 서명 지우기 (Clear)</button>
 
             <button class="btn-primary" id="btn-submit-sign" onclick="submitSignature()" disabled>
-                <i class="fas fa-paper-plane"></i> 서명 완료 및 문서 병합 (Submit)
+                <i class="fas fa-paper-plane"></i> 서명 완료 및 문서 제출 (Submit)
             </button>
         </div>
     </div>
@@ -245,17 +270,22 @@
     <button class="dev-bypass" onclick="bypassTimer()">[Dev] Bypass 14 Days</button>
 
     <script>
-        // ★ 통합된 백엔드(Google Apps Script) URL 적용 완료
+        // =========================================================================
+        // [백엔드 API 설정] 발급받으신 Google Apps Script URL
+        // =========================================================================
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYRDZuuiL2AHnRxGDFrRYH1XI06RoaL9PloETzw9fzwfToCqit6akBEhGWvvdiyus-/exec"; 
 
+        // ---------------------------------------------------------
         // 1. Signature Pad 초기화
+        // ---------------------------------------------------------
         const canvas = document.getElementById('signature-pad');
         const signaturePad = new SignaturePad(canvas, {
-            penColor: "rgb(30, 41, 59)", 
+            penColor: "rgb(15, 23, 42)", // 고급스러운 잉크색(Dark Slate)
             backgroundColor: "rgba(255, 255, 255, 0)", 
             minWidth: 1.5, maxWidth: 3.5
         });
 
+        // 레티나 디스플레이 대응 및 리사이즈 에러 방지
         function resizeCanvas() {
             const ratio = Math.max(window.devicePixelRatio || 1, 1);
             canvas.width = canvas.offsetWidth * ratio;
@@ -266,7 +296,9 @@
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
 
+        // ---------------------------------------------------------
         // 2. 14일 락업 타이머 로직
+        // ---------------------------------------------------------
         let timerInterval;
         const LOCK_DAYS = 14; 
         const LOCK_MS = LOCK_DAYS * 24 * 60 * 60 * 1000;
@@ -280,14 +312,15 @@
                 return;
             }
 
+            // ★ 버그 픽스: 클릭 방지 해제 (언제든 재다운로드 가능하게 변경)
             const fddBtn = document.getElementById('btn-read-fdd');
-            fddBtn.innerHTML = '<i class="fas fa-check-circle" style="color: #10b981;"></i> 열람 완료 (Audit Logged)';
-            fddBtn.style.pointerEvents = 'none';
-            fddBtn.onclick = (e) => { e.preventDefault(); }; 
+            fddBtn.innerHTML = '<i class="fas fa-check-circle" style="color: #10b981;"></i> 열람 완료 (클릭 시 재다운로드)';
+            fddBtn.classList.add('accessed');
+            fddBtn.onclick = null; // 커스텀 이벤트 제거하여 순수 <a> 태그 다운로드 기능만 작동
             
             const alertBox = document.getElementById('fdd-alert');
             alertBox.className = 'alert-box alert-info';
-            alertBox.innerHTML = '<i class="fas fa-info-circle" style="margin-top: 3px;"></i><span>법적 수령증 발급 및 14일 대기 타이머가 정상적으로 작동 중입니다.</span>';
+            alertBox.innerHTML = '<i class="fas fa-shield-alt" style="margin-top: 3px;"></i><span>법적 수령증 발급 및 14일 대기 타이머가 시스템에 정상적으로 기록 중입니다.</span>';
 
             const startMs = parseInt(startTime);
             const now = new Date().getTime();
@@ -329,7 +362,7 @@
 
             document.getElementById('lock-text').innerHTML = 
                 `캐나다 가맹법에 따라 정보공개서 열람 후 14일의 대기 기간이 필요합니다.<br>` +
-                `<strong style="color: var(--sj-red);">[${unlockMonth}월 ${unlockDay}일 ${unlockHour}시]</strong>부터 가맹계약서(Contract) 서명이 가능합니다.`;
+                `<strong style="color: var(--sj-red);">[${unlockMonth}월 ${unlockDay}일 ${unlockHour}시]</strong>부터 가맹계약서(Contract) 서명이 활성화됩니다.`;
         }
 
         function unlockSignature() {
@@ -339,11 +372,15 @@
             submitBtn.disabled = false;
         }
 
-        // 3. FDD 열람 및 DB 로깅 (CORS 보안 패치 적용)
-        async function startCoolingOff() {
-            if (localStorage.getItem('sinjeon_fdd_timestamp')) return;
+        // ---------------------------------------------------------
+        // 3. FDD 열람 및 DB 로깅 (CORS 보안 패치 적용 & 다운로드 버그 픽스)
+        // ---------------------------------------------------------
+        async function startCoolingOff(event) {
+            // 이미 열람 기록이 있으면 확인창 스킵하고 순수 다운로드 기능만 작동
+            if (localStorage.getItem('sinjeon_fdd_timestamp')) return; 
+
             if (!confirm("정보공개서(FDD) 문서를 열람하시겠습니까?\n동의 시 접속 IP 및 타임스탬프가 법적 증빙으로 로깅되며 14일 대기 기간이 시작됩니다.")) {
-                event.preventDefault(); 
+                if(event) event.preventDefault(); // 취소 시 다운로드 차단
                 return;
             }
             
@@ -351,6 +388,7 @@
             localStorage.setItem('sinjeon_fdd_timestamp', now);
             
             try {
+                // IP 추적
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 
@@ -361,13 +399,14 @@
                     userAgent: navigator.userAgent 
                 };
                 
-                // ★ CORS 우회를 위한 안전한 fetch 설정 적용 완료
+                // 백엔드로 로그 전송 (CORS 우회)
                 fetch(GOOGLE_APPS_SCRIPT_URL, { 
                     method: "POST", 
                     headers: { "Content-Type": "text/plain;charset=utf-8" }, 
                     body: JSON.stringify(auditData),
                     redirect: "follow"
-                });
+                }).catch(e => console.log("Audit Log send silently failed", e));
+
             } catch(error) { console.error("Audit Logging Error:", error); }
             
             checkTimerStatus();
@@ -398,37 +437,50 @@
             }
 
             const btn = document.getElementById('btn-submit-sign');
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> 문서 병합 중 (Merging PDF)...';
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> 문서 렌더링 중 (Processing)...';
             btn.disabled = true;
 
             try {
                 const dataURL = signaturePad.toDataURL("image/png");
                 const { PDFDocument, rgb, StandardFonts } = PDFLib;
 
+                // 1. 서버의 원본 계약서 템플릿 로드
                 const templateResponse = await fetch('contract_template.pdf');
                 if (!templateResponse.ok) throw new Error("Contract template not found.");
                 const existingPdfBytes = await templateResponse.arrayBuffer();
                 const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
+                // 2. 폰트 및 데이터 세팅
                 const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
                 const todayDate = new Date().toLocaleDateString('en-CA'); 
                 
                 const pngImage = await pdfDoc.embedPng(dataURL);
-                const pngDims = pngImage.scale(0.35); 
+                const pngDims = pngImage.scale(0.35); // 서명 이미지 비율
 
+                // 3. PDF 마지막 페이지 타겟팅
                 const pages = pdfDoc.getPages();
                 const lastPage = pages[pages.length - 1]; 
                 
+                // ========================================================
+                // [좌표 설정 구역]
+                // ※ pdf-lib의 좌표계는 (0,0)이 문서의 '왼쪽 맨 아래'입니다.
+                // ※ 다운로드된 PDF 결과물을 보고 아래 x, y 값을 미세 조정하세요.
+                // ========================================================
+                
+                // (좌측) 서명일자 기입
                 lastPage.drawText(todayDate, { x: 130, y: 140, size: 12, font: font, color: rgb(0,0,0) });
+
+                // (우측) 법인명, 서명, 대표자명, 직책 기입
                 lastPage.drawText(corpName, { x: 380, y: 220, size: 12, font: font, color: rgb(0,0,0) });
                 lastPage.drawImage(pngImage, { x: 380, y: 155, width: pngDims.width, height: pngDims.height });
                 lastPage.drawText(repName, { x: 380, y: 140, size: 12, font: font, color: rgb(0,0,0) });
                 lastPage.drawText(repTitle, { x: 380, y: 110, size: 12, font: font, color: rgb(0,0,0) });
 
+                // 4. 완성 파일 추출
                 const pdfBytes = await pdfDoc.save();
                 const base64Pdf = await pdfDoc.saveAsBase64({ dataUri: true });
 
-                // ★ CORS 우회를 위한 안전한 fetch 설정 적용 완료 (최종 서명 PDF 전송)
+                // 5. 구글 백엔드로 전송 (안전한 fetch)
                 fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -436,11 +488,12 @@
                         action: "CONTRACT_SIGNED", 
                         timestamp: new Date().toISOString(), 
                         pdfData: base64Pdf,
-                        ip: "N/A" // 보안상 서버 단에서 로깅 처리
+                        ip: "N/A"
                     }),
                     redirect: "follow"
-                });
+                }).catch(e => console.log("Backend submit silently failed", e));
 
+                // 6. 점주 로컬 PC에 사본 저장
                 const blob = new Blob([pdfBytes], { type: "application/pdf" });
                 const link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
@@ -453,8 +506,8 @@
 
             } catch (error) {
                 console.error("Contract Error:", error);
-                alert("[시스템 안내] 'contract_template.pdf' 원본 파일이 서버에 없어 문서를 합성할 수 없습니다.\n해당 파일을 폴더에 업로드하면 정상 작동합니다.");
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 서명 완료 및 문서 병합 (Submit)';
+                alert("[시스템 안내] 서버 경로에 'contract_template.pdf' 파일이 없어 문서를 합성할 수 없습니다.\n해당 파일을 폴더에 업로드하면 정상 작동합니다.");
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 서명 완료 및 문서 제출 (Submit)';
                 btn.disabled = false;
             }
         }
