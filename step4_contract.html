@@ -30,9 +30,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* -----------------------------------------
-           1. Header
-           ----------------------------------------- */
+        /* Header & Progress Bar */
         .portal-header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 40px; border-bottom: 1px solid var(--border-color);
@@ -47,9 +45,6 @@
         .btn-cancel { background: white; color: var(--text-gray); border: 1px solid var(--border-color); padding: 8px 20px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.2s; }
         .btn-cancel:hover { background: #f1f5f9; color: var(--text-dark); }
 
-        /* -----------------------------------------
-           2. Progress Bar
-           ----------------------------------------- */
         .progress-wrapper { max-width: 800px; margin: 50px auto 40px; position: relative; padding: 0 20px;}
         .progress-track { position: absolute; top: 20px; left: 10%; right: 10%; height: 3px; background: #e2e8f0; z-index: 1; }
         .progress-fill { position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: var(--sj-red); z-index: 1; }
@@ -59,28 +54,19 @@
         .step-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; background: white; border: 3px solid #e2e8f0; color: #94a3b8; transition: 0.3s; }
         .step.completed .step-icon { background: var(--sj-red); border-color: var(--sj-red); color: white; }
         .step.active .step-icon { background: white; border-color: var(--sj-red); color: var(--sj-red); box-shadow: 0 0 0 5px rgba(210, 75, 65, 0.1); }
-        
         .step-text { text-align: center; font-size: 0.75rem; font-weight: 800; color: #94a3b8; letter-spacing: 0.5px; }
         .step.completed .step-text, .step.active .step-text { color: var(--sj-red); }
 
-        /* -----------------------------------------
-           3. Content Area
-           ----------------------------------------- */
+        /* Content Area */
         .content-container { max-width: 800px; margin: 0 auto 100px; padding: 0 20px; text-align: center; }
         .page-title { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 15px; color: #0f172a; }
         .page-desc { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 50px; font-weight: 500; }
 
-        /* 공통 패널 */
         .panel { background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); margin-bottom: 30px; text-align: left; position: relative; overflow: hidden; }
         .panel-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid var(--bg-light); padding-bottom: 20px; }
         .panel-icon { width: 45px; height: 45px; background: #fef2f2; color: var(--sj-red); border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.3rem; }
         .panel-title { font-size: 1.4rem; font-weight: 800; margin: 0; color: var(--text-dark);}
         
-        .btn-primary { background: var(--sj-red); color: white; border: none; padding: 18px 30px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(210, 75, 65, 0.2);}
-        .btn-primary:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(210, 75, 65, 0.3);}
-        .btn-primary:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; transform: none; color: white;}
-
-        /* 첨부문서 다운로드 박스 UI */
         .document-box { border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; margin-bottom: 25px; transition: 0.2s;}
         .document-box:hover { border-color: #94a3b8; }
         .doc-info { display: flex; align-items: center; gap: 15px; }
@@ -90,27 +76,36 @@
         .btn-download { background: white; border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 8px; font-weight: 700; color: var(--text-dark); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem;}
         .btn-download:hover { background: #e2e8f0; }
 
-        /* 타이머 UI */
-        .timer-box { text-align: center; background: #f8fafc; border: 1px dashed #cbd5e1; padding: 30px; border-radius: 12px; margin-bottom: 25px; }
-        .timer-display { font-size: 2.8rem; font-weight: 900; color: var(--sj-red); letter-spacing: 2px; font-variant-numeric: tabular-nums; }
-        .timer-label { font-size: 0.85rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; font-weight: 700;}
-
-        /* 서명 영역 */
-        .signature-pad-wrapper { background: #f8fafc; border-radius: 12px; padding: 10px; border: 2px dashed #cbd5e1; margin-bottom: 15px; }
-        canvas { width: 100%; height: 250px; border-radius: 8px; cursor: crosshair; touch-action: none; background: white; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
-        .btn-clear { background: white; color: var(--text-gray); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 700; margin-bottom: 25px;}
-        .btn-clear:hover { background: #f1f5f9; color: var(--text-dark);}
-
-        /* 락업 오버레이 (블러) */
-        .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; border-radius: 16px; }
-        .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
-        .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.5;}
-        
         .alert-box { padding: 15px 20px; border-radius: 12px; margin-bottom: 25px; font-size: 0.95rem; font-weight: 600; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
         .alert-warning { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
         .alert-info { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
 
-        /* 개발자 우회 버튼 */
+        .timer-box { text-align: center; background: #f8fafc; border: 1px dashed #cbd5e1; padding: 30px; border-radius: 12px; margin-bottom: 25px; }
+        .timer-display { font-size: 2.8rem; font-weight: 900; color: var(--sj-red); letter-spacing: 2px; font-variant-numeric: tabular-nums; }
+        .timer-label { font-size: 0.85rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; font-weight: 700;}
+
+        /* 계약자 정보 폼 (업그레이드) */
+        .signer-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-group label { font-size: 0.85rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase;}
+        .form-group input { padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px; font-family: inherit; font-size: 1rem; color: var(--text-dark); outline: none; transition: 0.2s;}
+        .form-group input:focus { border-color: var(--sj-red); box-shadow: 0 0 0 3px rgba(210, 75, 65, 0.1); }
+
+        .signature-pad-wrapper { background: #f8fafc; border-radius: 12px; padding: 10px; border: 2px dashed #cbd5e1; margin-bottom: 15px; }
+        canvas { width: 100%; height: 250px; border-radius: 8px; cursor: crosshair; touch-action: none; background: white; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+        
+        .btn-clear { background: white; color: var(--text-gray); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 700; margin-bottom: 25px;}
+        .btn-clear:hover { background: #f1f5f9; color: var(--text-dark);}
+
+        .btn-primary { background: var(--sj-red); color: white; border: none; padding: 18px 30px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(210, 75, 65, 0.2);}
+        .btn-primary:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(210, 75, 65, 0.3);}
+        .btn-primary:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; transform: none; color: white;}
+
+        .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; border-radius: 16px; }
+        .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
+        .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.5;}
+
         .dev-bypass { position: fixed; bottom: 20px; right: 20px; background: #e2e8f0; border: none; color: var(--text-gray); padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; cursor: pointer; opacity: 0.5; transition: 0.2s; z-index: 9999;}
         .dev-bypass:hover { opacity: 1; background: var(--sj-red); color: white;}
 
@@ -123,12 +118,12 @@
             .step-text { display: none; }
             .document-box { flex-direction: column; align-items: flex-start; gap: 15px; }
             .btn-download { width: 100%; justify-content: center; }
+            .signer-form { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. Header -->
     <header class="portal-header">
         <div class="logo-group">
             <img src="sinjeon_logo_canada.png" alt="Sinjeon Logo">
@@ -140,11 +135,8 @@
         </div>
     </header>
 
-    <!-- 2. Progress Tracker -->
     <div class="progress-wrapper">
-        <div class="progress-track">
-            <div class="progress-fill"></div> 
-        </div>
+        <div class="progress-track"><div class="progress-fill"></div></div>
         <div class="progress-steps">
             <div class="step completed"><div class="step-icon"><i class="fas fa-check"></i></div><div class="step-text">STEP 1<br>QUICK INQUIRY</div></div>
             <div class="step completed"><div class="step-icon"><i class="fas fa-check"></i></div><div class="step-text">STEP 2<br>OFFICIAL APP</div></div>
@@ -153,7 +145,6 @@
         </div>
     </div>
 
-    <!-- 3. Main Content -->
     <div class="content-container">
         <h1 class="page-title">SECURE DOCUMENT PORTAL</h1>
         <p class="page-desc">
@@ -161,19 +152,16 @@
             법적 보호를 위해 서명은 14일의 숙고 기간(Cooling-off Period) 이후 활성화됩니다.
         </p>
 
-        <!-- 패널 1: 정보공개서(FDD) 열람 및 타이머 시작 -->
+        <!-- 패널 1: FDD 열람 -->
         <div class="panel" id="fdd-panel">
             <div class="panel-header">
                 <div class="panel-icon"><i class="fas fa-file-contract"></i></div>
                 <h2 class="panel-title">1. Franchise Disclosure Document (FDD)</h2>
             </div>
-            
             <p style="color: var(--text-gray); line-height: 1.6; margin-bottom: 20px;">
                 가맹 계약 체결을 위해 사전에 반드시 확인해야 하는 정보공개서입니다. 아래 버튼을 클릭하여 문서를 열람하는 즉시 
-                <b>접속 IP 및 타임스탬프가 법적 수령증으로 시스템에 영구 기록</b>되며, 본계약을 위한 14일 대기 기간이 강제 시작됩니다.
+                <b>접속 IP 및 타임스탬프가 법적 수령증으로 시스템에 영구 기록</b>되며, 14일 대기 기간 타이머가 시작됩니다.
             </p>
-
-            <!-- FDD 다운로드 박스 UI -->
             <div class="document-box">
                 <div class="doc-info">
                     <i class="fas fa-file-pdf doc-icon"></i>
@@ -182,22 +170,19 @@
                         <p>Sinjeon_FDD_Canada_Version.pdf (2.4MB)</p>
                     </div>
                 </div>
-                <!-- ★ href 속성에 실제 FDD PDF 경로 연결 필요 -->
+                <!-- ★ 실제 FDD 파일명으로 링크 교체 -->
                 <a href="dummy_fdd.pdf" target="_blank" class="btn-download" id="btn-read-fdd" onclick="startCoolingOff()">
                     <i class="fas fa-download"></i> 열람 및 14일 대기 시작
                 </a>
             </div>
-
             <div class="alert-box alert-warning" id="fdd-alert">
                 <i class="fas fa-exclamation-triangle" style="margin-top: 3px;"></i>
                 <span>주의: 문서를 다운로드/열람하는 순간부터 가맹법에 따른 14일의 쿨링오프(Cooling-off) 타이머가 시작됩니다.</span>
             </div>
         </div>
 
-        <!-- 패널 2: 가맹 계약서 (Franchise Agreement) 및 전자 서명 -->
+        <!-- 패널 2: 가맹 계약서 서명 -->
         <div class="panel" id="signature-panel" style="margin-bottom: 0;">
-            
-            <!-- 락업 오버레이 (초기엔 덮여있음) -->
             <div class="lock-overlay" id="lock-overlay">
                 <i class="fas fa-lock"></i>
                 <p id="lock-text">가맹법에 따른 14일 대기 기간이 경과하지 않았습니다.<br>상단의 FDD(정보공개서) 열람을 먼저 진행해 주세요.</p>
@@ -209,10 +194,9 @@
             </div>
             
             <p style="color: var(--text-gray); margin-bottom: 20px;">
-                14일의 대기 기간이 종료되었습니다. 아래 <b>가맹계약서 원본</b> 내용을 최종 확인하신 후, 하단 영역에 본인 자필 서명을 입력해 주십시오. 제출된 서명은 계약서(PDF)와 디지털 병합되어 아카이빙됩니다.
+                14일의 대기 기간이 종료되었습니다. 아래 가맹계약서 원본 내용을 최종 확인하신 후, 계약자 정보와 서명을 입력해 주십시오. 제출 시 계약서 파일(PDF)에 정보가 디지털 병합됩니다.
             </p>
 
-            <!-- 가맹 계약서 원본 다운로드/확인 UI -->
             <div class="document-box" style="background: white;">
                 <div class="doc-info">
                     <i class="fas fa-file-signature doc-icon" style="color: #3b82f6;"></i>
@@ -221,16 +205,31 @@
                         <p>Sinjeon_Franchise_Agreement.pdf</p>
                     </div>
                 </div>
-                <!-- ★ href 속성에 실제 가맹계약서 빈 양식 PDF 경로 연결 필요 -->
+                <!-- ★ 실제 계약서 템플릿 파일명으로 링크 교체 -->
                 <a href="contract_template.pdf" target="_blank" class="btn-download">
                     <i class="fas fa-eye"></i> 계약서 초안 확인
                 </a>
             </div>
 
-            <!-- 카운트다운 타이머 디스플레이 -->
             <div class="timer-box" id="timer-box" style="display: none;">
                 <div class="timer-display" id="timer-display">14:00:00:00</div>
                 <div class="timer-label">Days : Hours : Minutes : Seconds remaining</div>
+            </div>
+
+            <!-- ★ 추가된 서명 정보 입력 폼 -->
+            <div class="signer-form">
+                <div class="form-group full">
+                    <label>Franchisee Entity (가맹점 법인명/상호명)</label>
+                    <input type="text" id="signer_corp" placeholder="e.g., Sinjeon Toronto Inc." required>
+                </div>
+                <div class="form-group">
+                    <label>Representative Name (대표자 성함)</label>
+                    <input type="text" id="signer_name" placeholder="e.g., John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Title (직책)</label>
+                    <input type="text" id="signer_title" placeholder="e.g., President / CEO" required>
+                </div>
             </div>
 
             <div class="signature-pad-wrapper">
@@ -239,7 +238,7 @@
             <button class="btn-clear" onclick="signaturePad.clear()"><i class="fas fa-eraser"></i> 서명 다시하기 (Clear)</button>
 
             <button class="btn-primary" id="btn-submit-sign" onclick="submitSignature()" disabled>
-                <i class="fas fa-paper-plane"></i> 서명 완료 및 제출 (Submit)
+                <i class="fas fa-paper-plane"></i> 서명 완료 및 문서 병합 (Submit)
             </button>
         </div>
     </div>
@@ -247,16 +246,11 @@
     <!-- 개발자 우회 버튼 -->
     <button class="dev-bypass" onclick="bypassTimer()">[Dev] Bypass 14 Days</button>
 
-    <!-- 4. Logic Scripts -->
     <script>
-        // =========================================================
-        // [백엔드 연동 설정] 구글 앱스 스크립트 웹앱 URL 
-        // =========================================================
+        // 백엔드 연동 설정 (추후 생성할 구글 앱스 스크립트 웹앱 URL 입력)
         const GOOGLE_APPS_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL"; 
 
-        // ---------------------------------------------------------
         // 1. Signature Pad 초기화
-        // ---------------------------------------------------------
         const canvas = document.getElementById('signature-pad');
         const signaturePad = new SignaturePad(canvas, {
             penColor: "rgb(30, 41, 59)", 
@@ -274,9 +268,7 @@
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
 
-        // ---------------------------------------------------------
-        // 2. 14일 락업 타이머 로직 (Cooling-off Period)
-        // ---------------------------------------------------------
+        // 2. 14일 락업 타이머 로직
         let timerInterval;
         const LOCK_DAYS = 14; 
         const LOCK_MS = LOCK_DAYS * 24 * 60 * 60 * 1000;
@@ -290,11 +282,10 @@
                 return;
             }
 
-            // FDD 버튼 UI 변경 (열람 완료 상태)
             const fddBtn = document.getElementById('btn-read-fdd');
             fddBtn.innerHTML = '<i class="fas fa-check-circle" style="color: #10b981;"></i> 열람 완료 (Audit Logged)';
             fddBtn.style.pointerEvents = 'none';
-            fddBtn.onclick = (e) => { e.preventDefault(); }; // 다운로드는 막지 않되, 백엔드 중복 전송 방지
+            fddBtn.onclick = (e) => { e.preventDefault(); }; 
             
             const alertBox = document.getElementById('fdd-alert');
             alertBox.className = 'alert-box alert-info';
@@ -350,48 +341,30 @@
             submitBtn.disabled = false;
         }
 
-        // ---------------------------------------------------------
-        // 3. FDD 열람 및 DB 로깅 (Audit Trail)
-        // ---------------------------------------------------------
+        // 3. FDD 열람 및 DB 로깅
         async function startCoolingOff() {
-            // 이미 열람한 경우 타이머 로직 중복 실행 방지
             if (localStorage.getItem('sinjeon_fdd_timestamp')) return;
-
             if (!confirm("정보공개서(FDD) 문서를 열람하시겠습니까?\n동의 시 접속 IP 및 타임스탬프가 법적 증빙으로 로깅되며 14일 대기 기간이 시작됩니다.")) {
-                event.preventDefault(); // 다운로드 취소
+                event.preventDefault(); 
                 return;
             }
             
             const now = new Date().getTime();
             localStorage.setItem('sinjeon_fdd_timestamp', now);
             
-            // 무료 IP 추적 API를 통한 IP 획득 및 구글 시트 전송
             try {
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 
-                const auditData = {
-                    action: "FDD_ACCESSED",
-                    timestamp: new Date(now).toISOString(),
-                    ip: ipData.ip,
-                    userAgent: navigator.userAgent
-                };
-
+                const auditData = { action: "FDD_ACCESSED", timestamp: new Date(now).toISOString(), ip: ipData.ip, userAgent: navigator.userAgent };
                 if(GOOGLE_APPS_SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL") {
-                    fetch(GOOGLE_APPS_SCRIPT_URL, {
-                        method: "POST",
-                        body: JSON.stringify(auditData)
-                    });
+                    fetch(GOOGLE_APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(auditData) });
                 }
-                console.log("Audit Log Logged:", auditData);
-            } catch(error) {
-                console.error("Audit Logging Error:", error);
-            }
+            } catch(error) { console.error("Audit Logging Error:", error); }
             
             checkTimerStatus();
         }
 
-        // [개발자 테스트용] 14일 스킵
         function bypassTimer() {
             const fakeTime = new Date().getTime() - LOCK_MS - 1000;
             localStorage.setItem('sinjeon_fdd_timestamp', fakeTime);
@@ -400,9 +373,18 @@
         }
 
         // ---------------------------------------------------------
-        // 4. 서명 제출 및 브라우저 PDF 합성 (pdf-lib)
+        // 4. 서명 제출 및 브라우저 PDF 합성 (텍스트 + 이미지)
         // ---------------------------------------------------------
         async function submitSignature() {
+            // 유효성 검사
+            const corpName = document.getElementById('signer_corp').value.trim();
+            const repName = document.getElementById('signer_name').value.trim();
+            const repTitle = document.getElementById('signer_title').value.trim();
+
+            if (!corpName || !repName || !repTitle) {
+                alert("법인명, 대표자 성함, 직책을 모두 입력해 주세요.");
+                return;
+            }
             if (signaturePad.isEmpty()) {
                 alert("서명란이 비어있습니다. 본인 자필 서명을 입력해 주세요.");
                 return;
@@ -414,51 +396,57 @@
 
             try {
                 const dataURL = signaturePad.toDataURL("image/png");
-                const { PDFDocument } = PDFLib;
+                const { PDFDocument, rgb, StandardFonts } = PDFLib;
 
-                // ★ 가맹계약서 템플릿(contract_template.pdf) 로드
+                // 1. 서버의 원본 계약서 템플릿 로드 (반드시 동일한 경로에 있어야 함)
                 const templateResponse = await fetch('contract_template.pdf');
                 if (!templateResponse.ok) throw new Error("Contract template not found.");
                 const existingPdfBytes = await templateResponse.arrayBuffer();
-                
                 const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
+                // 2. 폰트 및 텍스트 데이터 준비
+                const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+                const todayDate = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD 포맷
+                
+                // 3. 서명 이미지 로드
                 const pngImage = await pdfDoc.embedPng(dataURL);
-                const pngDims = pngImage.scale(0.4); 
+                const pngDims = pngImage.scale(0.35); // 이미지 크기 비율
 
-                // 마지막 페이지 가져오기
+                // 4. PDF 마지막 페이지에 그리기
                 const pages = pdfDoc.getPages();
                 const lastPage = pages[pages.length - 1]; 
                 
-                // ★ 서명 삽입 (가맹 계약서 원본의 서명란 좌표에 맞게 x, y 수정 필요)
-                lastPage.drawImage(pngImage, {
-                    x: 100, 
-                    y: 150, 
-                    width: pngDims.width,
-                    height: pngDims.height,
-                });
+                // ========================================================
+                // [좌표 설정 가이드]
+                // - A4 사이즈는 보통 width: 595.28, height: 841.89 입니다.
+                // - (0,0)은 왼쪽 맨 아래 구석(Bottom-Left)입니다.
+                // - 아래 x, y 값을 수정하여 서명과 텍스트 위치를 조정하세요.
+                // ========================================================
+                
+                // (좌측) Receipt Date 입력
+                lastPage.drawText(todayDate, { x: 130, y: 140, size: 12, font: font, color: rgb(0,0,0) });
 
-                // 합성된 최종 계약서 추출
+                // (우측) 가맹점주 정보 및 서명 입력
+                lastPage.drawText(corpName, { x: 380, y: 220, size: 12, font: font, color: rgb(0,0,0) });
+                lastPage.drawImage(pngImage, { x: 380, y: 155, width: pngDims.width, height: pngDims.height });
+                lastPage.drawText(repName, { x: 380, y: 140, size: 12, font: font, color: rgb(0,0,0) });
+                lastPage.drawText(repTitle, { x: 380, y: 110, size: 12, font: font, color: rgb(0,0,0) });
+
+                // 5. 합성된 최종 계약서 추출 및 다운로드
                 const pdfBytes = await pdfDoc.save();
                 const base64Pdf = await pdfDoc.saveAsBase64({ dataUri: true });
 
-                // 구글 드라이브 아카이빙 및 알림 트리거 전송
                 if(GOOGLE_APPS_SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL") {
                     fetch(GOOGLE_APPS_SCRIPT_URL, {
                         method: "POST",
-                        body: JSON.stringify({
-                            action: "CONTRACT_SIGNED",
-                            timestamp: new Date().toISOString(),
-                            pdfData: base64Pdf
-                        })
+                        body: JSON.stringify({ action: "CONTRACT_SIGNED", timestamp: new Date().toISOString(), pdfData: base64Pdf })
                     });
                 }
 
-                // 브라우저에서 최종본 다운로드
                 const blob = new Blob([pdfBytes], { type: "application/pdf" });
                 const link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
-                link.download = "Sinjeon_Franchise_Agreement_Signed.pdf";
+                link.download = `Sinjeon_Contract_${corpName.replace(/\s+/g, '_')}.pdf`; // 파일명에 법인명 자동 삽입
                 link.click();
 
                 btn.innerHTML = '<i class="fas fa-check"></i> Contract Successfully Submitted';
@@ -467,8 +455,8 @@
 
             } catch (error) {
                 console.error("Contract Error:", error);
-                alert("[시스템 안내] 'contract_template.pdf' 원본 파일이 서버에 없어 문서를 합성할 수 없습니다.\n해당 파일을 업로드하면 정상 작동합니다.");
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 서명 완료 및 제출 (Submit)';
+                alert("[시스템 안내] 'contract_template.pdf' 원본 파일이 서버에 없어 문서를 합성할 수 없습니다.\n해당 파일을 폴더에 업로드하면 정상 작동합니다.");
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 서명 완료 및 문서 병합 (Submit)';
                 btn.disabled = false;
             }
         }
