@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600&display=swap" rel="stylesheet">
     
-    <!-- PDF 변환 글로벌 표준 라이브러리 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
@@ -75,6 +74,9 @@
         .document-paper ul { margin-top: 5px; margin-bottom: 15px; font-size: 0.95rem; padding-left: 20px;}
         .document-paper li { margin-bottom: 6px; }
         
+        /* [핵심] 글자 반갈림 방지 CSS */
+        .document-paper p, .document-paper ul, .document-paper h2, .sig-block { page-break-inside: avoid; }
+
         /* 세련된 입력 폼 (문서 빈칸) */
         .doc-input { border: none; border-bottom: 1.5px solid #0f172a; background: #f0fdf4; border-radius: 2px 2px 0 0; padding: 2px 6px; font-family: inherit; font-size: 1rem; color: var(--sj-red); font-weight: 700; outline: none; transition: 0.2s; width: 100%; max-width: 250px;}
         .doc-input:focus { background: #fef2f2; border-bottom-color: var(--sj-red); box-shadow: 0 2px 0 rgba(210, 75, 65, 0.2);}
@@ -98,7 +100,16 @@
         .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
         .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.6;}
 
-        /* 개발자 도구 (플로팅 버튼) */
+        /* [핵심] PDF 변환 시 스크롤 제약을 완전히 해제하기 위한 특수 클래스 */
+        .pdf-exporting {
+            max-height: none !important;
+            overflow: visible !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            background: white !important;
+        }
+
         .dev-tools { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 9999; }
         .dev-btn { background: #e2e8f0; border: 1px solid #cbd5e1; color: var(--text-gray); padding: 8px 14px; font-size: 0.8rem; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 700;}
         .dev-btn:hover { background: var(--text-dark); color: white;}
@@ -149,11 +160,11 @@
             
             <div class="alert-box alert-warning" id="fdd-alert">
                 <i class="fas fa-exclamation-triangle" style="margin-top: 3px;"></i>
-                <span>법적 교부 의무에 따라 화면의 원문을 확인해야 합니다. 서명 즉시 화면 전체가 PDF로 변환되어 다운로드되며 14일 락업이 적용됩니다.</span>
+                <span>법적 교부 의무에 따라 화면의 원문을 확인해야 합니다. 서명 즉시 14일 락업이 적용되며 원본 PDF가 구글 서버에 자동 저장됩니다.</span>
             </div>
 
-            <!-- ★ FDD 스마트 문서 (A4 Paper UI) -->
-            <div class="document-wrapper">
+            <!-- ★ FDD 스마트 문서 -->
+            <div class="document-wrapper" id="fdd-scroll-wrapper">
                 <div class="document-paper" id="fdd-doc-content">
                     <h1>Franchise Disclosure Document</h1>
                     <h3>(Master Pan-Canadian Template)</h3>
@@ -266,7 +277,7 @@
                         </div>
                     </div>
                 </div>
-            </div> <!-- End of fdd-doc-content -->
+            </div> 
 
             <button class="btn-primary" id="btn-submit-fdd" onclick="signAndSubmitFDD()">
                 <i class="fas fa-file-download"></i> 문서 서명 및 FDD 수령본 발급 (Start 14 Days)
@@ -286,7 +297,7 @@
             </div>
             
             <p style="color: var(--text-gray); margin-bottom: 25px;">
-                14일의 대기 기간이 경과했습니다. 입력된 정보가 올바른지 확인 후 하단의 최종 서명을 입력해 주십시오. <b>제출 즉시 본계약서 원본(PDF)이 생성되어 다운로드되며 구글 드라이브로 동시 전송됩니다.</b>
+                14일의 대기 기간이 경과했습니다. 입력된 정보가 올바른지 확인 후 하단의 최종 서명을 입력해 주십시오. <b>제출 즉시 본계약서 원본(PDF)이 생성되어 구글 드라이브로 자동 전송됩니다.</b>
             </p>
 
             <div class="timer-box" id="timer-box" style="display: none;">
@@ -295,7 +306,7 @@
             </div>
 
             <!-- ★ Contract 스마트 문서 -->
-            <div class="document-wrapper" style="max-height: max-content;">
+            <div class="document-wrapper" id="contract-scroll-wrapper" style="max-height: max-content;">
                 <div class="document-paper" id="contract-doc-content">
                     <h1 style="font-size: 1.8rem; margin-bottom: 20px;">Franchise Agreement</h1>
                     <p style="text-align: center; font-size: 1rem; margin-bottom: 40px;">
@@ -341,16 +352,14 @@
         </div>
     </div>
 
-    <!-- ★ 상태 충돌 해결을 위한 개발자 도구 -->
+    <!-- ★ 상태 충돌 해결용 시스템 초기화 툴 -->
     <div class="dev-tools">
         <button class="dev-btn danger" onclick="resetPortal()"><i class="fas fa-trash-alt"></i> 시스템 초기화(Reset)</button>
         <button class="dev-btn" onclick="bypassTimer()"><i class="fas fa-forward"></i> Bypass 14 Days</button>
     </div>
 
     <script>
-        // =========================================================================
-        // ★ 최신 백엔드 배포 URL 
-        // =========================================================================
+        // ★ 배포 업데이트하신 구글 백엔드 URL 
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyixVvPndcv8oYpT8hk3y0GrtDs-PcnP_WPcjzugb7QSPNDjMvuBr7YRBckJs-KQOp-/exec"; 
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -364,7 +373,7 @@
         let timerInterval;
         const LOCK_MS = 14 * 24 * 60 * 60 * 1000;
 
-        // [핵심 로직] 시스템 완전 초기화 기능 
+        // 시스템 리셋
         function resetPortal() {
             if(confirm("모든 로컬 테스트 기록을 지우고 포털을 초기 상태로 되돌리시겠습니까?")) {
                 localStorage.removeItem('sinjeon_fdd_timestamp');
@@ -376,7 +385,7 @@
             }
         }
 
-        // [핵심 로직] 폼(Input)을 텍스트(Span)로 변환하여 문서 잠금 처리
+        // 입력 폼을 플랫한 텍스트로 변환
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -399,15 +408,12 @@
             });
         }
 
-        // ---------------------------------------------------------
-        // 상태(State) 체크 및 화면 렌더링 로직
-        // ---------------------------------------------------------
+        // 화면 상태 체크 및 복원
         function checkStateAndRender() {
             const startTime = localStorage.getItem('sinjeon_fdd_timestamp');
             
             if (!startTime) return; 
 
-            // 서명 완료 상태 복원
             const fddDoc = document.getElementById('fdd-doc-content');
             if(fddDoc && fddDoc.querySelector('input')) {
                 document.getElementById('fdd_province').value = localStorage.getItem('sj_province') || '';
@@ -477,17 +483,19 @@
             checkStateAndRender();
         }
 
-        // ---------------------------------------------------------
-        // 제출 및 PDF 변환 로직 (html2pdf)
-        // ---------------------------------------------------------
-        const pdfOptions = (filename) => ({
+        // ★ [핵심] PDF 변환 옵션 (텍스트 반갈림 방지)
+        const getPdfOptions = (filename) => ({
             margin:       [15, 15, 15, 15], 
             filename:     filename,
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, logging: false },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['css', 'legacy'] } // 글자 찢어짐 방지
         });
 
+        // ---------------------------------------------------------
+        // 1. FDD 문서 제출 및 구글 드라이브 전송
+        // ---------------------------------------------------------
         async function signAndSubmitFDD() {
             const province = document.getElementById('fdd_province').value;
             const corpName = document.getElementById('fdd_corp').value.trim();
@@ -498,7 +506,7 @@
                 alert("문서 하단의 빈칸(관할 주, 법인명, 서명, 직책)을 모두 입력해 주세요."); return;
             }
 
-            if (!confirm("FDD 문서를 완전히 확인하셨으며 서명을 진행하시겠습니까?\n동의 시 문서가 PDF로 변환되어 다운로드되며, 14일 락업이 시작됩니다.")) return;
+            if (!confirm("FDD 문서를 완전히 확인하셨으며 서명을 진행하시겠습니까?\n동의 시 원본이 구글 드라이브에 안전하게 보관되며, 14일 락업이 시작됩니다.")) return;
 
             const btn = document.getElementById('btn-submit-fdd');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 서류 생성 및 구글 드라이브 전송 중...';
@@ -512,13 +520,19 @@
 
             lockInputsToText('fdd-doc-content');
 
+            // ★ PDF 캡처 전, 잘림 방지를 위해 스크롤 영역을 임시로 완전히 풀어줌
+            const wrapper = document.getElementById('fdd-scroll-wrapper');
+            wrapper.classList.add('pdf-exporting');
+
             try {
                 const element = document.getElementById('fdd-doc-content');
-                const opt = pdfOptions(`Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
+                const opt = getPdfOptions(`Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
 
+                // Base64 추출 (구글 전송용)
                 const pdfBase64String = await html2pdf().set(opt).from(element).outputPdf('datauristring');
                 const ipData = await fetch('https://api.ipify.org?format=json').then(r => r.json()).catch(() => ({ip: 'N/A'}));
 
+                // 구글 백엔드 발송
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -532,13 +546,17 @@
                     redirect: "follow"
                 });
 
+                // 점주 PC 다운로드 (교부)
                 html2pdf().set(opt).from(element).save();
                 
+                // CSS 원상복구
+                wrapper.classList.remove('pdf-exporting');
                 checkStateAndRender();
                 alert("정보공개서(FDD) 전자 서명이 완료되어 서버로 전송되었습니다.\n14일 락업 타이머가 가동됩니다.");
 
             } catch (err) {
                 console.error(err);
+                wrapper.classList.remove('pdf-exporting');
                 alert("오류가 발생했습니다. 네트워크 상태를 확인해주세요.");
                 btn.innerHTML = '<i class="fas fa-file-download"></i> 문서 서명 및 FDD 수령본 발급';
                 btn.disabled = false;
@@ -547,6 +565,9 @@
             }
         }
 
+        // ---------------------------------------------------------
+        // 2. 본계약서 제출 및 구글 드라이브 전송
+        // ---------------------------------------------------------
         async function signAndSubmitContract() {
             const corpName = document.getElementById('contract_corp').value;
             const province = document.getElementById('contract_province').value;
@@ -560,9 +581,13 @@
 
             lockInputsToText('contract-doc-content');
 
+            // 스크롤 해제
+            const wrapper = document.getElementById('contract-scroll-wrapper');
+            wrapper.classList.add('pdf-exporting');
+
             try {
                 const element = document.getElementById('contract-doc-content');
-                const opt = pdfOptions(`Sinjeon_Contract_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
+                const opt = getPdfOptions(`Sinjeon_Contract_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
 
                 const pdfBase64String = await html2pdf().set(opt).from(element).outputPdf('datauristring');
 
@@ -581,12 +606,14 @@
 
                 html2pdf().set(opt).from(element).save();
 
+                wrapper.classList.remove('pdf-exporting');
                 btn.innerHTML = '<i class="fas fa-check"></i> 계약 완료 및 교부 성공';
                 btn.style.background = 'var(--sj-green)';
-                alert("본계약 전자 서명이 최종 완료되었습니다!\n서명된 계약서 원본이 점주님 PC에 교부(다운로드)되었습니다.");
+                alert("본계약 전자 서명이 최종 완료되었습니다!\n서명된 계약서 원본이 구글 드라이브로 저장되고 점주님 PC에 교부(다운로드)되었습니다.");
 
             } catch (err) {
                 console.error(err);
+                wrapper.classList.remove('pdf-exporting');
                 alert("오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> 본계약 최종 서명 완료 및 문서 발급';
                 btn.disabled = false;
