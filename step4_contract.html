@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600&display=swap" rel="stylesheet">
     
-    <!-- ★ 핵심 엔진 교체: HTML을 직접 PDF로 변환해주는 라이브러리 -->
+    <!-- ★ HTML to PDF 변환 핵심 엔진 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
@@ -55,7 +55,6 @@
 
         .alert-box { padding: 16px 20px; border-radius: 12px; margin-bottom: 25px; font-size: 0.95rem; font-weight: 600; display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; }
         .alert-warning { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
-        .alert-info { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
 
         .timer-box { text-align: center; background: #f8fafc; border: 2px dashed #cbd5e1; padding: 35px 20px; border-radius: 16px; margin-bottom: 30px; }
         .timer-display { font-size: 3.2rem; font-weight: 900; color: var(--sj-red); letter-spacing: 2px; font-variant-numeric: tabular-nums; line-height: 1;}
@@ -80,7 +79,7 @@
         .inline-input:focus { background: #fef2f2; border-bottom-color: var(--sj-red); }
         .type-signature { font-family: 'Caveat', cursive !important; font-size: 1.6rem !important; color: #1e3a8a !important; border-bottom: 2px solid #1e3a8a; }
 
-        /* 제출 완료 후 변환될 span 텍스트 (PDF에 예쁘게 보이기 위함) */
+        /* 제출 완료 후 변환될 텍스트 (PDF 출력용) */
         .locked-text { font-weight: bold; color: #0f172a; border-bottom: 1px solid #0f172a; padding: 0 5px; }
 
         .sig-block { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 25px; margin-top: 30px; background: #f8fafc; page-break-inside: avoid; }
@@ -164,6 +163,8 @@
                             <option value="Ontario">Ontario</option>
                             <option value="Alberta">Alberta</option>
                             <option value="Manitoba">Manitoba</option>
+                            <option value="New Brunswick">New Brunswick</option>
+                            <option value="Prince Edward Island">Prince Edward Island</option>
                         </select>
                     </p>
                 </div>
@@ -223,7 +224,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px;">
                         <div><strong>Y2C Holdings Inc.</strong></div>
                         <div style="text-align: center;">
-                            <!-- 본사 서명 이미지 -->
+                            <!-- 본사 직인 렌더링 -->
                             <img src="y2c_director_sign.png" alt="Y2C Signature" style="height: 50px; display: block; margin: 0 auto;" onerror="this.style.display='none'">
                             <strong>By:</strong> Yoon-ji Lee <br> <strong>Title:</strong> Director
                         </div>
@@ -282,6 +283,7 @@
                 <div class="timer-label">Days : Hours : Minutes : Seconds remaining</div>
             </div>
 
+            <!-- ★ 계약서 HTML 문서 영역 -->
             <div class="smart-document" id="contract-doc-content" style="background: #f8fafc; border: 1px solid #cbd5e1; max-height: max-content;">
                 <h1 style="font-size: 1.5rem;">Franchise Agreement</h1>
                 <h3>Execution & Signature Page</h3>
@@ -327,10 +329,13 @@
         </div>
     </div>
 
+    <!-- 개발자 우회 버튼 -->
     <button class="dev-bypass" onclick="bypassTimer()">[Dev] Bypass 14 Days</button>
 
     <script>
-        // 발급받으신 백엔드 API URL
+        // =========================================================================
+        // ★ 새로 발급받으신 Google Apps Script 백엔드 URL을 여기에 붙여넣으세요!
+        // =========================================================================
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylb9lJJZsLCD0atEa_EF7WTi366VZGvNH9fAJFCxSY2AWTRNrwi6uPb_Z0JchWbUmO/exec"; 
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -342,14 +347,20 @@
         const LOCK_DAYS = 14; 
         const LOCK_MS = LOCK_DAYS * 24 * 60 * 60 * 1000;
 
-        // [핵심 유틸 함수] 입력된 Input 폼을 일반 Text로 변환하여 문서를 고정(Lock)시키는 함수
+        // [핵심 로직] 입력 폼을 플랫한 텍스트로 변환 (수정 방지)
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             const inputs = container.querySelectorAll('input, select');
             
             inputs.forEach(el => {
                 const span = document.createElement('span');
-                span.innerText = el.value || '';
+                
+                // Select 박스의 경우 선택된 텍스트 추출
+                if(el.tagName === 'SELECT') {
+                    span.innerText = el.options[el.selectedIndex]?.text || '';
+                } else {
+                    span.innerText = el.value || '';
+                }
                 
                 if (el.classList.contains('type-signature')) {
                     span.className = 'locked-text type-signature';
@@ -380,26 +391,25 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 서류 생성 및 구글 드라이브 전송 중...';
             btn.disabled = true;
 
-            // 1. 입력 폼을 일반 텍스트로 변환 (문서 수정 불가 상태로 만듦)
+            // 1. 문서 잠금 처리
             lockInputsToText('fdd-doc-content');
 
             try {
-                // 2. 화면의 HTML(fdd-doc-content)을 통째로 캡처하여 고품질 PDF로 변환
+                // 2. HTML to PDF 렌더링 설정
                 const element = document.getElementById('fdd-doc-content');
-                // PDF 렌더링 설정
                 const opt = {
-                    margin:       [15, 15, 15, 15], // 상 우 하 좌 마진 (mm)
+                    margin:       [15, 15, 15, 15], 
                     filename:     `Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`,
                     image:        { type: 'jpeg', quality: 0.98 },
                     html2canvas:  { scale: 2, useCORS: true },
                     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
 
-                // 3. 백엔드(구글 드라이브)로 보낼 Base64 데이터 추출
+                // 3. 백엔드(구글 드라이브) 전송을 위한 Base64 생성
                 const pdfBase64String = await html2pdf().set(opt).from(element).outputPdf('datauristring');
                 const ipData = await fetch('https://api.ipify.org?format=json').then(r => r.json()).catch(() => ({ip: 'N/A'}));
 
-                // 4. 구글 서버로 발송
+                // 4. 구글 서버 발송
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -413,10 +423,10 @@
                     redirect: "follow"
                 });
 
-                // 5. 점주 PC로 즉시 다운로드 (교부 의무 완수)
+                // 5. 점주 PC 다운로드 실행
                 html2pdf().set(opt).from(element).save();
 
-                // 6. 로컬 데이터 저장 및 타이머 작동
+                // 6. 로컬 데이터 저장
                 localStorage.setItem('sinjeon_fdd_timestamp', new Date().getTime());
                 localStorage.setItem('sj_province', province);
                 localStorage.setItem('sj_corp', corpName);
@@ -442,7 +452,7 @@
 
             // FDD 폼 잠금 처리
             const fddDoc = document.getElementById('fdd-doc-content');
-            if(fddDoc.querySelector('input')) lockInputsToText('fdd-doc-content'); // 새로고침 시 텍스트로 고정
+            if(fddDoc.querySelector('input')) lockInputsToText('fdd-doc-content'); 
             fddDoc.style.background = '#f8fafc';
             
             const fddBtn = document.getElementById('btn-submit-fdd');
@@ -515,7 +525,7 @@
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> 문서 생성 및 구글 드라이브 전송 중...';
             btn.disabled = true;
 
-            // 1. 폼 고정
+            // 1. 본계약서 폼 고정
             lockInputsToText('contract-doc-content');
 
             try {
@@ -535,7 +545,13 @@
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify({ action: "CONTRACT_SIGNED", timestamp: new Date().toISOString(), pdfData: pdfBase64String, franchisee: corpName, province: province }),
+                    body: JSON.stringify({ 
+                        action: "CONTRACT_SIGNED", 
+                        timestamp: new Date().toISOString(), 
+                        pdfData: pdfBase64String, 
+                        franchisee: corpName, 
+                        province: province 
+                    }),
                     redirect: "follow"
                 });
 
