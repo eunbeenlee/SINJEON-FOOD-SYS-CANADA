@@ -8,7 +8,6 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600&display=swap" rel="stylesheet">
-    
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     
     <style>
@@ -61,7 +60,7 @@
         .timer-label { font-size: 0.9rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; font-weight: 700;}
 
         /* =========================================
-           ★ 핵심 혁신: 웹 네이티브 스마트 문서 디자인 
+           ★ 웹 네이티브 스마트 문서 디자인 
            ========================================= */
         .smart-document { width: 100%; max-height: 600px; overflow-y: auto; background: white; border: 2px solid var(--border-light); border-radius: 12px; padding: 40px; margin-bottom: 25px; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #1e293b; box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);}
         .smart-document::-webkit-scrollbar { width: 8px; }
@@ -71,17 +70,12 @@
         .smart-document h3 { text-align: center; font-size: 1.1rem; color: #64748b; font-weight: 400; margin-top: 0; margin-bottom: 30px;}
         .smart-document h2 { font-size: 1.2rem; color: var(--sj-green); border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; margin-top: 25px;}
         .smart-document p { font-size: 0.95rem; margin-bottom: 10px; text-align: justify;}
-        .smart-document ul { margin-top: 5px; margin-bottom: 15px; font-size: 0.95rem; padding-left: 20px;}
         
-        /* 인라인 입력 필드 (마치 종이 빈칸처럼) */
         .inline-input { border: none; border-bottom: 2px solid #0f172a; background: #f8fafc; border-radius: 4px 4px 0 0; padding: 4px 8px; font-family: inherit; font-size: 1rem; color: var(--sj-red); font-weight: bold; outline: none; transition: 0.2s; width: 100%; max-width: 250px;}
         .inline-input:focus { background: #fef2f2; border-bottom-color: var(--sj-red); }
         .inline-input::placeholder { color: #cbd5e1; font-weight: normal; font-size: 0.85rem;}
-        
-        /* 타이핑 서명 필드 (필기체 적용) */
         .type-signature { font-family: 'Caveat', cursive !important; font-size: 1.6rem !important; color: #1e3a8a !important; border-bottom: 2px solid #1e3a8a; }
 
-        /* 서명 블록 레이아웃 */
         .sig-block { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 25px; margin-top: 30px; background: #f8fafc; }
         .sig-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; color: #0f172a; text-align: center; text-transform: uppercase;}
         .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -131,7 +125,8 @@
     <div class="content-container">
         <h1 class="page-title">Digital Signature Portal</h1>
         <p class="page-desc">
-            답답한 PDF 뷰어 대신 <b>웹 스마트 문서</b> 환경을 제공합니다.<br>문서를 읽으신 후, 빈칸 영역을 직접 클릭하여 타이핑 서명을 완료해 주세요.
+            캐나다 프랜차이즈법에 따른 정보공개서 열람 및 스마트 계약 포털입니다.<br>
+            문서를 읽으신 후, 빈칸을 마우스로 클릭하여 타이핑을 진행해 주세요.
         </p>
 
         <!-- 패널 1: FDD 열람 및 타이핑 서명 -->
@@ -143,17 +138,17 @@
             
             <div class="alert-box alert-warning" id="fdd-alert">
                 <i class="fas fa-exclamation-triangle" style="margin-top: 3px;"></i>
-                <span>아래 문서의 빈칸을 채우고 [서명 제출]을 누르는 순간 14일의 숙고(Cooling-off) 락업이 강제 적용됩니다.</span>
+                <span>하단 수령증을 작성하고 [서명 전송]을 누르는 순간 법적 14일(Cooling-off) 락업이 적용됩니다.</span>
             </div>
 
-            <!-- ★ 혁신 UI: 웹 네이티브 스마트 문서 (iframe 폐기) -->
+            <!-- ★ FDD 스마트 문서 -->
             <div class="smart-document" id="fdd-doc-content">
                 <h1>Franchise Disclosure Document</h1>
-                <h3>(Master Pan-Canadian Template)</h3>
+                <h3>(Master Pan-Canadian Executive Summary)</h3>
                 
                 <div style="background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                     <p><strong>Franchisor:</strong> Y2C Holdings Inc. (주식회사 와이투씨홀딩스)</p>
-                    <p><strong>Corporate Address:</strong> Gwang-an Daewoo I-Vill, Busan, Republic of Korea</p>
+                    <p><strong>Corporate Address:</strong> Busan, Republic of Korea</p>
                     <p style="display: flex; align-items: center; gap: 10px;">
                         <strong>Target Jurisdiction:</strong> Province of 
                         <select class="inline-input" id="fdd_province">
@@ -172,10 +167,10 @@
                 </div>
 
                 <h2>Item 1~3. The Franchisor & Operations</h2>
-                <p>The Franchisor is Y2C Holdings Inc., a corporation established under the laws of the Republic of Korea. Ms. Yoon-ji Lee, Director, oversees global franchise expansion and operations. Neither the Franchisor nor its directors are involved in material litigation or bankruptcy proceedings.</p>
+                <p>The Franchisor is Y2C Holdings Inc., established under the laws of the Republic of Korea. Ms. Yoon-ji Lee, Director, oversees global franchise expansion and operations. Neither the Franchisor nor its directors are involved in material litigation or bankruptcy proceedings.</p>
 
                 <h2>Item 4. Initial Fees & Investment</h2>
-                <ul>
+                <ul style="font-size: 0.95rem;">
                     <li>Initial Franchise Fee: KRW 40,000,000 (Non-refundable)</li>
                     <li>Initial Education Fee: KRW 5,000,000 (Non-refundable)</li>
                     <li>Logistics Security Deposit: CAD $5,000 to $20,000 (Refundable)</li>
@@ -185,7 +180,11 @@
                 <h2>Item 5. Ongoing Management Services Fee</h2>
                 <p><strong>4% of Gross Sales per month.</strong> Compensates for remote professional services, SCM optimization, and IT remote maintenance provided from South Korea.</p>
 
-                <!-- 서명 블록 (문서의 맨 밑 수령증 영역) -->
+                <p style="text-align: center; color: var(--text-gray); font-size: 0.9rem; margin-top: 20px;">
+                    * The complete 50+ page FDD including Financial Statements (Exhibit A) and full terms will be appended to the final generated PDF.
+                </p>
+
+                <!-- 서명 블록 -->
                 <div class="sig-block">
                     <div class="sig-title">RECEIPT OF FRANCHISE DISCLOSURE DOCUMENT</div>
                     <p style="text-align: center; font-size: 0.9rem; margin-bottom: 20px;">I acknowledge receipt of this Document. I understand the 14-day prohibition period.</p>
@@ -212,15 +211,15 @@
             </div>
 
             <button class="btn-primary" id="btn-submit-fdd" onclick="signAndSubmitFDD()">
-                <i class="fas fa-file-signature"></i> 문서 빈칸 확인 완료 및 서명 전송
+                <i class="fas fa-file-signature"></i> 문서 확인 및 수령증 서명 전송 (Start 14 Days)
             </button>
         </div>
 
-        <!-- 패널 2: 가맹계약서 및 디지털 서명 (14일 후) -->
+        <!-- 패널 2: 가맹계약서 본계약 (14일 후 스마트 문서) -->
         <div class="panel" id="signature-panel" style="margin-bottom: 0;">
             <div class="lock-overlay" id="lock-overlay">
                 <i class="fas fa-lock"></i>
-                <p id="lock-text">가맹법에 따른 14일 대기 기간이 경과하지 않았습니다.<br>상단의 스마트 문서 서명을 먼저 완료해 주세요.</p>
+                <p id="lock-text">가맹법에 따른 14일 대기 기간이 경과하지 않았습니다.<br>상단의 FDD 스마트 문서 서명을 먼저 완료해 주세요.</p>
             </div>
 
             <div class="panel-header">
@@ -229,7 +228,7 @@
             </div>
             
             <p style="color: var(--text-gray); margin-bottom: 25px;">
-                14일의 대기 기간이 경과했습니다. 입력된 정보가 올바른지 확인 후 하단의 서명을 입력하시면, 즉시 본사 인장과 함께 PDF 파일 원본에 자동 융합(Burn-in)되어 교부됩니다.
+                14일의 대기 기간이 경과했습니다. 입력된 정보가 올바른지 확인 후 하단의 최종 서명을 입력해 주십시오. 제출 시 구글 드라이브로 원본 PDF가 자동 전송 및 저장됩니다.
             </p>
 
             <div class="timer-box" id="timer-box" style="display: none;">
@@ -237,52 +236,62 @@
                 <div class="timer-label">Days : Hours : Minutes : Seconds remaining</div>
             </div>
 
-            <div class="sig-block" style="background: white;">
-                <div class="sig-title" style="color: var(--sj-green);">FINAL CONTRACT EXECUTION</div>
-                <div class="sig-grid">
-                    <div class="sig-field">
-                        <label>Province</label>
-                        <input type="text" id="contract_province" class="inline-input" readonly style="color: #64748b;">
-                    </div>
-                    <div class="sig-field">
-                        <label>Franchisee Entity</label>
-                        <input type="text" id="contract_corp" class="inline-input" readonly style="color: #64748b;">
-                    </div>
-                    <div class="sig-field">
-                        <label>Title</label>
-                        <input type="text" id="contract_title" class="inline-input" readonly style="color: #64748b;">
-                    </div>
-                    <div class="sig-field full">
-                        <label>Final Signature (최종 승인 서명 타이핑)</label>
-                        <input type="text" id="contract_name" class="inline-input type-signature" placeholder="이름을 한 번 더 타이핑하여 최종 계약을 승인합니다." style="max-width: 100%;">
+            <!-- ★ 계약서 스마트 문서 (Auto-fill 연동) -->
+            <div class="smart-document" id="contract-doc-content" style="background: #f8fafc; border: 1px solid #cbd5e1;">
+                <h1>Franchise Agreement</h1>
+                <h3>Execution & Signature Page</h3>
+                <p style="text-align: center; font-size: 1.05rem; font-weight: 500;">
+                    This Franchise Agreement is formally executed and entered into by and between <strong>Y2C Holdings Inc.</strong> and the Franchisee listed below, following the mandatory 14-day disclosure period.
+                </p>
+
+                <div class="sig-block" style="background: white;">
+                    <div class="sig-title" style="color: var(--sj-green);">FINAL CONTRACT EXECUTION</div>
+                    <div class="sig-grid">
+                        <div class="sig-field">
+                            <label>Target Province</label>
+                            <input type="text" id="contract_province" class="inline-input" readonly style="color: #64748b; background: #f1f5f9; border-bottom: 1px solid #cbd5e1;">
+                        </div>
+                        <div class="sig-field">
+                            <label>Franchisee Entity</label>
+                            <input type="text" id="contract_corp" class="inline-input" readonly style="color: #64748b; background: #f1f5f9; border-bottom: 1px solid #cbd5e1;">
+                        </div>
+                        <div class="sig-field">
+                            <label>Title</label>
+                            <input type="text" id="contract_title" class="inline-input" readonly style="color: #64748b; background: #f1f5f9; border-bottom: 1px solid #cbd5e1;">
+                        </div>
+                        <div class="sig-field full">
+                            <label>Final Signature (최종 승인 서명 타이핑)</label>
+                            <input type="text" id="contract_name" class="inline-input type-signature" placeholder="영문 이름을 한 번 더 타이핑하여 최종 계약을 승인합니다." style="max-width: 100%;">
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()" disabled style="margin-top: 25px;">
+            <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()" disabled>
                 <i class="fas fa-paper-plane"></i> 본계약 최종 서명 완료 및 문서 발급
             </button>
         </div>
     </div>
 
+    <!-- 개발자 우회 버튼 -->
     <button class="dev-bypass" onclick="bypassTimer()">[Dev] Bypass 14 Days</button>
 
     <script>
-        // 발급받으신 Google Apps Script API 적용 완료
+        // 백엔드 API (Google Apps Script)
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylb9lJJZsLCD0atEa_EF7WTi366VZGvNH9fAJFCxSY2AWTRNrwi6uPb_Z0JchWbUmO/exec"; 
 
-        // [좌표 관리소] contract_template.pdf (A4 규격) 에 텍스트가 꽂힐 X, Y 위치
+        // PDF 생성 시 타겟팅할 좌표 (백그라운드에서 합성될 원본 PDF용)
         const pdfCoords = {
             p1_date:     { x: 180, y: 648 },
             p1_province: { x: 230, y: 625 },
             p4_c_date:   { x: 180, y: 395 }, 
             p4_c_corp:   { x: 380, y: 418 }, 
-            p4_c_sign:   { x: 340, y: 365 }, // 서명 위치
+            p4_c_sign:   { x: 340, y: 365 }, 
             p4_c_name:   { x: 400, y: 350 }, 
             p4_c_title:  { x: 340, y: 332 }, 
             
             c_p4_f_date: { x: 80,  y: 535 },
-            c_p4_f_sign: { x: 320, y: 530 }, // 본사 직인
+            c_p4_f_sign: { x: 320, y: 530 }, 
             c_p4_c_date: { x: 80,  y: 310 },
             c_p4_c_corp: { x: 340, y: 345 },
             c_p4_c_sign: { x: 320, y: 285 }, 
@@ -290,7 +299,7 @@
             c_p4_c_title: { x: 340, y: 255 }
         };
 
-        // 페이지 로드 시 현재 날짜 자동 세팅
+        // 로드 시 날짜 셋팅
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('fdd_date').value = new Date().toISOString().slice(0, 10);
             checkTimerStatus();
@@ -301,7 +310,7 @@
         const LOCK_MS = LOCK_DAYS * 24 * 60 * 60 * 1000;
 
         // ---------------------------------------------------------
-        // 1. FDD 스마트 문서 타이핑 서명 및 14일 락업 시작 로직
+        // 1. FDD 스마트 문서 타이핑 서명 로직
         // ---------------------------------------------------------
         async function signAndSubmitFDD() {
             const date = document.getElementById('fdd_date').value;
@@ -311,58 +320,63 @@
             const repTitle = document.getElementById('fdd_title').value.trim();
 
             if (!province || !corpName || !repName || !repTitle) {
-                alert("문서 내의 모든 빈칸(관할 주, 법인명, 성함, 직책)을 입력해 주세요."); return;
+                alert("스마트 문서 내의 모든 빈칸(관할 주, 법인명, 서명, 직책)을 기입해 주세요."); return;
             }
 
-            if (!confirm("입력하신 정보로 정보공개서(FDD) 수령증에 전자 서명하시겠습니까?\n제출 즉시 14일 대기 기간이 시작됩니다.")) return;
+            if (!confirm("입력하신 정보로 정보공개서(FDD)를 수령하고 서명하시겠습니까?\n제출 즉시 14일 대기 기간이 시작되며 구글 드라이브에 문서가 전송됩니다.")) return;
 
             const btn = document.getElementById('btn-submit-fdd');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 문서 렌더링 중...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 서명 전송 중...';
             btn.disabled = true;
 
             try {
+                // PDF-lib 로 백그라운드 PDF 생성 (사용자에겐 안 보이지만 서버엔 완벽한 PDF가 전송됨)
                 const { PDFDocument, rgb, StandardFonts } = PDFLib;
-                // PDF 원본 로드 (HTML 입력값을 이 PDF의 좌표에 찍습니다)
-                const templateRes = await fetch('contract_template.pdf');
-                if (!templateRes.ok) throw new Error("Template missing");
+                
+                // ※ 서버에 올려두신 Sinjeon_FDD_Pan_Canada_Master.pdf 파일을 타겟팅합니다.
+                const templateRes = await fetch('contract_template.pdf'); 
+                if (!templateRes.ok) throw new Error("FDD template missing");
                 
                 const existingPdfBytes = await templateRes.arrayBuffer();
                 const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
                 const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
                 const fontReg = await pdfDoc.embedFont(StandardFonts.Helvetica);
-                const fontItalic = await pdfDoc.embedFont(StandardFonts.HelveticaOblique); // 필기체 폰트
+                const fontItalic = await pdfDoc.embedFont(StandardFonts.HelveticaOblique);
                 
                 const txtColor = rgb(0.1, 0.1, 0.1); 
-                const signColor = rgb(0.1, 0.2, 0.6); // 블루 잉크
+                const signColor = rgb(0.1, 0.2, 0.6);
 
                 const pages = pdfDoc.getPages();
                 
-                // 1페이지 기입
                 const p1 = pages[0];
                 p1.drawText(date, { x: pdfCoords.p1_date.x, y: pdfCoords.p1_date.y, size: 10, font: font, color: txtColor });
                 p1.drawText(province, { x: pdfCoords.p1_province.x, y: pdfCoords.p1_province.y, size: 10, font: font, color: txtColor });
 
-                // 4페이지 수령증 기입 
                 const p4 = pages[3] || pages[pages.length - 1]; 
                 p4.drawText(date, { x: pdfCoords.p4_c_date.x, y: pdfCoords.p4_c_date.y, size: 10, font: fontReg, color: txtColor });
                 p4.drawText(corpName, { x: pdfCoords.p4_c_corp.x, y: pdfCoords.p4_c_corp.y, size: 10, font: font, color: txtColor });
-                p4.drawText(repName, { x: pdfCoords.p4_c_sign.x, y: pdfCoords.p4_c_sign.y, size: 16, font: fontItalic, color: signColor }); // 타이핑 서명 각인
+                p4.drawText(repName, { x: pdfCoords.p4_c_sign.x, y: pdfCoords.p4_c_sign.y, size: 16, font: fontItalic, color: signColor }); 
                 p4.drawText(repName, { x: pdfCoords.p4_c_name.x, y: pdfCoords.p4_c_name.y, size: 10, font: fontReg, color: txtColor });
                 p4.drawText(repTitle, { x: pdfCoords.p4_c_title.x, y: pdfCoords.p4_c_title.y, size: 10, font: fontReg, color: txtColor });
 
                 const base64Pdf = await pdfDoc.saveAsBase64({ dataUri: true });
                 const ipData = await fetch('https://api.ipify.org?format=json').then(r => r.json()).catch(() => ({ip: 'N/A'}));
 
-                // 백엔드 전송
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify({ action: "FDD_SIGNED", timestamp: new Date().toISOString(), pdfData: base64Pdf, franchisee: corpName, ip: ipData.ip }),
+                    body: JSON.stringify({ 
+                        action: "FDD_SIGNED", 
+                        timestamp: new Date().toISOString(), 
+                        pdfData: base64Pdf,
+                        franchisee: corpName,
+                        ip: ipData.ip
+                    }),
                     redirect: "follow"
                 });
 
-                // 정보 저장
+                // Auto-fill 용 로컬스토리지 저장
                 localStorage.setItem('sinjeon_fdd_timestamp', new Date().getTime());
                 localStorage.setItem('sj_province', province);
                 localStorage.setItem('sj_corp', corpName);
@@ -373,8 +387,8 @@
 
             } catch (err) {
                 console.error(err);
-                alert("오류 발생. 서버에 'contract_template.pdf' 파일이 있는지 확인해주세요.");
-                btn.innerHTML = '<i class="fas fa-file-signature"></i> 문서 빈칸 확인 완료 및 서명 전송';
+                alert("서버 연결에 실패했습니다. (contract_template.pdf 파일을 확인해 주세요)");
+                btn.innerHTML = '<i class="fas fa-file-signature"></i> 문서 확인 및 수령증 서명 전송';
                 btn.disabled = false;
             }
         }
@@ -386,16 +400,15 @@
             const startTime = localStorage.getItem('sinjeon_fdd_timestamp');
             if (!startTime) return; 
 
-            // FDD 폼 잠금
             document.getElementById('fdd-doc-content').style.opacity = '0.5';
             document.getElementById('fdd-doc-content').style.pointerEvents = 'none';
             const fddBtn = document.getElementById('btn-submit-fdd');
-            fddBtn.innerHTML = '<i class="fas fa-check-circle"></i> FDD 서명 완료 및 시스템 기록 됨';
+            fddBtn.innerHTML = '<i class="fas fa-check-circle"></i> FDD 서명 완료 및 서버 전송 됨';
             fddBtn.style.background = '#e2e8f0';
             fddBtn.style.color = '#10b981';
             fddBtn.onclick = null; 
             
-            // 본계약 폼 자동 완성
+            // 본계약 스마트 폼 데이터 Auto-fill
             document.getElementById('contract_province').value = localStorage.getItem('sj_province') || '';
             document.getElementById('contract_corp').value = localStorage.getItem('sj_corp') || '';
             document.getElementById('contract_title').value = localStorage.getItem('sj_title') || '';
@@ -443,11 +456,11 @@
         }
 
         // ---------------------------------------------------------
-        // 3. 본계약서 최종 서명 로직 (본사 서명 + 점주 타이핑 서명 동시 각인)
+        // 3. 본계약서 최종 서명 로직
         // ---------------------------------------------------------
         async function signAndSubmitContract() {
             const repName = document.getElementById('contract_name').value.trim();
-            if (!repName) { alert("본계약 승인을 위해 영문 성함을 입력해 주세요."); return; }
+            if (!repName) { alert("본계약 승인을 위해 서명란에 영문 성함을 입력해 주세요."); return; }
 
             const btn = document.getElementById('btn-submit-contract');
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> 서명 각인 및 구글 서버 전송 중...';
@@ -463,7 +476,7 @@
 
                 const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
                 const fontReg = await pdfDoc.embedFont(StandardFonts.Helvetica);
-                const fontItalic = await pdfDoc.embedFont(StandardFonts.HelveticaOblique);
+                const fontItalic = await pdfDoc.embedFont(StandardFonts.HelveticaOblique); 
                 
                 const today = new Date().toISOString().slice(0, 10); 
                 const txtColor = rgb(0.05, 0.05, 0.05); 
@@ -473,7 +486,6 @@
                 const province = document.getElementById('contract_province').value;
                 const repTitle = document.getElementById('contract_title').value;
 
-                // 본사 대표 직인 이미지 자동 로드
                 let franchisorImage;
                 try {
                     const fRes = await fetch('y2c_director_sign.png');
@@ -503,11 +515,16 @@
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify({ action: "CONTRACT_SIGNED", timestamp: new Date().toISOString(), pdfData: base64Pdf, franchisee: corpName, province: province }),
+                    body: JSON.stringify({ 
+                        action: "CONTRACT_SIGNED", 
+                        timestamp: new Date().toISOString(), 
+                        pdfData: base64Pdf,
+                        franchisee: corpName,
+                        province: province
+                    }),
                     redirect: "follow"
                 });
 
-                // 완성본 다운로드
                 const blob = new Blob([pdfBytes], { type: "application/pdf" });
                 const link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
@@ -521,7 +538,7 @@
             } catch (err) {
                 console.error(err);
                 alert("오류가 발생했습니다. 서버에 'contract_template.pdf'가 있는지 확인해 주세요.");
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 본계약 최종 전자 서명 및 제출';
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 본계약 최종 서명 완료 및 문서 발급';
                 btn.disabled = false;
             }
         }
