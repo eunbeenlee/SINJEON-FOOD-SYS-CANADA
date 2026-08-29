@@ -7,10 +7,10 @@
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 타이핑 전자서명을 위한 필기체 폰트(Caveat) 추가 -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600&display=swap" rel="stylesheet">
     
-    <!-- Open-Source Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.5/dist/signature_pad.umd.min.js"></script>
+    <!-- Open-Source Libraries (Zero-Cost PDF Engine) -->
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     
     <style>
@@ -78,6 +78,9 @@
         .btn-primary { background: var(--sj-red); color: white; border: none; padding: 20px 30px; border-radius: 14px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(210, 75, 65, 0.2); }
         .btn-primary:hover:not(:disabled) { background: #b83e35; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(210, 75, 65, 0.3); }
         .btn-primary:disabled { background: #cbd5e1; cursor: not-allowed; }
+        
+        .btn-outline { background: white; border: 2px solid var(--sj-green); color: var(--sj-green); padding: 16px 24px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .btn-outline:hover { background: #f0fdf4; }
 
         .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(6px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; border-radius: 24px; }
         .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
@@ -87,7 +90,7 @@
         .dev-bypass:hover { opacity: 1; background: var(--sj-red); color: white;}
 
         @media (max-width: 768px) {
-            .pdf-viewer-container { display: none; }
+            .pdf-viewer-container { display: none; } 
             .mobile-fallback { display: block; }
             .signer-form { grid-template-columns: 1fr; }
         }
@@ -119,7 +122,7 @@
     <div class="content-container">
         <h1 class="page-title">Digital Signature Portal</h1>
         <p class="page-desc">
-            캐나다 프랜차이즈법에 따른 정보공개서 열람 및 자필 서명 포털입니다.<br>
+            캐나다 프랜차이즈법에 따른 문서 열람 및 자필 서명 포털입니다.<br>
             화면 안의 PDF는 읽기 전용입니다. 서명은 문서 하단의 입력 폼을 이용해 주십시오.
         </p>
 
@@ -137,7 +140,6 @@
                 <a href="Sinjeon_FDD_Pan_Canada_Master.pdf" target="_blank" style="color: var(--sj-red); font-weight: bold; text-decoration: underline;">FDD 원본 다운로드하여 확인하기</a>
             </div>
 
-            <!-- ★ 추가된 FDD 수령증 서명 폼 -->
             <div class="signer-form" id="fdd-form-area">
                 <div class="form-group full">
                     <p style="margin: 0 0 10px 0; font-size: 0.95rem; color: var(--sj-red); font-weight: 700;">
@@ -166,6 +168,7 @@
                 </div>
                 <div class="form-group full">
                     <label>Representative Name / Electronic Signature (대표자 성함 및 전자서명)</label>
+                    <!-- 타이핑 서명 폼 -->
                     <input type="text" id="fdd_name" class="type-signature" placeholder="본인의 영문 성함을 입력하면 자필 서명으로 갈음됩니다.">
                 </div>
             </div>
@@ -203,6 +206,7 @@
                 <div class="timer-label">Days : Hours : Minutes : Seconds remaining</div>
             </div>
 
+            <!-- 자동완성 계약 폼 -->
             <div class="signer-form">
                 <div class="form-group full">
                     <label>Target Province (사업 대상 주)</label>
@@ -233,11 +237,12 @@
 
     <script>
         // =========================================================================
-        // [백엔드 API 설정]
+        // [백엔드 API 설정] 새로 발급받으신 Google Apps Script URL 적용 완료!
         // =========================================================================
-        const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYRDZuuiL2AHnRxGDFrRYH1XI06RoaL9PloETzw9fzwfToCqit6akBEhGWvvdiyus-/exec"; 
+        const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylb9lJJZsLCD0atEa_EF7WTi366VZGvNH9fAJFCxSY2AWTRNrwi6uPb_Z0JchWbUmO/exec"; 
 
         // 좌표 관리소 (A4 기준 595x842. (0,0)은 왼쪽 맨 아래)
+        // PDF 결과물을 보며 아래 x, y 숫자를 변경하여 위치를 완벽하게 조준하세요.
         const pdfCoords = {
             p1_date:     { x: 180, y: 648 },
             p1_province: { x: 230, y: 625 },
@@ -247,12 +252,12 @@
             p4_c_name:   { x: 400, y: 350 }, // 수령증 성함
             p4_c_title:  { x: 340, y: 332 }, // 수령증 직책
             
-            // 계약서용 좌표 (동일 양식을 쓴다고 가정)
+            // 계약서용 좌표
             c_p4_f_date: { x: 80,  y: 535 },
-            c_p4_f_sign: { x: 320, y: 530 }, 
+            c_p4_f_sign: { x: 320, y: 530 }, // 본사 직인
             c_p4_c_date: { x: 80,  y: 310 },
             c_p4_c_corp: { x: 340, y: 345 },
-            c_p4_c_sign: { x: 320, y: 285 }, 
+            c_p4_c_sign: { x: 320, y: 285 }, // 타이핑 서명
             c_p4_c_name: { x: 340, y: 280 },
             c_p4_c_title: { x: 340, y: 255 }
         };
@@ -277,7 +282,6 @@
             btn.disabled = true;
 
             try {
-                // PDF-lib을 활용한 브라우저 단 FDD 자동 완성
                 const { PDFDocument, rgb, StandardFonts } = PDFLib;
                 const templateRes = await fetch('Sinjeon_FDD_Pan_Canada_Master.pdf');
                 if (!templateRes.ok) throw new Error("FDD template missing");
@@ -291,7 +295,7 @@
                 
                 const today = new Date().toISOString().slice(0, 10); 
                 const txtColor = rgb(0.1, 0.1, 0.1); 
-                const signColor = rgb(0.1, 0.2, 0.6); // 서명은 짙은 파란색으로
+                const signColor = rgb(0.1, 0.2, 0.6); // 짙은 파란색 잉크
 
                 const pages = pdfDoc.getPages();
                 
@@ -300,18 +304,18 @@
                 p1.drawText(today, { x: pdfCoords.p1_date.x, y: pdfCoords.p1_date.y, size: 10, font: font, color: txtColor });
                 p1.drawText(province, { x: pdfCoords.p1_province.x, y: pdfCoords.p1_province.y, size: 10, font: font, color: txtColor });
 
-                // 4페이지 수령증 서명 (좌표에 맞춰 기입)
+                // 4페이지 수령증 서명 
                 const p4 = pages[3] || pages[pages.length - 1]; 
                 p4.drawText(today, { x: pdfCoords.p4_c_date.x, y: pdfCoords.p4_c_date.y, size: 10, font: fontReg, color: txtColor });
                 p4.drawText(corpName, { x: pdfCoords.p4_c_corp.x, y: pdfCoords.p4_c_corp.y, size: 10, font: font, color: txtColor });
-                p4.drawText(repName, { x: pdfCoords.p4_c_sign.x, y: pdfCoords.p4_c_sign.y, size: 14, font: fontItalic, color: signColor }); // 타이핑 서명
+                p4.drawText(repName, { x: pdfCoords.p4_c_sign.x, y: pdfCoords.p4_c_sign.y, size: 16, font: fontItalic, color: signColor }); // 캔버스 대신 타이핑
                 p4.drawText(repName, { x: pdfCoords.p4_c_name.x, y: pdfCoords.p4_c_name.y, size: 10, font: fontReg, color: txtColor });
                 p4.drawText(repTitle, { x: pdfCoords.p4_c_title.x, y: pdfCoords.p4_c_title.y, size: 10, font: fontReg, color: txtColor });
 
                 const base64Pdf = await pdfDoc.saveAsBase64({ dataUri: true });
                 const ipData = await fetch('https://api.ipify.org?format=json').then(r => r.json()).catch(() => ({ip: 'N/A'}));
 
-                // 구글 백엔드로 전송 (FDD_SIGNED)
+                // 구글 백엔드로 전송
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -325,11 +329,9 @@
                     redirect: "follow"
                 });
 
-                // 성공 처리 및 14일 타이머 시작
+                // 로컬 정보 저장 (계약서 자동 완성을 위해)
                 const now = new Date().getTime();
                 localStorage.setItem('sinjeon_fdd_timestamp', now);
-                
-                // 정보 저장 (계약서 자동 완성을 위해)
                 localStorage.setItem('sj_province', province);
                 localStorage.setItem('sj_corp', corpName);
                 localStorage.setItem('sj_title', repTitle);
@@ -349,9 +351,13 @@
         // ---------------------------------------------------------
         // 2. 타이머 관리 로직
         // ---------------------------------------------------------
+        let timerInterval;
+        const LOCK_DAYS = 14; 
+        const LOCK_MS = LOCK_DAYS * 24 * 60 * 60 * 1000;
+
         function checkTimerStatus() {
             const startTime = localStorage.getItem('sinjeon_fdd_timestamp');
-            if (!startTime) return; // 서명 전
+            if (!startTime) return; 
 
             // FDD 폼 비활성화
             document.getElementById('fdd-form-area').style.display = 'none';
@@ -445,6 +451,7 @@
                 const province = document.getElementById('contract_province').value;
                 const repTitle = document.getElementById('contract_title').value;
 
+                // 본사 서명 이미지 로드
                 let franchisorImage;
                 try {
                     const fRes = await fetch('y2c_director_sign.png');
@@ -461,16 +468,17 @@
                     p4.drawImage(franchisorImage, { x: pdfCoords.c_p4_f_sign.x, y: pdfCoords.c_p4_f_sign.y, width: fDims.width, height: fDims.height });
                 }
 
-                // 점주 스탬핑 (타이핑 전자서명)
+                // 점주 스탬핑 (타이핑 전자서명 적용)
                 p4.drawText(today, { x: pdfCoords.c_p4_c_date.x, y: pdfCoords.c_p4_c_date.y, size: 10, font: fontReg, color: txtColor });
                 p4.drawText(corpName, { x: pdfCoords.c_p4_c_corp.x, y: pdfCoords.c_p4_c_corp.y, size: 10, font: font, color: txtColor });
-                p4.drawText(repName, { x: pdfCoords.c_p4_c_sign.x, y: pdfCoords.c_p4_c_sign.y, size: 14, font: fontItalic, color: signColor }); // 자필 이미지 대신 폰트
+                p4.drawText(repName, { x: pdfCoords.c_p4_c_sign.x, y: pdfCoords.c_p4_c_sign.y, size: 16, font: fontItalic, color: signColor }); // 마우스 대신 타이핑
                 p4.drawText(repName, { x: pdfCoords.c_p4_c_name.x, y: pdfCoords.c_p4_c_name.y, size: 10, font: fontReg, color: txtColor });
                 p4.drawText(repTitle, { x: pdfCoords.c_p4_c_title.x, y: pdfCoords.c_p4_c_title.y, size: 10, font: fontReg, color: txtColor });
 
                 const pdfBytes = await pdfDoc.save();
                 const base64Pdf = await pdfDoc.saveAsBase64({ dataUri: true });
 
+                // 구글 백엔드 전송
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
