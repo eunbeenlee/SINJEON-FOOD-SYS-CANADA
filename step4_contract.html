@@ -84,7 +84,7 @@
         .timer-display { font-size: 2.8rem; font-weight: 900; color: var(--sj-red); letter-spacing: 2px; font-variant-numeric: tabular-nums; }
         .timer-label { font-size: 0.85rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; font-weight: 700;}
 
-        /* 계약자 정보 폼 (업그레이드) */
+        /* 계약자 정보 폼 */
         .signer-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .form-group { display: flex; flex-direction: column; gap: 5px; }
         .form-group.full { grid-column: 1 / -1; }
@@ -170,7 +170,6 @@
                         <p>Sinjeon_FDD_Canada_Version.pdf (2.4MB)</p>
                     </div>
                 </div>
-                <!-- ★ 실제 FDD 파일명으로 링크 교체 -->
                 <a href="dummy_fdd.pdf" target="_blank" class="btn-download" id="btn-read-fdd" onclick="startCoolingOff()">
                     <i class="fas fa-download"></i> 열람 및 14일 대기 시작
                 </a>
@@ -205,7 +204,6 @@
                         <p>Sinjeon_Franchise_Agreement.pdf</p>
                     </div>
                 </div>
-                <!-- ★ 실제 계약서 템플릿 파일명으로 링크 교체 -->
                 <a href="contract_template.pdf" target="_blank" class="btn-download">
                     <i class="fas fa-eye"></i> 계약서 초안 확인
                 </a>
@@ -216,7 +214,7 @@
                 <div class="timer-label">Days : Hours : Minutes : Seconds remaining</div>
             </div>
 
-            <!-- ★ 추가된 서명 정보 입력 폼 -->
+            <!-- 서명 정보 입력 폼 -->
             <div class="signer-form">
                 <div class="form-group full">
                     <label>Franchisee Entity (가맹점 법인명/상호명)</label>
@@ -247,8 +245,8 @@
     <button class="dev-bypass" onclick="bypassTimer()">[Dev] Bypass 14 Days</button>
 
     <script>
-        // 백엔드 연동 설정 (추후 생성할 구글 앱스 스크립트 웹앱 URL 입력)
-        const GOOGLE_APPS_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL"; 
+        // ★ 통합된 백엔드(Google Apps Script) URL 적용 완료
+        const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYRDZuuiL2AHnRxGDFrRYH1XI06RoaL9PloETzw9fzwfToCqit6akBEhGWvvdiyus-/exec"; 
 
         // 1. Signature Pad 초기화
         const canvas = document.getElementById('signature-pad');
@@ -341,7 +339,7 @@
             submitBtn.disabled = false;
         }
 
-        // 3. FDD 열람 및 DB 로깅
+        // 3. FDD 열람 및 DB 로깅 (CORS 보안 패치 적용)
         async function startCoolingOff() {
             if (localStorage.getItem('sinjeon_fdd_timestamp')) return;
             if (!confirm("정보공개서(FDD) 문서를 열람하시겠습니까?\n동의 시 접속 IP 및 타임스탬프가 법적 증빙으로 로깅되며 14일 대기 기간이 시작됩니다.")) {
@@ -356,10 +354,20 @@
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 
-                const auditData = { action: "FDD_ACCESSED", timestamp: new Date(now).toISOString(), ip: ipData.ip, userAgent: navigator.userAgent };
-                if(GOOGLE_APPS_SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL") {
-                    fetch(GOOGLE_APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(auditData) });
-                }
+                const auditData = { 
+                    action: "FDD_ACCESSED", 
+                    timestamp: new Date(now).toISOString(), 
+                    ip: ipData.ip, 
+                    userAgent: navigator.userAgent 
+                };
+                
+                // ★ CORS 우회를 위한 안전한 fetch 설정 적용 완료
+                fetch(GOOGLE_APPS_SCRIPT_URL, { 
+                    method: "POST", 
+                    headers: { "Content-Type": "text/plain;charset=utf-8" }, 
+                    body: JSON.stringify(auditData),
+                    redirect: "follow"
+                });
             } catch(error) { console.error("Audit Logging Error:", error); }
             
             checkTimerStatus();
@@ -376,7 +384,6 @@
         // 4. 서명 제출 및 브라우저 PDF 합성 (텍스트 + 이미지)
         // ---------------------------------------------------------
         async function submitSignature() {
-            // 유효성 검사
             const corpName = document.getElementById('signer_corp').value.trim();
             const repName = document.getElementById('signer_name').value.trim();
             const repTitle = document.getElementById('signer_title').value.trim();
@@ -398,55 +405,46 @@
                 const dataURL = signaturePad.toDataURL("image/png");
                 const { PDFDocument, rgb, StandardFonts } = PDFLib;
 
-                // 1. 서버의 원본 계약서 템플릿 로드 (반드시 동일한 경로에 있어야 함)
                 const templateResponse = await fetch('contract_template.pdf');
                 if (!templateResponse.ok) throw new Error("Contract template not found.");
                 const existingPdfBytes = await templateResponse.arrayBuffer();
                 const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
-                // 2. 폰트 및 텍스트 데이터 준비
                 const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-                const todayDate = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD 포맷
+                const todayDate = new Date().toLocaleDateString('en-CA'); 
                 
-                // 3. 서명 이미지 로드
                 const pngImage = await pdfDoc.embedPng(dataURL);
-                const pngDims = pngImage.scale(0.35); // 이미지 크기 비율
+                const pngDims = pngImage.scale(0.35); 
 
-                // 4. PDF 마지막 페이지에 그리기
                 const pages = pdfDoc.getPages();
                 const lastPage = pages[pages.length - 1]; 
                 
-                // ========================================================
-                // [좌표 설정 가이드]
-                // - A4 사이즈는 보통 width: 595.28, height: 841.89 입니다.
-                // - (0,0)은 왼쪽 맨 아래 구석(Bottom-Left)입니다.
-                // - 아래 x, y 값을 수정하여 서명과 텍스트 위치를 조정하세요.
-                // ========================================================
-                
-                // (좌측) Receipt Date 입력
                 lastPage.drawText(todayDate, { x: 130, y: 140, size: 12, font: font, color: rgb(0,0,0) });
-
-                // (우측) 가맹점주 정보 및 서명 입력
                 lastPage.drawText(corpName, { x: 380, y: 220, size: 12, font: font, color: rgb(0,0,0) });
                 lastPage.drawImage(pngImage, { x: 380, y: 155, width: pngDims.width, height: pngDims.height });
                 lastPage.drawText(repName, { x: 380, y: 140, size: 12, font: font, color: rgb(0,0,0) });
                 lastPage.drawText(repTitle, { x: 380, y: 110, size: 12, font: font, color: rgb(0,0,0) });
 
-                // 5. 합성된 최종 계약서 추출 및 다운로드
                 const pdfBytes = await pdfDoc.save();
                 const base64Pdf = await pdfDoc.saveAsBase64({ dataUri: true });
 
-                if(GOOGLE_APPS_SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL") {
-                    fetch(GOOGLE_APPS_SCRIPT_URL, {
-                        method: "POST",
-                        body: JSON.stringify({ action: "CONTRACT_SIGNED", timestamp: new Date().toISOString(), pdfData: base64Pdf })
-                    });
-                }
+                // ★ CORS 우회를 위한 안전한 fetch 설정 적용 완료 (최종 서명 PDF 전송)
+                fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ 
+                        action: "CONTRACT_SIGNED", 
+                        timestamp: new Date().toISOString(), 
+                        pdfData: base64Pdf,
+                        ip: "N/A" // 보안상 서버 단에서 로깅 처리
+                    }),
+                    redirect: "follow"
+                });
 
                 const blob = new Blob([pdfBytes], { type: "application/pdf" });
                 const link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
-                link.download = `Sinjeon_Contract_${corpName.replace(/\s+/g, '_')}.pdf`; // 파일명에 법인명 자동 삽입
+                link.download = `Sinjeon_Contract_${corpName.replace(/\s+/g, '_')}.pdf`;
                 link.click();
 
                 btn.innerHTML = '<i class="fas fa-check"></i> Contract Successfully Submitted';
