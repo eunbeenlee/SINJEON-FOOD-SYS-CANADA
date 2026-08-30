@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#1A1A1A">
     
-    <title>Step 1: Quick Inquiry | Y2C Holdings</title>
-    <meta name="description" content="Official Franchise Application Portal for Sinjeon Canada.">
+    <title>Step 1: Franchise Proposal | Y2C Holdings</title>
+    <meta name="description" content="Official Franchise Proposal and Inquiry Portal for Sinjeon Canada.">
 
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,7 +24,7 @@
 
         :root {
             --sj-green: #008250; --sj-red: #D24B41; --text-dark: #0f172a; --text-gray: #64748b;
-            --bg-light: #F8FAFC; --bg-white: #FFFFFF; --border-color: #E2E8F0;
+            --bg-light: #F8FAFC; --bg-white: #FFFFFF; --border-color: #E2E8F0; --doc-bg: #ffffff;
         }
 
         /* ================= Header & Progress ================= */
@@ -60,8 +60,32 @@
         .panel-title { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); margin: 0;}
         .panel-subtitle { font-size: 0.9rem; color: var(--text-gray); font-weight: 400; display: block; margin-top: 4px; }
 
-        /* ================= 겹침 방지 Form Grid (고급화 UI) ================= */
-        .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-bottom: 25px;}
+        /* ================= Proposal Smart Document (제안서 뷰어) ================= */
+        .document-wrapper { width: 100%; max-height: 650px; overflow-y: auto; background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);}
+        .document-wrapper::-webkit-scrollbar { width: 8px; }
+        .document-wrapper::-webkit-scrollbar-thumb { background-color: #94a3b8; border-radius: 4px; }
+
+        .document-paper { background: var(--doc-bg); width: 100%; margin: 0 auto; padding: 45px 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); font-family: 'Noto Sans KR', Arial, sans-serif; line-height: 1.6; color: #1e293b;}
+        .document-paper h1 { text-align: center; font-size: 1.8rem; margin-bottom: 5px; color: #0f172a; word-break: keep-all; letter-spacing: -0.5px;}
+        .document-paper h3 { text-align: center; font-size: 1.05rem; color: #64748b; font-weight: 400; margin-top: 0; margin-bottom: 35px;}
+        
+        .clause { margin-bottom: 30px; }
+        .clause h2 { font-size: 1.15rem; color: var(--sj-green); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
+        .clause p { font-size: 1rem; margin-bottom: 8px; text-align: justify; font-weight: 500; word-break: keep-all; line-height: 1.7;}
+        .clause .en-text { font-size: 0.9rem; color: #64748b; font-weight: 400; display: block; margin-bottom: 10px; line-height: 1.5; font-family: 'Outfit', sans-serif;}
+        
+        /* 파격 프로모션 강조 박스 (가장 핵심적인 현혹 포인트) */
+        .promo-box { background: linear-gradient(135deg, #fff1f2 0%, #fef2f2 100%); border: 2px solid var(--sj-red); border-radius: 12px; padding: 25px; margin: 20px 0; box-shadow: 0 4px 15px rgba(210, 75, 65, 0.1); position: relative; overflow: hidden;}
+        .promo-box::before { content: '\f06b'; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; top: -10px; right: -10px; font-size: 6rem; color: rgba(210, 75, 65, 0.05); transform: rotate(-15deg);}
+        .promo-box h4 { color: var(--sj-red); font-size: 1.25rem; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; font-weight: 900;}
+        .promo-box .promo-subtitle { font-size: 0.9rem; color: #64748b; margin-bottom: 20px; display: block; font-weight: 500;}
+        .promo-list { list-style: none; padding: 0; margin: 0; }
+        .promo-list li { font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;}
+        .promo-list li i { color: var(--sj-red); margin-top: 4px; font-size: 1.1rem;}
+        .promo-list li span.highlight { color: var(--sj-red); background: rgba(210, 75, 65, 0.1); padding: 2px 8px; border-radius: 4px; font-weight: 900;}
+
+        /* ================= 겹침 방지 Form Grid (간편 문의 폼) ================= */
+        .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-bottom: 15px;}
         .sig-field { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         .sig-field.full { grid-column: 1 / -1; }
         
@@ -71,9 +95,9 @@
         .doc-input { width: 100%; max-width: 100%; border: 1px solid var(--border-light); background: #f8fafc; border-radius: 10px; padding: 14px 16px; font-family: inherit; font-size: 1rem; color: var(--text-dark); font-weight: 600; outline: none; transition: 0.2s; box-sizing: border-box;}
         .doc-input:focus { background: white; border-color: var(--sj-red); box-shadow: 0 0 0 4px rgba(210, 75, 65, 0.1);}
         .doc-input::placeholder { color: #cbd5e1; font-weight: 400; font-size: 0.95rem;}
-        textarea.doc-input { resize: vertical; min-height: 120px; line-height: 1.5; }
+        textarea.doc-input { resize: vertical; min-height: 100px; line-height: 1.5; }
 
-        .btn-primary { background: var(--sj-red); color: white; border: none; padding: 22px 30px; border-radius: 14px; font-weight: 900; font-size: 1.15rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(210, 75, 65, 0.2); margin-top: 10px; box-sizing: border-box;}
+        .btn-primary { background: var(--sj-red); color: white; border: none; padding: 22px 30px; border-radius: 14px; font-weight: 900; font-size: 1.15rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(210, 75, 65, 0.2); margin-top: 20px; box-sizing: border-box;}
         .btn-primary:hover:not(:disabled) { background: #b83e35; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3); }
         .btn-primary:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; transform: none;}
 
@@ -93,14 +117,16 @@
         @media (max-width: 768px) {
             .stepper-wrapper { display: none; }
             .portal-header { padding: 15px 20px; }
-            .btn-back span { display: none; } /* 모바일: 텍스트 숨김 */
+            .btn-back span { display: none; } 
             .panel { padding: 35px 20px; }
-            .sig-grid { grid-template-columns: 1fr; gap: 15px; margin-bottom: 15px;}
+            .document-paper { padding: 30px 20px; }
+            .sig-grid { grid-template-columns: 1fr; gap: 15px; margin-bottom: 10px;}
         }
     </style>
 </head>
 <body>
 
+    <!-- Header -->
     <header class="portal-header">
         <div style="display: flex; align-items: center; gap: 15px;">
             <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> <span>돌아가기 (Home)</span></a>
@@ -113,6 +139,7 @@
         </div>
     </header>
 
+    <!-- Progress -->
     <div class="progress-wrapper">
         <div class="progress-track"><div class="progress-fill"></div></div>
         <div class="progress-steps">
@@ -135,57 +162,100 @@
         </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content-container">
-        <h1 class="page-title">Quick Franchise Inquiry</h1>
+        <h1 class="page-title">Franchise Proposal & Inquiry</h1>
         <p class="page-desc">
-            신전떡볶이 캐나다 가맹 사업에 관심을 가져주셔서 감사합니다.<br>
-            간단한 연락처를 남겨주시면 곧바로 공식 지원서(Step 2)로 이동합니다.
-            <span class="en-desc">Thank you for your interest in Sinjeon Canada. Please provide brief details below to proceed to the Official Application.</span>
+            대한민국 1위 떡볶이 브랜드, 신전떡볶이 캐나다 가맹 사업 제안서입니다.<br>
+            가맹 혜택을 확인하시고 하단의 간편 문의처를 남겨주시면 공식 지원서로 안내해 드립니다.
+            <span class="en-desc">Review our Franchise Proposal and exclusive benefits. Fill out the quick inquiry below to proceed to the Official Application.</span>
         </p>
 
+        <!-- PANEL 1: Franchise Proposal (제안서 및 현혹 포인트) -->
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-icon"><i class="fas fa-file-signature"></i></div>
+                <div>
+                    <h2 class="panel-title">1. Franchise Proposal (가맹 사업 제안서)</h2>
+                    <span class="panel-subtitle">Official Proposal & Financial Incentives</span>
+                </div>
+            </div>
+
+            <div class="document-wrapper">
+                <div class="document-paper">
+                    <h1>FRANCHISE OPPORTUNITY</h1>
+                    <h3>신전떡볶이 캐나다 마스터 프랜차이즈 제안서</h3>
+                    
+                    <p style="text-align: center; margin-bottom: 30px; font-size: 0.95rem; color: #1e293b; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0;">
+                        주식회사 와이투씨홀딩스는 북미 시장 진출을 함께할 역량 있는 마스터 파트너 및 가맹점주를 모십니다.<br>
+                        <span class="en-text" style="margin-top: 5px;">Y2C Holdings Inc. is seeking capable partners and franchisees to expand the Sinjeon brand across the North American market.</span>
+                    </p>
+
+                    <div class="clause">
+                        <h2><i class="fas fa-globe-americas"></i> 제 1 조 K-Food를 선도하는 글로벌 브랜드</h2>
+                        <p>신전떡볶이는 대한민국 1위 분식 프랜차이즈를 넘어 전 세계 800여 개 매장을 보유하며 글로벌 K-Food 열풍을 이끌고 있습니다. 검증된 특제 레시피와 체계화된 물류 시스템으로 북미 시장에서의 압도적인 성공을 보장합니다.</p>
+                        <span class="en-text">Sinjeon is the #1 Tteok-bokki franchise in Korea, leading the K-Food wave globally. With proven recipes and a streamlined SCM, we guarantee operational success in the North American market.</span>
+                    </div>
+
+                    <!-- 🌟 가맹 혜택 및 할인 프로모션 강조 (핵심 현혹 포인트) -->
+                    <div class="promo-box">
+                        <h4><i class="fas fa-gift"></i> 2026 Exclusive Promotional Incentives</h4>
+                        <span class="promo-subtitle">초기 가맹점 확장을 위해 파격적인 본사 지원 혜택을 제공합니다.</span>
+                        <ul class="promo-list">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <div><strong>얼리버드 가맹비 할인 (Early Bird Discount):</strong><br>캐나다 내 선착순 5개 매장 한정 론칭 프로모션으로 <span class="highlight">표준 가맹비 20% 특별 할인</span>을 적용합니다.</div>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <div><strong>다점포 오픈 혜택 (Multi-Unit Operator):</strong><br>동일 점주가 2호점 이상 추가 오픈 계약 시 <span class="highlight">추가 가맹비 50% 파격 할인</span> 혜택을 보장합니다.</div>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <div><strong>로컬 마케팅 지원 (Marketing Support):</strong><br>매장 오픈 첫 달, 본사 차원의 로컬 타겟팅 맞춤형 <span class="highlight">디지털 마케팅 비용을 100% 전액 지원</span>합니다.</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="clause" style="margin-top: 35px;">
+                        <h2><i class="fas fa-truck-loading"></i> 제 2 조 압도적인 본사 물류 및 경영 지원</h2>
+                        <p>가맹본부(Y2C Holdings)는 대한민국 본사 공장에서 캐나다 각 지역 가맹점 앞까지 다이렉트 콜드체인(Cold-Chain) 식자재 직공급 망을 완벽하게 구축했습니다. 매월 발생하는 총 매출의 4%의 지원 수수료만으로 신메뉴 R&D, 캐나다 현지화 마케팅 기획, 실시간 IT 경영 컨설팅을 평생 제공받으실 수 있습니다.</p>
+                        <span class="en-text">Y2C Holdings operates a direct cold-chain SCM from Korea to Canada. For a 4% Management Fee, you receive continuous R&D, localized marketing, and real-time operational consulting.</span>
+                    </div>
+                </div>
+            </div> <!-- End of Document Wrapper -->
+        </div>
+
+        <!-- PANEL 2: Quick Inquiry (간편 문의 폼) -->
         <form id="step1-form" onsubmit="return handleInquirySubmit(event)">
-            
             <div class="panel">
-                <div class="panel-header">
-                    <div class="panel-icon"><i class="fas fa-envelope-open-text"></i></div>
+                <div class="panel-header" style="border-bottom: none; margin-bottom: 10px; padding-bottom: 0;">
+                    <div class="panel-icon" style="background: #e0f2fe; color: #3b82f6;"><i class="fas fa-envelope-open-text"></i></div>
                     <div>
-                        <h2 class="panel-title">1. Basic Information (기본 정보)</h2>
-                        <span class="panel-subtitle">본인 확인 및 안내를 위한 연락처를 기재해 주세요.</span>
+                        <h2 class="panel-title">2. Quick Inquiry (간편 가맹 문의)</h2>
+                        <span class="panel-subtitle">프로모션 상담 및 안내를 위해 기본 연락처와 희망 지역을 남겨주세요.</span>
                     </div>
                 </div>
 
-                <div class="sig-grid">
+                <div class="sig-grid" style="margin-top: 25px;">
                     <div class="sig-field">
-                        <label>First Name (이름) <span class="en">Legal First Name</span></label>
+                        <label>First Name (이름) <span class="en">Given Name</span></label>
                         <input type="text" id="first_name" name="first_name" class="doc-input" required autocomplete="given-name">
                     </div>
                     <div class="sig-field">
-                        <label>Last Name (성) <span class="en">Legal Last Name</span></label>
+                        <label>Last Name (성) <span class="en">Family Name</span></label>
                         <input type="text" id="last_name" name="last_name" class="doc-input" required autocomplete="family-name">
                     </div>
                     <div class="sig-field">
-                        <label>Email Address (이메일 주소) <span class="en">Primary Email</span></label>
+                        <label>Email Address (이메일) <span class="en">Primary Email</span></label>
                         <input type="email" id="email" name="email" class="doc-input" required autocomplete="email">
                     </div>
                     <div class="sig-field">
                         <label>Phone Number (연락처) <span class="en">Mobile Phone</span></label>
                         <input type="tel" id="phone" name="phone" class="doc-input" required autocomplete="tel">
                     </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-header">
-                    <div class="panel-icon" style="background: #e0f2fe; color: #3b82f6;"><i class="fas fa-map-marker-alt"></i></div>
-                    <div>
-                        <h2 class="panel-title">2. Additional Details (추가 정보)</h2>
-                        <span class="panel-subtitle">오픈 희망 지역과 문의사항을 남겨주세요.</span>
-                    </div>
-                </div>
-
-                <div class="sig-grid">
                     <div class="sig-field">
-                        <label>Target City / Region (오픈 희망 지역) <span class="en">Target City or Province</span></label>
+                        <label>Target City / Region (희망 지역) <span class="en">Target City or Province</span></label>
                         <input type="text" id="target_city" name="target_city" class="doc-input" required>
                     </div>
                     <div class="sig-field">
@@ -196,28 +266,28 @@
                             <option value="Google Search">인터넷 검색 (Google)</option>
                             <option value="Visited a Store">매장 방문 경험</option>
                             <option value="Referral / Word of Mouth">지인 추천</option>
-                            <option value="News / Article">뉴스 및 기사</option>
                             <option value="Other">기타</option>
                         </select>
                     </div>
                     <div class="sig-field full">
-                        <label>Message / Questions (문의 내용 - 선택사항) <span class="en">Any specific questions? (Optional)</span></label>
-                        <textarea id="message" name="message" class="doc-input" placeholder="궁금하신 점이나 본사에 전하고 싶으신 내용을 자유롭게 적어주세요."></textarea>
+                        <label>Message / Questions (문의 내용 - 선택) <span class="en">Any specific questions? (Optional)</span></label>
+                        <textarea id="message" name="message" class="doc-input" placeholder="할인 프로모션 적용 여부나 궁금하신 점을 편하게 적어주세요."></textarea>
                     </div>
                 </div>
 
                 <button type="submit" class="btn-primary" id="btn-submit">
-                    <i class="fas fa-paper-plane"></i> Submit Inquiry (문의 접수 및 다음 단계로)
+                    <i class="fas fa-paper-plane"></i> Submit Inquiry & Proceed (제출 및 다음 단계로)
                 </button>
             </div>
         </form>
     </div>
 
+    <!-- Success Modal -->
     <div class="modal-overlay" id="success-modal" aria-hidden="true" role="dialog">
         <div class="modal-content">
             <div class="success-icon"><i class="fas fa-check" aria-hidden="true"></i></div>
             <h3>Inquiry Received!</h3>
-            <p>가맹 문의가 성공적으로 구글 서버에 접수되었습니다.<br>신속한 심사 진행을 위해 공식 지원서(Step 2) 제출을 이어서 완료해 주시기 바랍니다.<br><span class="en-desc" style="display:block; margin-top:10px;">Please proceed to Step 2 to complete your Official Application.</span></p>
+            <p>가맹 문의가 성공적으로 구글 서버에 접수되었습니다.<br>신속한 심사 및 프로모션 적용을 위해 공식 지원서(Step 2) 제출을 이어서 완료해 주시기 바랍니다.<br><span class="en-desc" style="display:block; margin-top:10px;">Please proceed to Step 2 to complete your Official Application.</span></p>
             <a href="step2_official_app.html" class="btn-modal-next">Proceed to Step 2 (공식 지원서 작성) <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
@@ -226,7 +296,7 @@
         // ★ 통합 백엔드 URL 완벽 적용 
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjqosY23kJFdwCAwZA36-zVOt_xL6xw9gfXtNEgyWXTMDcHz9VPm0H07ZR3u8jDhOowg/exec";
 
-        // ================= 보안 및 복사 방지 로직 =================
+        // ================= 3중 보안 및 복사 방지 로직 =================
         document.addEventListener('contextmenu', e => { e.preventDefault(); alert("보안 정책상 우클릭이 차단되어 있습니다."); });
         document.addEventListener('selectstart', e => { if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
@@ -238,7 +308,7 @@
             }
         });
 
-        // ================= Google Drive 자동 전송 로직 =================
+        // ================= Google Drive 자동 전송 및 오토필 로직 =================
         async function handleInquirySubmit(event) {
             event.preventDefault();
             
@@ -261,7 +331,6 @@
             localStorage.setItem('sj_last_name', lastName);
             localStorage.setItem('sj_email', email);
             localStorage.setItem('sj_phone', phone);
-            // 지점명 연동을 위해 지역도 저장
             localStorage.setItem('sj_target_city', targetCity); 
 
             const payload = {
@@ -295,7 +364,7 @@
                 alert("네트워크 오류가 발생했습니다. 구글 서버 연결 상태를 확인 후 다시 시도해 주세요.");
             } finally {
                 submitButton.disabled = false;
-                submitButton.innerHTML = `<i class="fas fa-paper-plane"></i> Submit Inquiry (문의 접수 및 다음 단계로)`;
+                submitButton.innerHTML = `<i class="fas fa-paper-plane"></i> Submit Inquiry & Proceed (제출 및 다음 단계로)`;
             }
         }
     </script>
