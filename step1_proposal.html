@@ -31,7 +31,6 @@
         .portal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 40px; border-bottom: 1px solid var(--border-light); background: rgba(255, 255, 255, 0.98); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
         .logo-group { display: flex; align-items: center; gap: 12px; text-decoration: none;}
         .logo-group img { height: 30px; }
-        .logo-group span { font-weight: 800; font-size: 1.45rem; color: var(--sj-green); letter-spacing: -0.5px; }
         
         .header-actions { display: flex; gap: 12px; align-items: center; }
         .btn-back { display: flex; align-items: center; gap: 6px; background: var(--bg-white); color: var(--text-gray); border: 1px solid var(--border-color); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
@@ -51,7 +50,7 @@
 
         /* ================= Layout & Panels ================= */
         .content-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; }
-        .page-title { font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase; text-align: center;}
+        .page-title { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase; text-align: center;}
         .page-desc { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 40px; font-weight: 500; text-align: center;}
         .en-desc { font-size: 0.95rem; color: #94a3b8; display: block; font-weight: 400; margin-top: 5px; font-family: 'Outfit', sans-serif; }
 
@@ -61,7 +60,7 @@
         .panel-title { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); margin: 0;}
         .panel-subtitle { font-size: 0.9rem; color: var(--text-gray); font-weight: 400; display: block; margin-top: 4px; }
 
-        /* ================= 겹침 방지 Form Grid ================= */
+        /* ================= 겹침 방지 Form Grid (고급화 UI) ================= */
         .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-bottom: 25px;}
         .sig-field { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         .sig-field.full { grid-column: 1 / -1; }
@@ -74,7 +73,7 @@
         .doc-input::placeholder { color: #cbd5e1; font-weight: 400; font-size: 0.95rem;}
         textarea.doc-input { resize: vertical; min-height: 120px; line-height: 1.5; }
 
-        .btn-primary { background: var(--sj-red); color: white; border: none; padding: 22px 30px; border-radius: 14px; font-weight: 900; font-size: 1.15rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(210, 75, 65, 0.2); margin-top: 30px; box-sizing: border-box;}
+        .btn-primary { background: var(--sj-red); color: white; border: none; padding: 22px 30px; border-radius: 14px; font-weight: 900; font-size: 1.15rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(210, 75, 65, 0.2); margin-top: 10px; box-sizing: border-box;}
         .btn-primary:hover:not(:disabled) { background: #b83e35; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3); }
         .btn-primary:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; transform: none;}
 
@@ -90,11 +89,12 @@
         .btn-modal-next { display: flex; justify-content: center; gap: 10px; align-items: center; width: 100%; padding: 20px; background: var(--sj-red); color: white; border-radius: 12px; font-weight: 800; text-decoration: none; font-size: 1.1rem; transition: 0.2s; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3);}
         .btn-modal-next:hover { background: #b83e35; transform: translateY(-3px);}
 
+        /* Mobile Optimization */
         @media (max-width: 768px) {
             .stepper-wrapper { display: none; }
             .portal-header { padding: 15px 20px; }
-            .btn-back span { display: none; } 
-            .form-card { padding: 40px 25px; }
+            .btn-back span { display: none; } /* 모바일: 텍스트 숨김 */
+            .panel { padding: 35px 20px; }
             .sig-grid { grid-template-columns: 1fr; gap: 15px; margin-bottom: 15px;}
         }
     </style>
@@ -139,27 +139,28 @@
         <h1 class="page-title">Quick Franchise Inquiry</h1>
         <p class="page-desc">
             신전떡볶이 캐나다 가맹 사업에 관심을 가져주셔서 감사합니다.<br>
-            간단한 정보를 남겨주시면 공식 지원서(Step 2) 링크를 안내해 드립니다.
-            <span class="en-desc">Thank you for your interest in Sinjeon Canada. Please provide brief details below to proceed.</span>
+            간단한 연락처를 남겨주시면 곧바로 공식 지원서(Step 2)로 이동합니다.
+            <span class="en-desc">Thank you for your interest in Sinjeon Canada. Please provide brief details below to proceed to the Official Application.</span>
         </p>
 
         <form id="step1-form" onsubmit="return handleInquirySubmit(event)">
+            
             <div class="panel">
                 <div class="panel-header">
                     <div class="panel-icon"><i class="fas fa-envelope-open-text"></i></div>
                     <div>
                         <h2 class="panel-title">1. Basic Information (기본 정보)</h2>
-                        <span class="panel-subtitle">본인 확인을 위한 연락처를 기재해 주세요.</span>
+                        <span class="panel-subtitle">본인 확인 및 안내를 위한 연락처를 기재해 주세요.</span>
                     </div>
                 </div>
 
                 <div class="sig-grid">
                     <div class="sig-field">
-                        <label>First Name (이름) <span class="en">Given Name</span></label>
+                        <label>First Name (이름) <span class="en">Legal First Name</span></label>
                         <input type="text" id="first_name" name="first_name" class="doc-input" required autocomplete="given-name">
                     </div>
                     <div class="sig-field">
-                        <label>Last Name (성) <span class="en">Family Name</span></label>
+                        <label>Last Name (성) <span class="en">Legal Last Name</span></label>
                         <input type="text" id="last_name" name="last_name" class="doc-input" required autocomplete="family-name">
                     </div>
                     <div class="sig-field">
@@ -178,13 +179,13 @@
                     <div class="panel-icon" style="background: #e0f2fe; color: #3b82f6;"><i class="fas fa-map-marker-alt"></i></div>
                     <div>
                         <h2 class="panel-title">2. Additional Details (추가 정보)</h2>
-                        <span class="panel-subtitle">원하시는 지역과 문의사항을 남겨주세요.</span>
+                        <span class="panel-subtitle">오픈 희망 지역과 문의사항을 남겨주세요.</span>
                     </div>
                 </div>
 
                 <div class="sig-grid">
                     <div class="sig-field">
-                        <label>Target City / Region (오픈 희망 지역) <span class="en">City or Province</span></label>
+                        <label>Target City / Region (오픈 희망 지역) <span class="en">Target City or Province</span></label>
                         <input type="text" id="target_city" name="target_city" class="doc-input" required>
                     </div>
                     <div class="sig-field">
@@ -201,29 +202,28 @@
                     </div>
                     <div class="sig-field full">
                         <label>Message / Questions (문의 내용 - 선택사항) <span class="en">Any specific questions? (Optional)</span></label>
-                        <textarea id="message" name="message" class="doc-input" placeholder="궁금하신 점이나 전하고 싶으신 내용을 자유롭게 적어주세요."></textarea>
+                        <textarea id="message" name="message" class="doc-input" placeholder="궁금하신 점이나 본사에 전하고 싶으신 내용을 자유롭게 적어주세요."></textarea>
                     </div>
                 </div>
 
                 <button type="submit" class="btn-primary" id="btn-submit">
-                    <i class="fas fa-paper-plane"></i> Submit Inquiry (문의 접수)
+                    <i class="fas fa-paper-plane"></i> Submit Inquiry (문의 접수 및 다음 단계로)
                 </button>
             </div>
         </form>
     </div>
 
-    <!-- Success Modal -->
     <div class="modal-overlay" id="success-modal" aria-hidden="true" role="dialog">
         <div class="modal-content">
             <div class="success-icon"><i class="fas fa-check" aria-hidden="true"></i></div>
-            <h3>Inquiry Sent!</h3>
-            <p>가맹 문의가 성공적으로 접수되었습니다.<br>경영진 검토 후 기재해주신 이메일로 회신드리겠습니다.<br><br>계속해서 공식 지원서(Step 2) 작성을 원하시면 아래 버튼을 클릭해 주세요.</p>
+            <h3>Inquiry Received!</h3>
+            <p>가맹 문의가 성공적으로 구글 서버에 접수되었습니다.<br>신속한 심사 진행을 위해 공식 지원서(Step 2) 제출을 이어서 완료해 주시기 바랍니다.<br><span class="en-desc" style="display:block; margin-top:10px;">Please proceed to Step 2 to complete your Official Application.</span></p>
             <a href="step2_official_app.html" class="btn-modal-next">Proceed to Step 2 (공식 지원서 작성) <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
 
     <script>
-        // ★ 통합 백엔드 URL 
+        // ★ 통합 백엔드 URL 완벽 적용 
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjqosY23kJFdwCAwZA36-zVOt_xL6xw9gfXtNEgyWXTMDcHz9VPm0H07ZR3u8jDhOowg/exec";
 
         // ================= 보안 및 복사 방지 로직 =================
@@ -248,18 +248,21 @@
             submitButton.disabled = true;
             submitButton.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> SECURELY PROCESSING...`;
 
-            // Auto-fill 용 데이터 로컬 저장 (Step 2 폼을 위해)
+            // ★ Step 2 폼 연동을 위한 데이터 로컬 저장 (Auto-fill)
             const firstName = document.getElementById('first_name').value.trim();
             const lastName = document.getElementById('last_name').value.trim();
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const fullName = firstName + " " + lastName;
+            const targetCity = document.getElementById('target_city').value.trim();
             
             localStorage.setItem('sj_name', fullName);
             localStorage.setItem('sj_first_name', firstName);
             localStorage.setItem('sj_last_name', lastName);
             localStorage.setItem('sj_email', email);
             localStorage.setItem('sj_phone', phone);
+            // 지점명 연동을 위해 지역도 저장
+            localStorage.setItem('sj_target_city', targetCity); 
 
             const payload = {
                 action: "STEP1_SUBMIT",
@@ -267,12 +270,13 @@
                 name: fullName,
                 phone: phone,
                 email: email,
-                location: document.getElementById('target_city').value.trim(),
+                location: targetCity,
                 source: document.getElementById('source').value,
                 message: document.getElementById('message').value.trim() || '내용 없음'
             };
 
             try {
+                // 구글 백엔드로 데이터 전송
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -280,6 +284,7 @@
                     redirect: "follow"
                 });
 
+                // 성공 모달 띄우기
                 formElement.reset();
                 const modal = document.getElementById('success-modal');
                 modal.classList.add('active');
@@ -287,10 +292,10 @@
 
             } catch (error) {
                 console.error("서버 오류:", error);
-                alert("네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+                alert("네트워크 오류가 발생했습니다. 구글 서버 연결 상태를 확인 후 다시 시도해 주세요.");
             } finally {
                 submitButton.disabled = false;
-                submitButton.innerHTML = `<i class="fas fa-paper-plane"></i> Submit Inquiry (문의 접수)`;
+                submitButton.innerHTML = `<i class="fas fa-paper-plane"></i> Submit Inquiry (문의 접수 및 다음 단계로)`;
             }
         }
     </script>
