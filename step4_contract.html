@@ -8,11 +8,14 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600&display=swap" rel="stylesheet">
-    
-    <!-- 글로벌 표준 PDF 변환 엔진 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
+        /* 보안 방어 (드래그 차단) */
+        html, body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+        input, select { -webkit-user-select: auto; -moz-user-select: auto; -ms-user-select: auto; user-select: auto; }
+        @media print { body { display: none !important; } }
+
         :root {
             --sj-green: #008250; --sj-red: #D24B41;
             --bg-light: #f8fafc; --text-dark: #0f172a; --text-gray: #64748b;
@@ -23,9 +26,8 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: #f1f5f9; color: var(--text-dark); font-family: 'Outfit', 'Noto Sans KR', sans-serif; -webkit-font-smoothing: antialiased; }
 
-        /* ================= Header & Progress ================= */
         .portal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 40px; border-bottom: 1px solid var(--border-light); background: rgba(255, 255, 255, 0.98); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
-        .logo-group { display: flex; align-items: center; gap: 12px; }
+        .logo-group { display: flex; align-items: center; gap: 12px; text-decoration:none;}
         .logo-group img { height: 30px; }
         .logo-group span { font-weight: 800; font-size: 1.45rem; color: var(--sj-green); letter-spacing: -0.5px; }
         
@@ -44,7 +46,6 @@
         .step-text { text-align: center; font-size: 0.8rem; font-weight: 800; color: #64748b; line-height: 1.3;}
         .step.completed .step-text, .step.active .step-text { color: var(--sj-red); }
 
-        /* ================= Layout & Panels ================= */
         .content-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; text-align: center; }
         .page-title { font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase;}
         .page-desc { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 30px; font-weight: 500; }
@@ -72,7 +73,6 @@
         .document-paper h1 { text-align: center; font-size: 1.6rem; margin-bottom: 5px; color: #0f172a; word-break: keep-all;}
         .document-paper h3 { text-align: center; font-size: 1.05rem; color: #64748b; font-weight: 400; margin-top: 0; margin-bottom: 30px;}
         
-        /* 계약 조항 디자인 (이중 언어 교차) */
         .clause { margin-bottom: 25px; page-break-inside: avoid; }
         .clause h2 { font-size: 1.1rem; color: var(--sj-green); border-bottom: 1.5px solid #e2e8f0; padding-bottom: 5px; margin-top: 0; margin-bottom: 10px; word-break: keep-all;}
         .clause p { font-size: 0.95rem; margin-bottom: 5px; text-align: justify; font-weight: 500; word-break: keep-all;}
@@ -81,7 +81,6 @@
         .clause li { margin-bottom: 8px; font-size: 0.95rem; font-weight: 500;}
         .clause li .en-text { display: inline; margin-left: 5px; color: #64748b; font-weight: 400; font-size: 0.85rem;}
 
-        /* 스마트 인라인 폼 (모바일 대응) */
         .doc-input { border: none; border-bottom: 1.5px solid #0f172a; background: #f0fdf4; border-radius: 2px 2px 0 0; padding: 2px 6px; font-family: inherit; font-size: 0.95rem; color: var(--sj-red); font-weight: 700; outline: none; transition: 0.2s; width: auto; min-width: 150px; text-align: center; display: inline-block; box-sizing: border-box;}
         .doc-input.large { min-width: 250px; }
         .doc-input:focus { background: #fef2f2; border-bottom-color: var(--sj-red); box-shadow: 0 2px 0 rgba(210, 75, 65, 0.2);}
@@ -91,11 +90,9 @@
         .type-signature { font-family: 'Caveat', cursive !important; font-size: 1.8rem !important; color: #1e3a8a !important; border-bottom: 2px solid #1e3a8a; }
         .locked-text { font-weight: bold; color: #0f172a; padding: 0 5px; display: inline-block; border-bottom: 1px solid #0f172a;}
 
-        /* 서명 블록 */
         .sig-block { border: 2px solid #cbd5e1; padding: 25px; margin-top: 30px; background: #ffffff; page-break-inside: avoid; border-radius: 8px;}
         .sig-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; color: #0f172a; text-align: center; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;}
         
-        /* Grid 겹침 방지 */
         .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; width: 100%;}
         .sig-field { display: flex; flex-direction: column; gap: 5px; font-size: 0.9rem; font-weight: bold; color: #0f172a; width: 100%;}
         .sig-field.full { grid-column: 1 / -1; }
@@ -131,10 +128,10 @@
 <body>
 
     <header class="portal-header">
-        <div class="logo-group">
+        <a href="index.html" class="logo-group">
             <img src="sinjeon_logo_canada.png" alt="Sinjeon Logo" onerror="this.src='https://via.placeholder.com/30'">
             <span>SINJEON CANADA</span>
-        </div>
+        </a>
         <div class="header-actions">
             <div class="badge-secure"><i class="fas fa-lock"></i> 256-BIT SECURE</div>
         </div>
@@ -158,9 +155,6 @@
             <span class="en-desc">Please carefully review the documents below and fill in the blanks to proceed with your electronic signature.</span>
         </p>
 
-        <!-- ==========================================
-             PANEL 1: FDD (이중언어 정보공개서 풀버전)
-             ========================================== -->
         <div class="panel" id="fdd-panel">
             <div class="panel-header">
                 <div class="panel-icon"><i class="fas fa-file-contract"></i></div>
@@ -178,7 +172,6 @@
                 </div>
             </div>
 
-            <!-- FDD 스마트 문서 -->
             <div class="document-wrapper" id="fdd-scroll-wrapper">
                 <div class="document-paper" id="fdd-doc-content">
                     <h1>가맹사업 정보공개서</h1>
@@ -276,7 +269,6 @@
                         </ul>
                     </div>
 
-                    <!-- 본사 인증 및 서명 -->
                     <div class="sig-block" style="border-color: #0f172a; margin-top: 40px; background: #ffffff;">
                         <div class="sig-title">CERTIFICATE OF FRANCHISOR</div>
                         <p style="font-size: 0.9rem; text-align: center;">본인은 위 정보공개서의 내용이 진실되고 정확함을 인증합니다.<br><span class="en-text" style="display:inline;">I certify that the information provided in this Document is true, accurate, and complete.</span></p>
@@ -291,7 +283,6 @@
                         </div>
                     </div>
 
-                    <!-- 점주 수령 서명 폼 -->
                     <div class="sig-block" style="background: #f8fafc;">
                         <div class="sig-title">RECEIPT OF FRANCHISE DISCLOSURE DOCUMENT</div>
                         <p style="text-align: center; font-size: 0.9rem; margin-bottom: 20px;">본인은 본 정보공개서를 수령하였음을 확인하며, 서명일로부터 14일 경과 전까지 가맹계약이 체결될 수 없음을 이해합니다.<br><span class="en-text" style="display:inline;">I acknowledge receipt of this Document. I understand the 14-day statutory prohibition period prior to executing any binding agreement.</span></p>
@@ -316,16 +307,13 @@
                         </div>
                     </div>
                 </div>
-            </div> <!-- End of fdd-doc-content -->
+            </div> 
 
             <button class="btn-primary" id="btn-submit-fdd" onclick="signAndSubmitFDD()">
                 <i class="fas fa-file-download"></i> 정보공개서 확인 및 FDD 수령본 서명 (Start 14 Days)
             </button>
         </div>
 
-        <!-- ==========================================
-             PANEL 2: FINAL CONTRACT (이중언어 본계약서 풀버전)
-             ========================================== -->
         <div class="panel" id="signature-panel" style="margin-bottom: 0;">
             <div class="lock-overlay" id="lock-overlay">
                 <i class="fas fa-lock"></i>
@@ -352,7 +340,6 @@
                 <div class="timer-label">Days : Hours : Minutes : Seconds remaining</div>
             </div>
 
-            <!-- ★ 본계약서 풀버전 스마트 문서 (이중언어 및 Auto-fill 적용) -->
             <div class="document-wrapper" id="contract-scroll-wrapper" style="max-height: max-content;">
                 <div class="document-paper" id="contract-doc-content">
                     <h1 style="font-size: 1.6rem; margin-bottom: 0;">주식회사 와이투씨홀딩스 신전떡볶이 가맹계약서</h1>
@@ -436,7 +423,7 @@
                         <span class="en-text">Transfer to competing global franchises is strictly prohibited. The Franchisor has the Right of First Refusal.</span>
                         
                         <p><strong>제 10 조 [계약의 해지 / Termination]</strong></p>
-                        <p>가맹본부는 수수료를 2개월 이상 연체하거나, 매출 축소 보고, 비승인 식자재 몰래 사용 시 즉시 계약을 해지할 수 있다.</p>
+                        <p>가맹본부는 수수료를 2개월 이상 연체하거나, 매출 축소 보고, 비승인 식자재 몰래 사용 시 즉시 계약 해지를 할 수 있다.</p>
                         <span class="en-text">The Franchisor may immediately terminate this Agreement for late fee payments (2+ months), under-reporting sales, or using unapproved ingredients.</span>
                         
                         <p><strong>제 11 조 [비밀유지 및 경업금지 / Confidentiality & Non-Compete]</strong></p>
@@ -459,12 +446,10 @@
                         </ul>
                     </div>
 
-                    <!-- 본계약 최종 서명 블록 -->
                     <div class="sig-block" style="border-color: #0f172a; margin-top: 40px; background: white;">
                         <div class="sig-title" style="color: var(--sj-green);">FINAL CONTRACT EXECUTION</div>
                         <p style="text-align: center; font-size: 0.9rem; margin-bottom: 20px;">IN WITNESS WHEREOF, the parties hereto have duly executed this Agreement as of the date written below.</p>
                         
-                        <!-- 본사 서명 (Y2C Holdings 도장 삽입) -->
                         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0;">
                             <div style="font-size: 1.1rem; color: #0f172a; line-height: 1.6;">
                                 <strong>[가맹본부 / Franchisor]</strong><br>
@@ -479,7 +464,6 @@
                             </div>
                         </div>
 
-                        <!-- 점주 최종 서명 폼 -->
                         <div class="sig-grid" style="margin-top: 25px;">
                             <div class="sig-field">
                                 <label>점포 명 (Store Name)</label>
@@ -508,15 +492,14 @@
         </div>
     </div>
 
-    <!-- ★ 에러 방지용 시스템 초기화 도구 -->
     <div class="dev-tools">
         <button class="dev-btn danger" onclick="resetPortal()"><i class="fas fa-power-off"></i> 시스템 리셋(초기화)</button>
         <button class="dev-btn" onclick="bypassTimer()"><i class="fas fa-forward"></i> Bypass 14 Days</button>
     </div>
 
     <script>
-        // ★ 최신 백엔드 API (Google Apps Script)
-        const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyixVvPndcv8oYpT8hk3y0GrtDs-PcnP_WPcjzugb7QSPNDjMvuBr7YRBckJs-KQOp-/exec"; 
+        // ★ 통합 백엔드 URL 
+        const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwlHOkL4M1t72qMJz-wndJud97hp4toLqvWc9B5pEhFJYfDSRsfMNzXo8-KKkL2dhTYhg/exec"; 
 
         document.addEventListener('DOMContentLoaded', () => {
             const fddDateEl = document.getElementById('fdd_date');
@@ -525,7 +508,6 @@
             }
             checkStateAndRender();
 
-            // 지점명 입력 시 하단 계약서 서명란 자동 동기화
             const locInput = document.getElementById('c_location');
             if(locInput) {
                 locInput.addEventListener('input', (e) => {
@@ -535,10 +517,21 @@
             }
         });
 
+        // 보안 방지
+        document.addEventListener('contextmenu', e => { e.preventDefault(); alert("보안 정책상 우클릭이 차단되어 있습니다."); });
+        document.addEventListener('selectstart', e => { if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) || (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'P' || e.key === 'p'))) {
+                e.preventDefault(); alert("보안 정책에 따라 소스코드 열람 및 인쇄가 제한되어 있습니다.");
+            }
+            if (e.ctrlKey && (e.key === 'C' || e.key === 'c')) {
+                if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault();
+            }
+        });
+
         let timerInterval;
         const LOCK_MS = 14 * 24 * 60 * 60 * 1000; 
 
-        // 시스템 초기화
         function resetPortal() {
             if(confirm("모든 로컬 테스트 기록을 지우고 포털을 초기 백지 상태로 되돌리시겠습니까?")) {
                 localStorage.clear();
@@ -546,7 +539,6 @@
             }
         }
 
-        // 입력 폼 텍스트 변환 (락업)
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -569,11 +561,9 @@
             });
         }
 
-        // 상태 렌더링 로직 (Auto-fill 포함)
         function checkStateAndRender() {
             const startTime = localStorage.getItem('sinjeon_fdd_timestamp');
             
-            // Step 3에서 넘어온 이름이 있으면 기본 채워주기
             const sjName = localStorage.getItem('sj_name');
             if(sjName && !startTime) {
                 const fddName = document.getElementById('fdd_name');
@@ -582,7 +572,6 @@
             
             if (!startTime) return; 
 
-            // FDD 상태 복원
             const fddDoc = document.getElementById('fdd-doc-content');
             if(fddDoc && fddDoc.querySelector('input')) {
                 document.getElementById('fdd_province').value = localStorage.getItem('sj_province') || '';
@@ -600,7 +589,6 @@
                 fddBtn.onclick = null; 
             }
             
-            // ★ 본계약서 Auto-fill 
             const savedProv = localStorage.getItem('sj_province') || '';
             const savedCorp = localStorage.getItem('sj_corp') || '';
             
@@ -661,7 +649,6 @@
             checkStateAndRender();
         }
 
-        // PDF 렌더링 옵션 (페이지 잘림 방지 100% 적용)
         const getPdfOptions = (filename) => ({
             margin:       [15, 15, 15, 15], 
             filename:     filename,
@@ -671,9 +658,6 @@
             pagebreak:    { mode: ['css', 'legacy'] } 
         });
 
-        // ---------------------------------------------------------
-        // Action 1: FDD 문서 제출 및 구글 드라이브 전송
-        // ---------------------------------------------------------
         async function signAndSubmitFDD() {
             const province = document.getElementById('fdd_province').value;
             const corpName = document.getElementById('fdd_corp').value.trim();
@@ -744,9 +728,6 @@
             }
         }
 
-        // ---------------------------------------------------------
-        // Action 2: 본계약서 제출 및 구글 드라이브 전송
-        // ---------------------------------------------------------
         async function signAndSubmitContract() {
             const locName = document.getElementById('c_location').value.trim();
             const repName = document.getElementById('contract_name').value.trim();
@@ -802,7 +783,7 @@
                 console.error(err);
                 wrapper.classList.remove('pdf-exporting');
                 alert("오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 본계약 최종 전자 서명 및 서버 발송';
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 본계약서 서명 완료 및 서버 발송';
                 btn.disabled = false;
             }
         }
