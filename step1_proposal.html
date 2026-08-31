@@ -13,7 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* ================= 보안 및 기본 설정 (Anti-Theft) ================= */
+        /* ================= 보안 및 레이아웃 일원화 (화면 틀어짐 완벽 방지) ================= */
+        html { overflow-y: scroll; /* 스크롤바 강제 표시로 화면 틀어짐 방지 */ }
         html, body { width: 100%; max-width: 100vw; overflow-x: hidden !important; position: relative; -webkit-touch-callout: none; scroll-behavior: smooth; margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: #f1f5f9; color: #0f172a; font-family: 'Outfit', 'Noto Sans KR', sans-serif; -webkit-font-smoothing: antialiased; user-select: none;}
         *, *::before, *::after { box-sizing: border-box; }
@@ -49,7 +50,7 @@
         .step-text { text-align: center; font-size: 0.8rem; font-weight: 800; color: #64748b; line-height: 1.3;}
         .step.active .step-text { color: var(--sj-red); font-weight: 800; }
 
-        /* ================= Layout & Panels ================= */
+        /* ================= Layout & Panels (900px 통일) ================= */
         .content-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; }
         .page-title { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase; text-align: center;}
         .page-desc { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 40px; font-weight: 500; text-align: center;}
@@ -74,15 +75,15 @@
         .clause h2 { font-size: 1.15rem; color: var(--sj-green); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
         .clause p { font-size: 1rem; margin-bottom: 8px; text-align: justify; font-weight: 500; word-break: keep-all; line-height: 1.7;}
         .clause .en-text { font-size: 0.9rem; color: #64748b; font-weight: 400; display: block; margin-bottom: 10px; line-height: 1.5; font-family: 'Outfit', sans-serif;}
-
-        /* 투명 가맹비 강조 박스 */
+        
+        /* 투명 가맹비 박스 */
         .fee-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px 20px; margin-top: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;}
         .fee-item { display: flex; justify-content: space-between; align-items: center; font-size: 1rem; font-weight: 700; border-bottom: 1px dashed #e2e8f0; padding-bottom: 8px;}
         .fee-item:last-child { border-bottom: none; padding-bottom: 0; }
         .fee-item span.val { color: var(--sj-green); font-size: 1.1rem; font-family: 'Outfit', sans-serif;}
         .fee-item span.desc { font-size: 0.85rem; color: #64748b; font-weight: 500; margin-left: 8px;}
 
-        /* 🔥 인터랙티브 피치 덱 카드 (생동감 있는 제안서 UI) */
+        /* 🔥 인터랙티브 피치 덱 카드 (생동감 및 경쟁사 비교 극대화) */
         .pitch-deck-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin: 25px 0;}
         .pitch-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 25px 20px; transition: 0.3s; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); position: relative; overflow: hidden;}
         .pitch-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--sj-red); transform: scaleX(0); transition: 0.3s; transform-origin: left;}
@@ -93,6 +94,7 @@
         .pitch-title { font-weight: 900; font-size: 1.1rem; color: #0f172a; margin-bottom: 10px; line-height: 1.3;}
         .pitch-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; font-weight: 500; word-break: keep-all;}
         .pitch-highlight { color: var(--sj-red); background: rgba(210, 75, 65, 0.1); padding: 2px 6px; border-radius: 4px; font-weight: 800;}
+        .vs-text { font-size: 0.8rem; color: #94a3b8; text-decoration: line-through; display: block; margin-top: 5px; font-weight: 400;}
 
         /* ================= 겹침 방지 Form Grid (간편 문의 폼) ================= */
         .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-bottom: 15px;}
@@ -188,7 +190,7 @@
                 <div class="panel-icon"><i class="fas fa-file-signature"></i></div>
                 <div>
                     <h2 class="panel-title">1. Franchise Proposal (가맹 사업 제안서)</h2>
-                    <span class="panel-subtitle">Official Proposal & Financial Incentives</span>
+                    <span class="panel-subtitle">Official Proposal & Competitive Advantages</span>
                 </div>
             </div>
 
@@ -203,24 +205,30 @@
                     </p>
 
                     <div class="clause">
-                        <h2><i class="fas fa-hand-holding-usd"></i> 제 1 조 정찰제 가맹 조건 (Transparent Fees)</h2>
+                        <h2><i class="fas fa-globe-americas"></i> 제 1 조 K-Food를 선도하는 글로벌 브랜드</h2>
+                        <p>신전떡볶이는 대한민국 1위 분식 프랜차이즈를 넘어 전 세계 800여 개 매장을 보유하며 글로벌 K-Food 열풍을 이끌고 있습니다. 검증된 특제 레시피로 어떠한 상권에서도 확실한 경쟁력을 보장합니다.</p>
+                        <span class="en-text">Sinjeon is the #1 Tteok-bokki franchise in Korea, leading the K-Food wave globally. With proven recipes, we guarantee operational success.</span>
+                    </div>
+
+                    <div class="clause">
+                        <h2><i class="fas fa-hand-holding-usd"></i> 제 2 조 정찰제 가맹 조건 (Transparent Fees)</h2>
                         <p>당사는 브랜드 가치를 보호하기 위해 가맹비 무단 할인을 지양하고 투명한 정찰제를 유지합니다.</p>
                         <span class="en-text">We maintain a strict fixed franchise fee to protect brand value, focusing on long-term profitability and support.</span>
                         
                         <div class="fee-box">
                             <div class="fee-item">가맹비 (Franchise Fee) <span class="val">CAD $45,000 <span class="desc">(정찰제)</span></span></div>
-                            <div class="fee-item">교육비 (Education Fee) <span class="val">KRW 5,000,000</span></div>
-                            <div class="fee-item">기본 로열티 (Standard Royalty) <span class="val">Gross Sales 4%</span></div>
+                            <div class="fee-item">교육비 (Education Fee) <span class="val">CAD $5,000</span></div>
+                            <div class="fee-item">기본 로열티 (Standard Royalty) <span class="val">Net Sales 4%</span></div>
                         </div>
                     </div>
 
                     <div class="clause" style="margin-top: 35px;">
-                        <h2><i class="fas fa-bolt"></i> 제 2 조 압도적인 2026 가맹 특별 혜택</h2>
-                        <p>론칭 초기 파트너들의 성공적이고 폭발적인 수익 창출을 보장하기 위해, 업계 최고 수준의 파격적인 본사 재무 및 물류 지원 혜택을 제공합니다.</p>
-                        <span class="en-text">To ensure the explosive profitability of our early partners, we provide unprecedented financial and logistical incentives.</span>
+                        <h2><i class="fas fa-bolt"></i> 제 3 조 압도적인 2026 가맹 특별 혜택</h2>
+                        <p>론칭 초기 파트너들의 성공적이고 폭발적인 수익 창출을 보장하기 위해, 타 프랜차이즈와 비교 불가한 업계 최고 수준의 재무 및 물류 지원 혜택을 제공합니다.</p>
+                        <span class="en-text">To ensure the explosive profitability of our early partners, we provide unprecedented financial and logistical incentives compared to competitors.</span>
                     </div>
 
-                    <!-- 🔥 인터랙티브 피치 덱 (핵심 현혹 포인트 생동감 극대화) -->
+                    <!-- 🔥 인터랙티브 피치 덱 (순매출, 노마진, 광고비 0% 강조) -->
                     <div class="pitch-deck-grid">
                         <div class="pitch-card">
                             <i class="fas fa-truck-loading pitch-icon"></i>
@@ -236,16 +244,18 @@
                             <div class="pitch-title">Early Bird Royalty</div>
                             <div class="pitch-desc">
                                 <strong>선착순 로열티 특별 인하</strong><br>
-                                얼리버드 선착순 단 3개 점포에 한하여, 기존 4%의 로열티를 <span class="pitch-highlight">평생 3.5%</span>로 전격 인하 적용합니다.
+                                단 3개 점포 한정, 기존 4%의 로열티를 순매출액(Net Sales) 기준 <span class="pitch-highlight">평생 3.5%</span>로 전격 인하 적용합니다.
                             </div>
                         </div>
 
                         <div class="pitch-card">
                             <i class="fas fa-bullhorn pitch-icon"></i>
-                            <div class="pitch-title">Marketing Support</div>
+                            <div class="pitch-title">0% Advertising Fee</div>
                             <div class="pitch-desc">
-                                <strong>로컬 디지털 마케팅 전액 지원</strong><br>
-                                매장 오픈 첫 달, 본사 주도의 타겟팅 광고 및 맞춤형 마케팅 비용을 <span class="pitch-highlight">100% 전액 무상 지원</span>합니다.
+                                <strong>로컬 마케팅/광고비 0%</strong><br>
+                                당사는 마케팅 명목의 <span class="pitch-highlight">광고비를 수취하지 않습니다.</span>
+                                <span class="vs-text">경쟁 A업체: 매출의 3% 요구</span>
+                                <span class="vs-text">경쟁 B업체: 매출의 2% 요구</span>
                             </div>
                         </div>
                     </div>
@@ -254,7 +264,7 @@
             </div> <!-- End of Document Wrapper -->
         </div>
 
-        <!-- PANEL 2: Quick Inquiry (간편 퀵 폼 무손실 보존) -->
+        <!-- PANEL 2: Quick Inquiry (간편 문의 폼 무손실 보존) -->
         <form id="step1-form" onsubmit="return handleInquirySubmit(event)">
             <div class="panel">
                 <div class="panel-header" style="border-bottom: none; margin-bottom: 10px; padding-bottom: 0;">
@@ -299,7 +309,7 @@
                     </div>
                     <div class="sig-field full">
                         <label>Message / Questions (문의 내용 - 선택) <span class="en">Any specific questions? (Optional)</span></label>
-                        <textarea id="message" name="message" class="doc-input" placeholder="얼리버드 로열티 적용 여부나 노마진 물류 시스템 관련 등 궁금하신 점을 적어주세요."></textarea>
+                        <textarea id="message" name="message" class="doc-input" placeholder="얼리버드 프로모션 적용 여부나 노마진 물류 시스템 관련 등 궁금하신 점을 적어주세요."></textarea>
                     </div>
                 </div>
 
@@ -321,7 +331,7 @@
     </div>
 
     <script>
-        // ★ 통합 백엔드 URL 완벽 적용 
+        // ★ 통합 백엔드 URL
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjqosY23kJFdwCAwZA36-zVOt_xL6xw9gfXtNEgyWXTMDcHz9VPm0H07ZR3u8jDhOowg/exec";
 
         // ================= 3중 보안 및 복사 방지 로직 =================
@@ -373,7 +383,6 @@
             };
 
             try {
-                // 구글 백엔드로 데이터 전송
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -381,7 +390,6 @@
                     redirect: "follow"
                 });
 
-                // 성공 모달 띄우기
                 formElement.reset();
                 const modal = document.getElementById('success-modal');
                 modal.classList.add('active');
