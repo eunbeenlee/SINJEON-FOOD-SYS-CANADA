@@ -9,23 +9,28 @@
     <meta name="description" content="Official Franchise Proposal and Inquiry Portal for Sinjeon Canada.">
 
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
+    
+    <!-- 스텝 4와 동일한 폰트 패키지 (Caveat 포함 완벽 일치) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600&display=swap" rel="stylesheet">
 
     <style>
-        /* ================= 보안 및 레이아웃 일원화 (화면 틀어짐 완벽 방지) ================= */
-        html { overflow-y: scroll; /* 스크롤바 강제 표시로 화면 틀어짐 방지 */ }
+        /* ================= 보안 및 레이아웃 일원화 (화면 틀어짐 방지) ================= */
+        html { overflow-y: scroll; }
         html, body { width: 100%; max-width: 100vw; overflow-x: hidden !important; position: relative; -webkit-touch-callout: none; scroll-behavior: smooth; margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #f1f5f9; color: #0f172a; font-family: 'Outfit', 'Noto Sans KR', sans-serif; -webkit-font-smoothing: antialiased; user-select: none;}
+        body { background-color: #f1f5f9; color: var(--text-dark); font-family: 'Outfit', 'Noto Sans KR', sans-serif; -webkit-font-smoothing: antialiased; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
         *, *::before, *::after { box-sizing: border-box; }
-        input, textarea, select { user-select: auto; font-family: inherit; }
+        input, textarea, select { -webkit-user-select: auto; -moz-user-select: auto; -ms-user-select: auto; user-select: auto; font-family: inherit; }
         img { -webkit-user-drag: none; max-width: 100%; height: auto; display: block; }
         @media print { body { display: none !important; } }
         *:focus-visible { outline: 3px solid #D24B41; outline-offset: 4px; border-radius: 8px; }
 
+        /* 스텝 3/4와 완벽히 동일한 변수(Variables) 적용 */
         :root {
-            --sj-green: #008250; --sj-red: #D24B41; --text-dark: #0f172a; --text-gray: #64748b;
-            --bg-light: #F8FAFC; --bg-white: #FFFFFF; --border-color: #E2E8F0; --doc-bg: #ffffff;
+            --sj-green: #008250; --sj-red: #D24B41;
+            --bg-light: #f8fafc; --text-dark: #0f172a; --text-gray: #64748b;
+            --border-light: #e2e8f0; --border-focus: #94a3b8;
+            --doc-bg: #ffffff;
         }
 
         /* ================= Header & Progress ================= */
@@ -35,7 +40,7 @@
         .logo-group span { font-weight: 800; font-size: 1.45rem; color: var(--sj-green); letter-spacing: -0.5px; }
         
         .header-actions { display: flex; gap: 12px; align-items: center; }
-        .btn-back { display: flex; align-items: center; gap: 6px; background: var(--bg-white); color: var(--text-gray); border: 1px solid var(--border-color); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
+        .btn-back { display: flex; align-items: center; gap: 6px; background: #ffffff; color: var(--text-gray); border: 1px solid var(--border-light); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
         .btn-back:hover { background: #e2e8f0; color: var(--text-dark); }
         .security-badge { display: flex; align-items: center; gap: 6px; background: #ecfdf5; color: #059669; padding: 8px 18px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; border: 1px solid #a7f3d0; }
 
@@ -46,20 +51,21 @@
         .progress-steps { display: flex; justify-content: space-between; position: relative; z-index: 2; }
         .step { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 130px;}
         .step-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; background: white; border: 3px solid #cbd5e1; color: #94a3b8; transition: 0.3s; z-index: 3;}
+        .step.completed .step-icon { background: var(--sj-red); border-color: var(--sj-red); color: white; }
         .step.active .step-icon { background: white; border-color: var(--sj-red); color: var(--sj-red); box-shadow: 0 0 0 6px rgba(210, 75, 65, 0.1); }
         .step-text { text-align: center; font-size: 0.8rem; font-weight: 800; color: #64748b; line-height: 1.3;}
-        .step.active .step-text { color: var(--sj-red); font-weight: 800; }
+        .step.completed .step-text, .step.active .step-text { color: var(--sj-red); }
 
         /* ================= Layout & Panels (900px 통일) ================= */
-        .content-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; }
-        .page-title { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase; text-align: center;}
-        .page-desc { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 40px; font-weight: 500; text-align: center;}
+        .content-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; text-align: center; }
+        .page-title { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase;}
+        .page-desc { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 40px; font-weight: 500; }
         .en-desc { font-size: 0.95rem; color: #94a3b8; display: block; font-weight: 400; margin-top: 5px; font-family: 'Outfit', sans-serif; }
 
-        .panel { background: white; border: 1px solid var(--border-light); border-radius: 24px; padding: 45px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); margin-bottom: 35px; }
+        .panel { background: white; border: 1px solid var(--border-light); border-radius: 24px; padding: 45px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); margin-bottom: 35px; text-align: left; position: relative; }
         .panel-header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; border-bottom: 1px solid #f1f5f9; padding-bottom: 20px;}
         .panel-icon { width: 48px; height: 48px; background: #fef2f2; color: var(--sj-red); border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.4rem; }
-        .panel-title { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); margin: 0;}
+        .panel-title { font-size: 1.4rem; font-weight: 800; margin: 0; color: var(--text-dark); }
         .panel-subtitle { font-size: 0.9rem; color: var(--text-gray); font-weight: 400; display: block; margin-top: 4px; }
 
         /* ================= A4 Style Smart Document (제안서 뷰어) ================= */
@@ -68,15 +74,15 @@
         .document-wrapper::-webkit-scrollbar-thumb { background-color: #94a3b8; border-radius: 4px; }
 
         .document-paper { background: var(--doc-bg); width: 100%; margin: 0 auto; padding: 45px 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); font-family: 'Noto Sans KR', Arial, sans-serif; line-height: 1.6; color: #1e293b;}
-        .document-paper h1 { text-align: center; font-size: 1.8rem; margin-bottom: 5px; color: #0f172a; word-break: keep-all; letter-spacing: -0.5px;}
+        .document-paper h1 { text-align: center; font-size: 1.7rem; margin-bottom: 5px; color: #0f172a; word-break: keep-all; letter-spacing: -0.5px;}
         .document-paper h3 { text-align: center; font-size: 1.05rem; color: #64748b; font-weight: 400; margin-top: 0; margin-bottom: 35px;}
         
         .clause { margin-bottom: 30px; }
         .clause h2 { font-size: 1.15rem; color: var(--sj-green); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
         .clause p { font-size: 1rem; margin-bottom: 8px; text-align: justify; font-weight: 500; word-break: keep-all; line-height: 1.7;}
         .clause .en-text { font-size: 0.9rem; color: #64748b; font-weight: 400; display: block; margin-bottom: 10px; line-height: 1.5; font-family: 'Outfit', sans-serif;}
-        
-        /* 투명 가맹비 박스 */
+
+        /* 투명 가맹비 강조 박스 */
         .fee-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px 20px; margin-top: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;}
         .fee-item { display: flex; justify-content: space-between; align-items: center; font-size: 1rem; font-weight: 700; border-bottom: 1px dashed #e2e8f0; padding-bottom: 8px;}
         .fee-item:last-child { border-bottom: none; padding-bottom: 0; }
@@ -96,21 +102,21 @@
         .pitch-highlight { color: var(--sj-red); background: rgba(210, 75, 65, 0.1); padding: 2px 6px; border-radius: 4px; font-weight: 800;}
         .vs-text { font-size: 0.8rem; color: #94a3b8; text-decoration: line-through; display: block; margin-top: 5px; font-weight: 400;}
 
-        /* ================= 겹침 방지 Form Grid (간편 문의 폼) ================= */
-        .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-bottom: 15px;}
-        .sig-field { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+        /* ================= 겹침 방지 Form Grid (스텝 4와 동일 규격) ================= */
+        .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; width: 100%;}
+        .sig-field { display: flex; flex-direction: column; gap: 5px; font-size: 0.9rem; font-weight: bold; color: #0f172a; width: 100%;}
         .sig-field.full { grid-column: 1 / -1; }
         
-        .sig-field label { font-size: 0.9rem; font-weight: 800; color: #0f172a; display: flex; flex-direction: column;}
-        .sig-field label span.en { font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;}
+        .sig-field label { font-size: 0.85rem; font-weight: 800; color: #0f172a; display: flex; flex-direction: column;}
+        .sig-field label span.en { font-size: 0.75rem; color: #94a3b8; font-weight: 500; margin-top: 2px;}
         
-        .doc-input { width: 100%; max-width: 100%; border: 1px solid var(--border-light); background: #f8fafc; border-radius: 10px; padding: 14px 16px; font-family: inherit; font-size: 1rem; color: var(--text-dark); font-weight: 600; outline: none; transition: 0.2s; box-sizing: border-box;}
-        .doc-input:focus { background: white; border-color: var(--sj-red); box-shadow: 0 0 0 4px rgba(210, 75, 65, 0.1);}
-        .doc-input::placeholder { color: #cbd5e1; font-weight: 400; font-size: 0.95rem;}
-        textarea.doc-input { resize: vertical; min-height: 100px; line-height: 1.5; }
+        .form-input { width: 100%; min-width: 100%; text-align: left; padding: 14px 16px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1rem; color: var(--text-dark); font-weight: 600; outline: none; transition: 0.2s; background: #f8fafc;}
+        .form-input:focus { background: white; border-color: var(--sj-red); box-shadow: 0 0 0 3px rgba(210, 75, 65, 0.1);}
+        .form-input::placeholder { color: #cbd5e1; font-weight: 400; font-size: 0.95rem;}
+        textarea.form-input { resize: vertical; min-height: 100px; line-height: 1.5; }
 
-        .btn-primary { background: var(--text-dark); color: white; border: none; padding: 22px 30px; border-radius: 14px; font-weight: 900; font-size: 1.15rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); margin-top: 20px; box-sizing: border-box;}
-        .btn-primary:hover:not(:disabled) { background: var(--sj-red); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3); }
+        .btn-primary { background: var(--sj-red); color: white; border: none; padding: 22px 30px; border-radius: 14px; font-weight: 900; font-size: 1.15rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(210, 75, 65, 0.2); margin-top: 20px; box-sizing: border-box;}
+        .btn-primary:hover:not(:disabled) { background: #b83e35; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3); }
         .btn-primary:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; transform: none;}
 
         /* ================= Success Modal ================= */
@@ -122,17 +128,16 @@
         .success-icon { width: 90px; height: 90px; background: #f0fdf4; color: var(--sj-green); font-size: 3rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
         .modal-content h3 { font-size: 2rem; font-weight: 900; color: var(--text-dark); margin-bottom: 15px; }
         .modal-content p { font-size: 1.05rem; color: var(--text-gray); margin-bottom: 30px; line-height: 1.6; font-weight: 500;}
-        .btn-modal-next { display: flex; justify-content: center; gap: 10px; align-items: center; width: 100%; padding: 20px; background: var(--sj-red); color: white; border-radius: 12px; font-weight: 800; text-decoration: none; font-size: 1.1rem; transition: 0.2s; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3);}
+        .btn-modal-next { display: flex; justify-content: center; gap: 10px; align-items: center; width: 100%; padding: 20px; background: var(--sj-red); color: white; border-radius: 12px; font-weight: 800; text-decoration: none; font-size: 1.1rem; transition: 0.2s; box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3); border: none; cursor: pointer;}
         .btn-modal-next:hover { background: #b83e35; transform: translateY(-3px);}
 
         /* Mobile Optimization */
         @media (max-width: 768px) {
-            .stepper-wrapper { display: none; }
             .portal-header { padding: 15px 20px; }
             .btn-back span { display: none; } 
-            .panel { padding: 35px 20px; }
-            .document-paper { padding: 30px 20px; }
-            .sig-grid { grid-template-columns: 1fr; gap: 15px; margin-bottom: 10px;}
+            .panel { padding: 30px 20px; }
+            .document-paper { padding: 25px 20px; }
+            .sig-grid { grid-template-columns: 1fr; gap: 15px; margin-top: 10px;}
         }
     </style>
 </head>
@@ -158,19 +163,19 @@
         <div class="progress-steps">
             <div class="step active">
                 <div class="step-icon">1</div>
-                <div class="step-title">Step 1<br>PROPOSAL</div>
+                <div class="step-text">STEP 1<br>PROPOSAL</div>
             </div>
             <div class="step">
                 <div class="step-icon">2</div>
-                <div class="step-title">Step 2<br>OFFICIAL APP</div>
+                <div class="step-text">STEP 2<br>OFFICIAL APP</div>
             </div>
             <div class="step">
                 <div class="step-icon">3</div>
-                <div class="step-title">Step 3<br>NDA & POF</div>
+                <div class="step-text">STEP 3<br>NDA & POF</div>
             </div>
             <div class="step">
                 <div class="step-icon">4</div>
-                <div class="step-title">Step 4<br>CONTRACT</div>
+                <div class="step-text">STEP 4<br>CONTRACT</div>
             </div>
         </div>
     </div>
@@ -180,7 +185,7 @@
         <h1 class="page-title">Franchise Proposal</h1>
         <p class="page-desc">
             대한민국 1위 떡볶이 브랜드, 신전떡볶이 마스터 가맹 제안서입니다.<br>
-            독보적인 가맹 혜택을 확인하시고 간편 문의를 남겨주시면 공식 지원서로 안내해 드립니다.
+            독보적인 혜택을 확인하시고 간편 문의를 남겨주시면 공식 지원서로 안내해 드립니다.
             <span class="en-desc">Review our Franchise Proposal and exclusive benefits below to proceed to the Official Application.</span>
         </p>
 
@@ -259,12 +264,11 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div> <!-- End of Document Wrapper -->
         </div>
 
-        <!-- PANEL 2: Quick Inquiry (간편 문의 폼 무손실 보존) -->
+        <!-- PANEL 2: Quick Inquiry (간편 폼 - 규격 일원화 완료) -->
         <form id="step1-form" onsubmit="return handleInquirySubmit(event)">
             <div class="panel">
                 <div class="panel-header" style="border-bottom: none; margin-bottom: 10px; padding-bottom: 0;">
@@ -275,30 +279,30 @@
                     </div>
                 </div>
 
-                <div class="sig-grid" style="margin-top: 10px;">
+                <div class="sig-grid">
                     <div class="sig-field">
                         <label>First Name (이름) <span class="en">Given Name</span></label>
-                        <input type="text" id="first_name" name="first_name" class="doc-input" required autocomplete="given-name">
+                        <input type="text" id="first_name" name="first_name" class="form-input" required autocomplete="given-name">
                     </div>
                     <div class="sig-field">
                         <label>Last Name (성) <span class="en">Family Name</span></label>
-                        <input type="text" id="last_name" name="last_name" class="doc-input" required autocomplete="family-name">
+                        <input type="text" id="last_name" name="last_name" class="form-input" required autocomplete="family-name">
                     </div>
                     <div class="sig-field">
                         <label>Email Address (이메일) <span class="en">Primary Email</span></label>
-                        <input type="email" id="email" name="email" class="doc-input" required autocomplete="email">
+                        <input type="email" id="email" name="email" class="form-input" required autocomplete="email">
                     </div>
                     <div class="sig-field">
                         <label>Phone Number (연락처) <span class="en">Mobile Phone</span></label>
-                        <input type="tel" id="phone" name="phone" class="doc-input" required autocomplete="tel">
+                        <input type="tel" id="phone" name="phone" class="form-input" required autocomplete="tel">
                     </div>
                     <div class="sig-field">
                         <label>Target City / Region (희망 지역) <span class="en">Target City or Province</span></label>
-                        <input type="text" id="target_city" name="target_city" class="doc-input" required>
+                        <input type="text" id="target_city" name="target_city" class="form-input" required>
                     </div>
                     <div class="sig-field">
                         <label>How did you hear about us? (알게 된 경로) <span class="en">Source</span></label>
-                        <select id="source" name="source" class="doc-input" required>
+                        <select id="source" name="source" class="form-input" required>
                             <option value="" disabled selected hidden>선택하세요 (Select)</option>
                             <option value="Social Media (Instagram/Facebook)">소셜 미디어 (SNS)</option>
                             <option value="Google Search">인터넷 검색 (Google)</option>
@@ -309,7 +313,7 @@
                     </div>
                     <div class="sig-field full">
                         <label>Message / Questions (문의 내용 - 선택) <span class="en">Any specific questions? (Optional)</span></label>
-                        <textarea id="message" name="message" class="doc-input" placeholder="얼리버드 프로모션 적용 여부나 노마진 물류 시스템 관련 등 궁금하신 점을 적어주세요."></textarea>
+                        <textarea id="message" name="message" class="form-input" placeholder="얼리버드 프로모션 적용 여부나 노마진 물류 시스템 관련 등 궁금하신 점을 적어주세요."></textarea>
                     </div>
                 </div>
 
@@ -331,7 +335,7 @@
     </div>
 
     <script>
-        // ★ 통합 백엔드 URL
+        // ★ 통합 백엔드 URL 완벽 적용 
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjqosY23kJFdwCAwZA36-zVOt_xL6xw9gfXtNEgyWXTMDcHz9VPm0H07ZR3u8jDhOowg/exec";
 
         // ================= 3중 보안 및 복사 방지 로직 =================
