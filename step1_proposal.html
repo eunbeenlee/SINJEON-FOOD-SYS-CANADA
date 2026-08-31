@@ -3,31 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Secure Document Portal | Step 1 Franchise Proposal</title>
-    <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
+    <meta name="theme-color" content="#1A1A1A">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --sj-green: #008250; --sj-red: #D24B41;
-            --bg-light: #f8fafc; --text-dark: #0f172a; --text-gray: #64748b;
-            --border-light: #e2e8f0; --border-focus: #94a3b8;
-            --doc-bg: #ffffff;
-        }
+    <title>Step 1: Franchise Proposal | Y2C Holdings</title>
+    <meta name="description" content="Official Franchise Proposal and Inquiry Portal for Sinjeon Canada.">
 
+    <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
         /* ================= 보안 및 기본 설정 (Anti-Theft) ================= */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { width: 100%; max-width: 100vw; overflow-x: hidden !important; position: relative; -webkit-touch-callout: none; scroll-behavior: smooth; }
-        body { background-color: #f1f5f9; color: var(--text-dark); font-family: 'Outfit', 'Noto Sans KR', sans-serif; -webkit-font-smoothing: antialiased; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
-        input, textarea, select { -webkit-user-select: auto; -moz-user-select: auto; -ms-user-select: auto; user-select: auto; font-family: inherit; }
+        html, body { width: 100%; max-width: 100vw; overflow-x: hidden !important; position: relative; -webkit-touch-callout: none; scroll-behavior: smooth; margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #f1f5f9; color: #0f172a; font-family: 'Outfit', 'Noto Sans KR', sans-serif; -webkit-font-smoothing: antialiased; user-select: none;}
+        *, *::before, *::after { box-sizing: border-box; }
+        input, textarea, select { user-select: auto; font-family: inherit; }
         img { -webkit-user-drag: none; max-width: 100%; height: auto; display: block; }
         @media print { body { display: none !important; } }
         *:focus-visible { outline: 3px solid #D24B41; outline-offset: 4px; border-radius: 8px; }
 
+        :root {
+            --sj-green: #008250; --sj-red: #D24B41; --text-dark: #0f172a; --text-gray: #64748b;
+            --bg-light: #F8FAFC; --bg-white: #FFFFFF; --border-color: #E2E8F0; --doc-bg: #ffffff;
+        }
+
         /* ================= Header & Progress ================= */
-        .portal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 40px; border-bottom: 1px solid var(--border-light); background: rgba(255, 255, 255, 0.98); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
+        .portal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 40px; border-bottom: 1px solid var(--border-light); background: rgba(255, 255, 255, 0.98); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);}
         .logo-group { display: flex; align-items: center; gap: 12px; text-decoration: none;}
         .logo-group img { height: 30px; }
         .logo-group span { font-weight: 800; font-size: 1.45rem; color: var(--sj-green); letter-spacing: -0.5px; }
@@ -43,14 +44,14 @@
         
         .progress-steps { display: flex; justify-content: space-between; position: relative; z-index: 2; }
         .step { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 130px;}
-        .step-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; background: white; border: 3px solid #cbd5e1; color: #94a3b8; transition: 0.3s; z-index: 3; }
+        .step-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; background: white; border: 3px solid #cbd5e1; color: #94a3b8; transition: 0.3s; z-index: 3;}
         .step.active .step-icon { background: white; border-color: var(--sj-red); color: var(--sj-red); box-shadow: 0 0 0 6px rgba(210, 75, 65, 0.1); }
         .step-text { text-align: center; font-size: 0.8rem; font-weight: 800; color: #64748b; line-height: 1.3;}
-        .step.active .step-text { color: var(--sj-red); }
+        .step.active .step-text { color: var(--sj-red); font-weight: 800; }
 
         /* ================= Layout & Panels ================= */
-        .content-container { max-width: 850px; margin: 0 auto 100px; padding: 0 20px; }
-        .page-title { font-size: 2.4rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase; text-align: center;}
+        .content-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; }
+        .page-title { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase; text-align: center;}
         .page-desc { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 40px; font-weight: 500; text-align: center;}
         .en-desc { font-size: 0.95rem; color: #94a3b8; display: block; font-weight: 400; margin-top: 5px; font-family: 'Outfit', sans-serif; }
 
@@ -60,49 +61,54 @@
         .panel-title { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); margin: 0;}
         .panel-subtitle { font-size: 0.9rem; color: var(--text-gray); font-weight: 400; display: block; margin-top: 4px; }
 
-        /* ================= A4 Proposal Document 스타일 ================= */
-        .document-wrapper { width: 100%; max-height: 600px; overflow-y: auto; background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);}
+        /* ================= A4 Style Smart Document (제안서 뷰어) ================= */
+        .document-wrapper { width: 100%; max-height: 750px; overflow-y: auto; background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);}
         .document-wrapper::-webkit-scrollbar { width: 8px; }
         .document-wrapper::-webkit-scrollbar-thumb { background-color: #94a3b8; border-radius: 4px; }
 
-        .document-paper { background: var(--doc-bg); width: 100%; margin: 0 auto; padding: 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); font-family: 'Noto Sans KR', Arial, sans-serif; line-height: 1.6; color: #1e293b;}
-        .document-paper h1 { text-align: center; font-size: 1.6rem; margin-bottom: 5px; color: #0f172a;}
-        .document-paper h3 { text-align: center; font-size: 1.05rem; color: #64748b; font-weight: 400; margin-top: 0; margin-bottom: 30px;}
+        .document-paper { background: var(--doc-bg); width: 100%; margin: 0 auto; padding: 45px 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); font-family: 'Noto Sans KR', Arial, sans-serif; line-height: 1.6; color: #1e293b;}
+        .document-paper h1 { text-align: center; font-size: 1.8rem; margin-bottom: 5px; color: #0f172a; word-break: keep-all; letter-spacing: -0.5px;}
+        .document-paper h3 { text-align: center; font-size: 1.05rem; color: #64748b; font-weight: 400; margin-top: 0; margin-bottom: 35px;}
         
-        .clause { margin-bottom: 25px; }
-        .clause h2 { font-size: 1.05rem; color: var(--sj-green); border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; margin-top: 0; margin-bottom: 10px;}
-        .clause p { font-size: 0.95rem; margin-bottom: 5px; text-align: justify; font-weight: 500; word-break: keep-all;}
-        .clause .en-text { font-size: 0.85rem; color: #64748b; font-weight: 400; display: block; margin-bottom: 10px; line-height: 1.4; font-family: 'Outfit', sans-serif;}
+        .clause { margin-bottom: 30px; }
+        .clause h2 { font-size: 1.15rem; color: var(--sj-green); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
+        .clause p { font-size: 1rem; margin-bottom: 8px; text-align: justify; font-weight: 500; word-break: keep-all; line-height: 1.7;}
+        .clause .en-text { font-size: 0.9rem; color: #64748b; font-weight: 400; display: block; margin-bottom: 10px; line-height: 1.5; font-family: 'Outfit', sans-serif;}
 
-        /* 프로모션 박스 */
-        .promo-box { background: linear-gradient(135deg, #fff1f2 0%, #fef2f2 100%); border: 2px solid var(--sj-red); border-radius: 12px; padding: 20px; margin: 20px 0; }
-        .promo-box h4 { color: var(--sj-red); font-size: 1.1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-weight: 900;}
-        .promo-list { list-style: none; padding: 0; margin: 0; }
-        .promo-list li { font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;}
-        .promo-list li i { color: var(--sj-red); margin-top: 3px; }
-        .promo-list li span.highlight { color: var(--sj-red); background: rgba(210, 75, 65, 0.1); padding: 1px 6px; border-radius: 4px; font-weight: 900;}
-
-        /* 투명 가맹비 박스 */
-        .fee-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px 16px; margin-top: 10px; display: flex; flex-direction: column; gap: 6px;}
-        .fee-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 700; border-bottom: 1px dashed #e2e8f0; padding-bottom: 6px;}
+        /* 투명 가맹비 강조 박스 */
+        .fee-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px 20px; margin-top: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;}
+        .fee-item { display: flex; justify-content: space-between; align-items: center; font-size: 1rem; font-weight: 700; border-bottom: 1px dashed #e2e8f0; padding-bottom: 8px;}
         .fee-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .fee-item span.val { color: var(--sj-green); font-family: 'Outfit', sans-serif;}
+        .fee-item span.val { color: var(--sj-green); font-size: 1.1rem; font-family: 'Outfit', sans-serif;}
+        .fee-item span.desc { font-size: 0.85rem; color: #64748b; font-weight: 500; margin-left: 8px;}
 
-        /* ================= 겹침 방지 Form Grid ================= */
-        .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%;}
+        /* 🔥 인터랙티브 피치 덱 카드 (생동감 있는 제안서 UI) */
+        .pitch-deck-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin: 25px 0;}
+        .pitch-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 25px 20px; transition: 0.3s; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); position: relative; overflow: hidden;}
+        .pitch-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--sj-red); transform: scaleX(0); transition: 0.3s; transform-origin: left;}
+        .pitch-card:hover { border-color: var(--sj-red); box-shadow: 0 10px 25px rgba(210,75,65,0.1); transform: translateY(-5px); }
+        .pitch-card:hover::after { transform: scaleX(1); }
+        .pitch-icon { font-size: 2.8rem; color: var(--sj-red); margin-bottom: 15px; transition: 0.3s;}
+        .pitch-card:hover .pitch-icon { transform: scale(1.1); }
+        .pitch-title { font-weight: 900; font-size: 1.1rem; color: #0f172a; margin-bottom: 10px; line-height: 1.3;}
+        .pitch-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; font-weight: 500; word-break: keep-all;}
+        .pitch-highlight { color: var(--sj-red); background: rgba(210, 75, 65, 0.1); padding: 2px 6px; border-radius: 4px; font-weight: 800;}
+
+        /* ================= 겹침 방지 Form Grid (간편 문의 폼) ================= */
+        .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-bottom: 15px;}
         .sig-field { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         .sig-field.full { grid-column: 1 / -1; }
         
-        .sig-field label { font-size: 0.85rem; font-weight: 800; color: #0f172a; display: flex; flex-direction: column;}
-        .sig-field label span.en { font-size: 0.75rem; color: #94a3b8; font-weight: 500; margin-top: 2px;}
+        .sig-field label { font-size: 0.9rem; font-weight: 800; color: #0f172a; display: flex; flex-direction: column;}
+        .sig-field label span.en { font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;}
         
-        .doc-input { width: 100%; max-width: 100%; border: 1px solid var(--border-light); background: #f8fafc; border-radius: 8px; padding: 14px 16px; font-family: inherit; font-size: 1rem; color: var(--text-dark); font-weight: 600; outline: none; transition: 0.2s; box-sizing: border-box;}
-        .doc-input:focus { background: white; border-color: var(--sj-red); box-shadow: 0 0 0 3px rgba(210, 75, 65, 0.1);}
-        .doc-input::placeholder { color: #cbd5e1; font-weight: 400; font-size: 0.9rem;}
+        .doc-input { width: 100%; max-width: 100%; border: 1px solid var(--border-light); background: #f8fafc; border-radius: 10px; padding: 14px 16px; font-family: inherit; font-size: 1rem; color: var(--text-dark); font-weight: 600; outline: none; transition: 0.2s; box-sizing: border-box;}
+        .doc-input:focus { background: white; border-color: var(--sj-red); box-shadow: 0 0 0 4px rgba(210, 75, 65, 0.1);}
+        .doc-input::placeholder { color: #cbd5e1; font-weight: 400; font-size: 0.95rem;}
         textarea.doc-input { resize: vertical; min-height: 100px; line-height: 1.5; }
 
-        .btn-primary { background: var(--text-dark); color: white; border: none; padding: 20px 30px; border-radius: 14px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); margin-top: 20px; box-sizing: border-box;}
-        .btn-primary:hover:not(:disabled) { background: var(--sj-red); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(210, 75, 65, 0.3); }
+        .btn-primary { background: var(--text-dark); color: white; border: none; padding: 22px 30px; border-radius: 14px; font-weight: 900; font-size: 1.15rem; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); margin-top: 20px; box-sizing: border-box;}
+        .btn-primary:hover:not(:disabled) { background: var(--sj-red); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3); }
         .btn-primary:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; transform: none;}
 
         /* ================= Success Modal ================= */
@@ -119,12 +125,12 @@
 
         /* Mobile Optimization */
         @media (max-width: 768px) {
+            .stepper-wrapper { display: none; }
             .portal-header { padding: 15px 20px; }
-            .btn-back span { display: none; }
-            .panel { padding: 30px 20px; }
-            .sig-grid { grid-template-columns: 1fr; gap: 15px;}
-            .document-paper { padding: 25px 20px; }
-            .step-text { display: none; }
+            .btn-back span { display: none; } 
+            .panel { padding: 35px 20px; }
+            .document-paper { padding: 30px 20px; }
+            .sig-grid { grid-template-columns: 1fr; gap: 15px; margin-bottom: 10px;}
         }
     </style>
 </head>
@@ -150,19 +156,19 @@
         <div class="progress-steps">
             <div class="step active">
                 <div class="step-icon">1</div>
-                <div class="step-text">STEP 1<br>PROPOSAL</div>
+                <div class="step-title">Step 1<br>PROPOSAL</div>
             </div>
             <div class="step">
                 <div class="step-icon">2</div>
-                <div class="step-text">STEP 2<br>OFFICIAL APP</div>
+                <div class="step-title">Step 2<br>OFFICIAL APP</div>
             </div>
             <div class="step">
                 <div class="step-icon">3</div>
-                <div class="step-text">STEP 3<br>NDA</div>
+                <div class="step-title">Step 3<br>NDA & POF</div>
             </div>
             <div class="step">
                 <div class="step-icon">4</div>
-                <div class="step-text">STEP 4<br>CONTRACT</div>
+                <div class="step-title">Step 4<br>CONTRACT</div>
             </div>
         </div>
     </div>
@@ -171,12 +177,12 @@
     <div class="content-container">
         <h1 class="page-title">Franchise Proposal</h1>
         <p class="page-desc">
-            대한민국 1위 떡볶이 브랜드, 신전떡볶이 가맹 제안서입니다.<br>
+            대한민국 1위 떡볶이 브랜드, 신전떡볶이 마스터 가맹 제안서입니다.<br>
             독보적인 가맹 혜택을 확인하시고 간편 문의를 남겨주시면 공식 지원서로 안내해 드립니다.
             <span class="en-desc">Review our Franchise Proposal and exclusive benefits below to proceed to the Official Application.</span>
         </p>
 
-        <!-- PANEL 1: Franchise Proposal (A4 스마트 문서 규격) -->
+        <!-- PANEL 1: Franchise Proposal (A4 문서 + 피치덱 생동감 결합) -->
         <div class="panel">
             <div class="panel-header">
                 <div class="panel-icon"><i class="fas fa-file-signature"></i></div>
@@ -197,50 +203,61 @@
                     </p>
 
                     <div class="clause">
-                        <h2><i class="fas fa-globe-americas"></i> 제 1 조 K-Food를 선도하는 글로벌 브랜드</h2>
-                        <p>신전떡볶이는 대한민국 1위 분식 프랜차이즈를 넘어 전 세계 800여 개 매장을 보유하며 글로벌 K-Food 열풍을 이끌고 있습니다. 검증된 특제 레시피로 어떠한 상권에서도 확실한 경쟁력을 보장합니다.</p>
-                        <span class="en-text">Sinjeon is the #1 Tteok-bokki franchise in Korea, leading the K-Food wave globally. With proven recipes, we guarantee operational success.</span>
-                    </div>
-
-                    <div class="clause">
-                        <h2><i class="fas fa-hand-holding-usd"></i> 제 2 조 정찰제 가맹 조건 및 로열티</h2>
+                        <h2><i class="fas fa-hand-holding-usd"></i> 제 1 조 정찰제 가맹 조건 (Transparent Fees)</h2>
                         <p>당사는 브랜드 가치를 보호하기 위해 가맹비 무단 할인을 지양하고 투명한 정찰제를 유지합니다.</p>
                         <span class="en-text">We maintain a strict fixed franchise fee to protect brand value, focusing on long-term profitability and support.</span>
                         
                         <div class="fee-box">
-                            <div class="fee-item">가맹비 (Franchise Fee) <span class="val">CAD $45,000 (정찰제)</span></div>
+                            <div class="fee-item">가맹비 (Franchise Fee) <span class="val">CAD $45,000 <span class="desc">(정찰제)</span></span></div>
                             <div class="fee-item">교육비 (Education Fee) <span class="val">KRW 5,000,000</span></div>
+                            <div class="fee-item">기본 로열티 (Standard Royalty) <span class="val">Gross Sales 4%</span></div>
                         </div>
                     </div>
 
-                    <!-- 🔥 강력한 현혹 포인트 (로열티 인하 및 0% 마진 물류) -->
-                    <div class="promo-box">
-                        <h4><i class="fas fa-crown"></i> Exclusive 2026 Incentives & Support</h4>
-                        <ul class="promo-list">
-                            <li>
-                                <i class="fas fa-percentage"></i>
-                                <div><strong>얼리버드 로열티 인하 (Early Bird Royalty):</strong><br>론칭 초기 선착순 3개 점포에 한하여, 기존 4% 로열티를 <span class="highlight">평생 3.5%로 특별 인하</span> 적용합니다.</div>
-                            </li>
-                            <li>
-                                <i class="fas fa-truck-loading"></i>
-                                <div><strong>본사 마진 0% 물류 직공급 시스템 (Zero-Margin SCM):</strong><br>본사 유통 마진 없이 현지 마트 체인 및 가맹점으로 <span class="highlight">원가 그대로(0% 마진) 다이렉트 배송 시스템</span>을 구축하여 점주의 수익률을 극대화합니다.</div>
-                            </li>
-                        </ul>
+                    <div class="clause" style="margin-top: 35px;">
+                        <h2><i class="fas fa-bolt"></i> 제 2 조 압도적인 2026 가맹 특별 혜택</h2>
+                        <p>론칭 초기 파트너들의 성공적이고 폭발적인 수익 창출을 보장하기 위해, 업계 최고 수준의 파격적인 본사 재무 및 물류 지원 혜택을 제공합니다.</p>
+                        <span class="en-text">To ensure the explosive profitability of our early partners, we provide unprecedented financial and logistical incentives.</span>
                     </div>
 
-                    <div class="clause" style="margin-top: 25px;">
-                        <h2><i class="fas fa-headset"></i> 제 3 조 체계적인 본사 경영 지원</h2>
-                        <p>지속적인 신메뉴 R&D, 현지화 마케팅, 실시간 IT 경영 컨설팅을 통해 가맹점의 안정적인 성장을 전폭적으로 지원합니다.</p>
-                        <span class="en-text">We provide continuous R&D, localized marketing campaigns, and real-time operational consulting for stable store growth.</span>
+                    <!-- 🔥 인터랙티브 피치 덱 (핵심 현혹 포인트 생동감 극대화) -->
+                    <div class="pitch-deck-grid">
+                        <div class="pitch-card">
+                            <i class="fas fa-truck-loading pitch-icon"></i>
+                            <div class="pitch-title">0% Margin Logistics</div>
+                            <div class="pitch-desc">
+                                <strong>본사 마진 0% 물류 직배송</strong><br>
+                                현지 마트 체인 및 매장 앞까지 원가 그대로 연동되는 <span class="pitch-highlight">다이렉트 콜드체인</span> 시스템으로 점주 마진을 극대화합니다.
+                            </div>
+                        </div>
+
+                        <div class="pitch-card">
+                            <i class="fas fa-crown pitch-icon"></i>
+                            <div class="pitch-title">Early Bird Royalty</div>
+                            <div class="pitch-desc">
+                                <strong>선착순 로열티 특별 인하</strong><br>
+                                얼리버드 선착순 단 3개 점포에 한하여, 기존 4%의 로열티를 <span class="pitch-highlight">평생 3.5%</span>로 전격 인하 적용합니다.
+                            </div>
+                        </div>
+
+                        <div class="pitch-card">
+                            <i class="fas fa-bullhorn pitch-icon"></i>
+                            <div class="pitch-title">Marketing Support</div>
+                            <div class="pitch-desc">
+                                <strong>로컬 디지털 마케팅 전액 지원</strong><br>
+                                매장 오픈 첫 달, 본사 주도의 타겟팅 광고 및 맞춤형 마케팅 비용을 <span class="pitch-highlight">100% 전액 무상 지원</span>합니다.
+                            </div>
+                        </div>
                     </div>
+
                 </div>
-            </div> 
+            </div> <!-- End of Document Wrapper -->
         </div>
 
-        <!-- PANEL 2: Quick Inquiry (간편 문의 폼) -->
+        <!-- PANEL 2: Quick Inquiry (간편 퀵 폼 무손실 보존) -->
         <form id="step1-form" onsubmit="return handleInquirySubmit(event)">
             <div class="panel">
-                <div class="panel-header">
+                <div class="panel-header" style="border-bottom: none; margin-bottom: 10px; padding-bottom: 0;">
                     <div class="panel-icon" style="background: #e0f2fe; color: #3b82f6;"><i class="fas fa-envelope-open-text"></i></div>
                     <div>
                         <h2 class="panel-title">2. Quick Inquiry (간편 가맹 문의)</h2>
@@ -282,12 +299,12 @@
                     </div>
                     <div class="sig-field full">
                         <label>Message / Questions (문의 내용 - 선택) <span class="en">Any specific questions? (Optional)</span></label>
-                        <textarea id="message" name="message" class="doc-input" placeholder="얼리버드 프로모션 적용 여부나 물류 시스템 관련 등 궁금하신 점을 적어주세요."></textarea>
+                        <textarea id="message" name="message" class="doc-input" placeholder="얼리버드 로열티 적용 여부나 노마진 물류 시스템 관련 등 궁금하신 점을 적어주세요."></textarea>
                     </div>
                 </div>
 
                 <button type="submit" class="btn-primary" id="btn-submit">
-                    <i class="fas fa-paper-plane"></i> Proceed to Official Application (문의 접수 및 지원서 작성)
+                    Proceed to Official Application (문의 접수 및 지원서 작성) <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </form>
@@ -375,7 +392,7 @@
                 alert("네트워크 오류가 발생했습니다. 구글 서버 연결 상태를 확인 후 다시 시도해 주세요.");
             } finally {
                 submitButton.disabled = false;
-                submitButton.innerHTML = `<i class="fas fa-paper-plane"></i> Proceed to Official Application (문의 접수 및 지원서 작성)`;
+                submitButton.innerHTML = `Proceed to Official Application (문의 접수 및 지원서 작성) <i class="fas fa-arrow-right"></i>`;
             }
         }
     </script>
