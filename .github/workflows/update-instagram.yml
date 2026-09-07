@@ -1,35 +1,52 @@
-name: Update Instagram Feed
+name: Auto Update Instagram Feed (Daily)
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
-
-  workflow_dispatch:
-
-permissions:
-  contents: write
+    # 한도 초과를 완벽히 막기 위해 매일 자정(하루 1번)에만 갱신합니다.
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 수동 실행 버튼 (에러 테스트용)
 
 jobs:
-  update-instagram:
+  fetch-feed:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - name: Update Instagram JSON
-        run: python scripts/update-instagram.py
-
-      - name: Commit updated feed
+      # =======================================================
+      # 1. RapidAPI를 통해 신전 캐나다 피드 가져오기
+      # =======================================================
+      - name: Fetch Instagram Feed via RapidAPI
+        env:
+          # GitHub Secrets 금고에 1단계에서 넣어두신 키를 불러옵니다.
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "RapidAPI를 통해 @sinjeon_canada 최신 피드를 호출합니다..."
+          
+          # 대표님이 선택하신 'User Posts' API 규격에 맞춰
+          # 아이디(sinjeon_canada)와 요청 수량(amount=12)을 세팅했습니다.
+          
+          curl --request POST \
+            --url https://instagram-scraper-stable-api.p.rapidapi.com/get_ig_user_posts.php \
+            --header 'Content-Type: application/x-www-form-urlencoded' \
+            --header 'x-rapidapi-host: instagram-scraper-stable-api.p.rapidapi.com' \
+            --header "x-rapidapi-key: $RAPIDAPI_KEY" \
+            --data username_or_url=https://www.instagram.com/sinjeon_canada \
+            --data pagination_token= \
+            --data amount=12 \
+            > instagram-feed.json
+            
+          echo "피드 데이터 수집 및 json 저장 완료!"
 
+      # =======================================================
+      # 2. 업데이트된 피드 데이터를 GitHub에 자동 커밋 & 배포
+      # =======================================================
+      - name: Commit and Push to GitHub
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
           git add instagram-feed.json
-
-          if git diff --cached --quiet; then
-            echo "No changes to Instagram feed."
-          else
-            git commit -m "Update Instagram feed"
-            git push
-          fi
+          git commit -m "Auto-update Instagram feed (RapidAPI)" || echo "No changes to commit"
+          git push
