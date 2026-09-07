@@ -1675,7 +1675,7 @@
     </script>
 
     <!-- =========================================
-         [Instagram Feed Loader (DOM API)]
+         [Instagram Feed Loader (JSON API)]
          ========================================= -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -1694,22 +1694,13 @@
                     'Accept': 'application/json'
                 }
             })
-            .then(function (response) {
+            .then(response => {
                 if (!response.ok) {
                     throw new Error('Instagram JSON HTTP Error: ' + response.status);
                 }
-                return response.text();
+                return response.json();
             })
-            .then(function (text) {
-                let jsonData;
-
-                try {
-                    jsonData = JSON.parse(text);
-                } catch (error) {
-                    console.error('Instagram JSON Parse Error:', error);
-                    throw new Error('Instagram JSON parsing failed.');
-                }
-
+            .then(jsonData => {
                 let posts = [];
 
                 if (Array.isArray(jsonData)) {
@@ -1722,131 +1713,54 @@
                     throw new Error('Instagram JSON structure is invalid.');
                 }
 
-                const validPosts = posts
-                    .filter(function (post) {
-                        return post && (post.media_url || post.thumbnail_url || post.image);
-                    })
-                    .slice(0, 6);
+                // RapidAPI 데이터에서 미디어 정보가 있는 상위 6개 게시물만 추출
+                const validPosts = posts.filter(post => post && (post.media_url || post.thumbnail_url || post.image)).slice(0, 6);
 
                 if (validPosts.length === 0) {
                     throw new Error('No valid Instagram posts found.');
                 }
 
-                const fragment = document.createDocumentFragment();
+                // 화면에 있던 스켈레톤 로더들 초기화
+                feedContainer.innerHTML = '';
 
-                validPosts.forEach(function (post) {
-                    let imageUrl =
-                        post.media_url ||
-                        post.image ||
-                        post.thumbnail_url ||
-                        '';
+                // CSS 스타일에 완벽하게 맞춰진 템플릿 리터럴로 DOM 렌더링
+                validPosts.forEach(post => {
+                    let imageUrl = post.media_url || post.image || post.thumbnail_url || '';
 
+                    // 비디오일 경우 썸네일 우선 적용
                     if (post.media_type === 'VIDEO' && post.thumbnail_url) {
                         imageUrl = post.thumbnail_url;
                     }
 
-                    const permalink =
-                        typeof post.permalink === 'string' &&
-                        post.permalink.startsWith('http')
-                            ? post.permalink
-                            : 'https://www.instagram.com/sinjeon_Canada/';
+                    const permalink = (typeof post.permalink === 'string' && post.permalink.startsWith('http'))
+                        ? post.permalink
+                        : 'https://www.instagram.com/sinjeon_Canada/';
 
-                    const card = document.createElement('div');
-                    card.className = 'instagram-item';
-
-                    const link = document.createElement('a');
-                    link.href = permalink;
-                    link.target = '_blank';
-                    link.rel = 'noopener noreferrer';
-                    link.setAttribute('aria-label', 'View on Instagram');
-
-                    const image = document.createElement('img');
-                    image.src = imageUrl;
-                    image.alt = 'Sinjeon Instagram Post';
-                    image.loading = 'lazy';
-                    image.decoding = 'async';
-
-                    image.onerror = function () {
-                        this.onerror = null;
-                        this.src = 'sinjeon_logo_canada.png';
-                        this.style.objectFit = 'contain';
-                        this.style.padding = '20px';
-                    };
-
-                    const overlay = document.createElement('div');
-                    overlay.className = 'instagram-overlay';
-
-                    const icon = document.createElement('span');
-                    icon.className = 'instagram-icon';
-
-                    const instagramIcon = document.createElement('i');
-                    instagramIcon.className = 'fab fa-instagram';
-                    instagramIcon.setAttribute('aria-hidden', 'true');
-
-                    icon.appendChild(instagramIcon);
-                    overlay.appendChild(icon);
-
-                    link.appendChild(image);
-                    link.appendChild(overlay);
-                    card.appendChild(link);
-
-                    fragment.appendChild(card);
+                    const html = `
+                        <div class="instagram-item">
+                            <a href="${permalink}" target="_blank" rel="noopener noreferrer" aria-label="View on Instagram">
+                                <img src="${imageUrl}" alt="Sinjeon Instagram Post" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='sinjeon_logo_canada.png'; this.style.objectFit='contain'; this.style.padding='20px';">
+                                <div class="instagram-overlay">
+                                    <span class="instagram-icon"><i class="fab fa-instagram" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                    feedContainer.innerHTML += html;
                 });
 
-                feedContainer.replaceChildren(fragment);
-
-                console.log(
-                    'Instagram Feed Loaded Successfully:',
-                    validPosts.length,
-                    'posts'
-                );
+                console.log('Instagram Feed Loaded Successfully:', validPosts.length, 'posts');
             })
-            .catch(function (error) {
+            .catch(error => {
                 console.error('Instagram Feed Error:', error);
 
                 feedContainer.innerHTML = `
-                    <div style="
-                        grid-column: 1 / -1;
-                        padding: 40px 20px;
-                        background: #1f2937;
-                        border-radius: 16px;
-                        border: 1px dashed #374151;
-                    ">
-                        <i
-                            class="fab fa-instagram"
-                            style="
-                                font-size: 2.5rem;
-                                color: var(--sj-red);
-                                margin-bottom: 15px;
-                            "
-                        ></i>
-                        <h4 style="
-                            font-size: 1.2rem;
-                            color: white;
-                            margin-bottom: 5px;
-                            font-weight: 800;
-                        ">
-                            Feed Temporarily Unavailable
-                        </h4>
-                        <p style="
-                            color: var(--text-light);
-                            font-size: 0.95rem;
-                            margin: 0;
-                            font-weight: 500;
-                        ">
-                            Instagram feed is temporarily unavailable.
-                            Please visit
-                            <a
-                                href="https://www.instagram.com/sinjeon_Canada"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style="
-                                    color: var(--sj-red);
-                                    text-decoration: underline;
-                                "
-                            >
-                                @sinjeon_Canada
-                            </a>
+                    <div style="grid-column: 1 / -1; padding: 40px 20px; background: #1f2937; border-radius: 16px; border: 1px dashed #374151;">
+                        <i class="fab fa-instagram" style="font-size: 2.5rem; color: var(--sj-red); margin-bottom: 15px;"></i>
+                        <h4 style="font-size: 1.2rem; color: white; margin-bottom: 5px; font-weight: 800;">Feed Temporarily Unavailable</h4>
+                        <p style="color: var(--text-light); font-size: 0.95rem; margin: 0; font-weight: 500;">
+                            Instagram feed is temporarily unavailable. Please visit 
+                            <a href="https://www.instagram.com/sinjeon_Canada" target="_blank" rel="noopener noreferrer" style="color: var(--sj-red); text-decoration: underline;">@sinjeon_Canada</a> 
                             for the latest updates.
                         </p>
                     </div>
