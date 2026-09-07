@@ -1675,7 +1675,7 @@
     </script>
 
     <!-- =========================================
-         [Instagram Feed Loader (JSON API)]
+         [Instagram Feed Loader (JSON API - RapidAPI 구조 대응 완벽판)]
          ========================================= -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -1701,45 +1701,54 @@
                 return response.json();
             })
             .then(jsonData => {
-                let posts = [];
-
-                if (Array.isArray(jsonData)) {
-                    posts = jsonData;
-                } else if (jsonData && Array.isArray(jsonData.data)) {
-                    posts = jsonData.data;
-                } else if (jsonData && Array.isArray(jsonData.items)) {
-                    posts = jsonData.items;
-                } else {
+                // 1. RapidAPI의 새로운 데이터 구조('posts' 배열) 파악
+                if (!jsonData || !Array.isArray(jsonData.posts)) {
                     throw new Error('Instagram JSON structure is invalid.');
                 }
 
-                // RapidAPI 데이터에서 미디어 정보가 있는 상위 6개 게시물만 추출
-                const validPosts = posts.filter(post => post && (post.media_url || post.thumbnail_url || post.image)).slice(0, 6);
+                // 2. 화면에 표시할 정상적인 게시물 최대 6개 추출
+                const validPosts = [];
+                for (let i = 0; i < jsonData.posts.length; i++) {
+                    if (validPosts.length >= 6) break;
+                    
+                    const node = jsonData.posts[i].node;
+                    if (!node) continue;
+                    
+                    let imageUrl = '';
+                    
+                    // 3. 사진/영상 썸네일 URL 딥서치 (Deep Search)
+                    if (node.image_versions2 && node.image_versions2.candidates && node.image_versions2.candidates.length > 0) {
+                        imageUrl = node.image_versions2.candidates[0].url;
+                    } else if (node.carousel_media && node.carousel_media.length > 0 && node.carousel_media[0].image_versions2) {
+                        imageUrl = node.carousel_media[0].image_versions2.candidates[0].url;
+                    }
+                    
+                    if (!imageUrl) continue;
+                    
+                    // 4. 게시물 고유 링크(Permalink) 조립
+                    const permalink = node.code 
+                        ? `https://www.instagram.com/p/${node.code}/` 
+                        : 'https://www.instagram.com/sinjeon_Canada/';
+                    
+                    validPosts.push({
+                        imageUrl: imageUrl,
+                        permalink: permalink
+                    });
+                }
 
                 if (validPosts.length === 0) {
                     throw new Error('No valid Instagram posts found.');
                 }
 
-                // 화면에 있던 스켈레톤 로더들 초기화
+                // 5. 화면에 있던 회색 스켈레톤 로더들 지우기
                 feedContainer.innerHTML = '';
 
-                // CSS 스타일에 완벽하게 맞춰진 템플릿 리터럴로 DOM 렌더링
+                // 6. 예쁘게 추출된 데이터를 화면에 렌더링
                 validPosts.forEach(post => {
-                    let imageUrl = post.media_url || post.image || post.thumbnail_url || '';
-
-                    // 비디오일 경우 썸네일 우선 적용
-                    if (post.media_type === 'VIDEO' && post.thumbnail_url) {
-                        imageUrl = post.thumbnail_url;
-                    }
-
-                    const permalink = (typeof post.permalink === 'string' && post.permalink.startsWith('http'))
-                        ? post.permalink
-                        : 'https://www.instagram.com/sinjeon_Canada/';
-
                     const html = `
                         <div class="instagram-item">
-                            <a href="${permalink}" target="_blank" rel="noopener noreferrer" aria-label="View on Instagram">
-                                <img src="${imageUrl}" alt="Sinjeon Instagram Post" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='sinjeon_logo_canada.png'; this.style.objectFit='contain'; this.style.padding='20px';">
+                            <a href="${post.permalink}" target="_blank" rel="noopener noreferrer" aria-label="View on Instagram">
+                                <img src="${post.imageUrl}" alt="Sinjeon Instagram Post" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='sinjeon_logo_canada.png'; this.style.objectFit='contain'; this.style.padding='20px';">
                                 <div class="instagram-overlay">
                                     <span class="instagram-icon"><i class="fab fa-instagram" aria-hidden="true"></i></span>
                                 </div>
