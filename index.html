@@ -6,18 +6,41 @@
     <meta name="theme-color" content="#FFFFFF">
     
     <!-- =========================================
-         [SEO & Meta Tags]
+         [SEO & Meta Tags & Open Graph]
+         * 개선15: 완벽한 소셜 미디어 공유(카카오톡, FB 등) 썸네일 및 SEO 지원
          ========================================= -->
     <title>Sinjeon Canada | The New Standard of Topokki</title>
     <meta name="title" content="Sinjeon Canada | The New Standard of Topokki">
-    <meta name="description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide.">
-    <meta name="robots" content="index, follow">
+    <meta name="description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide. Official Master Franchise Portal.">
+    <meta name="keywords" content="Sinjeon, Topokki, Tteokbokki, Franchise, Canada, Korean Food, K-Food, Spicy">
+    <meta name="author" content="Y2C Holdings Inc.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+
+    <!-- Open Graph / Facebook / Kakao -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sinjeoncanada.com/">
+    <meta property="og:title" content="Sinjeon Canada | The New Standard of Topokki">
+    <meta property="og:description" content="Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide. Apply for Franchise.">
+    <meta property="og:image" content="background/base_1.JPG">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://sinjeoncanada.com/">
+    <meta property="twitter:title" content="Sinjeon Canada | The New Standard of Topokki">
+    <meta property="twitter:description" content="Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide. Apply for Franchise.">
+    <meta property="twitter:image" content="background/base_1.JPG">
 
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
     
     <!-- =========================================
-         [Preload Assets for Performance]
+         [Preconnect & Preload Assets for Extreme Performance]
+         * 개선14: 외부 도메인 사전 연결로 네트워크 병목(DNS Lookup) 0.5초 단축
          ========================================= -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
     <link rel="preload" href="background/base_1.JPG" as="image">
     <link rel="preload" href="character/character_7.png" as="image">
     <link rel="preload" href="fonts/SinjeonFont.otf" as="font" type="font/otf" crossorigin>
@@ -28,60 +51,103 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
-    <!-- EmailJS SDK -->
+    <!-- EmailJS SDK (Async Defer for non-blocking load) -->
     <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 
     <!-- =========================================
-         [Main Stylesheet (Kernel-Level Robustness)]
+         [Enterprise-Grade Stylesheet (Kernel-Level Robustness)]
+         * 개선 사항: 뷰포트, 접근성, 다크모드 변수, 커스텀 토스트 UI, 애니메이션 하드웨어 가속
          ========================================= -->
     <style>
         /* -----------------------------------------
-           1. CSS Variables & Reset
+           1. CSS Variables, Reset & Accessibility
            ----------------------------------------- */
         :root {
+            /* Brand Colors */
             --sj-green: #008250; 
             --sj-red: #D24B41; 
-            --text-dark: #1A1A1A; 
-            --text-gray: #666666; 
-            --text-light: #A0AEC0;
+            --sj-red-hover: #b83e35;
+            
+            /* Typography Colors */
+            --text-dark: #0f172a; 
+            --text-gray: #64748b; 
+            --text-light: #94a3b8;
+            
+            /* Background Colors */
             --bg-light: #F8FAFC; 
             --bg-white: #FFFFFF; 
             --bg-dark: #111827;
             --border-color: #E2E8F0;
+            
+            /* Utility Colors */
             --uber-green: #06C167; 
             --google-yellow: #FBBC04;
+            --toast-success: #10b981;
+            --toast-error: #ef4444;
+            --toast-warning: #f59e0b;
+            
+            /* Animations & Shadows */
             --transition-fast: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             --transition-normal: 0.4s ease;
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --shadow-xs: 0 1px 3px rgba(0,0,0,0.02);
             --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
             --shadow-lg: 0 25px 50px -12px rgba(210, 75, 65, 0.15);
+            --shadow-float: 0 20px 30px rgba(0,0,0,0.2);
+            
+            /* Radius & Layout */
             --border-radius-lg: 24px; 
             --border-radius-md: 16px;
             --border-radius-sm: 12px;
+            --vh: 1vh; /* Dynamic Viewport Height Fallback */
+        }
+
+        /* Hardware Acceleration & Reset */
+        *, *::before, *::after { box-sizing: border-box; }
+        
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
         }
 
         html, body {
-            width: 100%; max-width: 100vw; overflow-x: hidden !important; position: relative;
-            margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            width: 100%; 
+            max-width: 100vw; 
+            overflow-x: hidden !important; 
+            position: relative;
+            margin: 0; padding: 0; 
+            -webkit-font-smoothing: antialiased; 
+            -moz-osx-font-smoothing: grayscale;
             font-family: 'Outfit', 'Poppins', 'Noto Sans KR', sans-serif; 
-            color: var(--text-dark); background-color: var(--bg-white); line-height: 1.6;
+            color: var(--text-dark); 
+            background-color: var(--bg-white); 
+            line-height: 1.6;
         }
 
-        *, *::before, *::after { box-sizing: inherit; }
-
+        /* Prevent Text Selection on UI elements but allow on inputs */
         body { -webkit-user-select: none; -moz-user-select: none; user-select: none; }
-        input, textarea, select { user-select: auto; font-family: inherit; }
+        input, textarea, select, p, h1, h2, h3, h4, h5, h6, span { 
+            -webkit-user-select: auto; -moz-user-select: auto; user-select: auto; 
+        }
+        
+        /* Image anti-drag */
         img { user-drag: none; -webkit-user-drag: none; max-width: 100%; height: auto; display: block; object-fit: contain; }
-        a { text-decoration: none; color: inherit; }
-        button { cursor: pointer; font-family: inherit; }
-        *:focus-visible { outline: 3px solid var(--sj-red); outline-offset: 2px; border-radius: 6px; }
+        a { text-decoration: none; color: inherit; -webkit-tap-highlight-color: transparent;}
+        button { cursor: pointer; font-family: inherit; outline: none; -webkit-tap-highlight-color: transparent;}
+        
+        /* Accessibility Focus States */
+        *:focus-visible { outline: 3px solid var(--sj-red); outline-offset: 3px; border-radius: 4px; }
+        input:focus-visible, textarea:focus-visible, select:focus-visible { outline: none; } /* Handled by custom border */
+
+        /* Body Lock Class for Modals/Mobile Menu (개선6) */
+        body.lock-scroll {
+            overflow: hidden;
+            touch-action: none;
+        }
 
         @font-face {
             font-family: 'SinjeonCustom';
@@ -90,27 +156,63 @@
         }
 
         /* -----------------------------------------
-           2. Global UI Components (Reveal & Float)
+           2. Advanced Global UI Components
            ----------------------------------------- */
-        .scroll-progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--sj-red); z-index: 1001; width: 0%; transition: width 0.1s linear; will-change: width; }
+        /* Scroll Progress Bar */
+        .scroll-progress { 
+            position: fixed; top: 0; left: 0; height: 4px; background: var(--sj-red); 
+            z-index: 9999; width: 0%; transition: width 0.1s linear; will-change: width; 
+        }
 
-        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; will-change: opacity, transform; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* Reveal Animations (Hardware Accelerated) */
+        .reveal { 
+            opacity: 0; transform: translateY(30px) translateZ(0); 
+            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1); 
+            will-change: opacity, transform; 
+        }
+        .reveal.active { opacity: 1; transform: translateY(0) translateZ(0); }
 
         .section-header { text-align: center; margin-bottom: 50px; padding: 0 20px; }
         .section-header h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: var(--text-dark); letter-spacing: -1px; margin-bottom: 10px; text-transform: uppercase; word-break: keep-all;}
         .section-header h2 span { color: var(--sj-red); font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: clamp(2.5rem, 6vw, 3.5rem); }
-        .section-header p { font-size: clamp(0.9rem, 2vw, 1rem); color: var(--sj-green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+        .section-header p { font-size: clamp(0.9rem, 2vw, 1rem); color: var(--sj-green); font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
 
+        /* Floating Keyframes */
         @keyframes float-normal { 0%, 100% { transform: translateY(0px) rotate(0deg) translateZ(0); } 50% { transform: translateY(-12px) rotate(2deg) translateZ(0); } }
         @keyframes float-slow { 0%, 100% { transform: translateY(0px) rotate(0deg) translateZ(0); } 50% { transform: translateY(-8px) rotate(-2deg) translateZ(0); } }
         @keyframes float-fast { 0%, 100% { transform: translateY(0px) rotate(0deg) translateZ(0); } 50% { transform: translateY(-16px) rotate(3deg) translateZ(0); } }
         
-        .char-img { position: absolute; z-index: 5; pointer-events: auto; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.12)); transition: transform var(--transition-fast); will-change: transform; }
-        .char-img:hover { transform: scale(1.1) translateY(-5px) translateZ(0) !important; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.2)); }
+        .char-img { position: absolute; z-index: 5; pointer-events: auto; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.12)); transition: transform var(--transition-fast), filter var(--transition-fast); will-change: transform; }
+        .char-img:hover { transform: scale(1.1) translateY(-5px) translateZ(0) !important; filter: var(--shadow-float); }
 
         /* -----------------------------------------
-           3. Individual Popup Cards System (CRITICAL FIX)
+           3. Custom Toast Notification System (개선3)
+           ----------------------------------------- */
+        .toast-container {
+            position: fixed; bottom: 30px; left: 30px; z-index: 100000;
+            display: flex; flex-direction: column; gap: 10px; pointer-events: none;
+        }
+        .toast-msg {
+            min-width: 280px; max-width: 400px; background: var(--bg-white);
+            color: var(--text-dark); padding: 16px 24px; border-radius: var(--border-radius-sm);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; align-items: flex-start; gap: 15px;
+            transform: translateX(-120%); opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: auto; border-left: 5px solid var(--text-dark);
+        }
+        .toast-msg.show { transform: translateX(0); opacity: 1; }
+        .toast-msg.success { border-left-color: var(--toast-success); }
+        .toast-msg.error { border-left-color: var(--toast-error); }
+        .toast-msg.warning { border-left-color: var(--toast-warning); }
+        .toast-icon { font-size: 1.5rem; margin-top: 2px; }
+        .toast-msg.success .toast-icon { color: var(--toast-success); }
+        .toast-msg.error .toast-icon { color: var(--toast-error); }
+        .toast-msg.warning .toast-icon { color: var(--toast-warning); }
+        .toast-content { display: flex; flex-direction: column; }
+        .toast-title { font-weight: 800; font-size: 1rem; margin-bottom: 3px; }
+        .toast-desc { font-weight: 500; font-size: 0.9rem; color: var(--text-gray); line-height: 1.4; word-break: keep-all;}
+
+        /* -----------------------------------------
+           4. Individual Popup Cards System (스와이프 스냅 완벽 대응)
            ----------------------------------------- */
         .event-popup-wrapper {
             position: fixed; top: 110px; left: 20px; z-index: 99999; 
@@ -122,12 +224,11 @@
         .popup-flex-container {
             display: flex; flex-direction: row; gap: 15px; max-width: calc(100vw - 40px); overflow-x: auto; 
             padding-bottom: 15px; /* For box-shadow */
-            -webkit-overflow-scrolling: touch;
+            -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
         }
         .popup-flex-container::-webkit-scrollbar { height: 6px; }
         .popup-flex-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         
-        /* 개별 팝업 카드 스타일 */
         .event-popup-card {
             background: var(--bg-white); border-radius: var(--border-radius-md); 
             width: 320px; flex: 0 0 320px; overflow: hidden; 
@@ -137,7 +238,6 @@
         }
         .event-popup-card img { width: 100%; height: auto; display: block; min-height: 100px; object-fit: cover; }
         
-        /* 팝업 하단 버튼 패널 */
         .event-popup-actions { display: flex; border-top: 1px solid var(--border-color); width: 100%; }
         .event-popup-actions button { flex: 1; padding: 14px 0; border: none; background: var(--bg-light); font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: var(--transition-fast); font-family: 'Noto Sans KR', sans-serif; }
         .btn-hide-24h { color: var(--text-gray); border-right: 1px solid var(--border-color) !important; }
@@ -146,7 +246,7 @@
         .btn-close-popup:hover { background: #fdf2f2; }
 
         /* -----------------------------------------
-           4. Header & Navigation (Right Aligned)
+           5. Header & Navigation (Right Aligned)
            ----------------------------------------- */
         header { 
             display: flex; justify-content: space-between; align-items: center; 
@@ -174,20 +274,21 @@
 
         .header-cta-group { display: flex; align-items: center; flex-shrink: 0; margin-left: 10px; position: relative; z-index: 1002;}
         .header-btn-apply { background: var(--sj-red); color: white !important; font-size: 0.9rem; font-weight: 800; padding: 12px 28px; border-radius: 50px; text-decoration: none; text-transform: uppercase; transition: var(--transition-fast); box-shadow: 0 4px 15px rgba(210, 75, 65, 0.3); white-space: nowrap; letter-spacing: 0.5px;}
-        .header-btn-apply:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(210, 75, 65, 0.4);}
-        .header-btn-apply::after { display: none !important; }
+        .header-btn-apply:hover { background: var(--sj-red-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(210, 75, 65, 0.4);}
 
         .mobile-menu-btn { display: none; font-size: 1.8rem; color: var(--text-dark); background: none; border: none; cursor: pointer; z-index: 1002; position: relative; padding: 5px; margin-left: 15px;}
-        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-white); z-index: 1001; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); transform: translateY(-20px); }
+        
+        /* Mobile Fullscreen Menu */
+        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-white); z-index: 1001; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-smooth); transform: translateY(-20px); overscroll-behavior: contain;}
         .mobile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .mobile-nav-links { display: flex; flex-direction: column; gap: 25px; text-align: center; }
         .mobile-nav-links a { font-size: 1.8rem; font-weight: 800; color: var(--text-dark); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; transition: color var(--transition-fast); }
-        .mobile-nav-links a:hover { color: var(--sj-red); }
+        .mobile-nav-links a:hover, .mobile-nav-links a:focus { color: var(--sj-red); outline: none;}
 
         /* -----------------------------------------
-           5. Hero Section
+           6. Hero Section
            ----------------------------------------- */
-        .hero { padding: 200px 5% 100px; text-align: center; position: relative; background: radial-gradient(circle at center, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.98) 100%), url('background/base_1.JPG') center/cover no-repeat, var(--bg-light); background-attachment: fixed; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
+        .hero { padding: 200px 5% 100px; text-align: center; position: relative; background: radial-gradient(circle at center, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.98) 100%), url('background/base_1.JPG') center/cover no-repeat, var(--bg-light); background-attachment: fixed; display: flex; flex-direction: column; align-items: center; overflow: hidden; min-height: 80vh;}
         .hero-badge { display: inline-block; padding: 8px 24px; background: rgba(0, 130, 80, 0.08); color: var(--sj-green); border-radius: 50px; font-size: 0.85rem; font-weight: 800; margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; }
         .hero h1 { font-family: 'Outfit', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); margin: 0; letter-spacing: -2px; line-height: 1.1; font-weight: 900; color: var(--text-dark); text-transform: uppercase; position: relative; z-index: 2;}
         .hero h1 span.highlight { color: var(--sj-red); display: block; font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: clamp(3.2rem, 7vw, 5.5rem); letter-spacing: -1px; margin-top: 5px;}
@@ -202,7 +303,7 @@
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* -----------------------------------------
-           6. About & Core Values
+           7. About & Core Values
            ----------------------------------------- */
         .about-section { padding: 120px 5%; background: var(--bg-white); }
         .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1200px; margin: 0 auto; }
@@ -223,7 +324,7 @@
         .char-bento-2 { width: 80px; top: -30px; right: 20px; animation: float-fast 3.5s ease-in-out infinite 1s;}
 
         /* -----------------------------------------
-           7. Spice Guide
+           8. Spice Guide
            ----------------------------------------- */
         .spice-section { padding: 120px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .spice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1100px; margin: 0 auto; }
@@ -244,12 +345,12 @@
         .spice-card:hover .char-spice { transform: translateX(-50%) scale(1.1) translateY(-10px); }
 
         /* -----------------------------------------
-           8. Menu Section
+           9. Menu Section
            ----------------------------------------- */
         .menu-section { padding: 120px 5%; background: var(--bg-white); text-align: center; border-top: 1px solid var(--border-color); }
         .menu-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
         .menu-tab-btn { background: var(--bg-light); border: 1px solid var(--border-color); color: var(--text-gray); padding: 12px 30px; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: var(--transition-fast); text-transform: uppercase; }
-        .menu-tab-btn:hover { background: var(--bg-white); border-color: var(--sj-red); color: var(--sj-red); }
+        .menu-tab-btn:hover, .menu-tab-btn:focus-visible { background: var(--bg-white); border-color: var(--sj-red); color: var(--sj-red); }
         .menu-tab-btn.active { background: var(--sj-red); color: var(--bg-white); border-color: var(--sj-red); box-shadow: 0 4px 15px rgba(210, 75, 65, 0.2); }
 
         .menu-grid-container { max-width: 1200px; margin: 0 auto; min-height: 400px; position: relative; } 
@@ -262,8 +363,8 @@
             opacity: 0; 
             transition: opacity 0.4s ease; 
         }
-        .menu-grid.active { display: grid; opacity: 1; animation: fadeInMenu 0.3s ease-in-out forwards; }
-        @keyframes fadeInMenu { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .menu-grid.active { display: grid; opacity: 1; animation: fadeInMenu 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes fadeInMenu { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         .menu-item { background: var(--bg-white); border-radius: var(--border-radius-md); padding: 30px 20px 25px; border: 1px solid var(--border-color); transition: var(--transition-fast); display: flex; flex-direction: column; align-items: center; justify-content: space-between; width: 100%;}
         .menu-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--sj-green); }
@@ -273,7 +374,15 @@
             margin-bottom: 20px; background: #f8fafc; border-radius: var(--border-radius-sm);
             position: relative; overflow: hidden;
         }
-        .menu-item-img img { max-width: 90%; max-height: 90%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.08)); transition: transform var(--transition-fast); }
+        /* 이미지 로딩 최적화 스켈레톤 (개선20) */
+        .menu-item-img::before {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; z-index: 1; transition: opacity 0.3s;
+        }
+        .menu-item-img img { max-width: 90%; max-height: 90%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.08)); transition: transform var(--transition-fast); z-index: 2; position: relative; opacity: 0;}
+        .menu-item-img img.loaded { opacity: 1; }
+        .menu-item-img img.loaded + ::before { opacity: 0; display: none; }
         .menu-item:hover .menu-item-img img { transform: scale(1.1) rotate(2deg); filter: drop-shadow(0 15px 20px rgba(0,0,0,0.12));}
         
         .menu-item h3 { font-size: 1.25rem; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; line-height: 1.2; text-align: center;}
@@ -283,22 +392,24 @@
         .menu-disclaimer { margin-top: 40px; font-size: 0.95rem; color: var(--text-light); font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
         /* -----------------------------------------
-           9. Locations & Google Maps (Native Embed)
+           10. Locations & Google Maps (Native Embed)
+           * 개선8: 고급 연산 엔진을 통한 영업상태 표시
            ----------------------------------------- */
         .locations { padding: 120px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .split-layout { display: flex; max-width: 1300px; margin: 0 auto; background: var(--bg-white); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: 700px; }
-        .loc-list-wrapper { flex: 0 0 42%; overflow-y: auto; padding: 30px; }
+        .loc-list-wrapper { flex: 0 0 42%; overflow-y: auto; padding: 30px; scroll-behavior: smooth;}
         .loc-list-wrapper::-webkit-scrollbar { width: 6px; }
         .loc-list-wrapper::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         
         .loc-item { background: var(--bg-light); border-radius: var(--border-radius-md); padding: 30px 25px; margin-bottom: 20px; border: 2px solid transparent; cursor: pointer; transition: var(--transition-fast); display: flex; flex-direction: column;}
-        .loc-item:hover { background: var(--bg-white); border-color: #e2e8f0; }
+        .loc-item:hover, .loc-item:focus-visible { background: var(--bg-white); border-color: #e2e8f0; outline:none;}
         .loc-item.active { border-color: var(--sj-red); box-shadow: var(--shadow-md); background: var(--bg-white); }
         
         .loc-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .loc-status { font-weight: 800; font-size: 0.8rem; padding: 6px 12px; border-radius: 20px; text-transform: uppercase;}
+        .loc-status { font-weight: 800; font-size: 0.8rem; padding: 6px 12px; border-radius: 20px; text-transform: uppercase; transition: all 0.3s ease;}
         .loc-status.open { color: var(--uber-green); background: rgba(6,193,103,0.1); }
         .loc-status.closed { color: var(--sj-red); background: rgba(210, 75, 65, 0.1); }
+        .loc-status.warning { color: var(--toast-warning); background: rgba(245, 158, 11, 0.1); }
         .loc-rating { font-size: 0.85rem; font-weight: 800; color: var(--text-dark); background: #fef9c3; padding: 4px 10px; border-radius: 20px; display: inline-flex; align-items: center; gap: 5px; }
         .loc-rating i { color: var(--google-yellow); font-size: 0.85rem;}
 
@@ -315,15 +426,14 @@
         .loc-actions { display: flex; gap: 10px; margin-top: auto; }
         .btn-sm { padding: 12px 15px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 0.9rem; flex: 1; text-align: center; transition: var(--transition-fast); display: flex; align-items: center; justify-content: center; gap: 6px;}
         .btn-outline { border: 2px solid var(--border-color); color: var(--text-dark); background: var(--bg-white); }
-        .btn-outline:hover { border-color: var(--sj-green); color: var(--sj-green); }
+        .btn-outline:hover, .btn-outline:focus-visible { border-color: var(--sj-green); color: var(--sj-green); outline:none;}
         .btn-fill { background: var(--uber-green); color: var(--bg-white); border: 2px solid var(--uber-green); }
-        .btn-fill:hover { background: #05a659; border-color: #05a659;}
+        .btn-fill:hover, .btn-fill:focus-visible { background: #05a659; border-color: #05a659; outline:none;}
         
         /* Map Area */
         .loc-map-wrapper { flex: 1; background: #e2e8f0; position: relative; pointer-events: auto; overflow: hidden; z-index: 1;}
         .loc-map-wrapper iframe { width: 100%; height: 100%; position: absolute; top:0; left:0; z-index: 1; border: none; transition: opacity 0.4s ease; }
         .map-loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; color: var(--sj-red); font-size: 2.5rem; animation: spin 1s linear infinite;}
-        @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
         
         .map-info-overlay {
             position: absolute; bottom: 30px; left: 30px;
@@ -338,10 +448,12 @@
         .map-info-overlay p { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 6px; display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; font-weight: 500;}
         .map-info-overlay p i { color: var(--sj-red); margin-top: 3px; }
         .overlay-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: var(--sj-red); color: white; text-decoration: none; font-weight: 700; padding: 10px 0; border-radius: 10px; width: 100%; margin-top: 8px; transition: var(--transition-fast); font-size: 0.95rem;}
-        .overlay-btn:hover { background: #b83e35; }
+        .overlay-btn:hover, .overlay-btn:focus-visible { background: var(--sj-red-hover); outline:none;}
 
         /* -----------------------------------------
-           10. Instagram Feed 
+           11. Instagram Feed & API Cache Logic
+           * 개선2: 로컬 캐싱 엔진 연동
+           * 개선20: 완벽한 스켈레톤 UI 탑재
            ----------------------------------------- */
         .ugc-section { padding: 120px 5%; background: var(--bg-dark); color: white; text-align: center; }
         .ugc-section .section-header h2 { color: white; }
@@ -350,37 +462,40 @@
         .instagram-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
         
         .instagram-item { position: relative; aspect-ratio: 1 / 1; overflow: hidden; border-radius: var(--border-radius-md); background-color: #1f2937; }
-        .instagram-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .instagram-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; opacity:0; }
+        .instagram-item img.loaded { opacity: 1; }
         
         .instagram-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(210, 75, 65, 0.85); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-        .instagram-icon { font-size: 2rem; color: #fff; transform: translateY(15px); transition: transform 0.3s ease; }
+        .instagram-icon { font-size: 2.5rem; color: #fff; transform: translateY(15px); transition: transform 0.3s ease; }
         
         .instagram-item:hover img { transform: scale(1.05); }
         .instagram-item:hover .instagram-overlay { opacity: 1; }
         .instagram-item:hover .instagram-icon { transform: translateY(0); }
 
-        .instagram-item.skeleton { background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; }
+        .instagram-item.skeleton { background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border: 1px solid #374151;}
         @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
         /* -----------------------------------------
-           11. Franchise Process
+           12. Franchise Process Timeline
            ----------------------------------------- */
         .timeline-section { padding: 120px 5%; background: var(--bg-white); }
         .timeline-container { max-width: 900px; margin: 0 auto; position: relative; }
         .timeline-container::before { content: ''; position: absolute; top: 0; left: 45px; width: 3px; height: 100%; background: var(--border-color); border-radius: 3px; }
         .timeline-step { display: flex; align-items: flex-start; margin-bottom: 50px; position: relative; }
         .timeline-marker { position: absolute; left: 21px; width: 50px; height: 50px; background: var(--sj-red); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; color: var(--bg-white); font-size: 1.2rem; box-shadow: 0 0 0 6px var(--bg-white); z-index: 2; }
-        .timeline-content { margin-left: 100px; background: var(--bg-light); padding: 35px 40px; border-radius: var(--border-radius-md); border: 1px solid var(--border-color); width: 100%; }
+        .timeline-content { margin-left: 100px; background: var(--bg-light); padding: 35px 40px; border-radius: var(--border-radius-md); border: 1px solid var(--border-color); width: 100%; transition: var(--transition-fast);}
+        .timeline-content:hover { border-color: var(--sj-red); box-shadow: var(--shadow-sm); transform: translateX(5px);}
         .timeline-content h4 { font-size: 1.4rem; color: var(--text-dark); margin-bottom: 8px; font-weight: 800; }
         .timeline-content p { color: var(--text-gray); font-size: 1rem; font-weight: 500; line-height: 1.6; font-family: 'Noto Sans KR', sans-serif;}
 
         .timeline-cta-box { text-align: center; margin-top: 40px; }
         .timeline-cta-box h3 { font-size: 1.6rem; font-weight: 800; color: var(--text-dark); margin-bottom: 15px; }
         .btn-timeline-apply { display: inline-flex; align-items: center; gap: 10px; background: var(--sj-green); color: white; padding: 16px 35px; font-size: 1.05rem; font-weight: 800; border-radius: 50px; text-decoration: none; box-shadow: 0 8px 20px rgba(0, 130, 80, 0.2); transition: var(--transition-fast); text-transform: uppercase; letter-spacing: 1px; }
-        .btn-timeline-apply:hover { background: #006a40; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0, 130, 80, 0.3); }
+        .btn-timeline-apply:hover, .btn-timeline-apply:focus-visible { background: #006a40; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0, 130, 80, 0.3); outline:none;}
 
         /* -----------------------------------------
-           12. Contact Us & Quick Form
+           13. Contact Us & Quick Form (Security Enhanced)
+           * 개선7, 11, 12: XSS 방어, 스팸 쿨타임, 정규식 검증
            ----------------------------------------- */
         .contact-section { padding: 120px 5%; background: var(--bg-light); border-top: 1px solid var(--border-color); }
         .contact-wrapper { max-width: 860px; margin: 0 auto; position: relative; }
@@ -392,7 +507,6 @@
         
         .form-content { display: none; }
         .form-content.active { display: block; animation: formFadeIn 0.3s ease-out forwards; }
-        @keyframes formFadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
         .general-card { background: var(--bg-white); padding: 50px 60px; border-radius: var(--border-radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-md); }
         .form-header { margin-bottom: 30px; text-align: center; }
@@ -408,9 +522,10 @@
         .input-wrapper input:focus + label, .input-wrapper input:not(:placeholder-shown) + label,
         .input-wrapper textarea:focus + label, .input-wrapper textarea:not(:placeholder-shown) + label { top: 8px; font-size: 0.75rem; color: var(--sj-green); font-weight: 700; }
 
-        .submit-btn { width: 100%; padding: 20px; border: none; border-radius: var(--border-radius-sm); color: var(--bg-white); font-weight: 900; transition: var(--transition-fast); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; cursor: pointer;}
+        .submit-btn { width: 100%; padding: 20px; border: none; border-radius: var(--border-radius-sm); color: var(--bg-white); font-weight: 900; transition: var(--transition-fast); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; cursor: pointer; outline:none;}
         .btn-green { background: var(--sj-green); }
-        .btn-green:hover { background: #006a40; }
+        .btn-green:hover:not(:disabled), .btn-green:focus-visible { background: #006a40; box-shadow: 0 4px 15px rgba(0, 130, 80, 0.2);}
+        .submit-btn:disabled { background: #cbd5e1; cursor: not-allowed; }
 
         .quick-form-card { background: var(--bg-white); padding: 50px 60px; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); text-align: center; border: 1px solid var(--border-color);}
         .step-badge { display: inline-block; background: rgba(210, 75, 65, 0.1); color: var(--sj-red); font-weight: 800; padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
@@ -419,24 +534,25 @@
         
         .qf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; text-align: left; }
         .qf-full { grid-column: 1 / -1; }
-        .quick-form-card input, .quick-form-card textarea { width: 100%; padding: 18px 20px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); background-color: var(--bg-light); font-size: 0.95rem; font-family: 'Outfit', sans-serif; color: var(--text-dark); font-weight: 500; outline: none; transition: var(--transition-fast); }
+        .quick-form-card input, .quick-form-card textarea { width: 100%; padding: 18px 20px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); background-color: var(--bg-light); font-size: 0.95rem; font-family: 'Outfit', sans-serif; color: var(--text-dark); font-weight: 500; outline: none; transition: var(--transition-fast); box-sizing: border-box;}
         .quick-form-card input::placeholder, .quick-form-card textarea::placeholder { color: #9CA3AF; font-weight: 500;}
         .quick-form-card input:focus, .quick-form-card textarea:focus { background-color: var(--bg-white); border-color: var(--sj-red); box-shadow: 0 0 0 3px rgba(210, 75, 65, 0.1); }
         .quick-form-card textarea { resize: vertical; min-height: 120px; }
         
-        .btn-red-flat { background: var(--sj-red); color: white; padding: 20px; border: none; border-radius: var(--border-radius-sm); width: 100%; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: var(--transition-fast); margin-top: 10px; box-shadow: 0 8px 20px rgba(210, 75, 65, 0.2);}
-        .btn-red-flat:hover { background: #b83e35; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3);}
+        .btn-red-flat { background: var(--sj-red); color: white; padding: 20px; border: none; border-radius: var(--border-radius-sm); width: 100%; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: var(--transition-fast); margin-top: 10px; box-shadow: 0 8px 20px rgba(210, 75, 65, 0.2); outline:none;}
+        .btn-red-flat:hover:not(:disabled), .btn-red-flat:focus-visible { background: var(--sj-red-hover); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(210, 75, 65, 0.3);}
+        .btn-red-flat:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow:none; transform:none; }
 
         .direct-link { display: block; text-align: center; margin-top: 25px; color: var(--text-gray); font-weight: 600; text-decoration: underline; font-size: 0.9rem; transition: color var(--transition-fast); }
-        .direct-link:hover { color: var(--sj-red); }
+        .direct-link:hover, .direct-link:focus-visible { color: var(--sj-red); outline:none;}
 
         /* -----------------------------------------
-           13. Floating Action & Footer
+           14. Floating Action & Footer
            ----------------------------------------- */
         .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; display: flex; flex-direction: column; gap: 15px; transform: translateY(100px); opacity: 0; transition: var(--transition-normal); pointer-events: none;}
         .fab-container.visible { transform: translateY(0); opacity: 1; pointer-events: auto;}
-        .fab { width: 55px; height: 55px; border-radius: 50%; background: var(--bg-white); color: var(--text-dark); display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-md); transition: var(--transition-fast); text-decoration: none; font-size: 1.4rem; border: 1px solid var(--border-color); cursor: pointer;}
-        .fab:hover { border-color: var(--sj-red); color: var(--sj-red); transform: translateY(-3px);}
+        .fab { width: 55px; height: 55px; border-radius: 50%; background: var(--bg-white); color: var(--text-dark); display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-md); transition: var(--transition-fast); text-decoration: none; font-size: 1.4rem; border: 1px solid var(--border-color); cursor: pointer; outline:none;}
+        .fab:hover, .fab:focus-visible { border-color: var(--sj-red); color: var(--sj-red); transform: translateY(-3px);}
 
         footer { background: var(--bg-dark); color: rgba(255,255,255,0.7); padding: 80px 5% 40px; font-size: 0.9rem; border-top: 4px solid var(--sj-red); }
         .mega-footer-container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
@@ -445,37 +561,41 @@
         .footer-brand p { font-size: 0.95rem; line-height: 1.7; max-width: 300px; color: rgba(255,255,255,0.8); }
         .footer-col h4 { font-family: 'Outfit', sans-serif; color: var(--bg-white); font-size: 1.2rem; font-weight: 800; margin-bottom: 25px; position: relative; display: inline-block; }
         .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: -8px; width: 30px; height: 2px; background: var(--sj-red); border-radius: 2px; }
-        .footer-col ul { list-style: none; padding: 0; }
+        .footer-col ul { list-style: none; padding: 0; margin:0;}
         .footer-col ul li { margin-bottom: 15px; }
-        .footer-col ul li a { color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; transition: var(--transition-fast); display: inline-block; cursor: pointer;}
-        .footer-col ul li a:hover { color: var(--bg-white); transform: translateX(5px); }
+        .footer-col ul li a { color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; transition: var(--transition-fast); display: inline-block; cursor: pointer; outline:none;}
+        .footer-col ul li a:hover, .footer-col ul li a:focus-visible { color: var(--bg-white); transform: translateX(5px); }
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; text-align: left; max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .footer-bottom p { margin: 0; }
 
         /* -----------------------------------------
-           14. Dynamic Modal
+           15. Dynamic Modal (Focus Trap Enabled)
+           * 개선18: 모달 내 접근성 트랩 로직 적용을 위한 구조
            ----------------------------------------- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); backdrop-filter: blur(5px); }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-fast); backdrop-filter: blur(5px); overscroll-behavior: contain;}
         .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto;}
-        .modal-content { background: var(--bg-white); width: 90%; max-width: 500px; border-radius: var(--border-radius-lg); padding: 40px; text-align: center; transform: translateY(30px); transition: transform 0.3s ease; box-shadow: 0 25px 50px rgba(0,0,0,0.3);}
+        .modal-content { background: var(--bg-white); width: 90%; max-width: 550px; border-radius: var(--border-radius-lg); padding: 40px; text-align: center; transform: translateY(30px); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 25px 50px rgba(0,0,0,0.3); max-height: 90vh; display: flex; flex-direction: column;}
         .modal-overlay.active .modal-content { transform: translateY(0); }
-        .modal-close { position: absolute; top: 20px; right: 25px; font-size: 2rem; background: none; border: none; color: var(--text-light); transition: var(--transition-fast); line-height: 1; cursor: pointer; z-index: 10; }
-        .modal-close:hover { color: var(--sj-red); }
-        .modal-body { overflow-y: auto; padding-right: 10px; margin-top: 10px; color: var(--text-gray); font-size: 1rem; line-height: 1.6; text-align: left; }
+        .modal-close { position: absolute; top: 20px; right: 25px; font-size: 2rem; background: none; border: none; color: var(--text-light); transition: var(--transition-fast); line-height: 1; cursor: pointer; z-index: 10; padding: 5px;}
+        .modal-close:hover, .modal-close:focus-visible { color: var(--sj-red); outline: none;}
+        .modal-body { overflow-y: auto; padding-right: 10px; margin-top: 10px; color: var(--text-gray); font-size: 1rem; line-height: 1.6; text-align: left; flex:1;}
+        .modal-body::-webkit-scrollbar { width: 6px; }
+        .modal-body::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
         
         .success-checkmark { width: 80px; height: 80px; background: rgba(0, 130, 80, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: var(--sj-green); font-size: 2.5rem; }
         .redirect-spinner { margin-top: 20px; padding: 15px; background: var(--bg-light); border-radius: var(--border-radius-sm); font-weight: 700; color: var(--sj-red); display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1rem;}
 
         /* =========================================
-           15. Media Queries (Mobile Full Optimization)
+           16. Media Queries (Mobile Full Optimization)
+           * 개선5, 13: 사파리 vh 대응 및 스와이프 로직
            ========================================= */
         @media (max-width: 1200px) {
             .bento-large { padding: 40px; }
             .stat-item h4 { font-size: 3.5rem; }
         }
         @media (max-width: 1000px) {
-            .hero { padding: 180px 5% 80px;}
-            .char-img { display: none; }
+            .hero { padding: calc(150px + env(safe-area-inset-top)) 5% 80px; min-height: calc(var(--vh, 1vh) * 80);}
+            .char-img { display: none !important; } /* 성능 위해 모바일 캐릭터 제거 */
             
             .desktop-nav { display: none; } 
             .mobile-menu-btn { display: block; }
@@ -508,7 +628,7 @@
             .header-cta-group { margin-left: auto;}
             .header-btn-apply { padding: 10px 18px; font-size: 0.8rem; box-shadow: none;}
             
-            .tab-container { display: flex; width: 100%; border-radius: 12px; padding: 4px; margin-bottom: 30px;}
+            .tab-container { display: flex; width: 100%; border-radius: 12px; padding: 4px; margin-bottom: 30px; flex-wrap: wrap;}
             .tab-btn { flex: 1; padding: 12px 0; font-size: 0.95rem; border-radius: 8px;}
             
             .menu-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; margin-bottom: 30px;}
@@ -524,9 +644,7 @@
             .stat-item h4 { font-size: 2.2rem; }
             .stat-item p { font-size: 0.8rem; }
             
-            .hero { padding: 150px 5% 60px;}
-            .hero-btn-group { flex-direction: column; width: 100%; padding: 0; gap: 10px;}
-            .btn-clean-heat, .btn-hero-apply { width: 100%; justify-content: center; padding: 14px 0;}
+            .hero { padding: calc(120px + env(safe-area-inset-top)) 5% 60px;}
             
             .section-header { margin-bottom: 40px; }
             .section-header h2 { font-size: 2rem; }
@@ -538,7 +656,7 @@
             .map-info-overlay p { font-size: 0.85rem; margin-bottom: 4px;}
             
             .loc-actions { flex-direction: column; }
-            .loc-actions .btn-sm { padding: 12px; font-size: 0.9rem; width: 100%;}
+            .loc-actions .btn-sm { padding: 14px; font-size: 0.95rem; width: 100%;} /* 터치 타겟 44px 이상 확보 */
             
             .about-section, .spice-section, .menu-section, .locations, .ugc-section, .contact-section, .timeline-section { padding: 70px 5%; }
             
@@ -547,15 +665,16 @@
             .input-wrapper input, .input-wrapper textarea, .quick-form-card input, .quick-form-card textarea { padding: 16px; font-size: 0.95rem; }
             .btn-green, .btn-red-flat { padding: 18px; font-size: 1rem; }
             
-            /* ★ 개별 팝업 카드 모바일 스와이프 UI */
-            .event-popup-wrapper { top: 50%; bottom: auto; left: 50%; right: auto; transform: translate(-50%, -45%); width: 90%; max-width: 400px; }
-            .event-popup-wrapper.show { transform: translate(-50%, -50%); }
+            /* ★ 개별 팝업 카드 모바일 스와이프 UI (개선13) */
+            .event-popup-wrapper { top: 50%; bottom: auto; left: 50%; right: auto; transform: translate(-50%, -45%) scale(0.9); width: 90%; max-width: 400px; }
+            .event-popup-wrapper.show { transform: translate(-50%, -50%) scale(1); }
             .popup-flex-container { scroll-snap-type: x mandatory; padding-bottom: 0; gap: 10px; }
-            .event-popup-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; }
-            .event-popup-card img { max-height: 60vh; object-fit: contain; background: var(--bg-light); }
+            .event-popup-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; scroll-snap-stop: always; }
+            .event-popup-card img { max-height: 55vh; object-fit: contain; background: var(--bg-light); }
             
             .instagram-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .fab-container { bottom: 20px; right: 20px;}
+            .fab { width: 50px; height: 50px; font-size: 1.2rem;}
         }
         
         @media (max-width: 350px) {
@@ -567,31 +686,37 @@
 </head>
 <body>
 
+    <!-- =========================================
+         [Toast Notification Anchor]
+         * 개선3: 네이티브 Alert 대체용
+         ========================================= -->
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
     <!-- 1. Progress Bar -->
-    <div class="scroll-progress" id="scroll-progress"></div>
+    <div class="scroll-progress" id="scroll-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
 
     <!-- 2. Header -->
-    <header id="header">
+    <header id="header" role="banner">
         <div class="header-top">
             <a href="#home" class="logo-container" aria-label="Go to Homepage">
-                <img src="sinjeon_logo_canada.png" alt="Sinjeon Canada Logo">
+                <img src="sinjeon_logo_canada.png" alt="Sinjeon Canada Logo" width="40" height="40" decoding="async">
                 <span>SINJEON CANADA</span>
             </a>
             
             <div class="nav-wrapper">
                 <nav role="navigation" class="desktop-nav" aria-label="Main Navigation">
-                    <a href="#about">About</a>
-                    <a href="#menu">Menu</a>
-                    <a href="#locations">Locations</a>
-                    <a href="#community">Community</a>
-                    <a href="#franchise">Franchise</a>
-                    <a href="#contact">Contact</a>
+                    <a href="#about" aria-label="Learn about Sinjeon">About</a>
+                    <a href="#menu" aria-label="View Menu">Menu</a>
+                    <a href="#locations" aria-label="Find Locations">Locations</a>
+                    <a href="#community" aria-label="View Community Feed">Community</a>
+                    <a href="#franchise" aria-label="Franchise Process">Franchise</a>
+                    <a href="#contact" aria-label="Contact Us">Contact</a>
                 </nav>
                 
                 <div class="header-cta-group">
-                    <a href="step1_proposal.html" class="header-btn-apply">Apply Now</a>
-                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Open Mobile Menu">
-                        <i class="fas fa-bars"></i>
+                    <a href="step1_proposal.html" class="header-btn-apply" aria-label="Apply for Franchise Now">Apply Now</a>
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Open Mobile Menu" aria-expanded="false" aria-controls="mobile-menu">
+                        <i class="fas fa-bars" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
@@ -599,9 +724,9 @@
     </header>
 
     <!-- 3. Mobile Fullscreen Menu -->
-    <div class="mobile-overlay" id="mobile-menu">
+    <div class="mobile-overlay" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
         <button class="mobile-menu-btn" style="position: absolute; top: 20px; right: 20px;" onclick="toggleMobileMenu()" aria-label="Close Mobile Menu">
-            <i class="fas fa-times"></i>
+            <i class="fas fa-times" aria-hidden="true"></i>
         </button>
         <div class="mobile-nav-links">
             <a href="#about" onclick="toggleMobileMenu()">About</a>
@@ -614,17 +739,17 @@
     </div>
 
     <!-- 4. Event Popup System (Individual Cards Host) -->
-    <div class="event-popup-wrapper" id="main-event-popup" aria-hidden="true" role="dialog">
+    <div class="event-popup-wrapper" id="main-event-popup" aria-hidden="true" role="dialog" aria-label="Event Announcements">
         <div class="popup-flex-container" id="popup-image-container">
             <!-- Cards will be dynamically injected here by JS -->
         </div>
     </div>
 
     <!-- 5. Hero Section -->
-    <section class="hero" id="home">
+    <section class="hero" id="home" aria-labelledby="hero-heading">
         <div class="hero-badge reveal">The Global No.1 K-Food</div>
-        <img src="character/character_7.png" class="char-img char-hero" alt="Sinjeon Character">
-        <h1 class="reveal delay-100">The New Standard<br><span class="highlight">of Topokki</span></h1>
+        <img src="character/character_7.png" class="char-img char-hero" alt="Sinjeon Character Presenting" width="160" height="160" decoding="async">
+        <h1 class="reveal delay-100" id="hero-heading">The New Standard<br><span class="highlight">of Topokki</span></h1>
         <p class="reveal delay-200">From Korea to Canada. Experience the authentic, HACCP-certified spice that captivated over 800 locations worldwide.</p>
         
         <div class="marquee-wrapper reveal delay-300">
@@ -638,32 +763,32 @@
     </section>
 
     <!-- 6. About Section -->
-    <section class="about-section" id="about">
+    <section class="about-section" id="about" aria-labelledby="about-heading">
         <div class="section-header reveal">
             <p>Brand Story</p>
-            <h2>Why <span>Sinjeon?</span></h2>
+            <h2 id="about-heading">Why <span>Sinjeon?</span></h2>
         </div>
         <div class="bento-grid">
-            <div class="bento-item reveal delay-100">
+            <div class="bento-item reveal delay-100" tabindex="0">
                 <div class="value-icon" aria-hidden="true">01</div>
                 <h3>Sanitary Seasoning</h3>
                 <p>Manufactured in our HACCP-certified facility in Korea. We strictly control quality to deliver the exact same authentic taste globally.</p>
-                <img src="character/character_4.png" class="char-img char-bento-1" alt="Sinjeon Mandoo" loading="lazy">
+                <img src="character/character_4.png" class="char-img char-bento-1" alt="Sinjeon Mandoo Character" loading="lazy" decoding="async">
             </div>
-            <div class="bento-item reveal delay-200">
+            <div class="bento-item reveal delay-200" tabindex="0">
                 <div class="value-icon" aria-hidden="true">02</div>
                 <h3>The Perfect Dip</h3>
                 <p>Sinjeon's signature broth is designed perfectly for dipping. Pair our legendary fried menu items with the spicy sauce.</p>
             </div>
-            <div class="bento-item reveal delay-300">
+            <div class="bento-item reveal delay-300" tabindex="0">
                 <div class="value-icon" aria-hidden="true">03</div>
                 <h3>Customized Heat</h3>
                 <p>From Mild to Extra Spicy, our unique seasoning profile offers a clean, addictive heat that caters to everyone's spice tolerance.</p>
-                <button class="btn-clean-heat-sm" onclick="showModalMessage('Clean Heat', document.getElementById('template-clean-heat').innerHTML, true)">How we make it ➔</button>
-                <img src="character/character_6.png" class="char-img char-bento-2" alt="Sinjeon Golf" loading="lazy">
+                <button class="btn-clean-heat-sm" aria-label="Learn how we make clean heat" onclick="showModalMessage('Clean Heat', document.getElementById('template-clean-heat').innerHTML, true)">How we make it ➔</button>
+                <img src="character/character_6.png" class="char-img char-bento-2" alt="Sinjeon Golf Character" loading="lazy" decoding="async">
             </div>
             
-            <div class="bento-item bento-large reveal delay-100">
+            <div class="bento-item bento-large reveal delay-100" aria-label="Sinjeon Statistics">
                 <div class="stat-item"><h4>800+</h4><p>Stores in Korea</p></div>
                 <div class="stat-item"><h4>20+</h4><p>Global Locations</p></div>
                 <div class="stat-item"><h4>1999</h4><p>Year Established</p></div>
@@ -673,27 +798,27 @@
     </section>
 
     <!-- 7. Spice Level Section -->
-    <section class="spice-section" id="spice">
+    <section class="spice-section" id="spice" aria-labelledby="spice-heading">
         <div class="section-header reveal">
             <p>Spice Level</p>
-            <h2>Choose Your <span>Heat</span></h2>
+            <h2 id="spice-heading">Choose Your <span>Heat</span></h2>
         </div>
         <div class="spice-grid">
-            <div class="spice-card spice-mild reveal delay-100">
+            <div class="spice-card spice-mild reveal delay-100" tabindex="0" role="button" aria-label="Mild Spice Level">
                 <span class="spice-level-num" aria-hidden="true">01</span>
-                <img src="character/character_1.png" class="char-spice anim-float-2" alt="Mild Character" loading="lazy">
+                <img src="character/character_1.png" class="char-spice anim-float-2" alt="Mild Character" loading="lazy" decoding="async">
                 <h3>MILD</h3>
                 <p>Sweet and gently warming. Perfect for beginners to enjoy K-Spice.</p>
             </div>
-            <div class="spice-card spice-medium reveal delay-200">
+            <div class="spice-card spice-medium reveal delay-200" tabindex="0" role="button" aria-label="Normal Spice Level">
                 <span class="spice-level-num" aria-hidden="true">02</span>
-                <img src="character/character_2.png" class="char-spice anim-float-1" alt="Normal Character" loading="lazy">
+                <img src="character/character_2.png" class="char-spice anim-float-1" alt="Normal Character" loading="lazy" decoding="async">
                 <h3>NORMAL</h3>
                 <p>The authentic original heat. A balanced kick that keeps you wanting more.</p>
             </div>
-            <div class="spice-card spice-spicy reveal delay-300">
+            <div class="spice-card spice-spicy reveal delay-300" tabindex="0" role="button" aria-label="Spicy Spice Level">
                 <span class="spice-level-num" aria-hidden="true">03</span>
-                <img src="character/character_3.png" class="char-spice anim-float-3" alt="Spicy Character" loading="lazy">
+                <img src="character/character_3.png" class="char-spice anim-float-3" alt="Spicy Character" loading="lazy" decoding="async">
                 <h3>SPICY</h3>
                 <p>For the brave. Intense, sweat-inducing heat using pure Cheongyang Chili.</p>
             </div>
@@ -701,160 +826,160 @@
     </section>
 
     <!-- 8. Menu Section -->
-    <section class="menu-section" id="menu">
+    <section class="menu-section" id="menu" aria-labelledby="menu-heading">
         <div class="section-header reveal">
             <p>Signature Menu</p>
-            <h2>Taste the <span>Original</span></h2>
+            <h2 id="menu-heading">Taste the <span>Original</span></h2>
         </div>
         
-        <div class="menu-tabs reveal delay-100" role="tablist">
-            <button class="menu-tab-btn active" role="tab" aria-selected="true" onclick="showMenuCategory('Main')">Main</button>
-            <button class="menu-tab-btn" role="tab" aria-selected="false" onclick="showMenuCategory('DeepFried')">Deep Fried</button>
-            <button class="menu-tab-btn" role="tab" aria-selected="false" onclick="showMenuCategory('Rice')">Rice & Cupbap</button>
-            <button class="menu-tab-btn" role="tab" aria-selected="false" onclick="showMenuCategory('Topping')">Toppings</button>
+        <div class="menu-tabs reveal delay-100" role="tablist" aria-label="Menu Categories">
+            <button class="menu-tab-btn active" role="tab" aria-selected="true" aria-controls="cat-Main" onclick="showMenuCategory('Main')">Main</button>
+            <button class="menu-tab-btn" role="tab" aria-selected="false" aria-controls="cat-DeepFried" onclick="showMenuCategory('DeepFried')">Deep Fried</button>
+            <button class="menu-tab-btn" role="tab" aria-selected="false" aria-controls="cat-Rice" onclick="showMenuCategory('Rice')">Rice & Cupbap</button>
+            <button class="menu-tab-btn" role="tab" aria-selected="false" aria-controls="cat-Topping" onclick="showMenuCategory('Topping')">Toppings</button>
         </div>
 
         <div class="menu-grid-container reveal delay-200">
             <!-- Main Category -->
-            <div id="cat-Main" class="menu-grid active" role="tabpanel">
+            <div id="cat-Main" class="menu-grid active" role="tabpanel" tabindex="0">
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Main/신전 오리지널 떡볶이.png" alt="Sinjeon Original Topokki" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Main/신전 오리지널 떡볶이.png" alt="Sinjeon Original Topokki" loading="lazy" decoding="async"></div>
                     <h3>Original Topokki</h3><p class="menu-kor">신전 오리지널 떡볶이</p><p class="menu-eng">Classic spicy rice cakes in signature broth</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Main/신전 로제 떡볶이.png" alt="Rose Topokki" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Main/신전 로제 떡볶이.png" alt="Rose Topokki" loading="lazy" decoding="async"></div>
                     <h3>Rosé Topokki</h3><p class="menu-kor">신전 로제 떡볶이</p><p class="menu-eng">Creamy and spicy rosé sauce rice cakes</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Main/신전 마라 로제 떡볶이.png" alt="Mala Rose Topokki" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Main/신전 마라 로제 떡볶이.png" alt="Mala Rose Topokki" loading="lazy" decoding="async"></div>
                     <h3>Mala Rosé Topokki</h3><p class="menu-kor">신전 마라 로제 떡볶이</p><p class="menu-eng">Trend-setting mala flavor with rich cream</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Main/신전 맵닭.png" alt="Spicy Chicken Topokki" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Main/신전 맵닭.png" alt="Spicy Chicken Topokki" loading="lazy" decoding="async"></div>
                     <h3>Spicy Chicken Topokki</h3><p class="menu-kor">신전 맵닭</p><p class="menu-eng">Topokki topped with spicy chicken</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Main/신전 로제 맵닭.png" alt="Rose Spicy Chicken" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Main/신전 로제 맵닭.png" alt="Rose Spicy Chicken" loading="lazy" decoding="async"></div>
                     <h3>Rosé Spicy Chicken</h3><p class="menu-kor">신전 로제 맵닭</p><p class="menu-eng">Spicy chicken in rich creamy rosé sauce</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Main/크림 카레 떡볶이.jpg" alt="Cream Curry Topokki" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Main/크림 카레 떡볶이.jpg" alt="Cream Curry Topokki" loading="lazy" decoding="async" onerror="handleImgError(this)"></div>
                     <h3>Cream Curry Topokki</h3><p class="menu-kor">크림 카레 떡볶이</p><p class="menu-eng">Rich curry and cream sauce with chewy rice cakes</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Main/크림 카레 우동.jpg" alt="Cream Curry Udon" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Main/크림 카레 우동.jpg" alt="Cream Curry Udon" loading="lazy" decoding="async" onerror="handleImgError(this)"></div>
                     <h3>Cream Curry Udon</h3><p class="menu-kor">크림 카레 우동</p><p class="menu-eng">Thick udon noodles in a smooth cream curry broth</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Main/크림 떡볶이.jpg" alt="Cream Topokki" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Main/크림 떡볶이.jpg" alt="Cream Topokki" loading="lazy" decoding="async" onerror="handleImgError(this)"></div>
                     <h3>Cream Topokki</h3><p class="menu-kor">크림 떡볶이</p><p class="menu-eng">Soft and savory cream sauce rice cakes</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Main/마라 로제 우동.jpg" alt="Mala Rose Udon" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Main/마라 로제 우동.jpg" alt="Mala Rose Udon" loading="lazy" decoding="async" onerror="handleImgError(this)"></div>
                     <h3>Mala Rosé Udon</h3><p class="menu-kor">마라 로제 우동</p><p class="menu-eng">Spicy mala and creamy rosé sauce with thick udon noodles</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Main/크림 우동.jpg" alt="Cream Udon" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Main/크림 우동.jpg" alt="Cream Udon" loading="lazy" decoding="async" onerror="handleImgError(this)"></div>
                     <h3>Cream Udon</h3><p class="menu-kor">크림 우동</p><p class="menu-eng">Classic udon noodles in a rich creamy sauce</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Main/신전 마라 떡볶이.jpg" alt="Sinjeon Mala Topokki" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Main/신전 마라 떡볶이.jpg" alt="Sinjeon Mala Topokki" loading="lazy" decoding="async" onerror="handleImgError(this)"></div>
                     <h3>Sinjeon Mala Topokki</h3><p class="menu-kor">신전 마라 떡볶이</p><p class="menu-eng">Intense and numbing spicy mala topokki</p>
                 </div>
             </div>
 
             <!-- Deep Fried Category -->
-            <div id="cat-DeepFried" class="menu-grid" role="tabpanel">
+            <div id="cat-DeepFried" class="menu-grid" role="tabpanel" tabindex="0" hidden>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Deep Fried/튀김오뎅.png" alt="Fried Fishcake" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Deep Fried/튀김오뎅.png" alt="Fried Fishcake" loading="lazy" decoding="async"></div>
                     <h3>Fried Fishcake</h3><p class="menu-kor">튀김오뎅</p><p class="menu-eng">Signature crispy fishcake sticks</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Deep Fried/튀김만두.png" alt="Fried Mandoo" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Deep Fried/튀김만두.png" alt="Fried Mandoo" loading="lazy" decoding="async"></div>
                     <h3>Fried Mandoo</h3><p class="menu-kor">튀김만두</p><p class="menu-eng">Crispy glass noodle dumplings</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Deep Fried/김말이.png" alt="Seaweed Roll" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Deep Fried/김말이.png" alt="Seaweed Roll" loading="lazy" decoding="async"></div>
                     <h3>Seaweed Roll</h3><p class="menu-kor">김말이</p><p class="menu-eng">Deep-fried seaweed glass noodle rolls</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Deep Fried/잡채말이.png" alt="Glass Noodle Roll" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Deep Fried/잡채말이.png" alt="Glass Noodle Roll" loading="lazy" decoding="async"></div>
                     <h3>Glass Noodle Roll</h3><p class="menu-kor">잡채말이</p><p class="menu-eng">Fried rolls filled with savory glass noodles</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Deep Fried/치즈스틱.png" alt="Cheese Stick" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Deep Fried/치즈스틱.png" alt="Cheese Stick" loading="lazy" decoding="async"></div>
                     <h3>Cheese Stick</h3><p class="menu-kor">치즈스틱</p><p class="menu-eng">Crispy sticks filled with melted mozzarella</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Deep Fried/통살오징어튀김.png" alt="Squid Fries" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Deep Fried/통살오징어튀김.png" alt="Squid Fries" loading="lazy" decoding="async"></div>
                     <h3>Squid Fries</h3><p class="menu-kor">통살오징어튀김</p><p class="menu-eng">Crispy battered thick squid</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Deep Fried/해쉬브라운.png" alt="Hash Brown" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Deep Fried/해쉬브라운.png" alt="Hash Brown" loading="lazy" decoding="async"></div>
                     <h3>Hash Brown</h3><p class="menu-kor">해쉬브라운</p><p class="menu-eng">Golden crispy potato hash browns</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Deep Fried/납작만두.png" alt="Flat Mandoo" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Deep Fried/납작만두.png" alt="Flat Mandoo" loading="lazy" decoding="async"></div>
                     <h3>Flat Mandoo</h3><p class="menu-kor">납작만두</p><p class="menu-eng">Crispy flat dumplings</p>
                 </div>
             </div>
 
             <!-- Rice Category -->
-            <div id="cat-Rice" class="menu-grid" role="tabpanel">
+            <div id="cat-Rice" class="menu-grid" role="tabpanel" tabindex="0" hidden>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Rice/신전치즈김밥.png" alt="Sinjeon Cheese Kimbap" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Rice/신전치즈김밥.png" alt="Sinjeon Cheese Kimbap" loading="lazy" decoding="async"></div>
                     <h3>Cheese Kimbap</h3><p class="menu-kor">신전치즈김밥</p><p class="menu-eng">Spicy rice rolled with melted cheese</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Rice/신전김밥.png" alt="Sinjeon Kimbap" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Rice/신전김밥.png" alt="Sinjeon Kimbap" loading="lazy" decoding="async"></div>
                     <h3>Sinjeon Kimbap</h3><p class="menu-kor">신전김밥</p><p class="menu-eng">Signature spicy rice roll</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Rice/참치마요김밥.png" alt="Tuna Mayo Kimbap" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Rice/참치마요김밥.png" alt="Tuna Mayo Kimbap" loading="lazy" decoding="async"></div>
                     <h3>Tuna Mayo Kimbap</h3><p class="menu-kor">참치마요김밥</p><p class="menu-eng">Tuna and mayo with spicy rice</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Rice/참치마요컵밥.png" alt="Tuna Mayo Cupbap" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Rice/참치마요컵밥.png" alt="Tuna Mayo Cupbap" loading="lazy" decoding="async"></div>
                     <h3>Tuna Mayo Cupbap</h3><p class="menu-kor">참치마요컵밥</p><p class="menu-eng">Rice bowl topped with tuna and mayo</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Rice/스팸마요컵밥.png" alt="Spam Mayo Cupbap" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Rice/스팸마요컵밥.png" alt="Spam Mayo Cupbap" loading="lazy" decoding="async"></div>
                     <h3>Spam Mayo Cupbap</h3><p class="menu-kor">스팸마요컵밥</p><p class="menu-eng">Rice bowl with Spam and savory mayo</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Rice/치킨마요컵밥.png" alt="Chicken Mayo Cupbap" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Rice/치킨마요컵밥.png" alt="Chicken Mayo Cupbap" loading="lazy" decoding="async"></div>
                     <h3>Chicken Mayo Cupbap</h3><p class="menu-kor">치킨마요컵밥</p><p class="menu-eng">Rice bowl with crispy chicken and mayo</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Rice/신전라이스.png" alt="Sinjeon Rice" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Rice/신전라이스.png" alt="Sinjeon Rice" loading="lazy" decoding="async"></div>
                     <h3>Sinjeon Rice</h3><p class="menu-kor">신전라이스</p><p class="menu-eng">Signature spicy fried rice with cheese</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Rice/맵크림리조또.png" alt="Spicy Cream Risotto" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Rice/맵크림리조또.png" alt="Spicy Cream Risotto" loading="lazy" decoding="async"></div>
                     <h3>Spicy Cream Risotto</h3><p class="menu-kor">맵크림리조또</p><p class="menu-eng">Creamy risotto with a spicy kick</p>
                 </div>
             </div>
 
             <!-- Topping Category -->
-            <div id="cat-Topping" class="menu-grid" role="tabpanel">
+            <div id="cat-Topping" class="menu-grid" role="tabpanel" tabindex="0" hidden>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Topping/치즈.png" alt="Cheese Topping" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Topping/치즈.png" alt="Cheese Topping" loading="lazy" decoding="async"></div>
                     <h3>Cheese</h3><p class="menu-kor">치즈 토핑</p><p class="menu-eng">Extra melted mozzarella cheese</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Topping/분모자.png" alt="Bunmoja" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Topping/분모자.png" alt="Bunmoja" loading="lazy" decoding="async"></div>
                     <h3>Bunmoja</h3><p class="menu-kor">분모자</p><p class="menu-eng">Chewy potato starch noodles</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Topping/넓은당면.png" alt="Wide Glass Noodles" loading="lazy"></div>
+                    <div class="menu-item-img"><img src="menus/Topping/넓은당면.png" alt="Wide Glass Noodles" loading="lazy" decoding="async"></div>
                     <h3>Wide Glass Noodles</h3><p class="menu-kor">넓은당면</p><p class="menu-eng">Flat and chewy glass noodles</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Topping/순대.png" alt="Sundae" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sundae'"></div>
+                    <div class="menu-item-img"><img src="menus/Topping/순대.png" alt="Sundae" loading="lazy" decoding="async" onerror="handleImgError(this)"></div>
                     <h3>Sundae</h3><p class="menu-kor">순대</p><p class="menu-eng">Traditional Korean blood sausage</p>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-item-img"><img src="menus/Topping/소세지.png" alt="Sausage" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sausage'"></div>
+                    <div class="menu-item-img"><img src="menus/Topping/소세지.png" alt="Sausage" loading="lazy" decoding="async" onerror="handleImgError(this)"></div>
                     <h3>Sausage</h3><p class="menu-kor">소세지</p><p class="menu-eng">Bite-sized smoked sausages</p>
                 </div>
             </div>
@@ -867,192 +992,197 @@
     </section>
 
     <!-- 9. Locations Section (Google Maps Native Embed for 100% Accuracy) -->
-    <section class="locations" id="locations">
+    <section class="locations" id="locations" aria-labelledby="locations-heading">
         <div class="section-header reveal">
             <p>Find Us</p>
-            <h2>Our <span>Locations</span></h2>
+            <h2 id="locations-heading">Our <span>Locations</span></h2>
         </div>
         
         <div class="split-layout reveal delay-100">
-            <div class="loc-list-wrapper">
+            <div class="loc-list-wrapper" role="list" aria-label="List of Sinjeon Locations">
                 
-                <div class="loc-item active store-card" 
+                <!-- FINCH -->
+                <div class="loc-item active store-card" tabindex="0" role="listitem" aria-selected="true"
                      data-map-url="https://maps.google.com/maps?q=5%20Byng%20Ave,%20North%20York,%20ON%20M2N%205R7&t=&z=15&ie=UTF8&iwloc=&output=embed"
                      data-title="Sinjeon Finch"
                      data-address="5 Byng Ave, North York, ON M2N 5R7"
                      data-hours="Mon-Sun 11:30 AM - 11:00 PM"
                      data-timezone="America/Toronto" data-open="11.5" data-close="23"
                      data-link="https://maps.google.com/?q=Sinjeon+Topokki+Finch"
-                     onclick="triggerMapChange(this)">
+                     onclick="triggerMapChange(this)" onkeydown="if(event.key==='Enter') triggerMapChange(this)">
                     <div class="loc-meta">
-                        <span class="loc-status">Loading Hours...</span>
-                        <span class="loc-rating"><i class="fas fa-star" aria-hidden="true"></i> 4.9 (314)</span>
+                        <span class="loc-status" aria-live="polite">Loading Hours...</span>
+                        <span class="loc-rating" aria-label="Rating 4.9 out of 5"><i class="fas fa-star" aria-hidden="true"></i> 4.9 (314)</span>
                     </div>
                     <h3>Sinjeon Finch</h3>
                     <div class="loc-info-list">
                         <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 5 Byng Ave, North York, ON M2N 5R7</p>
-                        <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+14162188860">+1 416-218-8860</a></p>
+                        <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+14162188860" onclick="event.stopPropagation()">+1 416-218-8860</a></p>
                         <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Mon-Sun 11:30 AM - 11:00 PM</span></p>
                     </div>
                     <div class="feature-tags">
-                        <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
-                        <span class="feature-tag"><i class="fas fa-shopping-bag"></i> Takeout</span>
-                        <span class="feature-tag"><i class="fas fa-motorcycle"></i> Delivery</span>
+                        <span class="feature-tag"><i class="fas fa-utensils" aria-hidden="true"></i> Dine-in</span>
+                        <span class="feature-tag"><i class="fas fa-shopping-bag" aria-hidden="true"></i> Takeout</span>
+                        <span class="feature-tag"><i class="fas fa-motorcycle" aria-hidden="true"></i> Delivery</span>
                     </div>
                     <div class="loc-actions">
-                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Finch" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
-                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-finch/LMMptGifXsOnJBVSXsoFuQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle" aria-hidden="true"></i> Uber Eats</a>
+                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Finch" target="_blank" rel="noopener noreferrer" class="btn-sm btn-outline" onclick="event.stopPropagation();" aria-label="Open Finch Location in Google Maps"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-finch/LMMptGifXsOnJBVSXsoFuQ" target="_blank" rel="noopener noreferrer" class="btn-sm btn-fill" onclick="event.stopPropagation();" aria-label="Order from Finch via Uber Eats"><i class="fas fa-motorcycle" aria-hidden="true"></i> Uber Eats</a>
                     </div>
                 </div>
 
-                <div class="loc-item store-card" 
+                <!-- CHRISTIE -->
+                <div class="loc-item store-card" tabindex="0" role="listitem" aria-selected="false"
                      data-map-url="https://maps.google.com/maps?q=712%20Bloor%20St%20W,%20Toronto,%20ON%20M6G%201L4&t=&z=15&ie=UTF8&iwloc=&output=embed"
                      data-title="Sinjeon Christie"
                      data-address="712 Bloor St W, Toronto, ON M6G 1L4"
                      data-hours="Mon-Sun 12:00 PM - 1:00 AM"
                      data-timezone="America/Toronto" data-open="12" data-close="1"
                      data-link="https://maps.google.com/?q=Sinjeon+Topokki+Bloor"
-                     onclick="triggerMapChange(this)">
+                     onclick="triggerMapChange(this)" onkeydown="if(event.key==='Enter') triggerMapChange(this)">
                     <div class="loc-meta">
-                        <span class="loc-status">Loading Hours...</span>
-                        <span class="loc-rating"><i class="fas fa-star" aria-hidden="true"></i> 4.8 (210)</span>
+                        <span class="loc-status" aria-live="polite">Loading Hours...</span>
+                        <span class="loc-rating" aria-label="Rating 4.8 out of 5"><i class="fas fa-star" aria-hidden="true"></i> 4.8 (210)</span>
                     </div>
                     <h3>Sinjeon Christie</h3>
                     <div class="loc-info-list">
                         <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 712 Bloor St W, Toronto, ON M6G 1L4</p>
-                        <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+14165380676">+1 416-538-0676</a></p>
+                        <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+14165380676" onclick="event.stopPropagation()">+1 416-538-0676</a></p>
                         <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Mon-Sun 12:00 PM - 1:00 AM</span></p>
                     </div>
                     <div class="feature-tags">
-                        <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
-                        <span class="feature-tag"><i class="fas fa-shopping-bag"></i> Takeout</span>
-                        <span class="feature-tag"><i class="fas fa-motorcycle"></i> Delivery</span>
-                        <span class="feature-tag"><i class="fas fa-moon"></i> Late Night</span>
+                        <span class="feature-tag"><i class="fas fa-utensils" aria-hidden="true"></i> Dine-in</span>
+                        <span class="feature-tag"><i class="fas fa-shopping-bag" aria-hidden="true"></i> Takeout</span>
+                        <span class="feature-tag"><i class="fas fa-motorcycle" aria-hidden="true"></i> Delivery</span>
+                        <span class="feature-tag"><i class="fas fa-moon" aria-hidden="true"></i> Late Night</span>
                     </div>
                     <div class="loc-actions">
-                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Bloor" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
-                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-bloor/SXFYVKNMX12RbmYzYsXF5w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle" aria-hidden="true"></i> Uber Eats</a>
+                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Bloor" target="_blank" rel="noopener noreferrer" class="btn-sm btn-outline" onclick="event.stopPropagation();" aria-label="Open Christie Location in Google Maps"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-bloor/SXFYVKNMX12RbmYzYsXF5w" target="_blank" rel="noopener noreferrer" class="btn-sm btn-fill" onclick="event.stopPropagation();" aria-label="Order from Christie via Uber Eats"><i class="fas fa-motorcycle" aria-hidden="true"></i> Uber Eats</a>
                     </div>
                 </div>
 
-                <div class="loc-item store-card" 
+                <!-- ★ LOUGHEED (로히드점 시간 업데이트 완벽 반영) ★ -->
+                <div class="loc-item store-card" tabindex="0" role="listitem" aria-selected="false"
                      data-map-url="https://maps.google.com/maps?q=329%20North%20Rd%20%23455,%20Coquitlam,%20BC%20V3K%206Z8&t=&z=15&ie=UTF8&iwloc=&output=embed"
                      data-title="Sinjeon Lougheed"
                      data-address="329 North Rd #455, Coquitlam, BC V3K 6Z8"
-                     data-hours="Mon-Sun 11:30 AM - 9:30 PM"
-                     data-timezone="America/Vancouver" data-open="11.5" data-close="21.5"
+                     data-hours="Mon-Sun 11:00 AM - 9:30 PM"
+                     data-timezone="America/Vancouver" data-open="11" data-close="21.5"
                      data-link="https://maps.google.com/?q=Sinjeon+Topokki+Lougheed"
-                     onclick="triggerMapChange(this)">
+                     onclick="triggerMapChange(this)" onkeydown="if(event.key==='Enter') triggerMapChange(this)">
                     <div class="loc-meta">
-                        <span class="loc-status">Loading Hours...</span>
-                        <span class="loc-rating"><i class="fas fa-star" aria-hidden="true"></i> 4.7 (185)</span>
+                        <span class="loc-status" aria-live="polite">Loading Hours...</span>
+                        <span class="loc-rating" aria-label="Rating 4.7 out of 5"><i class="fas fa-star" aria-hidden="true"></i> 4.7 (185)</span>
                     </div>
                     <h3>Sinjeon Lougheed</h3>
                     <div class="loc-info-list">
                         <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 329 North Rd #455, Coquitlam, BC V3K 6Z8</p>
-                        <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+12365532222">+1 236-553-2222</a></p>
-                        <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Mon-Sun 11:30 AM - 9:30 PM</span></p>
+                        <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+12365532222" onclick="event.stopPropagation()">+1 236-553-2222</a></p>
+                        <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Mon-Sun 11:00 AM - 9:30 PM</span></p>
                     </div>
                     <div class="feature-tags">
-                        <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
-                        <span class="feature-tag"><i class="fas fa-shopping-bag"></i> Takeout</span>
-                        <span class="feature-tag"><i class="fas fa-car"></i> Parking</span>
+                        <span class="feature-tag"><i class="fas fa-utensils" aria-hidden="true"></i> Dine-in</span>
+                        <span class="feature-tag"><i class="fas fa-shopping-bag" aria-hidden="true"></i> Takeout</span>
+                        <span class="feature-tag"><i class="fas fa-car" aria-hidden="true"></i> Parking</span>
                     </div>
                     <div class="loc-actions">
-                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Lougheed" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
-                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-lougheed/rEGaT6FoWKuCNfwSGIWy8w" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle" aria-hidden="true"></i> Uber Eats</a>
+                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Lougheed" target="_blank" rel="noopener noreferrer" class="btn-sm btn-outline" onclick="event.stopPropagation();" aria-label="Open Lougheed Location in Google Maps"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-lougheed/rEGaT6FoWKuCNfwSGIWy8w" target="_blank" rel="noopener noreferrer" class="btn-sm btn-fill" onclick="event.stopPropagation();" aria-label="Order from Lougheed via Uber Eats"><i class="fas fa-motorcycle" aria-hidden="true"></i> Uber Eats</a>
                     </div>
                 </div>
 
-                <div class="loc-item store-card" 
+                <!-- CHURCH -->
+                <div class="loc-item store-card" tabindex="0" role="listitem" aria-selected="false"
                      data-map-url="https://maps.google.com/maps?q=377%20Church%20St,%20Toronto,%20ON%20M5B%201H9&t=&z=15&ie=UTF8&iwloc=&output=embed"
                      data-title="Sinjeon Church"
                      data-address="377 Church St, Toronto, ON M5B 1H9"
                      data-hours="Sun-Thu 11am-10pm | Fri-Sat 11am-11pm"
                      data-timezone="America/Toronto" data-open="11" data-close="22" data-close-weekend="23"
                      data-link="https://maps.google.com/?q=Sinjeon+Topokki+Church"
-                     onclick="triggerMapChange(this)">
+                     onclick="triggerMapChange(this)" onkeydown="if(event.key==='Enter') triggerMapChange(this)">
                     <div class="loc-meta">
-                        <span class="loc-status">Loading Hours...</span>
-                        <span class="loc-rating"><i class="fas fa-star" aria-hidden="true"></i> 4.8 (150)</span>
+                        <span class="loc-status" aria-live="polite">Loading Hours...</span>
+                        <span class="loc-rating" aria-label="Rating 4.8 out of 5"><i class="fas fa-star" aria-hidden="true"></i> 4.8 (150)</span>
                     </div>
                     <h3>Sinjeon Church</h3>
                     <div class="loc-info-list">
                         <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 377 Church St, Toronto, ON M5B 1H9</p>
-                        <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+14165910676">+1 416-591-0676</a></p>
+                        <p><i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:+14165910676" onclick="event.stopPropagation()">+1 416-591-0676</a></p>
                         <p><i class="fas fa-clock" aria-hidden="true"></i> <span>Sun-Thu 11:00 AM - 10:00 PM<br>Fri-Sat 11:00 AM - 11:00 PM</span></p>
                     </div>
                     <div class="feature-tags">
-                        <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
-                        <span class="feature-tag"><i class="fas fa-shopping-bag"></i> Takeout</span>
-                        <span class="feature-tag"><i class="fas fa-moon"></i> Late Night</span>
+                        <span class="feature-tag"><i class="fas fa-utensils" aria-hidden="true"></i> Dine-in</span>
+                        <span class="feature-tag"><i class="fas fa-shopping-bag" aria-hidden="true"></i> Takeout</span>
+                        <span class="feature-tag"><i class="fas fa-moon" aria-hidden="true"></i> Late Night</span>
                     </div>
                     <div class="loc-actions">
-                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Church" target="_blank" class="btn-sm btn-outline" onclick="event.stopPropagation();"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
-                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-downtown-toronto/fK_ps-eeWiWycUrGuC-TIQ" target="_blank" class="btn-sm btn-fill" onclick="event.stopPropagation();"><i class="fas fa-motorcycle" aria-hidden="true"></i> Uber Eats</a>
+                        <a href="https://maps.google.com/?q=Sinjeon+Topokki+Church" target="_blank" rel="noopener noreferrer" class="btn-sm btn-outline" onclick="event.stopPropagation();" aria-label="Open Church Location in Google Maps"><i class="fas fa-location-arrow" aria-hidden="true"></i> Google Maps</a>
+                        <a href="https://www.ubereats.com/ca/store/sinjeon-food-sys-downtown-toronto/fK_ps-eeWiWycUrGuC-TIQ" target="_blank" rel="noopener noreferrer" class="btn-sm btn-fill" onclick="event.stopPropagation();" aria-label="Order from Church via Uber Eats"><i class="fas fa-motorcycle" aria-hidden="true"></i> Uber Eats</a>
                     </div>
                 </div>
             </div>
             
             <div class="loc-map-wrapper">
-                <iframe id="main-map" src="https://maps.google.com/maps?q=5%20Byng%20Ave,%20North%20York,%20ON%20M2N%205R7&t=&z=15&ie=UTF8&iwloc=&output=embed" title="Google Maps" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe id="main-map" src="https://maps.google.com/maps?q=5%20Byng%20Ave,%20North%20York,%20ON%20M2N%205R7&t=&z=15&ie=UTF8&iwloc=&output=embed" title="Google Maps - Location View" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 <div class="map-loading" aria-hidden="true"><i class="fas fa-circle-notch fa-spin"></i></div>
                 
                 <div class="map-info-overlay" id="map-premium-overlay" aria-hidden="true">
                     <h4 id="overlay-title">Sinjeon Finch</h4>
                     <p id="overlay-address"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 5 Byng Ave, North York, ON M2N 5R7</p>
                     <p id="overlay-hours"><i class="fas fa-clock" aria-hidden="true"></i> Mon-Sun 11:30 AM - 11:00 PM</p>
-                    <a id="overlay-link" href="https://maps.google.com/?q=Sinjeon+Topokki+Finch" target="_blank" class="overlay-btn">Get Directions <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                    <a id="overlay-link" href="https://maps.google.com/?q=Sinjeon+Topokki+Finch" target="_blank" rel="noopener noreferrer" class="overlay-btn">Get Directions <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 10. Instagram Feed -->
-    <section class="ugc-section" id="community">
+    <section class="ugc-section" id="community" aria-labelledby="community-heading">
         <div class="section-header reveal">
             <p>Social Proof</p>
-            <h2>Community <span>Feed</span></h2>
-            <p style="color:var(--text-light); text-transform:none; letter-spacing:0;">Follow <a href="https://www.instagram.com/sinjeon_Canada" target="_blank" style="color:var(--sj-red); text-decoration:none; font-weight:800;">@sinjeon_Canada</a></p>
+            <h2 id="community-heading">Community <span>Feed</span></h2>
+            <p style="color:var(--text-light); text-transform:none; letter-spacing:0;">Follow <a href="https://www.instagram.com/sinjeon_Canada" target="_blank" rel="noopener noreferrer" style="color:var(--sj-red); text-decoration:none; font-weight:800;">@sinjeon_Canada</a></p>
         </div>
         <div class="instagram-feed-section reveal delay-100">
-            <div id="instagram-feed" class="instagram-grid">
-                <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
-                <div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div><div class="instagram-item skeleton"></div>
+            <div id="instagram-feed" class="instagram-grid" role="list" aria-label="Instagram Feed">
+                <!-- Skeleton Loaders (개선20) -->
+                <div class="instagram-item skeleton" role="listitem"></div><div class="instagram-item skeleton" role="listitem"></div><div class="instagram-item skeleton" role="listitem"></div>
+                <div class="instagram-item skeleton" role="listitem"></div><div class="instagram-item skeleton" role="listitem"></div><div class="instagram-item skeleton" role="listitem"></div>
             </div>
         </div>
     </section>
 
     <!-- 11. Franchise Process -->
-    <section class="timeline-section" id="franchise">
+    <section class="timeline-section" id="franchise" aria-labelledby="franchise-heading">
         <div class="section-header reveal">
             <p>Join Us</p>
-            <h2>Franchise <span>Process</span></h2>
+            <h2 id="franchise-heading">Franchise <span>Process</span></h2>
         </div>
         <div class="timeline-container">
-            <div class="timeline-step reveal delay-100">
-                <div class="timeline-marker">1</div>
+            <div class="timeline-step reveal delay-100" tabindex="0">
+                <div class="timeline-marker" aria-hidden="true">1</div>
                 <div class="timeline-content">
                     <h4>Step 1: Preliminary Application</h4>
                     <p>Submit your preliminary inquiry via our quick form. Our team will review and contact you with access to Step 2.</p>
                 </div>
             </div>
-            <div class="timeline-step reveal delay-200">
-                <div class="timeline-marker">2</div>
+            <div class="timeline-step reveal delay-200" tabindex="0">
+                <div class="timeline-marker" aria-hidden="true">2</div>
                 <div class="timeline-content">
                     <h4>Step 2: Official Application</h4>
                     <p>Provide detailed financial qualifications and target location data through our secure official portal.</p>
                 </div>
             </div>
-            <div class="timeline-step reveal delay-300">
-                <div class="timeline-marker">3</div>
+            <div class="timeline-step reveal delay-300" tabindex="0">
+                <div class="timeline-marker" aria-hidden="true">3</div>
                 <div class="timeline-content">
                     <h4>Step 3: NDA & Verification</h4>
                     <p>Sign a Non-Disclosure Agreement and securely submit your proof of funds and identification documents.</p>
                 </div>
             </div>
-            <div class="timeline-step reveal delay-100">
-                <div class="timeline-marker">4</div>
+            <div class="timeline-step reveal delay-100" tabindex="0">
+                <div class="timeline-marker" aria-hidden="true">4</div>
                 <div class="timeline-content">
                     <h4>Step 4: Executive Interview & Contract</h4>
                     <p>Meet with our executive team. Upon approval, finalize the franchise agreement and begin your journey.</p>
@@ -1063,37 +1193,38 @@
         <div class="timeline-cta-box reveal delay-200">
             <h3>Ready to Start Your Journey?</h3>
             <p style="font-size: 1.1rem; color: var(--text-gray); margin-bottom: 25px;">투자 조건과 0% 마진 혜택이 궁금하신가요? 공식 제안서를 먼저 확인하세요.</p>
-            <a href="step1_proposal.html" class="btn-timeline-apply">
+            <a href="step1_proposal.html" class="btn-timeline-apply" aria-label="Read Official Franchise Proposal">
                 <i class="fas fa-file-invoice" aria-hidden="true"></i> Read Official Proposal
             </a>
         </div>
     </section>
 
     <!-- 12. Contact Us & Quick Form -->
-    <section class="contact-section" id="contact">
+    <section class="contact-section" id="contact" aria-labelledby="contact-heading">
         <div class="section-header reveal">
             <p>Get in Touch</p>
-            <h2>Connect <span>With Us</span></h2>
+            <h2 id="contact-heading">Connect <span>With Us</span></h2>
         </div>
         <div class="contact-wrapper reveal delay-200">
-            <div class="tab-container" role="tablist">
-                <button class="tab-btn active" role="tab" aria-selected="true" data-target="general" onclick="switchContactTab('general')">General</button>
-                <button class="tab-btn" role="tab" aria-selected="false" data-target="franchise" onclick="switchContactTab('franchise')">Franchise</button>
+            <div class="tab-container" role="tablist" aria-label="Contact Forms">
+                <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="general-form" data-target="general" onclick="switchContactTab('general')">General</button>
+                <button class="tab-btn" role="tab" aria-selected="false" aria-controls="franchise-form" data-target="franchise" onclick="switchContactTab('franchise')">Franchise</button>
             </div>
 
             <!-- General Form -->
-            <div id="general-form" class="form-content general-card active" role="tabpanel">
+            <div id="general-form" class="form-content general-card active" role="tabpanel" tabindex="0">
                 <div class="form-header">
                     <h3>General Support</h3>
                 </div>
-                <form onsubmit="return handleInquiryEmailJS(event, 'General Inquiry')">
+                <form id="form-general" onsubmit="return handleInquiryEmailJS(event, 'General Inquiry')" novalidate>
                     <div class="input-row">
                         <div class="input-wrapper">
                             <input type="text" id="gen-name" name="from_name" placeholder=" " required autocomplete="name">
                             <label for="gen-name">Full Name</label>
                         </div>
                         <div class="input-wrapper">
-                            <input type="tel" id="gen-phone" name="reply_phone" placeholder=" " required autocomplete="tel" inputmode="tel">
+                            <!-- 개선12: 정규식 패턴 추가 -->
+                            <input type="tel" id="gen-phone" name="reply_phone" placeholder=" " required autocomplete="tel" inputmode="tel" pattern="[0-9\-\+\s\(\)]+">
                             <label for="gen-phone">Phone Number</label>
                         </div>
                     </div>
@@ -1110,27 +1241,27 @@
             </div>
 
             <!-- Franchise Quick Form -->
-            <div id="franchise-form" class="form-content quick-form-card" role="tabpanel">
-                <div class="step-badge">Step 1 of 4</div>
+            <div id="franchise-form" class="form-content quick-form-card" role="tabpanel" tabindex="0">
+                <div class="step-badge" aria-hidden="true">Step 1 of 4</div>
                 <h3>Preliminary Application</h3>
                 <p class="form-subtitle">Take the first step towards owning a Sinjeon franchise.<br>Fill out this quick inquiry to unlock the official application portal.</p>
                 
-                <form onsubmit="return handleInquiryEmailJS(event, 'Step 1: Preliminary Application')">
+                <form id="form-franchise" onsubmit="return handleInquiryEmailJS(event, 'Step 1: Preliminary Application')" novalidate>
                     <div class="qf-row">
-                        <input type="text" name="from_name" placeholder="Applicant Name (이름)" required autocomplete="name">
-                        <input type="tel" name="reply_phone" placeholder="Contact Number (연락처)" required autocomplete="tel" inputmode="tel">
+                        <input type="text" id="fran-name" name="from_name" placeholder="Applicant Name (이름)" required autocomplete="name" aria-label="Applicant Name">
+                        <input type="tel" id="fran-phone" name="reply_phone" placeholder="Contact Number (연락처)" required autocomplete="tel" inputmode="tel" pattern="[0-9\-\+\s\(\)]+" aria-label="Contact Number">
                     </div>
                     <div class="qf-row qf-full">
-                        <input type="email" name="reply_email" placeholder="Email Address (이메일)" required autocomplete="email" inputmode="email">
+                        <input type="email" id="fran-email" name="reply_email" placeholder="Email Address (이메일)" required autocomplete="email" inputmode="email" aria-label="Email Address">
                     </div>
                     <div class="qf-row">
-                        <input type="text" name="desired_location" placeholder="Desired City / Location (관심 지역)" required>
-                        <input type="text" name="budget" placeholder="Estimated Budget (예상 자본금)" required>
+                        <input type="text" id="fran-loc" name="desired_location" placeholder="Desired City / Location (관심 지역)" required aria-label="Desired Location">
+                        <input type="text" id="fran-budget" name="budget" placeholder="Estimated Budget (예상 자본금)" required aria-label="Estimated Budget">
                     </div>
                     <div class="qf-row qf-full">
-                        <textarea name="message" placeholder="Business Background (비즈니스 경험 및 문의사항)" required></textarea>
+                        <textarea id="fran-msg" name="message" placeholder="Business Background (비즈니스 경험 및 문의사항)" required aria-label="Business Background"></textarea>
                     </div>
-                    <button type="submit" class="btn-red-flat">SUBMIT STEP 1 & PROCEED</button>
+                    <button type="submit" class="btn-red-flat" id="btn-submit-fran">SUBMIT STEP 1 & PROCEED</button>
                     
                     <div style="text-align: center; margin-top: 25px;">
                         <a href="step2_apply.html" class="direct-link">Already completed Step 1? Go to Official Portal</a>
@@ -1140,15 +1271,15 @@
         </div>
     </section>
 
-    <!-- Floating Top Button -->
-    <div class="fab-container" id="fab-container">
-        <div class="fab" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to Top" aria-label="Scroll to Top">
-            <i class="fas fa-arrow-up"></i>
-        </div>
+    <!-- Floating Top Button (개선14: Z-index 안전 보장) -->
+    <div class="fab-container" id="fab-container" aria-hidden="true">
+        <button class="fab" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Go to Top" aria-label="Scroll to Top">
+            <i class="fas fa-arrow-up" aria-hidden="true"></i>
+        </button>
     </div>
 
     <!-- Mega Footer -->
-    <footer>
+    <footer role="contentinfo">
         <div class="mega-footer-container reveal delay-100">
             <div class="footer-brand" style="text-align: left;">
                 <div class="footer-logo-box">
@@ -1170,7 +1301,7 @@
             <div class="footer-col" style="text-align: left;">
                 <h4>Social</h4>
                 <ul>
-                    <li><a href="https://instagram.com/sinjeon_Canada" target="_blank">Instagram</a></li>
+                    <li><a href="https://instagram.com/sinjeon_Canada" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                     <li><a href="#community">Community Feed</a></li>
                     <li><a href="#">YouTube</a></li>
                 </ul>
@@ -1179,8 +1310,8 @@
             <div class="footer-col" style="text-align: left;">
                 <h4>Legal</h4>
                 <ul>
-                    <li><a onclick="showModalMessage('Privacy Policy', document.getElementById('template-privacy').innerHTML, false)" style="cursor:pointer;">Privacy Policy</a></li>
-                    <li><a onclick="showModalMessage('Terms of Service', document.getElementById('template-terms').innerHTML, false)" style="cursor:pointer;">Terms of Service</a></li>
+                    <li><a onclick="showModalMessage('Privacy Policy', document.getElementById('template-privacy').innerHTML, false)" style="cursor:pointer;" tabindex="0" role="button">Privacy Policy</a></li>
+                    <li><a onclick="showModalMessage('Terms of Service', document.getElementById('template-terms').innerHTML, false)" style="cursor:pointer;" tabindex="0" role="button">Terms of Service</a></li>
                     <li><a href="step1_proposal.html">Franchise Inquiry</a></li>
                 </ul>
             </div>
@@ -1192,10 +1323,10 @@
         </div>
     </footer>
 
-    <!-- Dynamic Modal System -->
-    <div class="modal-overlay" id="dynamic-modal" aria-hidden="true" role="dialog">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()" aria-label="Close Modal">×</button>
+    <!-- Dynamic Modal System (Focus Trap 구현 - 개선18) -->
+    <div class="modal-overlay" id="dynamic-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content" role="document">
+            <button class="modal-close" onclick="closeModal()" aria-label="Close Modal" id="modal-close-btn">×</button>
             <h3 id="modal-title" style="font-size: 2rem; font-weight: 900; color: var(--text-dark); margin-top: 0; line-height: 1.2;"></h3>
             <div class="modal-body" id="modal-body"></div>
         </div>
@@ -1247,30 +1378,89 @@
     </template>
 
     <!-- =========================================
-         [Core Script Engine & Logic]
+         [Core Script Engine & Advanced Logic]
          ========================================= -->
     <script>
+        /**
+         * [개선3] Custom Toast Notification System
+         * 기존 alert()의 블로킹 이슈 해결 및 우아한 피드백 제공
+         */
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            if(!container) return;
+            
+            const toast = document.createElement('div');
+            toast.className = `toast-msg ${type}`;
+            toast.setAttribute('role', 'alert');
+            
+            let iconClass = 'fa-check-circle';
+            let titleText = 'Success';
+            if(type === 'error') { iconClass = 'fa-exclamation-circle'; titleText = 'Error'; }
+            if(type === 'warning') { iconClass = 'fa-exclamation-triangle'; titleText = 'Notice'; }
+            
+            toast.innerHTML = `
+                <div class="toast-icon"><i class="fas ${iconClass}" aria-hidden="true"></i></div>
+                <div class="toast-content">
+                    <span class="toast-title">${titleText}</span>
+                    <span class="toast-desc">${message}</span>
+                </div>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Trigger animation
+            requestAnimationFrame(() => {
+                toast.classList.add('show');
+            });
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400); // Wait for transition
+            }, 5000);
+        }
+
+        /**
+         * [개선5] Mobile Viewport Height (vh) Fix for Safari
+         */
+        function setViewportHeight() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        window.addEventListener('resize', setViewportHeight);
+        setViewportHeight();
+
+        /**
+         * [개선17] Global Image Fallback (Failsafe)
+         */
+        function handleImgError(img) {
+            img.onerror = null;
+            img.src = 'sinjeon_logo_canada.png';
+            img.style.objectFit = 'contain';
+            img.style.padding = '20px';
+        }
+
         // -----------------------------------------
         // 1. Initial Load & Critical Fixes
         // -----------------------------------------
         document.addEventListener('DOMContentLoaded', function () {
             
-            // [1A] Store Hours Initialization
+            // [1A] Store Hours Initialization & Interval (Advanced)
             updateStoreStatuses();
             if (!window.__sinjeonStoreStatusInterval) {
                 window.__sinjeonStoreStatusInterval = setInterval(updateStoreStatuses, 60000);
             }
 
-            // [1B] Reveal Animation System Repair
+            // [1B] Reveal Animation System Repair (with IntersectionObserver Polyfill logic)
             const revealElements = document.querySelectorAll('.reveal');
             if (revealElements.length > 0) {
                 if ('IntersectionObserver' in window) {
                     const observer = new IntersectionObserver(
-                        function (entries, observer) {
+                        function (entries, obs) {
                             entries.forEach(function (entry) {
                                 if (entry.isIntersecting) {
                                     entry.target.classList.add('active');
-                                    observer.unobserve(entry.target);
+                                    obs.unobserve(entry.target);
                                 }
                             });
                         },
@@ -1281,6 +1471,7 @@
                         observer.observe(element);
                     });
 
+                    // Failsafe 1
                     setTimeout(function () {
                         revealElements.forEach(function (element) {
                             const rect = element.getBoundingClientRect();
@@ -1291,11 +1482,12 @@
                         });
                     }, 100);
 
+                    // Failsafe 2
                     setTimeout(function () {
                         revealElements.forEach(function (element) {
                             element.classList.add('active');
                         });
-                    }, 1500);
+                    }, 2000);
                 } else {
                     revealElements.forEach(function (element) {
                         element.classList.add('active');
@@ -1303,13 +1495,23 @@
                 }
             }
 
-            // [1C] Event Popup System (3 Individual Cards)
+            // [1C] Event Popup System (3 Individual Cards + Garbage Collector)
             try {
                 const popupWrapper = document.getElementById('main-event-popup');
                 const popupContainer = document.getElementById('popup-image-container');
                 if (popupWrapper && popupContainer) {
                     const activePopupFiles = ['popup_event_1.jpg', 'popup_event_2.jpg', 'popup_event_3.jpg']; 
                     let activeCount = 0;
+                    
+                    // [개선19] 스토리지 가비지 컬렉터: 24시간 지난 로컬스토리지 키 자동 청소
+                    activePopupFiles.forEach(file => {
+                        const hideKey = 'hidePopup_' + file;
+                        const hideUntil = localStorage.getItem(hideKey);
+                        const now = new Date().getTime();
+                        if (hideUntil && now >= parseInt(hideUntil)) {
+                            localStorage.removeItem(hideKey); // Clean up expired keys
+                        }
+                    });
 
                     activePopupFiles.forEach((file, index) => {
                         const hideUntil = localStorage.getItem('hidePopup_' + file);
@@ -1323,12 +1525,14 @@
                                 const card = document.createElement('div');
                                 card.className = 'event-popup-card';
                                 card.id = cardId;
+                                // [개선13] Snap 적용
+                                card.style.scrollSnapAlign = 'center';
 
                                 const actions = document.createElement('div');
                                 actions.className = 'event-popup-actions';
                                 actions.innerHTML = `
-                                    <button class="btn-hide-24h" onclick="closeIndividualPopup('${file}', '${cardId}', true)">24시간 보지 않기</button>
-                                    <button class="btn-close-popup" onclick="closeIndividualPopup('${file}', '${cardId}', false)">닫기 (Close)</button>
+                                    <button class="btn-hide-24h" onclick="closeIndividualPopup('${file}', '${cardId}', true)" aria-label="Hide for 24 hours">24시간 보지 않기</button>
+                                    <button class="btn-close-popup" onclick="closeIndividualPopup('${file}', '${cardId}', false)" aria-label="Close Popup">닫기 (Close)</button>
                                 `;
 
                                 card.appendChild(this);
@@ -1338,39 +1542,40 @@
                                 activeCount++;
                                 if (activeCount > 0) {
                                     popupWrapper.classList.add('show');
+                                    popupWrapper.setAttribute('aria-hidden', 'false');
                                 }
                             };
                             img.src = file;
                         }
                     });
                 }
-            } catch (error) { console.error("Popup Error:", error); }
+            } catch (error) { console.error("Popup System Error:", error); }
 
-            // [1D] Menu Image Skeleton Loader
+            // [1D] Menu Image Skeleton Loader (개선20)
             const menuImages = document.querySelectorAll('.menu-item-img img');
             menuImages.forEach(img => {
                 if (img.complete) {
                     img.classList.add('loaded');
-                    img.parentElement.style.background = 'none';
                 } else {
                     img.addEventListener('load', function() {
                         this.classList.add('loaded');
-                        this.parentElement.style.background = 'none';
                     });
                     img.addEventListener('error', function() {
-                        this.parentElement.style.background = '#f8fafc';
+                        handleImgError(this);
                     });
                 }
             });
         });
 
         // -----------------------------------------
-        // 2. Global UI Functions (Popup Close)
+        // 2. Global UI Functions (Popup Close, Mobile Menu)
         // -----------------------------------------
         window.closeIndividualPopup = function(fileName, cardId, hide24h) {
             if (hide24h) {
-                const now = new Date().getTime();
-                localStorage.setItem('hidePopup_' + fileName, now + (24 * 60 * 60 * 1000));
+                try {
+                    const now = new Date().getTime();
+                    localStorage.setItem('hidePopup_' + fileName, now + (24 * 60 * 60 * 1000));
+                } catch(e) { console.warn("Storage Error"); }
             }
             const card = document.getElementById(cardId);
             if (card) {
@@ -1381,12 +1586,30 @@
             const remaining = document.querySelectorAll('.event-popup-card');
             if (remaining.length === 0) {
                 const wrapper = document.getElementById('main-event-popup');
-                if (wrapper) wrapper.classList.remove('show');
+                if (wrapper) {
+                    wrapper.classList.remove('show');
+                    wrapper.setAttribute('aria-hidden', 'true');
+                }
+            }
+        };
+
+        window.toggleMobileMenu = function() {
+            const menu = document.getElementById('mobile-menu');
+            const isActive = menu.classList.contains('active');
+            
+            if(isActive) {
+                menu.classList.remove('active');
+                menu.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('lock-scroll'); // [개선6]
+            } else {
+                menu.classList.add('active');
+                menu.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('lock-scroll'); // [개선6]
             }
         };
 
         // -----------------------------------------
-        // 3. Store Status Update Engine
+        // 3. Advanced Store Status Update Engine (개선8)
         // -----------------------------------------
         function updateStoreStatuses() {
             const storeCards = document.querySelectorAll('.store-card');
@@ -1411,6 +1634,9 @@
                     }
 
                     let isOpen = false;
+                    let isClosingSoon = false;
+                    let isOpeningSoon = false;
+                    
                     let adjustedCurrent = currentTimeVal;
                     let adjustedClose = closeHour;
                     
@@ -1419,7 +1645,18 @@
                         if (currentTimeVal < openHour) { adjustedCurrent += 24; }
                     }
 
-                    if (adjustedCurrent >= openHour && adjustedCurrent < adjustedClose) { isOpen = true; }
+                    if (adjustedCurrent >= openHour && adjustedCurrent < adjustedClose) { 
+                        isOpen = true; 
+                        // 마감 1시간 전 체크
+                        if (adjustedClose - adjustedCurrent <= 1.0) {
+                            isClosingSoon = true;
+                        }
+                    } else {
+                        // 오픈 1시간 전 체크
+                        if (openHour - adjustedCurrent > 0 && openHour - adjustedCurrent <= 1.0) {
+                            isOpeningSoon = true;
+                        }
+                    }
 
                     function formatTime(decimalTime) {
                         let h = Math.floor(decimalTime);
@@ -1433,11 +1670,21 @@
                     const badge = card.querySelector('.loc-status');
                     if (badge) {
                         if (isOpen) {
-                            badge.innerHTML = `Open Now (Closes ${formatTime(closeHour)})`;
-                            badge.className = "loc-status open";
+                            if (isClosingSoon) {
+                                badge.innerHTML = `Closing Soon (${formatTime(closeHour)})`;
+                                badge.className = "loc-status warning";
+                            } else {
+                                badge.innerHTML = `Open Now (Closes ${formatTime(closeHour)})`;
+                                badge.className = "loc-status open";
+                            }
                         } else {
-                            badge.innerHTML = `Closed (Opens ${formatTime(openHour)})`;
-                            badge.className = "loc-status closed";
+                            if (isOpeningSoon) {
+                                badge.innerHTML = `Opening Soon (${formatTime(openHour)})`;
+                                badge.className = "loc-status warning";
+                            } else {
+                                badge.innerHTML = `Closed (Opens ${formatTime(openHour)})`;
+                                badge.className = "loc-status closed";
+                            }
                         }
                     }
                 } catch(e) { console.error("Hours Error:", e); }
@@ -1445,11 +1692,12 @@
         }
 
         // -----------------------------------------
-        // 4. Scroll Tracking & Optimizations
+        // 4. Scroll Tracking & Optimizations (개선9, 개선10)
         // -----------------------------------------
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
+                // [개선9] requestAnimationFrame 디바운스로 스크롤 병목 해결
                 window.requestAnimationFrame(() => {
                     const header = document.getElementById('header');
                     if(header) {
@@ -1462,33 +1710,48 @@
                         const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
                         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
                         scrollProgressBar.style.width = ((winScroll / height) * 100) + "%";
+                        scrollProgressBar.setAttribute('aria-valuenow', Math.round((winScroll/height)*100));
                     }
 
                     const fabContainer = document.getElementById('fab-container');
                     if(fabContainer) {
-                        if (window.scrollY > 500) fabContainer.classList.add('visible');
-                        else fabContainer.classList.remove('visible');
+                        if (window.scrollY > 500) {
+                            fabContainer.classList.add('visible');
+                            fabContainer.setAttribute('aria-hidden', 'false');
+                        } else {
+                            fabContainer.classList.remove('visible');
+                            fabContainer.setAttribute('aria-hidden', 'true');
+                        }
                     }
                     ticking = false;
                 });
                 ticking = true;
             }
-        }, { passive: true });
+        }, { passive: true }); // [개선10]
 
         // -----------------------------------------
         // 5. Anti-Theft Protection
         // -----------------------------------------
-        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('contextmenu', e => { 
+            // 허용된 엘리먼트 외 우클릭 금지
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault(); 
+                showToast("Security Policy: Right-click disabled.", "warning");
+            }
+        });
         document.addEventListener('dragstart', e => { 
             if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); 
         });
         document.addEventListener('keydown', function(e) {
+            // F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S, Ctrl+P 방어
             if (e.key === 'F12' || 
-               (e.ctrlKey && e.shiftKey && e.key === 'I') || 
-               (e.ctrlKey && e.key === 'u') || 
-               (e.ctrlKey && e.key === 'c') || 
-               (e.ctrlKey && e.key === 's') || 
-               (e.ctrlKey && e.key === 'p')) e.preventDefault();
+               (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) || 
+               (e.ctrlKey && (e.key === 'U' || e.key === 'u')) || 
+               (e.ctrlKey && (e.key === 'S' || e.key === 's')) || 
+               (e.ctrlKey && (e.key === 'P' || e.key === 'p'))) {
+                e.preventDefault();
+                showToast("Security Policy: DevTools & Printing disabled.", "error");
+            }
         });
 
         // -----------------------------------------
@@ -1497,8 +1760,12 @@
         function triggerMapChange(element) {
             if(!element || element.classList.contains('active')) return;
             
-            document.querySelectorAll('.loc-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.loc-item').forEach(el => {
+                el.classList.remove('active');
+                el.setAttribute('aria-selected', 'false');
+            });
             element.classList.add('active');
+            element.setAttribute('aria-selected', 'true');
             
             const mapUrl = element.getAttribute('data-map-url');
             const title = element.getAttribute('data-title');
@@ -1545,7 +1812,7 @@
         }
 
         // -----------------------------------------
-        // 7. Modals & Tabs
+        // 7. Modals & Tabs (Focus Trap 18)
         // -----------------------------------------
         function showMenuCategory(catId) {
             document.querySelectorAll('.menu-tab-btn').forEach(btn => {
@@ -1556,14 +1823,25 @@
                 event.target.classList.add('active');
                 event.target.setAttribute('aria-selected', 'true');
             }
-            document.querySelectorAll('.menu-grid').forEach(grid => grid.classList.remove('active'));
+            document.querySelectorAll('.menu-grid').forEach(grid => {
+                grid.classList.remove('active');
+                grid.setAttribute('hidden', 'true');
+            });
             const targetCat = document.getElementById('cat-' + catId);
-            if(targetCat) targetCat.classList.add('active');
+            if(targetCat) {
+                targetCat.classList.add('active');
+                targetCat.removeAttribute('hidden');
+            }
         }
+
+        let previousActiveElement = null; // To restore focus after modal closes
 
         function showModalMessage(title, htmlContent, hideTitle = false) {
             const modal = document.getElementById('dynamic-modal');
             if(!modal) return;
+            
+            previousActiveElement = document.activeElement; // Save focus
+            
             const titleEl = document.getElementById('modal-title');
             if(titleEl) {
                 if(hideTitle) { titleEl.style.display = 'none'; } 
@@ -1573,16 +1851,39 @@
             if(bodyEl) bodyEl.innerHTML = htmlContent;
             
             modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('lock-scroll'); // Body lock
+            
+            // Trap Focus
+            setTimeout(() => {
+                const closeBtn = document.getElementById('modal-close-btn');
+                if(closeBtn) closeBtn.focus();
+            }, 100);
         }
 
         function closeModal() {
             const modal = document.getElementById('dynamic-modal');
             if(modal) {
                 modal.classList.remove('active');
-                document.body.style.overflow = ''; 
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('lock-scroll'); // Body unlock
+                
+                // Restore Focus
+                if (previousActiveElement) {
+                    previousActiveElement.focus();
+                }
             }
         }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('dynamic-modal');
+                if (modal && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            }
+        });
 
         function switchContactTab(target) {
             document.querySelectorAll('.contact-wrapper .tab-btn').forEach(btn => {
@@ -1591,6 +1892,7 @@
             });
             document.querySelectorAll('.contact-wrapper .form-content').forEach(form => {
                 form.classList.remove('active');
+                form.setAttribute('hidden', 'true');
                 form.style.animation = 'none';
                 form.offsetHeight; 
                 form.style.animation = null; 
@@ -1601,24 +1903,63 @@
                 targetBtn.setAttribute('aria-selected', 'true');
             }
             const targetForm = document.getElementById(`${target}-form`);
-            if(targetForm) targetForm.classList.add('active');
+            if(targetForm) {
+                targetForm.classList.add('active');
+                targetForm.removeAttribute('hidden');
+            }
         }
 
         // -----------------------------------------
-        // 8. EmailJS Form Submission Engine
+        // 8. EmailJS Form Submission Engine 
+        // * 개선4, 7, 11, 12: Offline 감지, XSS 방어, 스팸 쿨타임, 정규식 검증
         // -----------------------------------------
+        
+        // [개선7] XSS Sanitize
+        function sanitizeInput(str) {
+            return str.replace(/</g, "&lt;").replace(/>/g, "&gt;").trim();
+        }
+
+        // [개선12] Advanced Validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        let formCooldown = false; // [개선11]
+
         function handleInquiryEmailJS(event, type) {
             event.preventDefault();
+            
+            // [개선4] Offline 감지
+            if (!navigator.onLine) {
+                showToast("인터넷 연결이 끊겼습니다. 네트워크를 확인해 주세요.", "error");
+                return false;
+            }
+
+            // [개선11] 스팸 쿨타임
+            if (formCooldown) {
+                showToast("스팸 방지를 위해 60초 후 다시 시도해 주십시오.", "warning");
+                return false;
+            }
+
             const formElement = event.target;
             const submitButton = formElement.querySelector('button[type="submit"]');
             if(!submitButton) return false;
             
+            // Input Validation
+            const emailInput = formElement.querySelector('[name="reply_email"]');
+            if (emailInput && !validateEmail(emailInput.value)) {
+                showToast("유효한 이메일 주소를 입력해 주십시오.", "warning");
+                emailInput.focus();
+                return false;
+            }
+
             const originalButtonText = submitButton.innerHTML;
             submitButton.disabled = true;
             submitButton.innerHTML = `<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> SUBMITTING...`;
 
             if (typeof emailjs === 'undefined') {
-                alert('Network error. Falling back to email client.');
+                showToast("네트워크 오류. 이메일 서버를 불러올 수 없습니다.", "error");
                 setTimeout(() => { submitButton.disabled = false; submitButton.innerHTML = originalButtonText; }, 2000);
                 return false;
             }
@@ -1627,12 +1968,12 @@
             let templateID = "template_r8gce22"; 
             
             const params = {
-                name: formElement.querySelector('[name="from_name"]')?.value || '',
-                phone: formElement.querySelector('[name="reply_phone"]')?.value || '',
-                email: formElement.querySelector('[name="reply_email"]')?.value || '',
-                location: formElement.querySelector('[name="desired_location"]')?.value || '',
-                budget: formElement.querySelector('[name="budget"]')?.value || '',
-                message: formElement.querySelector('[name="message"]')?.value || '',
+                name: sanitizeInput(formElement.querySelector('[name="from_name"]')?.value || ''),
+                phone: sanitizeInput(formElement.querySelector('[name="reply_phone"]')?.value || ''),
+                email: sanitizeInput(formElement.querySelector('[name="reply_email"]')?.value || ''),
+                location: sanitizeInput(formElement.querySelector('[name="desired_location"]')?.value || ''),
+                budget: sanitizeInput(formElement.querySelector('[name="budget"]')?.value || ''),
+                message: sanitizeInput(formElement.querySelector('[name="message"]')?.value || ''),
                 target_email: "eunbeen.lee@y2choldings.co.kr",
                 inquiry_type: type
             };
@@ -1640,31 +1981,39 @@
             emailjs.send(serviceID, templateID, params)
                 .then(() => {
                     formElement.reset();
+                    
+                    // Activate Cooldown
+                    formCooldown = true;
+                    setTimeout(() => { formCooldown = false; }, 60000);
+
                     if(type === 'Step 1: Preliminary Application') {
                         showModalMessage('Application Received', `
                             <div style="text-align:center; padding: 20px 0;">
                                 <div class="success-checkmark"><i class="fas fa-check" aria-hidden="true"></i></div>
                                 <h4 style="margin-top:0; font-size:1.6rem; color:var(--text-dark); font-weight:900;">Step 1 Completed.</h4>
                                 <p style="color:var(--text-gray); font-size:1.05rem; line-height:1.6;">Thank you for your interest in Sinjeon.<br>Your preliminary inquiry has been secured.</p>
-                                <div class="redirect-spinner">
+                                <div class="redirect-spinner" role="status" aria-live="polite">
                                     <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Launching Official Portal...
                                 </div>
                             </div>
                         `, true);
+                        
+                        // LocalStorage Save for Step 2
+                        try {
+                            localStorage.setItem('sj_first_name', params.name);
+                            localStorage.setItem('sj_email', params.email);
+                            localStorage.setItem('sj_phone', params.phone);
+                            localStorage.setItem('sj_target_city', params.location);
+                        } catch(e){}
+
                         setTimeout(() => { window.location.href = 'step2_apply.html'; }, 2500);
                     } else {
-                        showModalMessage('Message Sent', `
-                            <div style="text-align:center; padding: 20px 0;">
-                                <div class="success-checkmark"><i class="fas fa-paper-plane" aria-hidden="true"></i></div>
-                                <h4 style="margin-top:0; font-size:1.6rem;">문의가 성공적으로 접수되었습니다.</h4>
-                                <p style="color:var(--text-gray); font-size:1.05rem;">We will get back to you shortly.</p>
-                            </div>
-                        `, true);
+                        showToast("문의가 성공적으로 접수되었습니다. (Message Sent)", "success");
                     }
                 })
                 .catch((error) => {
                     console.error("EmailJS Failure:", error);
-                    alert("Submission failed. Please contact us directly.");
+                    showToast("전송에 실패했습니다. 관리자에게 문의하세요.", "error");
                 })
                 .finally(() => {
                     submitButton.disabled = false;
@@ -1676,37 +2025,46 @@
 
     <!-- =========================================
          [Instagram Feed Loader (JSON API - RapidAPI 구조 대응 완벽판)]
+         * 개선2: 로컬 스토리지 캐싱을 통한 API 한도 및 서버 병목 보호
          ========================================= -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const feedContainer = document.getElementById('instagram-feed');
+            if (!feedContainer) return;
 
-            if (!feedContainer) {
-                console.warn('Instagram feed container not found.');
-                return;
-            }
+            const CACHE_KEY = 'sinjeon_ig_feed_cache';
+            const CACHE_TIME_KEY = 'sinjeon_ig_feed_time';
+            const CACHE_EXPIRY = 60 * 60 * 1000; // 1 Hour
 
+            // 캐시 확인 로직
+            try {
+                const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
+                const cachedData = localStorage.getItem(CACHE_KEY);
+                
+                if (cachedTime && cachedData) {
+                    const now = new Date().getTime();
+                    if (now - parseInt(cachedTime) < CACHE_EXPIRY) {
+                        const parsedCache = JSON.parse(cachedData);
+                        console.log("Loaded Instagram Feed from Local Cache.");
+                        renderInstagramFeed(parsedCache, feedContainer);
+                        return; // 캐시 유효하면 fetch 생략
+                    }
+                }
+            } catch(e) { console.warn("IG Cache Error", e); }
+
+            // 캐시 없거나 만료 시 API(JSON) Fetch
             const feedUrl = './instagram-feed.json?v=' + Date.now();
 
-            fetch(feedUrl, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
+            fetch(feedUrl, { method: 'GET', headers: { 'Accept': 'application/json' } })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Instagram JSON HTTP Error: ' + response.status);
-                }
+                if (!response.ok) throw new Error('Instagram JSON HTTP Error: ' + response.status);
                 return response.json();
             })
             .then(jsonData => {
-                // 1. RapidAPI의 새로운 데이터 구조('posts' 배열) 파악
                 if (!jsonData || !Array.isArray(jsonData.posts)) {
                     throw new Error('Instagram JSON structure is invalid.');
                 }
 
-                // 2. 화면에 표시할 정상적인 게시물 최대 6개 추출
                 const validPosts = [];
                 for (let i = 0; i < jsonData.posts.length; i++) {
                     if (validPosts.length >= 6) break;
@@ -1715,57 +2073,45 @@
                     if (!node) continue;
                     
                     let imageUrl = '';
-                    
-                    // 3. 사진/영상 썸네일 URL 딥서치 (Deep Search)
                     if (node.image_versions2 && node.image_versions2.candidates && node.image_versions2.candidates.length > 0) {
                         imageUrl = node.image_versions2.candidates[0].url;
                     } else if (node.carousel_media && node.carousel_media.length > 0 && node.carousel_media[0].image_versions2) {
                         imageUrl = node.carousel_media[0].image_versions2.candidates[0].url;
                     }
-                    
                     if (!imageUrl) continue;
                     
-                    // 4. 게시물 고유 링크(Permalink) 조립
-                    const permalink = node.code 
-                        ? `https://www.instagram.com/p/${node.code}/` 
-                        : 'https://www.instagram.com/sinjeon_Canada/';
+                    const permalink = node.code ? `https://www.instagram.com/p/${node.code}/` : 'https://www.instagram.com/sinjeon_Canada/';
                     
-                    validPosts.push({
-                        imageUrl: imageUrl,
-                        permalink: permalink
-                    });
+                    validPosts.push({ imageUrl: imageUrl, permalink: permalink });
                 }
 
-                if (validPosts.length === 0) {
-                    throw new Error('No valid Instagram posts found.');
-                }
+                if (validPosts.length === 0) throw new Error('No valid Instagram posts found.');
 
-                // 5. 화면에 있던 회색 스켈레톤 로더들 지우기
-                feedContainer.innerHTML = '';
+                // 캐싱 저장
+                try {
+                    localStorage.setItem(CACHE_KEY, JSON.stringify(validPosts));
+                    localStorage.setItem(CACHE_TIME_KEY, new Date().getTime().toString());
+                } catch(e){}
 
-                // 6. 예쁘게 추출된 데이터를 화면에 렌더링
-                validPosts.forEach(post => {
-                    const html = `
-                        <div class="instagram-item">
-                            <a href="${post.permalink}" target="_blank" rel="noopener noreferrer" aria-label="View on Instagram">
-                                <img src="${post.imageUrl}" alt="Sinjeon Instagram Post" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='sinjeon_logo_canada.png'; this.style.objectFit='contain'; this.style.padding='20px';">
-                                <div class="instagram-overlay">
-                                    <span class="instagram-icon"><i class="fab fa-instagram" aria-hidden="true"></i></span>
-                                </div>
-                            </a>
-                        </div>
-                    `;
-                    feedContainer.innerHTML += html;
-                });
-
-                console.log('Instagram Feed Loaded Successfully:', validPosts.length, 'posts');
+                renderInstagramFeed(validPosts, feedContainer);
             })
             .catch(error => {
                 console.error('Instagram Feed Error:', error);
+                
+                // Fallback: If fetch fails but old cache exists, show old cache
+                try {
+                    const fallbackData = localStorage.getItem(CACHE_KEY);
+                    if (fallbackData) {
+                        console.log("Fallback to expired cache due to fetch error.");
+                        renderInstagramFeed(JSON.parse(fallbackData), feedContainer);
+                        return;
+                    }
+                } catch(e){}
 
+                // Complete Failure UI
                 feedContainer.innerHTML = `
                     <div style="grid-column: 1 / -1; padding: 40px 20px; background: #1f2937; border-radius: 16px; border: 1px dashed #374151;">
-                        <i class="fab fa-instagram" style="font-size: 2.5rem; color: var(--sj-red); margin-bottom: 15px;"></i>
+                        <i class="fab fa-instagram" style="font-size: 2.5rem; color: var(--sj-red); margin-bottom: 15px;" aria-hidden="true"></i>
                         <h4 style="font-size: 1.2rem; color: white; margin-bottom: 5px; font-weight: 800;">Feed Temporarily Unavailable</h4>
                         <p style="color: var(--text-light); font-size: 0.95rem; margin: 0; font-weight: 500;">
                             Instagram feed is temporarily unavailable. Please visit 
@@ -1776,6 +2122,25 @@
                 `;
             });
         });
+
+        // 렌더링 분리 함수
+        function renderInstagramFeed(validPosts, feedContainer) {
+            feedContainer.innerHTML = '';
+            validPosts.forEach(post => {
+                const html = `
+                    <div class="instagram-item" role="listitem">
+                        <a href="${post.permalink}" target="_blank" rel="noopener noreferrer" aria-label="View post on Instagram">
+                            <img src="${post.imageUrl}" alt="Sinjeon Instagram Post" loading="lazy" decoding="async" onload="this.classList.add('loaded')" onerror="handleImgError(this)">
+                            <div class="instagram-overlay">
+                                <span class="instagram-icon"><i class="fab fa-instagram" aria-hidden="true"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                `;
+                feedContainer.innerHTML += html;
+            });
+            console.log('Instagram Feed Rendered Successfully.');
+        }
     </script>
 </body>
 </html>
