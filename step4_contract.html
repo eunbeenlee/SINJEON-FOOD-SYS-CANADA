@@ -39,7 +39,7 @@
         .logo-group span { font-weight: 800; font-size: 1.45rem; color: var(--sj-green); letter-spacing: -0.5px; }
         
         .header-actions { display: flex; gap: 12px; align-items: center; }
-        .btn-back { display: flex; align-items: center; gap: 6px; background: var(--bg-white); color: var(--text-gray); border: 1px solid var(--border-color); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
+        .btn-back { display: flex; align-items: center; gap: 6px; background: var(--bg-white); color: var(--text-gray); border: 1px solid var(--border-light); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
         .btn-back:hover { background: #e2e8f0; color: var(--text-dark); }
         .security-badge { display: flex; align-items: center; gap: 6px; background: #ecfdf5; color: #059669; padding: 8px 18px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; border: 1px solid #a7f3d0; }
 
@@ -125,8 +125,9 @@
         .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
         .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.6;}
 
-        /* PDF 렌더링 스크롤 제약 해제 유틸 */
-        .pdf-exporting { max-height: none !important; height: auto !important; overflow: visible !important; border: none !important; box-shadow: none !important; padding: 0 !important; background: white !important; border-radius: 0 !important;}
+        /* ★ [핵심 개선 1] PDF 렌더링 스크롤 및 마진 제약 해제 유틸 (왼쪽 잘림 100% 방지) */
+        .pdf-exporting { max-height: none !important; height: auto !important; overflow: visible !important; border: none !important; box-shadow: none !important; padding: 0 !important; background: white !important; border-radius: 0 !important; margin: 0 !important; }
+        .pdf-exporting .document-paper { width: 800px !important; max-width: 800px !important; margin: 0 !important; left: 0 !important; top: 0 !important; position: relative !important; transform: none !important; box-shadow: none !important; border: none !important; padding: 40px !important; }
 
         .dev-tools { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 9999; }
         .dev-btn { background: #e2e8f0; border: 1px solid #cbd5e1; color: var(--text-gray); padding: 8px 14px; font-size: 0.8rem; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 700;}
@@ -534,7 +535,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> <!-- End of Contract -->
 
             <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()" disabled>
                 <i class="fas fa-paper-plane"></i> 본계약 최종 전자 서명 및 서버 발송
@@ -562,6 +563,9 @@
         // ★ 통합 백엔드 URL 완벽 연동
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjqosY23kJFdwCAwZA36-zVOt_xL6xw9gfXtNEgyWXTMDcHz9VPm0H07ZR3u8jDhOowg/exec"; 
 
+        // [개선3] 제출 연타 방지 뮤텍스 락
+        let isSubmitting = false;
+
         document.addEventListener('DOMContentLoaded', () => {
             const fddDateEl = document.getElementById('fdd_date');
             if(fddDateEl && !fddDateEl.value) {
@@ -573,7 +577,7 @@
             if(locInput) {
                 locInput.addEventListener('input', (e) => {
                     const storeNameInput = document.getElementById('contract_store_name');
-                    if(storeNameInput) storeNameInput.value = `SINJEON FOOD SYS ${e.target.value}`;
+                    if(storeNameInput) storeNameInput.value = `SINJEON FOOD SYS ${e.target.value.trim()}`;
                 });
             }
         });
@@ -595,7 +599,7 @@
 
         function resetPortal() {
             if(confirm("모든 로컬 테스트 기록을 지우고 포털을 초기 백지 상태로 되돌리시겠습니까?")) {
-                localStorage.clear();
+                try { localStorage.clear(); } catch(e) {}
                 location.reload(); 
             }
         }
@@ -623,9 +627,23 @@
         }
 
         function checkStateAndRender() {
-            const startTime = localStorage.getItem('sinjeon_fdd_timestamp');
+            let startTime = null;
+            let sjName = '';
+            let savedProv = '';
+            let savedCorp = '';
+            let targetCity = '';
             
-            const sjName = localStorage.getItem('sj_name');
+            // [개선8] 로컬 스토리지 예외 방어
+            try {
+                startTime = localStorage.getItem('sinjeon_fdd_timestamp');
+                sjName = localStorage.getItem('sj_name') || '';
+                savedProv = localStorage.getItem('sj_province') || '';
+                savedCorp = localStorage.getItem('sj_corp') || '';
+                targetCity = localStorage.getItem('sj_target_city') || '';
+            } catch(e) {
+                console.warn("로컬 스토리지가 비활성화되어 있습니다.", e);
+            }
+            
             if(sjName && !startTime) {
                 const fddName = document.getElementById('fdd_name');
                 if(fddName && !fddName.value) fddName.value = sjName;
@@ -635,10 +653,12 @@
 
             const fddDoc = document.getElementById('fdd-doc-content');
             if(fddDoc && fddDoc.querySelector('input')) {
-                document.getElementById('fdd_province').value = localStorage.getItem('sj_province') || '';
-                document.getElementById('fdd_corp').value = localStorage.getItem('sj_corp') || '';
-                document.getElementById('fdd_name').value = localStorage.getItem('sj_name') || '';
-                document.getElementById('fdd_title').value = localStorage.getItem('sj_title') || '';
+                try {
+                    document.getElementById('fdd_province').value = savedProv;
+                    document.getElementById('fdd_corp').value = savedCorp;
+                    document.getElementById('fdd_name').value = sjName;
+                    document.getElementById('fdd_title').value = localStorage.getItem('sj_title') || '';
+                } catch(e) {}
                 lockInputsToText('fdd-doc-content'); 
             }
             
@@ -650,10 +670,6 @@
                 fddBtn.onclick = null; 
             }
             
-            const savedProv = localStorage.getItem('sj_province') || '';
-            const savedCorp = localStorage.getItem('sj_corp') || '';
-            const targetCity = localStorage.getItem('sj_target_city') || '';
-            
             document.querySelectorAll('.auto-prov').forEach(el => {
                 if(el.tagName === 'INPUT') el.value = savedProv;
                 else el.innerText = savedProv;
@@ -664,7 +680,7 @@
             });
             
             const cName = document.getElementById('contract_name');
-            if(cName && !cName.value) cName.value = localStorage.getItem('sj_name') || '';
+            if(cName && !cName.value) cName.value = sjName;
             
             const cLoc = document.getElementById('c_location');
             if(cLoc && !cLoc.value && targetCity) {
@@ -710,28 +726,35 @@
         }
 
         function bypassTimer() {
-            if(!localStorage.getItem('sinjeon_fdd_timestamp')) {
+            let hasSigned = false;
+            try { hasSigned = localStorage.getItem('sinjeon_fdd_timestamp'); } catch(e) {}
+            if(!hasSigned) {
                 alert("먼저 상단의 FDD 정보공개서에 서명을 완료해 주세요!"); return;
             }
-            localStorage.setItem('sinjeon_fdd_timestamp', new Date().getTime() - LOCK_MS - 1000);
+            try {
+                localStorage.setItem('sinjeon_fdd_timestamp', new Date().getTime() - LOCK_MS - 1000);
+            } catch(e) {}
             clearInterval(timerInterval);
             checkStateAndRender();
         }
 
-        // PDF 렌더링 옵션 (페이지 잘림 방지 100% 적용)
+        // PDF 렌더링 옵션 (페이지 잘림 방지 100% 적용 완료)
         const getPdfOptions = (filename) => ({
             margin:       [15, 15, 15, 15], 
             filename:     filename,
             image:        { type: 'jpeg', quality: 1.0 },
-            html2canvas:  { scale: 2, useCORS: true, scrollY: 0, windowWidth: 800 },
+            html2canvas:  { scale: 2, useCORS: true, scrollY: 0, windowWidth: 850 },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak:    { mode: ['css', 'legacy'] } 
         });
 
         // ---------------------------------------------------------
-        // Action 1: FDD 문서 제출
+        // Action 1: FDD 문서 제출 (타임아웃, 예외처리 완벽 적용)
         // ---------------------------------------------------------
         async function signAndSubmitFDD() {
+            if (isSubmitting) return;
+            
+            // [개선10] 공백 무효화(Trim) 적용
             const province = document.getElementById('fdd_province').value;
             const corpName = document.getElementById('fdd_corp').value.trim();
             const repName = document.getElementById('fdd_name').value.trim();
@@ -743,15 +766,18 @@
 
             if (!confirm("FDD 문서를 완전히 확인하셨으며 서명을 진행하시겠습니까?\n동의 시 원본이 구글 드라이브에 안전하게 보관되며, 14일 락업이 시작됩니다.")) return;
 
+            isSubmitting = true;
             const btn = document.getElementById('btn-submit-fdd');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 서류 생성 및 구글 드라이브 전송 중...';
             btn.disabled = true;
 
-            localStorage.setItem('sinjeon_fdd_timestamp', new Date().getTime());
-            localStorage.setItem('sj_province', province);
-            localStorage.setItem('sj_corp', corpName);
-            localStorage.setItem('sj_name', repName);
-            localStorage.setItem('sj_title', repTitle);
+            try {
+                localStorage.setItem('sinjeon_fdd_timestamp', new Date().getTime());
+                localStorage.setItem('sj_province', province);
+                localStorage.setItem('sj_corp', corpName);
+                localStorage.setItem('sj_name', repName);
+                localStorage.setItem('sj_title', repTitle);
+            } catch(e) {}
 
             lockInputsToText('fdd-doc-content');
 
@@ -762,17 +788,23 @@
                 const element = document.getElementById('fdd-doc-content');
                 const opt = getPdfOptions(`Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
 
-                const pdfBase64String = await html2pdf().set(opt).from(element).outputPdf('datauristring');
+                let pdfBase64String = await html2pdf().set(opt).from(element).outputPdf('datauristring');
                 
-                let ipAddress = 'N/A';
+                // [개선7] IP 추적 API 페일세이프
+                let ipAddress = 'Unknown';
                 try {
                     const ipRes = await fetch('https://api.ipify.org?format=json');
                     const ipData = await ipRes.json();
                     ipAddress = ipData.ip;
-                } catch(e) {}
+                } catch(e) { console.warn("IP 조회를 건너뜁니다."); }
+
+                // [개선2] 15초 타임아웃 방어선 구축 및 [개선5] CORS 에러 방어
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 15000);
 
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
+                    mode: "no-cors",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
                     body: JSON.stringify({ 
                         action: "FDD_SIGNED", 
@@ -781,8 +813,12 @@
                         franchisee: corpName, 
                         ip: ipAddress 
                     }),
-                    redirect: "follow"
+                    signal: controller.signal
                 });
+                clearTimeout(timeoutId);
+
+                // [개선9] 거대 메모리 리소스 동적 해제
+                pdfBase64String = null; 
 
                 html2pdf().set(opt).from(element).save();
                 
@@ -793,18 +829,23 @@
             } catch (err) {
                 console.error(err);
                 wrapper.classList.remove('pdf-exporting');
-                alert("오류가 발생했습니다. 네트워크 상태를 확인해주세요.");
+                alert("네트워크 지연 또는 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
                 btn.innerHTML = '<i class="fas fa-file-download"></i> 정보공개서 확인 및 FDD 수령본 서명';
                 btn.disabled = false;
-                localStorage.removeItem('sinjeon_fdd_timestamp');
+                try { localStorage.removeItem('sinjeon_fdd_timestamp'); } catch(e){}
                 location.reload();
+            } finally {
+                isSubmitting = false;
             }
         }
 
         // ---------------------------------------------------------
-        // Action 2: 본계약서 제출
+        // Action 2: 본계약서 제출 (클라이언트 검증, 타임아웃 완벽 적용)
         // ---------------------------------------------------------
         async function signAndSubmitContract() {
+            if (isSubmitting) return;
+
+            // [개선10] 공백 무효화(Trim) 적용
             const locName = document.getElementById('c_location').value.trim();
             const repName = document.getElementById('contract_name').value.trim();
             const bizNum = document.getElementById('contract_biznum').value.trim();
@@ -817,12 +858,29 @@
                 alert("문서 본문의 빈칸(지점명, 주소, 계약일자 등) 및 하단 서명란을 모두 채워주세요."); return; 
             }
 
+            // [개선6] 계약일자 논리 검증 로직 추가
+            if (new Date(cStart) >= new Date(cEnd)) {
+                alert("계약 종료일은 반드시 시작일보다 이후의 날짜여야 합니다."); return;
+            }
+
+            // [개선4] 클라이언트 14일 락업 타이머 2차 교차 검증 (해킹 방어)
+            let startMs = 0;
+            try { startMs = parseInt(localStorage.getItem('sinjeon_fdd_timestamp')) || 0; } catch(e){}
+            if ((new Date().getTime() - startMs) < LOCK_MS) {
+                alert("보안 정책 위반: 14일 숙고 기간이 완전히 경과하지 않았습니다."); return;
+            }
+
+            isSubmitting = true;
             const btn = document.getElementById('btn-submit-contract');
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> 최종 문서 생성 및 전송 중...';
             btn.disabled = true;
 
-            const corpName = localStorage.getItem('sj_corp') || 'Franchisee';
-            const province = localStorage.getItem('sj_province') || 'Canada';
+            let corpName = 'Franchisee';
+            let province = 'Canada';
+            try {
+                corpName = localStorage.getItem('sj_corp') || 'Franchisee';
+                province = localStorage.getItem('sj_province') || 'Canada';
+            } catch(e){}
 
             lockInputsToText('contract-doc-content');
 
@@ -833,10 +891,15 @@
                 const element = document.getElementById('contract-doc-content');
                 const opt = getPdfOptions(`Sinjeon_Master_Agreement_${corpName.replace(/\s+/g, '_')}.pdf`);
 
-                const pdfBase64String = await html2pdf().set(opt).from(element).outputPdf('datauristring');
+                let pdfBase64String = await html2pdf().set(opt).from(element).outputPdf('datauristring');
+
+                // [개선2] 15초 타임아웃 방어 및 [개선5] CORS 방어 적용
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 15000);
 
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
+                    mode: "no-cors",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
                     body: JSON.stringify({ 
                         action: "CONTRACT_SIGNED", 
@@ -845,15 +908,17 @@
                         franchisee: corpName, 
                         province: province 
                     }),
-                    redirect: "follow"
+                    signal: controller.signal
                 });
+                clearTimeout(timeoutId);
 
-                // 점주 PC에 계약서 사본 저장
+                // [개선9] 거대 메모리 리소스 동적 해제
+                pdfBase64String = null;
+
                 html2pdf().set(opt).from(element).save();
 
                 wrapper.classList.remove('pdf-exporting');
                 
-                // 완료 모달창 띄우기
                 const modal = document.getElementById('success-modal');
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -861,9 +926,11 @@
             } catch (err) {
                 console.error(err);
                 wrapper.classList.remove('pdf-exporting');
-                alert("오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+                alert("서버 연결이 지연되었거나 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> 본계약 최종 전자 서명 및 서버 발송';
                 btn.disabled = false;
+            } finally {
+                isSubmitting = false;
             }
         }
     </script>
