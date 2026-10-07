@@ -125,46 +125,83 @@
         .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
         .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.6;}
 
-        /* ★ [PDF 렌더링 최적화 유틸 - A4 실제 인쇄영역 기준 / 잘림 및 백지화 방지] */
+        /* ★ [PDF 전용 렌더링 안정화 - 화면 레이아웃/테마 무변경] */
+        /*
+         * 핵심 수정:
+         * 기존에는 실제 화면의 .document-wrapper 안에서 800px 문서를 직접 캡처했습니다.
+         * html2canvas의 windowWidth가 800px로 고정되면서 상위 .panel/.content-container의
+         * 폭 계산이 함께 줄어들고, 중앙정렬된 800px 문서의 왼쪽이 음수 좌표로 밀려
+         * PDF 왼쪽 영역이 잘리는 현상이 발생할 수 있었습니다.
+         *
+         * 따라서 PDF 생성 시에만 원본 문서를 800px 고정 폭의 독립 Stage에 복제합니다.
+         * 화면에 표시되는 원본 DOM에는 PDF용 폭/패딩/스크롤 스타일을 적용하지 않습니다.
+         */
         .pdf-exporting {
-            max-height: none !important;
+            width: 800px !important;
+            min-width: 800px !important;
+            max-width: 800px !important;
             height: auto !important;
             min-height: 0 !important;
-            overflow: visible !important;
-            overflow-y: visible !important;
-            border: none !important;
-            box-shadow: none !important;
-            padding: 0 !important;
-            background: white !important;
-            border-radius: 0 !important;
+            max-height: none !important;
             margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            overflow: visible !important;
+            background: #ffffff !important;
         }
         .pdf-exporting .document-paper {
-            width: 180mm !important;
-            max-width: 180mm !important;
-            min-width: 180mm !important;
-            margin: 0 auto !important;
-            position: relative !important;
-            box-shadow: none !important;
-            border: none !important;
-            padding: 12mm !important;
-            box-sizing: border-box !important;
+            display: block !important;
+            width: 800px !important;
+            min-width: 800px !important;
+            max-width: 800px !important;
             height: auto !important;
             min-height: 0 !important;
+            margin: 0 !important;
+            padding: 45px 40px !important;
+            position: relative !important;
+            box-shadow: none !important;
+            border: 0 !important;
+            background: #ffffff !important;
             overflow: visible !important;
         }
-        .pdf-exporting .clause,
-        .pdf-exporting .sig-block {
-            break-inside: avoid;
-            page-break-inside: avoid;
-        }
+        /* PDF 내부에서만 페이지 분할을 안정화. 화면 테마에는 적용되지 않습니다. */
         .pdf-exporting .html2pdf__page-break {
             display: block !important;
+            width: 100% !important;
             height: 0 !important;
             min-height: 0 !important;
             margin: 0 !important;
             padding: 0 !important;
             border: 0 !important;
+            page-break-before: always !important;
+            break-before: page !important;
+        }
+        .pdf-exporting .clause,
+        .pdf-exporting .sig-block {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+        }
+        .pdf-exporting img {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+        }
+        .pdf-export-stage {
+            position: fixed !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 800px !important;
+            min-width: 800px !important;
+            max-width: 800px !important;
+            height: auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            background: #ffffff !important;
+            overflow: visible !important;
+            z-index: -2147483647 !important;
+            pointer-events: none !important;
         }
 
         .dev-tools { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 9999; }
@@ -799,50 +836,91 @@
             alert("개발자 모드: 14일 락업이 해제되었습니다.");
         }
 
-        // PDF 렌더링 옵션 (A4 실제 인쇄영역 기준 / 페이지 잘림 방지)
-        const getPdfOptions = (filename) => ({
-            margin:       [10, 15, 10, 15],
-            filename:     filename,
-            image:        { type: 'jpeg', quality: 1.0 },
-            html2canvas:  {
+        // PDF 렌더링 옵션
+        // 중요: 일반 화면의 document-paper 스타일은 전혀 변경하지 않습니다.
+        // PDF는 800px 고정 독립 Stage에서 렌더링한 뒤 A4 안에 배치합니다.
+        const getPdfOptions = (filename, renderHeight = 1200) => ({
+            margin: [15, 15, 15, 15],
+            filename: filename,
+            image: {
+                type: 'jpeg',
+                quality: 1.0
+            },
+            html2canvas: {
                 scale: 2,
                 useCORS: true,
                 allowTaint: false,
                 logging: false,
-                scrollY: 0,
-                scrollX: 0,
-                windowWidth: 794,
-                windowHeight: 1123,
                 backgroundColor: '#ffffff',
-                imageTimeout: 15000
+                imageTimeout: 15000,
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: 800,
+                windowHeight: Math.max(1200, renderHeight)
             },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
-            pagebreak:    { mode: ['css', 'legacy'] }
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait',
+                compress: true
+            },
+            pagebreak: {
+                mode: ['css', 'legacy'],
+                before: ['.html2pdf__page-break'],
+                avoid: ['.clause', '.sig-block']
+            }
         });
 
-        // 폰트/이미지/레이아웃이 모두 확정된 뒤 PDF 캡처를 시작한다.
-        async function preparePdfExport(element) {
-            if (document.fonts && document.fonts.ready) {
-                try { await document.fonts.ready; } catch(e) {}
-            }
+        /*
+         * PDF 생성 전용 독립 Stage.
+         *
+         * 실제 화면의 문서를 html2canvas에 직접 넘기지 않습니다.
+         * 원본 문서를 clone하여 800px 고정 Stage에 배치하므로,
+         * 화면의 900px/패널/스크롤 구조가 PDF 캔버스 폭에 영향을 주지 않습니다.
+         * 특히 windowWidth:800 상태에서 중앙정렬 문서가 음수 X 좌표로 이동하여
+         * 왼쪽 글자가 잘리는 문제를 차단합니다.
+         */
+        async function buildPdfData(sourceElement, opt) {
+            const stage = document.createElement('div');
+            stage.className = 'pdf-exporting pdf-export-stage';
+            stage.setAttribute('aria-hidden', 'true');
 
-            const images = Array.from(element.querySelectorAll('img'));
-            await Promise.all(images.map(img => new Promise(resolve => {
-                if (img.complete) {
-                    if (typeof img.decode === 'function') {
-                        img.decode().catch(() => {}).finally(resolve);
-                    } else {
-                        resolve();
-                    }
-                    return;
+            const clone = sourceElement.cloneNode(true);
+
+            // 복제본의 중복 ID는 제거합니다. 표시 내용/스타일에는 영향을 주지 않습니다.
+            clone.removeAttribute('id');
+            clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+
+            stage.appendChild(clone);
+            document.body.appendChild(stage);
+
+            try {
+                // 외부 폰트가 아직 로딩 중인 경우 폰트 폭 계산이 달라지는 것을 방지합니다.
+                if (document.fonts && document.fonts.ready) {
+                    try { await document.fonts.ready; } catch (e) {}
                 }
-                img.addEventListener('load', resolve, { once: true });
-                img.addEventListener('error', resolve, { once: true });
-            })));
 
-            await new Promise(resolve => requestAnimationFrame(() =>
-                requestAnimationFrame(resolve)
-            ));
+                // clone의 실제 높이를 html2canvas viewport 높이에 반영합니다.
+                const renderHeight = Math.ceil(Math.max(
+                    stage.scrollHeight || 0,
+                    clone.scrollHeight || 0,
+                    clone.getBoundingClientRect().height || 0,
+                    1200
+                ));
+                opt.html2canvas.windowWidth = 800;
+                opt.html2canvas.windowHeight = renderHeight;
+
+                // 렌더링 직전 한 프레임을 기다려 복제 DOM의 레이아웃을 확정합니다.
+                await new Promise(resolve => requestAnimationFrame(() => resolve()));
+
+                const worker = html2pdf().set(opt).from(stage);
+                const pdf = await worker.toPdf().get('pdf');
+                const dataUri = pdf.output('datauristring');
+                return { pdf, dataUri };
+            } finally {
+                // PDF 객체는 이미 완성되었으므로 Stage를 화면 DOM에서 제거합니다.
+                stage.remove();
+            }
         }
 
         // ---------------------------------------------------------
@@ -879,15 +957,15 @@
 
             lockInputsToText('fdd-doc-content');
 
-            const wrapper = document.getElementById('fdd-scroll-wrapper');
-            wrapper.classList.add('pdf-exporting');
+            // [백지화 방어] DOM 변환 완료 후 DOM이 완전히 렌더링되도록 300ms 동기화 대기
+            await new Promise(resolve => setTimeout(resolve, 300));
 
             try {
                 const element = document.getElementById('fdd-doc-content');
-                await preparePdfExport(element);
                 const opt = getPdfOptions(`Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
-                const pdfWorker = html2pdf().set(opt).from(element).toPdf();
-                let pdfBase64String = await pdfWorker.outputPdf('datauristring');
+
+                const pdfResult = await buildPdfData(element, opt);
+                let pdfBase64String = pdfResult.dataUri;
                 
                 let ipAddress = 'Unknown';
                 try {
@@ -917,9 +995,8 @@
 
                 pdfBase64String = null; // 메모리 해제
 
-                await pdfWorker.save();
+                pdfResult.pdf.save(opt.filename);
                 
-                wrapper.classList.remove('pdf-exporting');
                 checkStateAndRender();
                 alert("정보공개서(FDD) 전자 서명이 완료되어 서버로 전송되었습니다.\n14일 락업 타이머가 가동됩니다.");
 
@@ -927,7 +1004,6 @@
 
             } catch (err) {
                 console.error(err);
-                wrapper.classList.remove('pdf-exporting');
                 alert("서버 전송 중 통신 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
                 btn.innerHTML = '<i class="fas fa-file-download"></i> 정보공개서 확인 및 FDD 수령본 서명';
                 btn.disabled = false;
@@ -981,15 +1057,15 @@
 
             lockInputsToText('contract-doc-content');
 
-            const wrapper = document.getElementById('contract-scroll-wrapper');
-            wrapper.classList.add('pdf-exporting');
+            // [백지화 방어] DOM 변환 완료 후 대기
+            await new Promise(resolve => setTimeout(resolve, 300));
 
             try {
                 const element = document.getElementById('contract-doc-content');
-                await preparePdfExport(element);
                 const opt = getPdfOptions(`Sinjeon_Master_Agreement_${corpName.replace(/\s+/g, '_')}.pdf`);
-                const pdfWorker = html2pdf().set(opt).from(element).toPdf();
-                let pdfBase64String = await pdfWorker.outputPdf('datauristring');
+
+                const pdfResult = await buildPdfData(element, opt);
+                let pdfBase64String = pdfResult.dataUri;
 
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 15000);
@@ -1011,8 +1087,7 @@
 
                 pdfBase64String = null; // 메모리 해제
 
-                await pdfWorker.save();
-                wrapper.classList.remove('pdf-exporting');
+                pdfResult.pdf.save(opt.filename);
                 
                 const modal = document.getElementById('success-modal');
                 modal.classList.add('active');
@@ -1020,7 +1095,6 @@
 
             } catch (err) {
                 console.error(err);
-                wrapper.classList.remove('pdf-exporting');
                 alert("서버 연결이 지연되었거나 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> 본계약 최종 전자 서명 및 서버 발송';
                 btn.disabled = false;
@@ -1031,4 +1105,3 @@
     </script>
 </body>
 </html>
-```[cite: 1, 2, 3]
