@@ -3,70 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-    <meta name="theme-color" content="#1A1A1A">
+    <meta name="theme-color" content="#FFFFFF">
     
     <!-- =========================================
-         [SEO & Meta Tags]
+         [SEO & Meta Tags & Open Graph]
          ========================================= -->
-    <title>Secure Document Portal | Step 4 Contract | Sinjeon Canada</title>
-    <meta name="description" content="Official Franchise Contract Portal for Sinjeon Canada. Secure FDD review and NDA signing.">
+    <title>Sinjeon Canada | The New Standard of Topokki</title>
+    <meta name="title" content="Sinjeon Canada | The New Standard of Topokki">
+    <meta name="description" content="From Korea to Canada. Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide. Official Master Franchise Portal.">
+    <meta name="keywords" content="Sinjeon, Topokki, Tteokbokki, Franchise, Canada, Korean Food, K-Food, Spicy">
     <meta name="author" content="Y2C Holdings Inc.">
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+
+    <!-- Open Graph / Facebook / Kakao -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sinjeoncanada.com/">
+    <meta property="og:title" content="Sinjeon Canada | The New Standard of Topokki">
+    <meta property="og:description" content="Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide. Apply for Franchise.">
+    <meta property="og:image" content="background/base_1.JPG">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://sinjeoncanada.com/">
+    <meta property="twitter:title" content="Sinjeon Canada | The New Standard of Topokki">
+    <meta property="twitter:description" content="Experience the authentic, HACCP-certified K-Spice that captivated over 800 locations worldwide. Apply for Franchise.">
+    <meta property="twitter:image" content="background/base_1.JPG">
 
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
     
     <!-- =========================================
-         [Preconnect & External Libraries]
+         [Preconnect & Preload Assets for Extreme Performance]
          ========================================= -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="background/base_1.JPG" as="image">
+    <link rel="preload" href="character/character_7.png" as="image">
+    <link rel="preload" href="fonts/SinjeonFont.otf" as="font" type="font/otf" crossorigin>
     
-    <!-- HTML2PDF Library for Secure Client-Side Rendering -->
+    <!-- =========================================
+         [External Libraries]
+         ========================================= -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- EmailJS SDK -->
+    <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <!-- HTML2PDF Library (For Secure Document Generation) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- =========================================
+         [Enterprise-Grade Stylesheet (Kernel-Level Robustness)]
+         ========================================= -->
     <style>
-        /* ==========================================================================
-           [1] CSS Variables, Reset & Kernel-Level Security Fixes
-           ========================================================================== */
+        /* -----------------------------------------
+           1. CSS Variables, Reset & Accessibility
+           ----------------------------------------- */
         :root {
+            /* Brand Colors */
             --sj-green: #008250; 
-            --sj-red: #D24B41;
+            --sj-red: #D24B41; 
             --sj-red-hover: #b83e35;
-            --bg-light: #f8fafc; 
+            
+            /* Typography Colors */
             --text-dark: #0f172a; 
-            --text-gray: #64748b;
+            --text-gray: #64748b; 
             --text-light: #94a3b8;
-            --border-light: #e2e8f0; 
-            --border-focus: #94a3b8;
+            
+            /* Background Colors */
+            --bg-light: #F8FAFC; 
+            --bg-white: #FFFFFF; 
+            --bg-dark: #111827;
+            --border-color: #E2E8F0;
             --doc-bg: #ffffff;
+            
+            /* Utility Colors */
+            --uber-green: #06C167; 
+            --google-yellow: #FBBC04;
             --toast-success: #10b981;
             --toast-error: #ef4444;
             --toast-warning: #f59e0b;
+            
+            /* Animations & Shadows */
             --transition-fast: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --transition-normal: 0.4s ease;
             --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-xs: 0 1px 3px rgba(0,0,0,0.02);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 25px 50px -12px rgba(210, 75, 65, 0.15);
+            --shadow-float: 0 20px 30px rgba(0,0,0,0.2);
+            
+            /* Radius & Layout */
+            --border-radius-lg: 24px; 
+            --border-radius-md: 16px;
+            --border-radius-sm: 12px;
             --vh: 1vh;
         }
 
+        /* Hardware Acceleration & Reset */
         *, *::before, *::after { box-sizing: border-box; }
         
-        html { scroll-behavior: smooth; overflow-y: scroll; -webkit-text-size-adjust: 100%; }
-        
-        html, body { 
-            width: 100%; max-width: 100vw; overflow-x: hidden !important; position: relative; 
-            -webkit-touch-callout: none; margin: 0; padding: 0; 
-            font-family: 'Outfit', 'Noto Sans KR', sans-serif; 
-            background-color: #f1f5f9; color: var(--text-dark); line-height: 1.6;
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-y: scroll; }
+
+        html, body {
+            width: 100%; max-width: 100vw; overflow-x: hidden !important; position: relative;
+            margin: 0; padding: 0; -webkit-touch-callout: none;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            font-family: 'Outfit', 'Poppins', 'Noto Sans KR', sans-serif; 
+            color: var(--text-dark); background-color: var(--bg-white); line-height: 1.6;
         }
 
-        /* Anti-Theft: Prevent selection on UI, allow on inputs */
-        body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
-        input, textarea, select, p, h1, h2, h3, h4, h5, h6, span, li { -webkit-user-select: auto; -moz-user-select: auto; -ms-user-select: auto; user-select: auto; font-family: inherit; }
-        img { -webkit-user-drag: none; max-width: 100%; height: auto; display: block; object-fit: contain; }
+        /* Prevent Text Selection on UI elements but allow on inputs */
+        body { -webkit-user-select: none; -moz-user-select: none; user-select: none; }
+        input, textarea, select, p, h1, h2, h3, h4, h5, h6, span, li { 
+            -webkit-user-select: auto; -moz-user-select: auto; user-select: auto; font-family: inherit;
+        }
+        
+        /* Image anti-drag */
+        img { user-drag: none; -webkit-user-drag: none; max-width: 100%; height: auto; display: block; object-fit: contain; }
+        a { text-decoration: none; color: inherit; -webkit-tap-highlight-color: transparent;}
+        button { cursor: pointer; font-family: inherit; outline: none; -webkit-tap-highlight-color: transparent;}
         
         /* Print Protection: Hide everything when printing */
         @media print { 
@@ -74,23 +136,53 @@
             body::before { content: "SECURITY WARNING: Printing this confidential document is strictly prohibited."; display: block !important; text-align: center; font-size: 20px; font-weight: bold; margin-top: 50px; color: black; }
         }
 
-        *:focus-visible { outline: 3px solid var(--sj-red); outline-offset: 4px; border-radius: 8px; }
-        a { text-decoration: none; color: inherit; -webkit-tap-highlight-color: transparent;}
-        button { cursor: pointer; font-family: inherit; outline: none; -webkit-tap-highlight-color: transparent;}
-        
-        /* Body Lock for Modals */
+        *:focus-visible { outline: 3px solid var(--sj-red); outline-offset: 3px; border-radius: 4px; }
+        input:focus-visible, textarea:focus-visible, select:focus-visible { outline: none; } 
+
+        /* Body Lock Class for Modals/Mobile Menu */
         body.lock-scroll { overflow: hidden; touch-action: none; }
 
-        /* ==========================================================================
-           [2] Custom Toast Notification System
-           ========================================================================== */
+        @font-face {
+            font-family: 'SinjeonCustom';
+            src: url('fonts/SinjeonFont.otf') format('opentype');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+
+        /* -----------------------------------------
+           2. Advanced Global UI Components
+           ----------------------------------------- */
+        .scroll-progress { 
+            position: fixed; top: 0; left: 0; height: 4px; background: var(--sj-red); 
+            z-index: 9999; width: 0%; transition: width 0.1s linear; will-change: width; 
+        }
+
+        .reveal { 
+            opacity: 0; transform: translateY(30px) translateZ(0); 
+            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1); 
+            will-change: opacity, transform; 
+        }
+        .reveal.active { opacity: 1; transform: translateY(0) translateZ(0); }
+
+        .section-header { text-align: center; margin-bottom: 50px; padding: 0 20px; }
+        .section-header h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: var(--text-dark); letter-spacing: -1px; margin-bottom: 10px; text-transform: uppercase; word-break: keep-all;}
+        .section-header h2 span { color: var(--sj-red); font-family: 'SinjeonCustom', sans-serif; font-weight: normal; font-size: clamp(2.5rem, 6vw, 3.5rem); }
+        .section-header p { font-size: clamp(0.9rem, 2vw, 1rem); color: var(--sj-green); font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+
+        @keyframes float-normal { 0%, 100% { transform: translateY(0px) rotate(0deg) translateZ(0); } 50% { transform: translateY(-12px) rotate(2deg) translateZ(0); } }
+        @keyframes float-slow { 0%, 100% { transform: translateY(0px) rotate(0deg) translateZ(0); } 50% { transform: translateY(-8px) rotate(-2deg) translateZ(0); } }
+        @keyframes float-fast { 0%, 100% { transform: translateY(0px) rotate(0deg) translateZ(0); } 50% { transform: translateY(-16px) rotate(3deg) translateZ(0); } }
+        
+        .char-img { position: absolute; z-index: 5; pointer-events: auto; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.12)); transition: transform var(--transition-fast), filter var(--transition-fast); will-change: transform; }
+        .char-img:hover { transform: scale(1.1) translateY(-5px) translateZ(0) !important; filter: var(--shadow-float); }
+
+        /* Custom Toast Notification System */
         .toast-container {
             position: fixed; bottom: 30px; left: 30px; z-index: 100000;
             display: flex; flex-direction: column; gap: 10px; pointer-events: none;
         }
         .toast-msg {
             min-width: 280px; max-width: 400px; background: var(--doc-bg);
-            color: var(--text-dark); padding: 16px 24px; border-radius: 12px;
+            color: var(--text-dark); padding: 16px 24px; border-radius: var(--border-radius-sm);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; align-items: flex-start; gap: 15px;
             transform: translateX(-120%); opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             pointer-events: auto; border-left: 5px solid var(--text-dark);
@@ -99,30 +191,95 @@
         .toast-msg.success { border-left-color: var(--toast-success); }
         .toast-msg.error { border-left-color: var(--toast-error); }
         .toast-msg.warning { border-left-color: var(--toast-warning); }
-        
         .toast-icon { font-size: 1.5rem; margin-top: 2px; }
         .toast-msg.success .toast-icon { color: var(--toast-success); }
         .toast-msg.error .toast-icon { color: var(--toast-error); }
         .toast-msg.warning .toast-icon { color: var(--toast-warning); }
-        
         .toast-content { display: flex; flex-direction: column; }
         .toast-title { font-weight: 800; font-size: 1rem; margin-bottom: 3px; }
         .toast-desc { font-weight: 500; font-size: 0.9rem; color: var(--text-gray); line-height: 1.4; word-break: keep-all;}
 
-        /* ==========================================================================
-           [3] Header & Progress Bar
-           ========================================================================== */
+        /* Individual Popup Cards System */
+        .event-popup-wrapper {
+            position: fixed; top: 110px; left: 20px; z-index: 99999; 
+            opacity: 0; visibility: hidden; transform: translateX(-30px); 
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none;
+        }
+        .event-popup-wrapper.show { opacity: 1; visibility: visible; transform: translateX(0); pointer-events: auto; }
+        
+        .popup-flex-container {
+            display: flex; flex-direction: row; gap: 15px; max-width: calc(100vw - 40px); overflow-x: auto; 
+            padding-bottom: 15px; 
+            -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
+        }
+        .popup-flex-container::-webkit-scrollbar { height: 6px; }
+        .popup-flex-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        .event-popup-card {
+            background: var(--bg-white); border-radius: var(--border-radius-md); 
+            width: 320px; flex: 0 0 320px; overflow: hidden; 
+            box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);
+            display: flex; flex-direction: column;
+            animation: formFadeIn 0.4s ease-out forwards;
+        }
+        .event-popup-card img { width: 100%; height: auto; display: block; min-height: 100px; object-fit: cover; }
+        
+        .event-popup-actions { display: flex; border-top: 1px solid var(--border-color); width: 100%; }
+        .event-popup-actions button { flex: 1; padding: 14px 0; border: none; background: var(--bg-light); font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: var(--transition-fast); font-family: 'Noto Sans KR', sans-serif; }
+        .btn-hide-24h { color: var(--text-gray); border-right: 1px solid var(--border-color) !important; }
+        .btn-hide-24h:hover { background: #e2e8f0; color: var(--text-dark); }
+        .btn-close-popup { color: var(--sj-red); }
+        .btn-close-popup:hover { background: #fdf2f2; }
+
+        /* -----------------------------------------
+           5. Header & Navigation (Right Aligned)
+           ----------------------------------------- */
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 5%; background: rgba(255, 255, 255, 0.95); 
+            position: fixed; width: 100%; top: 0; z-index: 1000; 
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid transparent; transition: all var(--transition-fast); 
+            will-change: padding, box-shadow, background;
+        }
+        header.scrolled { padding: 10px 5%; border-bottom: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0,0,0,0.04); background: rgba(255, 255, 255, 0.98); }
+        
+        .header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1400px; margin: 0 auto; }
+        
+        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; position: relative; z-index: 1002;}
+        .logo-container img { height: clamp(32px, 4vw, 40px); transition: var(--transition-fast); }
+        .logo-container span { font-family: 'SinjeonCustom', sans-serif; font-size: clamp(1.2rem, 3vw, 1.5rem); font-weight: normal; color: var(--sj-green); letter-spacing: -0.5px; margin-top: 4px;}
+        
+        .nav-wrapper { display: flex; align-items: center; gap: 35px; justify-content: flex-end; flex: 1; }
+        
+        .desktop-nav { display: flex; gap: 25px; align-items: center; }
+        .desktop-nav a { text-decoration: none; color: var(--text-dark); font-weight: 700; font-size: 0.9rem; position: relative; padding: 5px 0; transition: color var(--transition-fast); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;}
+        .desktop-nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: var(--sj-red); transition: width var(--transition-fast); }
+        .desktop-nav a:hover { color: var(--sj-red); }
+        .desktop-nav a:hover::after { width: 100%; }
+
+        .header-cta-group { display: flex; align-items: center; flex-shrink: 0; margin-left: 10px; position: relative; z-index: 1002;}
+        .header-btn-apply { background: var(--sj-red); color: white !important; font-size: 0.9rem; font-weight: 800; padding: 12px 28px; border-radius: 50px; text-decoration: none; text-transform: uppercase; transition: var(--transition-fast); box-shadow: 0 4px 15px rgba(210, 75, 65, 0.3); white-space: nowrap; letter-spacing: 0.5px;}
+        .header-btn-apply:hover { background: var(--sj-red-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(210, 75, 65, 0.4);}
+
+        .mobile-menu-btn { display: none; font-size: 1.8rem; color: var(--text-dark); background: none; border: none; cursor: pointer; z-index: 1002; position: relative; padding: 5px; margin-left: 15px;}
+        
+        /* Mobile Fullscreen Menu */
+        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-white); z-index: 1001; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition-smooth); transform: translateY(-20px); overscroll-behavior: contain;}
+        .mobile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
+        .mobile-nav-links { display: flex; flex-direction: column; gap: 25px; text-align: center; }
+        .mobile-nav-links a { font-size: 1.8rem; font-weight: 800; color: var(--text-dark); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; transition: color var(--transition-fast); }
+        .mobile-nav-links a:hover, .mobile-nav-links a:focus { color: var(--sj-red); outline: none;}
+
+        /* -----------------------------------------
+           Progress Bar specific for Document Portals
+           ----------------------------------------- */
         .portal-header { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 16px 40px; border-bottom: 1px solid var(--border-light); 
             background: rgba(255, 255, 255, 0.98); position: sticky; top: 0; 
             z-index: 100; backdrop-filter: blur(10px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
-        .logo-group { display: flex; align-items: center; gap: 12px; text-decoration: none;}
-        .logo-group img { height: 30px; }
-        .logo-group span { font-weight: 800; font-size: 1.45rem; color: var(--sj-green); letter-spacing: -0.5px; }
-        
-        .header-actions { display: flex; gap: 12px; align-items: center; }
         .btn-back { display: flex; align-items: center; gap: 6px; background: var(--doc-bg); color: var(--text-gray); border: 1px solid var(--border-light); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: var(--transition-fast); }
         .btn-back:hover { background: #e2e8f0; color: var(--text-dark); }
         .security-badge { display: flex; align-items: center; gap: 6px; background: #ecfdf5; color: #059669; padding: 8px 18px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; border: 1px solid #a7f3d0; }
@@ -139,9 +296,9 @@
         .step-text { text-align: center; font-size: 0.8rem; font-weight: 800; color: #64748b; line-height: 1.3;}
         .step.completed .step-text, .step.active .step-text { color: var(--sj-red); }
 
-        /* ==========================================================================
-           [4] Layout & Panels
-           ========================================================================== */
+        /* -----------------------------------------
+           Layout & Panels (900px 통일)
+           ----------------------------------------- */
         .content-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; text-align: center; }
         .page-title { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase;}
         .page-desc { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 30px; font-weight: 500; }
@@ -159,9 +316,9 @@
         .timer-display { font-size: 3.2rem; font-weight: 900; color: var(--sj-red); letter-spacing: 2px; font-variant-numeric: tabular-nums; line-height: 1;}
         .timer-label { font-size: 0.9rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; font-weight: 700;}
 
-        /* ==========================================================================
-           [5] Smart Document Viewer (FDD & Contract)
-           ========================================================================== */
+        /* -----------------------------------------
+           Smart Document Viewer (FDD & Contract)
+           ----------------------------------------- */
         .document-wrapper { 
             width: 100%; max-height: 700px; overflow-y: auto; overflow-x: hidden; 
             background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 12px; 
@@ -181,7 +338,6 @@
         .document-paper h1 { text-align: center; font-size: 1.7rem; margin-bottom: 5px; color: #0f172a; letter-spacing: -0.5px;}
         .document-paper h3 { text-align: center; font-size: 1.05rem; color: #64748b; font-weight: 400; margin-top: 0; margin-bottom: 35px;}
         
-        /* 계약 조항 디자인 */
         .clause { margin-bottom: 25px; page-break-inside: avoid; }
         .clause h2 { font-size: 1.05rem; color: var(--sj-green); border-bottom: 1.5px solid #e2e8f0; padding-bottom: 5px; margin-top: 0; margin-bottom: 10px;}
         .clause p { font-size: 0.95rem; margin-bottom: 5px; text-align: justify; font-weight: 500; line-height: 1.7;}
@@ -204,7 +360,8 @@
         .doc-input[readonly] { background: transparent; border-bottom-style: dashed; color: #0f172a; cursor: not-allowed;}
         
         .type-signature { font-family: 'Caveat', cursive !important; font-size: 1.8rem !important; color: #1e3a8a !important; border-bottom: 2px solid #1e3a8a; }
-        .locked-text { font-weight: bold; color: #0f172a; padding: 0 5px; display: inline-block; border-bottom: 1px solid #0f172a;}
+        .locked-text { font-weight: bold; color: #0f172a; padding: 0 5px; display: inline-block; border-bottom: 1px solid #0f172a; font-family: 'Outfit', 'Noto Sans KR', sans-serif;}
+        .locked-text.type-signature { font-family: 'Caveat', cursive !important; color: #1e3a8a !important; font-size: 1.8rem !important; }
 
         /* 서명 블록 및 그리드 (문서 외 폼) */
         .sig-block { border: 2px solid #cbd5e1; padding: 25px; margin-top: 30px; background: var(--doc-bg); page-break-inside: avoid; border-radius: 12px;}
@@ -240,12 +397,12 @@
         .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.6;}
 
         /* ==========================================================================
-           [6] PDF Clone Rendering Specific Fixes (왼쪽 잘림 100% 원천 방어)
+           [6] PDF Clone Rendering Specific Fixes (백지화 및 왼쪽 잘림 100% 원천 방어)
            ========================================================================== */
         .pdf-clone-container {
             position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
+            top: -9999px !important;
+            left: -9999px !important;
             margin: 0 !important;
             padding: 0 !important;
             width: 800px !important;
@@ -261,6 +418,7 @@
             transform: none !important;
             left: 0 !important;
             top: 0 !important;
+            color: #1e293b !important; /* Force color for PDF */
         }
         
         /* Backward compatibility fallback */
@@ -312,7 +470,7 @@
          ========================================= -->
     <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-    <!-- Header (돌아가기 버튼 적용) -->
+    <!-- Header -->
     <header class="portal-header" role="banner">
         <div style="display: flex; align-items: center; gap: 15px;">
             <a href="step3_nda.html" class="btn-back" aria-label="Go back to Step 3"><i class="fas fa-arrow-left" aria-hidden="true"></i> <span>이전으로 (Back)</span></a>
@@ -472,7 +630,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px;">
                             <div style="font-size: 1.1rem;"><strong>Y2C Holdings Inc.</strong></div>
                             <div style="text-align: center; position: relative;">
-                                <img src="y2c_director_sign.png" alt="Y2C Signature" style="height: 60px; display: block; margin: 0 auto; position: relative; z-index: 2;" onerror="handleImgError(this)">
+                                <img src="y2c_director_sign.png" alt="Y2C Signature" style="height: 60px; display: block; margin: 0 auto; position: relative; z-index: 2;" onerror="this.style.display='none'">
                                 <div style="position: relative; z-index: 1; margin-top: -15px;">
                                     <strong>By:</strong> Yoon-ji Lee <br> <strong>Title:</strong> Director
                                 </div>
@@ -611,8 +769,8 @@
                     <div class="clause">
                         <h2>제 3 장 영업활동 및 통제 (Article 4)</h2>
                         <p><strong>제 7 조 [필수 물류 조달 / Mandatory SCM Procurement]</strong></p>
-                        <p>가맹사업의 품질 유지를 위하여 가맹점사업자는 가맹본부가 마진 없이(0% Margin) 직공급하는 필수 원·부재료 망을 통해서만 독점 조달해야 한다.</p>
-                        <span class="en-text">To maintain quality, the Franchisee must procure mandatory ingredients exclusively from the Franchisor's zero-margin supply chain or approved vendors.</span>
+                        <p>품질 유지를 위해 지정된 독점 식자재 및 소모품을 본사 유통 마진이 없는(0% Margin) 본사 다이렉트 물류망 또는 승인된 공급업체로부터만 독점적으로 구매해야 합니다.</p>
+                        <span class="en-text">To maintain brand standards, the Franchisee must purchase designated proprietary ingredients exclusively from our zero-margin SCM or approved suppliers.</span>
                         
                         <p><strong>제 8 조 [듀얼 브랜딩 및 공유주방 원천 금지 / Anti-Dual Branding]</strong></p>
                         <p>가맹점사업자는 승인된 본 건 매장의 주방 및 설비를 이용하여 타 브랜드의 음식을 조리, 판매, 배달(공유주방 형태 포함)하는 행위를 절대 할 수 없다. 타 브랜드 제품 교차 홍보 또한 금지된다.</p>
@@ -698,7 +856,7 @@
         </section>
     </main>
 
-    <!-- 개발자 툴 (우회 및 리셋) -->
+    <!-- 개발자 툴 -->
     <div class="dev-tools">
         <button class="dev-btn danger" onclick="resetPortal()" aria-label="Reset System"><i class="fas fa-power-off" aria-hidden="true"></i> 시스템 리셋(초기화)</button>
         <button class="dev-btn" onclick="bypassTimer()" aria-label="Bypass 14 Day Lock"><i class="fas fa-forward" aria-hidden="true"></i> Bypass 14 Days</button>
@@ -721,12 +879,10 @@
         // ★ 통합 백엔드 URL 완벽 연동
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjqosY23kJFdwCAwZA36-zVOt_xL6xw9gfXtNEgyWXTMDcHz9VPm0H07ZR3u8jDhOowg/exec"; 
 
-        // [개선8] 제출 연타 방지 뮤텍스 락
         let isSubmitting = false;
         let timerInterval;
         const LOCK_MS = 14 * 24 * 60 * 60 * 1000; 
 
-        // [개선4] Custom Toast Notification
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             if(!container) return;
@@ -741,14 +897,13 @@
             setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 5000);
         }
 
-        // [개선17] 글로벌 이미지 엑박 방패
         function handleImgError(img) {
             img.onerror = null; img.src = 'sinjeon_logo_canada.png'; img.style.objectFit = 'contain'; img.style.padding = '10px';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // [개선13] FDD 서명란 및 본계약 체결일(c_date) 오늘 날짜 강제 세팅
-            const todayKST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); // YYYY-MM-DD
+            // FDD 서명란 및 본계약 체결일(c_date) 오늘 날짜 강제 세팅
+            const todayKST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); 
             
             const fddDateEl = document.getElementById('fdd_date');
             if(fddDateEl && !fddDateEl.value) { fddDateEl.value = todayKST; }
@@ -756,7 +911,7 @@
             const cDateEl = document.getElementById('c_date');
             if(cDateEl && !cDateEl.value) { cDateEl.value = todayKST; }
 
-            // [개선2] 계약 기간 자동 산출 엔진 (시작일 변경 시 -> 종료일 3년 후 -1일 자동 세팅)
+            // 계약 기간 자동 산출 엔진 (시작일 변경 시 -> 종료일 3년 후 -1일 자동 세팅)
             const startDateEl = document.getElementById('c_start_date');
             const endDateEl = document.getElementById('c_end_date');
             if(startDateEl && endDateEl) {
@@ -781,7 +936,7 @@
             }
         });
 
-        // [개선20] 3중 보안 방어 (무손실 보존 + 강화)
+        // 3중 보안 방어
         document.addEventListener('contextmenu', e => { 
             if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); showToast("보안 정책상 우클릭이 차단되어 있습니다.", "warning"); }
         });
@@ -802,7 +957,7 @@
             }
         }
 
-        // 입력 폼을 텍스트로 고정 (수정 불가 처리)
+        // ★ [핵심 개선 3] 입력 폼을 텍스트로 고정 (페일세이프 포함)
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -810,11 +965,15 @@
             
             inputs.forEach(el => {
                 const span = document.createElement('span');
+                
+                // 빈 값 방지 처리
+                let val = '';
                 if(el.tagName === 'SELECT') {
-                    span.innerText = el.options[el.selectedIndex]?.text || '';
+                    val = el.options[el.selectedIndex]?.text || '';
                 } else {
-                    span.innerText = el.value || '';
+                    val = el.value || '';
                 }
+                span.innerText = val ? val : '[입력 대기 중]';
                 
                 if (el.classList.contains('type-signature')) {
                     span.className = 'locked-text type-signature';
@@ -832,7 +991,7 @@
             let savedCorp = '';
             let targetCity = '';
             
-            // [개선17] 로컬 스토리지 에러 방어
+            // 로컬 스토리지 에러 방어
             try {
                 startTime = localStorage.getItem('sinjeon_fdd_timestamp');
                 sjName = localStorage.getItem('sj_name') || '';
@@ -942,24 +1101,40 @@
         }
 
         // =========================================================
-        // [개선1] PDF Clone Rendering System (왼쪽 잘림 완벽 방어)
+        // ★ [핵심 개선 1, 2, 4] PDF Clone Rendering System (백지화 & 왼쪽 잘림 100% 원천 방어)
         // =========================================================
         async function exportPdfSafely(sourceElementId, filename) {
             const sourceElement = document.getElementById(sourceElementId);
+            
+            // 렌더 트리 동기화 (DOM 안정화 대기)
+            await new Promise(resolve => setTimeout(resolve, 300));
             
             // Create isolated container at root to ignore all scrolling/flex constraints
             const tempContainer = document.createElement('div');
             tempContainer.className = 'pdf-clone-container';
             
             const clone = sourceElement.cloneNode(true);
+            
+            // 인라인 스타일 고정 (CSS 변수 유실 방지)
+            const allElements = clone.querySelectorAll('*');
+            allElements.forEach(el => {
+                const computed = window.getComputedStyle(el);
+                el.style.color = computed.color;
+                el.style.fontFamily = computed.fontFamily;
+                if(el.classList.contains('clause')) {
+                    el.style.pageBreakInside = 'avoid';
+                }
+            });
+
             tempContainer.appendChild(clone);
             document.body.appendChild(tempContainer);
 
+            // html2canvas 옵션 강화 (800 고정, CORS 트루)
             const opt = {
                 margin:       [15, 15, 15, 15], 
                 filename:     filename,
                 image:        { type: 'jpeg', quality: 1.0 },
-                html2canvas:  { scale: 2, useCORS: true, scrollY: 0, scrollX: 0, windowWidth: 800, x: 0, y: 0 },
+                html2canvas:  { scale: 2, useCORS: true, logging: false, scrollY: 0, scrollX: 0, windowWidth: 800, x: 0, y: 0 },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
@@ -979,10 +1154,10 @@
         async function signAndSubmitFDD() {
             if (isSubmitting) return;
 
-            // [개선6] 오프라인 감지
+            // 오프라인 감지
             if (!navigator.onLine) { showToast("인터넷 연결이 끊겼습니다.", "error"); return; }
             
-            // [개선12] 공백 무효화(Trim) 적용
+            // 공백 무효화(Trim) 적용
             const province = document.getElementById('fdd_province').value;
             const corpName = document.getElementById('fdd_corp').value.trim();
             const repName = document.getElementById('fdd_name').value.trim();
@@ -1010,7 +1185,7 @@
             lockInputsToText('fdd-doc-content');
 
             try {
-                // [개선1] 클론 렌더링 호출
+                // 클론 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('fdd-doc-content', `Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
                 
                 // IP 추적 페일세이프
@@ -1021,7 +1196,7 @@
                     ipAddress = ipData.ip;
                 } catch(e) { console.warn("IP 조회 불가"); }
 
-                // [개선5] 15초 타임아웃 방어선 구축 및 CORS 에러 방어
+                // 15초 타임아웃 방어선 구축 및 CORS 에러 방어
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 15000);
 
@@ -1040,13 +1215,13 @@
                 });
                 clearTimeout(timeoutId);
 
-                // [개선9] 거대 메모리 리소스 동적 해제
+                // 거대 메모리 리소스 동적 해제
                 pdfBase64String = null; 
 
                 checkStateAndRender();
                 showToast("정보공개서(FDD) 전자 서명이 완료되었습니다. 14일 락업 타이머가 가동됩니다.", "success");
                 
-                // [개선18] 부드러운 스크롤 이동
+                // 부드러운 스크롤 이동
                 document.getElementById('signature-panel').scrollIntoView({behavior: 'smooth', block: 'start'});
 
             } catch (err) {
@@ -1062,12 +1237,13 @@
         }
 
         // ---------------------------------------------------------
-        // Action 2: 본계약서 제출 (날짜 검증, 타임아웃 완벽 적용)
+        // Action 2: 본계약서 제출
         // ---------------------------------------------------------
         async function signAndSubmitContract() {
             if (isSubmitting) return;
             if (!navigator.onLine) { showToast("인터넷 연결이 끊겼습니다.", "error"); return; }
 
+            // 공백 무효화(Trim) 적용
             const locName = document.getElementById('c_location').value.trim();
             const repName = document.getElementById('contract_name').value.trim();
             const bizNum = document.getElementById('contract_biznum').value.trim();
@@ -1080,7 +1256,7 @@
                 showToast("문서 본문의 빈칸(지점명, 주소, 계약일자 등) 및 하단 서명란을 모두 채워주세요.", "error"); return; 
             }
 
-            // [개선3] 날짜 논리 오류 락업 (과거 계약 불가 및 역순 불가)
+            // 날짜 논리 오류 락업
             const dateC = new Date(cDate);
             const dateS = new Date(cStart);
             const dateE = new Date(cEnd);
@@ -1089,7 +1265,7 @@
                 showToast("계약 종료일은 반드시 시작일보다 이후의 날짜여야 합니다.", "error"); return;
             }
 
-            // [개선16] 서명 유사도 교차 검증 (보안)
+            // 서명 유사도 교차 검증 (보안)
             let fName = ''; try { fName = localStorage.getItem('sj_name') || ''; } catch(e){}
             if (fName && fName.toLowerCase() !== repName.toLowerCase()) {
                 if(!confirm("경고: FDD 서명자 이름과 본계약 서명자 이름이 일치하지 않습니다.\n계속 진행하시겠습니까?")) return;
@@ -1117,7 +1293,7 @@
             lockInputsToText('contract-doc-content');
 
             try {
-                // [개선1] 클론 렌더링 호출
+                // 클론 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('contract-doc-content', `Sinjeon_Master_Agreement_${corpName.replace(/\s+/g, '_')}.pdf`);
 
                 const controller = new AbortController();
@@ -1159,4 +1335,6 @@
         }
     </script>
 </body>
-</html>
+</html> 기존내용 무손실보존, 1차 FDD수령증 서명과정중의 오류. 내용소실및 줄어듬 없이 개선해줘
+
+There is a file you can reference named "image_4abf9d.png". Refer to this file by its name verbatim.
