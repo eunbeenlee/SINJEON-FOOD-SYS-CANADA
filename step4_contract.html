@@ -836,16 +836,31 @@
             alert("개발자 모드: 14일 락업이 해제되었습니다.");
         }
 
-        // PDF 렌더링 옵션
-        // 중요: 일반 화면의 document-paper 스타일은 전혀 변경하지 않습니다.
-        // PDF는 800px 고정 독립 Stage에서 렌더링한 뒤 A4 안에 배치합니다.
-        const getPdfOptions = (filename, renderHeight = 1200) => ({
+        /*
+         * PDF 렌더링 엔진
+         *
+         * 기존 html2pdf().from(element) 방식은 화면 DOM의 부모 스크롤/중앙정렬
+         * 구조와 html2canvas의 viewport 계산이 서로 영향을 주면서 좌측 잘림 또는
+         * 완전 백지 PDF가 발생할 수 있습니다.
+         *
+         * 따라서 PDF 전용 same-origin iframe을 만들고, 그 안에 문서의 CSS와
+         * 콘텐츠를 그대로 복제한 뒤 iframe 내부의 800px viewport에서 html2canvas로
+         * 렌더링합니다. 이후 canvas를 A4 페이지 단위로 잘라 jsPDF에 직접 삽입합니다.
+         * 화면 DOM/CSS에는 PDF 생성 중에도 레이아웃 변경을 가하지 않습니다.
+         */
+        const PDF_PAGE = {
+            widthMm: 210,
+            heightMm: 297,
+            marginMm: 15,
+            contentWidthMm: 180,
+            contentHeightMm: 267,
+            cssWidthPx: 800
+        };
+
+        const getPdfOptions = (filename) => ({
             margin: [15, 15, 15, 15],
             filename: filename,
-            image: {
-                type: 'jpeg',
-                quality: 1.0
-            },
+            image: { type: 'jpeg', quality: 1.0 },
             html2canvas: {
                 scale: 2,
                 useCORS: true,
@@ -855,71 +870,292 @@
                 imageTimeout: 15000,
                 scrollX: 0,
                 scrollY: 0,
-                windowWidth: 800,
-                windowHeight: Math.max(1200, renderHeight)
+                windowWidth: PDF_PAGE.cssWidthPx,
+                windowHeight: 1200
             },
             jsPDF: {
                 unit: 'mm',
                 format: 'a4',
                 orientation: 'portrait',
                 compress: true
-            },
-            pagebreak: {
-                mode: ['css', 'legacy'],
-                before: ['.html2pdf__page-break'],
-                avoid: ['.clause', '.sig-block']
             }
         });
 
-        /*
-         * PDF 생성 전용 독립 Stage.
-         *
-         * 실제 화면의 문서를 html2canvas에 직접 넘기지 않습니다.
-         * 원본 문서를 clone하여 800px 고정 Stage에 배치하므로,
-         * 화면의 900px/패널/스크롤 구조가 PDF 캔버스 폭에 영향을 주지 않습니다.
-         * 특히 windowWidth:800 상태에서 중앙정렬 문서가 음수 X 좌표로 이동하여
-         * 왼쪽 글자가 잘리는 문제를 차단합니다.
-         */
-        async function buildPdfData(sourceElement, opt) {
-            const stage = document.createElement('div');
-            stage.className = 'pdf-exporting pdf-export-stage';
-            stage.setAttribute('aria-hidden', 'true');
+        function absoluteUrl(url) {
+            if (!url) return url;
+            try { return new URL(url, document.baseURI).href; }
+            catch (e) { return url; }
+        }
 
+        function copyPdfStylesToFrame(frameDoc) {
+            // 원본 <head>의 style/link 순서를 그대로 유지합니다.
+            Array.from(document.head.children).forEach(node => {
+                if (node.tagName === 'STYLE') {
+                    const style = frameDoc.createElement('style');
+                    style.textContent = node.textContent || '';
+                    frameDoc.head.appendChild(style);
+                } else if (node.tagName === 'LINK' && (node.getAttribute('rel') || '').toLowerCase() === 'stylesheet') {
+                    const link = frameDoc.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = absoluteUrl(node.getAttribute('href'));
+                    frameDoc.head.appendChild(link);
+                }
+            });
+        }
+
+        function preparePdfClone(sourceElement) {
             const clone = sourceElement.cloneNode(true);
-
-            // 복제본의 중복 ID는 제거합니다. 표시 내용/스타일에는 영향을 주지 않습니다.
             clone.removeAttribute('id');
             clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
 
-            stage.appendChild(clone);
-            document.body.appendChild(stage);
+            clone.querySelectorAll('img').forEach(img => {
+                const src = img.getAttribute('src');
+                if (src) img.setAttribute('src', absoluteUrl(src));
+                const srcset = img.getAttribute('srcset');
+                if (srcset) {
+                    const converted = srcset.split(',').map(part => {
+                        const bits = part.trim().split(/\s+/);
+                        bits[0] = absoluteUrl(bits[0]);
+                        return bits.join(' ');
+                    }).join(', ');
+                    img.setAttribute('srcset', converted);
+                }
+            });
+
+            clone.style.width = '800px';
+            clone.style.minWidth = '800px';
+            clone.style.maxWidth = '800px';
+            clone.style.height = 'auto';
+            clone.style.minHeight = '0';
+            clone.style.maxHeight = 'none';
+            clone.style.margin = '0';
+            clone.style.overflow = 'visible';
+            clone.style.boxShadow = 'none';
+            clone.style.border = '0';
+            clone.style.background = '#ffffff';
+            clone.style.position = 'relative';
+            clone.style.left = '0';
+            clone.style.top = '0';
+
+            clone.querySelectorAll('.html2pdf__page-break').forEach(el => {
+                el.style.display = 'block';
+                el.style.width = '800px';
+                el.style.height = '0px';
+                el.style.minHeight = '0px';
+                el.style.margin = '0';
+                el.style.padding = '0';
+                el.style.border = '0';
+                el.style.pageBreakBefore = 'auto';
+                el.style.breakBefore = 'auto';
+            });
+
+            return clone;
+        }
+
+        async function waitForFrameAssets(frameDoc) {
+            if (frameDoc.fonts && frameDoc.fonts.ready) {
+                try { await frameDoc.fonts.ready; } catch (e) {}
+            }
+
+            const images = Array.from(frameDoc.images || []);
+            await Promise.all(images.map(img => new Promise(resolve => {
+                if (img.complete) { resolve(); return; }
+                const done = () => {
+                    img.removeEventListener('load', done);
+                    img.removeEventListener('error', done);
+                    resolve();
+                };
+                img.addEventListener('load', done, { once: true });
+                img.addEventListener('error', done, { once: true });
+                setTimeout(done, 15000);
+            })));
+
+            await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        }
+
+        function getExplicitPageBreakPositions(clone) {
+            const cloneRect = clone.getBoundingClientRect();
+            return Array.from(clone.querySelectorAll('.html2pdf__page-break'))
+                .map(el => {
+                    const r = el.getBoundingClientRect();
+                    return Math.max(0, Math.round(r.top - cloneRect.top));
+                })
+                .filter((value, index, arr) => index === 0 || value > arr[index - 1]);
+        }
+
+        function makeCanvasSlice(sourceCanvas, startY, endY) {
+            const width = sourceCanvas.width;
+            const height = Math.max(1, Math.min(sourceCanvas.height, Math.round(endY) - Math.round(startY)));
+            const slice = document.createElement('canvas');
+            slice.width = width;
+            slice.height = height;
+            const ctx = slice.getContext('2d', { alpha: false });
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+            ctx.drawImage(sourceCanvas, 0, Math.round(startY), width, height, 0, 0, width, height);
+            return slice;
+        }
+
+        async function buildPdfData(sourceElement, opt) {
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('aria-hidden', 'true');
+            iframe.setAttribute('tabindex', '-1');
+            iframe.style.position = 'fixed';
+            iframe.style.left = '-10000px';
+            iframe.style.top = '0';
+            iframe.style.width = '800px';
+            iframe.style.height = '100px';
+            iframe.style.border = '0';
+            iframe.style.opacity = '1';
+            iframe.style.visibility = 'visible';
+            iframe.style.pointerEvents = 'none';
+            iframe.style.zIndex = '-1';
+            document.body.appendChild(iframe);
 
             try {
-                // 외부 폰트가 아직 로딩 중인 경우 폰트 폭 계산이 달라지는 것을 방지합니다.
-                if (document.fonts && document.fonts.ready) {
-                    try { await document.fonts.ready; } catch (e) {}
+                const frameDoc = iframe.contentDocument;
+                if (!frameDoc) throw new Error('PDF iframe document를 생성할 수 없습니다.');
+
+                frameDoc.open();
+                frameDoc.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=800, initial-scale=1.0"></head><body></body></html>');
+                frameDoc.close();
+
+                copyPdfStylesToFrame(frameDoc);
+
+                const clone = preparePdfClone(sourceElement);
+                frameDoc.documentElement.style.margin = '0';
+                frameDoc.documentElement.style.padding = '0';
+                frameDoc.documentElement.style.width = '800px';
+                frameDoc.documentElement.style.minWidth = '800px';
+                frameDoc.documentElement.style.maxWidth = '800px';
+                frameDoc.documentElement.style.overflow = 'visible';
+                frameDoc.body.style.margin = '0';
+                frameDoc.body.style.padding = '0';
+                frameDoc.body.style.width = '800px';
+                frameDoc.body.style.minWidth = '800px';
+                frameDoc.body.style.maxWidth = '800px';
+                frameDoc.body.style.background = '#ffffff';
+                frameDoc.body.style.overflow = 'visible';
+                frameDoc.body.appendChild(clone);
+
+                // 외부 stylesheet가 iframe에 적용될 때까지 기다립니다.
+                const frameStylesheets = Array.from(frameDoc.querySelectorAll('link[rel="stylesheet"]'));
+                await Promise.all(frameStylesheets.map(link => new Promise(resolve => {
+                    const done = () => {
+                        link.removeEventListener('load', done);
+                        link.removeEventListener('error', done);
+                        resolve();
+                    };
+                    link.addEventListener('load', done, { once: true });
+                    link.addEventListener('error', done, { once: true });
+                    setTimeout(done, 15000);
+                })));
+
+                await waitForFrameAssets(frameDoc);
+
+                const renderWidth = PDF_PAGE.cssWidthPx;
+                const renderHeight = Math.ceil(Math.max(
+                    clone.scrollHeight,
+                    clone.getBoundingClientRect().height,
+                    1
+                ));
+                iframe.style.height = `${Math.max(renderHeight, 100)}px`;
+
+                // parent 페이지에 이미 로드된 html2canvas를 same-origin iframe의
+                // 요소에 직접 적용합니다. 별도의 CDN 재로딩이 필요하지 않습니다.
+                const canvas = await html2canvas(clone, {
+                    scale: opt.html2canvas.scale,
+                    useCORS: true,
+                    allowTaint: false,
+                    logging: false,
+                    backgroundColor: '#ffffff',
+                    imageTimeout: 15000,
+                    scrollX: 0,
+                    scrollY: 0,
+                    width: renderWidth,
+                    height: renderHeight,
+                    windowWidth: renderWidth,
+                    windowHeight: Math.max(renderHeight, 1200)
+                });
+
+                if (!canvas || canvas.width < 10 || canvas.height < 10) {
+                    throw new Error('PDF 렌더링 캔버스가 비어 있습니다.');
                 }
 
-                // clone의 실제 높이를 html2canvas viewport 높이에 반영합니다.
-                const renderHeight = Math.ceil(Math.max(
-                    stage.scrollHeight || 0,
-                    clone.scrollHeight || 0,
-                    clone.getBoundingClientRect().height || 0,
-                    1200
-                ));
-                opt.html2canvas.windowWidth = 800;
-                opt.html2canvas.windowHeight = renderHeight;
+                const pdf = new window.jspdf.jsPDF({
+                    unit: 'mm',
+                    format: 'a4',
+                    orientation: 'portrait',
+                    compress: true
+                });
 
-                // 렌더링 직전 한 프레임을 기다려 복제 DOM의 레이아웃을 확정합니다.
-                await new Promise(resolve => requestAnimationFrame(() => resolve()));
+                const pxPerMm = renderWidth / PDF_PAGE.contentWidthMm;
+                const maxPageHeightCssPx = PDF_PAGE.contentHeightMm * pxPerMm;
+                const scale = opt.html2canvas.scale;
+                const explicitBreaksCss = getExplicitPageBreakPositions(clone)
+                    .filter(y => y > 0 && y < renderHeight)
+                    .map(y => Math.min(renderHeight, y));
 
-                const worker = html2pdf().set(opt).from(stage);
-                const pdf = await worker.toPdf().get('pdf');
+                const breakBoundaries = [];
+                let cursor = 0;
+
+                for (const explicitBreak of explicitBreaksCss) {
+                    while ((explicitBreak - cursor) > maxPageHeightCssPx) {
+                        breakBoundaries.push(cursor + maxPageHeightCssPx);
+                        cursor += maxPageHeightCssPx;
+                    }
+                    breakBoundaries.push(explicitBreak);
+                    cursor = explicitBreak;
+                }
+
+                while ((renderHeight - cursor) > maxPageHeightCssPx) {
+                    breakBoundaries.push(cursor + maxPageHeightCssPx);
+                    cursor += maxPageHeightCssPx;
+                }
+                if (cursor < renderHeight || breakBoundaries.length === 0) {
+                    breakBoundaries.push(renderHeight);
+                }
+
+                let pageStartCss = 0;
+                let pageIndex = 0;
+
+                for (const pageEndCss of breakBoundaries) {
+                    if (pageEndCss <= pageStartCss + 1) {
+                        pageStartCss = pageEndCss;
+                        continue;
+                    }
+
+                    const startCanvasY = Math.round(pageStartCss * scale);
+                    const endCanvasY = Math.round(pageEndCss * scale);
+                    const slice = makeCanvasSlice(canvas, startCanvasY, endCanvasY);
+
+                    if (pageIndex > 0) pdf.addPage();
+
+                    const sliceCssHeight = pageEndCss - pageStartCss;
+                    const renderedHeightMm = Math.min(
+                        PDF_PAGE.contentHeightMm,
+                        sliceCssHeight / pxPerMm
+                    );
+
+                    pdf.addImage(
+                        slice.toDataURL('image/jpeg', 1.0),
+                        'JPEG',
+                        PDF_PAGE.marginMm,
+                        PDF_PAGE.marginMm,
+                        PDF_PAGE.contentWidthMm,
+                        renderedHeightMm,
+                        undefined,
+                        'FAST'
+                    );
+
+                    pageIndex++;
+                    pageStartCss = pageEndCss;
+                }
+
                 const dataUri = pdf.output('datauristring');
                 return { pdf, dataUri };
             } finally {
-                // PDF 객체는 이미 완성되었으므로 Stage를 화면 DOM에서 제거합니다.
-                stage.remove();
+                iframe.remove();
             }
         }
 
