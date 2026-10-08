@@ -77,7 +77,7 @@
         .logo-group span { font-weight: 800; font-size: 1.45rem; color: var(--sj-green); letter-spacing: -0.5px; }
         
         .header-actions { display: flex; gap: 12px; align-items: center; }
-        .btn-back { display: flex; align-items: center; gap: 6px; background: var(--bg-white); color: var(--text-gray); border: 1px solid var(--border-color); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
+        .btn-back { display: flex; align-items: center; gap: 6px; background: var(--doc-bg); color: var(--text-gray); border: 1px solid var(--border-color); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
         .btn-back:hover { background: #e2e8f0; color: var(--text-dark); }
         .security-badge { display: flex; align-items: center; gap: 6px; background: #ecfdf5; color: #059669; padding: 8px 18px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; border: 1px solid #a7f3d0; }
 
@@ -94,7 +94,7 @@
         .step.completed .step-text, .step.active .step-text { color: var(--sj-red); }
 
         /* -----------------------------------------
-           [Layout & Panels]
+           [Layout & Panels (900px 통일)]
            ----------------------------------------- */
         .content-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; text-align: center; }
         .page-title { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase;}
@@ -132,7 +132,7 @@
             position: relative; word-break: keep-all; overflow-wrap: break-word;
         }
         
-        .document-paper h1 { text-align: center; font-size: 1.7rem; margin-bottom: 5px; color: #0f172a; letter-spacing: -0.5px;}
+        .document-paper h1 { text-align: center; font-size: 1.7rem; margin-bottom: 5px; color: #0f172a; word-break: keep-all; letter-spacing: -0.5px;}
         .document-paper h3 { text-align: center; font-size: 1.05rem; color: #64748b; font-weight: 400; margin-top: 0; margin-bottom: 35px;}
         
         /* 계약 조항 디자인 */
@@ -151,9 +151,8 @@
         .doc-input::placeholder { color: #94a3b8; font-weight: normal; font-size: 0.85rem;}
         .doc-input[readonly] { background: transparent; border-bottom-style: dashed; color: #0f172a; cursor: not-allowed;}
         
-        /* 락업 텍스트 스타일 */
-        .locked-text { font-weight: bold; color: #0f172a; padding: 0 5px; display: inline-block; border-bottom: 1px solid #0f172a; font-family: 'Outfit', 'Noto Sans KR', sans-serif;}
-        .locked-text.type-signature { font-family: 'Caveat', cursive !important; color: #1e3a8a !important; font-size: 1.8rem !important; }
+        .type-signature { font-family: 'Caveat', cursive !important; font-size: 1.8rem !important; color: #1e3a8a !important; border-bottom: 2px solid #1e3a8a; }
+        .locked-text { font-weight: bold; color: #0f172a; padding: 0 5px; display: inline-block; border-bottom: 1px solid #0f172a;}
 
         /* 서명 블록 및 그리드 (문서 외 폼) */
         .sig-block { border: 2px solid #cbd5e1; padding: 25px; margin-top: 30px; background: #ffffff; page-break-inside: avoid; border-radius: 12px;}
@@ -226,7 +225,7 @@
     <!-- Toast Notification Anchor -->
     <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-    <!-- Header -->
+    <!-- Header (원본 유지) -->
     <header class="portal-header">
         <div style="display: flex; align-items: center; gap: 15px;">
             <a href="step3_nda.html" class="btn-back"><i class="fas fa-arrow-left"></i> <span>이전으로 (Back)</span></a>
@@ -657,7 +656,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // [날짜 자동 세팅]
+            // [자동화] 날짜 세팅
             const todayKST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); 
             
             const fddDateEl = document.getElementById('fdd_date');
@@ -669,7 +668,7 @@
 
             if(cDateEl && !cDateEl.value) { cDateEl.value = todayKST; }
 
-            // [날짜 3년 연산 엔진 완벽 구동]
+            // [자동화] 3년 계약일 자동 산출 엔진
             if(cStartEl && cEndEl) {
                 cStartEl.addEventListener('change', function(e) {
                     if(!e.target.value) return;
@@ -713,7 +712,7 @@
             }
         }
 
-        // [입력값 무손실 락업]
+        // [입력값 무손실 락업] 서명 텍스트 정중앙 배치 보강
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -729,7 +728,14 @@
                 }
                 span.innerText = val ? val : '[입력 대기 중]';
                 
-                // 폰트 스타일 인라인 강제 지정 (HTML2PDF가 스타일을 누락시키지 않도록 하드코딩)
+                // 센터링을 위해 inline-block과 min-width, text-align 강제 주입
+                span.style.display = "inline-block";
+                span.style.minWidth = "150px";
+                span.style.textAlign = "center";
+                span.style.fontWeight = "bold";
+                span.style.padding = "0 5px";
+                span.style.borderBottom = "1px solid #0f172a";
+
                 if (el.classList.contains('type-signature')) {
                     span.className = 'locked-text type-signature';
                     span.style.fontFamily = "'Caveat', cursive";
@@ -741,12 +747,6 @@
                     span.style.color = "#0f172a";
                     span.style.fontSize = "1rem";
                 }
-                span.style.fontWeight = "bold";
-                span.style.padding = "0 5px";
-                span.style.borderBottom = "1px solid #0f172a";
-                span.style.display = "inline-block";
-                span.style.minWidth = "50px";
-                span.style.textAlign = "center";
 
                 el.parentNode.replaceChild(span, el);
             });
@@ -865,75 +865,73 @@
         }
 
         // =========================================================
-        // ★ [가장 완벽한 인플레이스 렌더링 엔진] 
-        // 화면을 벗어나지 않고, 제자리에서 브라우저 폭 제약을 일시적으로 무효화한 뒤
-        // 문서를 정확히 800px 폭으로 고정하여 가운데 정렬(Center)로 캡처합니다.
-        // 왼쪽으로 쏠리는 현상, 잘림 현상, 그리고 백지화 현상을 100% 방어합니다.
+        // ★ [가장 완벽한 영점 조준(Zero-Point) 렌더링 엔진] 
+        // 화면을 밖으로 보내어 복제합니다.
+        // 이때 width:800px로 강제 고정하고, margin: 0 으로 설정하여 
+        // 캔버스 엔진이 중앙 정렬을 위해 좌표를 음수로 밀어내는 것을 원천 차단합니다.
         // =========================================================
         async function exportPdfSafely(sourceElementId, filename) {
             const sourceElement = document.getElementById(sourceElementId);
-            const parentWrapper = sourceElement.parentElement;
             
-            // DOM 값 반영을 확실히 기다림 (백지화 방지 1)
+            // DOM 렌더링 값 반영 대기
             await new Promise(resolve => setTimeout(resolve, 300));
             
-            // 캡처 중 화면이 틀어지는 것을 사용자에게 숨기기 위한 글로벌 오버레이 작동
-            document.getElementById('global-loading-overlay').classList.add('active');
+            // 화면 밖 고정 컨테이너 생성 (브라우저 스크롤 영향 0%)
+            const cloneContainer = document.createElement('div');
+            cloneContainer.style.position = 'fixed';
+            cloneContainer.style.top = '-9999px'; 
+            cloneContainer.style.left = '0px';
+            cloneContainer.style.width = '800px'; 
+            cloneContainer.style.margin = '0px'; 
+            cloneContainer.style.padding = '0px';
+            cloneContainer.style.backgroundColor = '#ffffff';
+            cloneContainer.style.boxSizing = 'border-box';
             
-            // 원래 적용되어 있던 스타일 백업 (무손실 롤백을 위함)
-            const originalSourceCss = sourceElement.style.cssText;
-            const originalWrapperCss = parentWrapper.style.cssText;
-
-            // ★ 핵심: html2canvas가 좌표계를 혼동하지 않도록(왼쪽 잘림 방지)
-            // margin: 0 auto를 풀고, 넓이를 강제로 800px로 세팅합니다.
-            sourceElement.style.cssText = `
-                width: 800px !important;
-                max-width: 800px !important;
-                min-width: 800px !important;
-                margin: 0 !important; 
-                padding: 40px !important;
-                box-shadow: none !important;
-                border: none !important;
-                background-color: #ffffff !important;
-                color: #1e293b !important;
-                position: relative !important;
-                transform: none !important;
-                left: 0 !important;
-                top: 0 !important;
-                box-sizing: border-box !important;
-            `;
+            // 원본 복제
+            const clone = sourceElement.cloneNode(true);
             
-            // 부모 요소를 블록 형태로 만들어 스크롤을 풀고 영역을 고정합니다.
-            parentWrapper.style.cssText = `
-                max-height: none !important;
-                height: auto !important;
-                overflow: visible !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                border: none !important;
-                box-shadow: none !important;
-                background-color: transparent !important;
-                display: block !important;
-                align-items: flex-start !important;
-            `;
+            // 복제본 강제 규격 락업 (왼쪽 쏠림 원천 방어)
+            clone.style.width = '800px';
+            clone.style.minWidth = '800px';
+            clone.style.maxWidth = '800px';
+            clone.style.margin = '0'; // 정중앙 쏠림 현상 방지의 핵심
+            clone.style.padding = '40px 40px'; 
+            clone.style.boxSizing = 'border-box';
+            clone.style.overflow = 'hidden'; 
+            clone.style.transform = 'none';
+            clone.style.boxShadow = 'none';
+            clone.style.border = 'none';
+            clone.style.backgroundColor = '#ffffff';
+            clone.style.position = 'static'; 
 
-            // 브라우저 렌더 트리가 CSS 변경을 완전히 인지하도록 대기 (백지화 방지 2)
-            await new Promise(resolve => setTimeout(resolve, 400));
+            // 페이지 분리선 유지
+            const pageBreaks = clone.querySelectorAll('.html2pdf__page-break');
+            pageBreaks.forEach(pb => {
+                pb.style.display = 'block';
+                pb.style.width = '100%';
+                pb.style.height = '0px';
+                pb.style.margin = '0px';
+                pb.style.pageBreakBefore = 'always';
+            });
+            
+            cloneContainer.appendChild(clone);
+            document.body.appendChild(cloneContainer);
 
-            // html2pdf 옵션 세팅 (가운데 정렬을 위해 좌우 마진 10 적용)
+            // html2canvas 옵션 세팅 (x:0, y:0 강제 영점 조준 및 width 지정으로 잘림 100% 픽스)
             const opt = {
-                margin:       [15, 10, 15, 10], // 상우하좌 (Top, Right, Bottom, Left)
+                margin:       [15, 10, 15, 10], // 완벽한 좌우 밸런스를 위한 여백 조정
                 filename:     filename,
                 image:        { type: 'jpeg', quality: 1.0 },
                 html2canvas:  { 
                     scale: 2, 
                     useCORS: true, 
                     logging: false, 
-                    windowWidth: 800,
-                    x: 0,
-                    y: 0,
+                    scrollY: 0, 
                     scrollX: 0,
-                    scrollY: 0
+                    x: 0, // 강제 좌측 상단 영점 조준
+                    y: 0,
+                    width: 800, // 캔버스 가로 폭 800 고정
+                    windowWidth: 800
                 },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak:    { mode: ['css', 'legacy'] } 
@@ -941,24 +939,21 @@
 
             let pdfBase64String = null;
             try {
-                // 화면 제자리에서 캡처 진행
-                pdfBase64String = await html2pdf().set(opt).from(sourceElement).outputPdf('datauristring');
+                // 가상 클론 문서를 타겟으로 스캔 
+                pdfBase64String = await html2pdf().set(opt).from(cloneContainer).outputPdf('datauristring');
                 
-                // 점주 PC 다운로드 유도
-                html2pdf().set(opt).from(sourceElement).save();
-            } catch (err) {
-                throw err;
+                // 점주 PC 다운로드 실행
+                html2pdf().set(opt).from(cloneContainer).save();
             } finally {
-                // 스캔 완료 후 원래의 완벽한 테마와 레이아웃으로 100% 롤백
-                sourceElement.style.cssText = originalSourceCss;
-                parentWrapper.style.cssText = originalWrapperCss;
+                // 작업 완료 후 가상 컨테이너 삭제 (메모리 누수 방지)
+                document.body.removeChild(cloneContainer);
             }
             
             return pdfBase64String;
         }
 
         // ---------------------------------------------------------
-        // Action 1: FDD 문서 제출 (타임아웃 해제)
+        // Action 1: FDD 문서 제출 (타임아웃 30초 릴레이 전송 적용)
         // ---------------------------------------------------------
         async function signAndSubmitFDD() {
             if (isSubmitting) return;
@@ -977,6 +972,7 @@
             if (!confirm("FDD 문서를 완전히 확인하셨으며 서명을 진행하시겠습니까?\n동의 시 원본이 구글 드라이브에 안전하게 보관되며, 14일 락업이 시작됩니다.")) return;
 
             isSubmitting = true;
+            document.getElementById('global-loading-overlay').classList.add('active');
 
             try {
                 localStorage.setItem('sinjeon_fdd_timestamp', new Date().getTime());
@@ -989,7 +985,7 @@
             lockInputsToText('fdd-doc-content');
 
             try {
-                // 렌더링 호출
+                // 오프스크린 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('fdd-doc-content', `Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
                 
                 let ipAddress = 'Unknown';
@@ -999,9 +995,9 @@
                     ipAddress = ipData.ip;
                 } catch(e) {}
 
-                // 대용량 전송을 위한 60초 타임아웃 릴레이 전송
+                // 대용량 전송을 위한 30초 타임아웃 릴레이 전송
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 60000);
+                const timeoutId = setTimeout(() => controller.abort(), 30000);
 
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
@@ -1037,7 +1033,7 @@
         }
 
         // ---------------------------------------------------------
-        // Action 2: 본계약서 제출 (타임아웃 해제)
+        // Action 2: 본계약서 제출
         // ---------------------------------------------------------
         async function signAndSubmitContract() {
             if (isSubmitting) return;
@@ -1071,6 +1067,7 @@
             }
 
             isSubmitting = true;
+            document.getElementById('global-loading-overlay').classList.add('active');
 
             let corpName = 'Franchisee';
             let province = 'Canada';
@@ -1082,12 +1079,12 @@
             lockInputsToText('contract-doc-content');
 
             try {
-                // 인플레이스 렌더링 호출
+                // 오프스크린 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('contract-doc-content', `Sinjeon_Master_Agreement_${corpName.replace(/\s+/g, '_')}.pdf`);
 
-                // 60초 대용량 릴레이 전송
+                // 30초 대용량 릴레이 전송
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 60000);
+                const timeoutId = setTimeout(() => controller.abort(), 30000);
 
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
@@ -1106,6 +1103,7 @@
 
                 pdfBase64String = null; 
                 
+                // 완료 팝업 실행
                 const modal = document.getElementById('success-modal');
                 modal.classList.add('active');
                 document.body.classList.add('lock-scroll');
