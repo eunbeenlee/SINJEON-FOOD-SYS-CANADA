@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="theme-color" content="#1A1A1A">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#FFFFFF">
     
     <title>Secure Document Portal | Step 4 Contract</title>
     <meta name="description" content="Official Franchise Contract Portal for Sinjeon Canada.">
@@ -11,11 +11,13 @@
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     
     <!-- HTML2PDF Library (For Secure Document Generation) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+
     <style>
         /* ================= 보안 및 레이아웃 일원화 (화면 틀어짐 방지 원본 유지) ================= */
         html { overflow-y: scroll; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -94,12 +96,12 @@
         .step.completed .step-text, .step.active .step-text { color: var(--sj-red); }
 
         /* -----------------------------------------
-           [Layout & Panels (900px 통일)]
+           [Layout & Panels]
            ----------------------------------------- */
         .content-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; text-align: center; }
         .page-title { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase;}
         .page-desc { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 30px; font-weight: 500; }
-        .en-desc { font-size: 0.95rem; color: #94a3b8; display: block; font-weight: 400; margin-top: 5px; font-family: 'Outfit', sans-serif; }
+        .en-desc { font-size: 0.95rem; color: var(--text-light); display: block; font-weight: 400; margin-top: 5px; font-family: 'Outfit', sans-serif; }
 
         .panel { background: white; border: 1px solid var(--border-color); border-radius: 24px; padding: 45px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); margin-bottom: 35px; text-align: left; position: relative; }
         .panel-header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; border-bottom: 1px solid #f1f5f9; padding-bottom: 20px;}
@@ -123,18 +125,15 @@
             position: relative; scroll-behavior: smooth;
         }
         .document-wrapper::-webkit-scrollbar { width: 8px; }
-        .document-wrapper::-webkit-scrollbar-thumb { background-color: #94a3b8; border-radius: 4px; }
+        .document-wrapper::-webkit-scrollbar-thumb { background-color: var(--border-focus); border-radius: 4px; }
 
-        /* 
-           * 문서 종이 설정
-           * box-sizing 속성 추가 및 패딩 간격 재조정 
-         */
+        /* 문서 종이 설정 (box-sizing 속성 추가 및 패딩 간격 재조정) */
         .document-paper { 
             background: var(--doc-bg); width: 100%; max-width: 800px; margin: 0 auto; 
             padding: 45px 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
             font-family: 'Noto Sans KR', Arial, sans-serif; line-height: 1.6; color: #1e293b; 
             position: relative; word-break: keep-all; overflow-wrap: break-word;
-            box-sizing: border-box; /* 추가: 패딩이 너비에 포함되도록 설정 */
+            box-sizing: border-box; 
         }
         
         .document-paper h1 { text-align: center; font-size: 1.7rem; margin-bottom: 5px; color: #0f172a; word-break: keep-all; letter-spacing: -0.5px;}
@@ -160,10 +159,10 @@
         
         /* 락업 텍스트 중앙 정렬 강화 */
         .locked-text { 
-            font-weight: bold; color: #0f172a; padding: 0 5px; 
-            display: inline-block; border-bottom: 1px solid #0f172a; 
-            text-align: center; min-width: 150px; white-space: nowrap;
+            font-weight: bold; color: #0f172a; padding: 0 5px; display: inline-block; 
+            border-bottom: 1px solid #0f172a; text-align: center; min-width: 150px;
         }
+        .locked-text.type-signature { font-family: 'Caveat', cursive !important; color: #1e3a8a !important; font-size: 1.8rem !important; }
 
         /* 서명 블록 및 그리드 (문서 외 폼) */
         .sig-block { border: 2px solid #cbd5e1; padding: 25px; margin-top: 30px; background: #ffffff; page-break-inside: avoid; border-radius: 12px; box-sizing: border-box;}
@@ -236,7 +235,7 @@
     <!-- Toast Notification Anchor -->
     <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-    <!-- Header (원본 유지) -->
+    <!-- Header -->
     <header class="portal-header">
         <div style="display: flex; align-items: center; gap: 15px;">
             <a href="step3_nda.html" class="btn-back"><i class="fas fa-arrow-left"></i> <span>이전으로 (Back)</span></a>
@@ -585,7 +584,7 @@
                                 <strong>사업자번호:</strong> 216-86-02475
                             </div>
                             <div style="text-align: center; position: relative; color: #0f172a;">
-                                <img src="y2c_director_sign.png" alt="Y2C Signature" style="height: 60px; display: block; margin: 0 auto; position: relative; z-index: 2;" onerror="handleImgError(this)">
+                                <img src="y2c_director_sign.png" alt="Y2C Signature" style="height: 60px; display: block; margin: 0 auto; position: relative; z-index: 2;" onerror="this.style.display='none'">
                                 <div style="position: relative; z-index: 1; margin-top: -15px;">
                                     <strong>서명권자 (Director):</strong> 이 윤 지 (Yoon-ji Lee)
                                 </div>
@@ -615,7 +614,7 @@
                 </div>
             </div> <!-- End of Contract -->
 
-            <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()" disabled>
+            <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()">
                 <i class="fas fa-paper-plane"></i> 본계약 최종 전자 서명 및 서버 발송
             </button>
         </section>
@@ -637,9 +636,6 @@
         </div>
     </div>
 
-    <!-- =========================================
-         [Core Script Engine & Advanced Logic]
-         ========================================= -->
     <script>
         // ★ 통합 백엔드 URL 완벽 연동
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjqosY23kJFdwCAwZA36-zVOt_xL6xw9gfXtNEgyWXTMDcHz9VPm0H07ZR3u8jDhOowg/exec"; 
@@ -662,12 +658,8 @@
             setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 5000);
         }
 
-        function handleImgError(img) {
-            img.onerror = null; img.src = 'sinjeon_logo_canada.png'; img.style.objectFit = 'contain'; img.style.padding = '10px';
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
-            // [자동화] 날짜 3년 연산 엔진 완벽 구동
+            // [자동화] 날짜 세팅 및 3년 계산기
             const todayKST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); 
             
             const fddDateEl = document.getElementById('fdd_date');
@@ -722,7 +714,7 @@
             }
         }
 
-        // [입력값 무손실 락업] 서명 텍스트 정중앙 배치(Center) 및 끊김 방지
+        // ★ [입력값 무손실 락업] 센터링을 위해 inline 속성 고정 및 크기 제한 적용
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -738,14 +730,12 @@
                 }
                 span.innerText = val ? val : '[입력 대기 중]';
                 
-                // 센터링을 위해 inline-block과 min-width, text-align 강제 주입
                 span.style.display = "inline-block";
                 span.style.minWidth = "150px";
                 span.style.textAlign = "center";
                 span.style.fontWeight = "bold";
                 span.style.padding = "0 5px";
                 span.style.borderBottom = "1px solid #0f172a";
-                span.style.whiteSpace = "nowrap"; // 긴 서명이 줄바꿈되지 않게 락업
 
                 if (el.classList.contains('type-signature')) {
                     span.className = 'locked-text type-signature';
@@ -776,9 +766,7 @@
                 savedProv = localStorage.getItem('sj_province') || '';
                 savedCorp = localStorage.getItem('sj_corp') || '';
                 targetCity = localStorage.getItem('sj_target_city') || '';
-            } catch(e) {
-                console.warn("로컬 스토리지가 비활성화되어 있습니다.", e);
-            }
+            } catch(e) {}
             
             if(sjName && !startTime) {
                 const fddName = document.getElementById('fdd_name');
@@ -876,18 +864,15 @@
         }
 
         // =========================================================
-        // ★ [가장 완벽한 영점 조준(Zero-Point) 렌더링 엔진] 
-        // 화면을 밖으로 보내어 복제합니다.
-        // 이때 width:800px로 강제 고정하고, margin: 0 으로 설정하여 
-        // 캔버스 엔진이 중앙 정렬을 위해 좌표를 음수로 밀어내는 것을 원천 차단합니다.
+        // ★ [PDF 렌더링 무결성 패치] 센터링 및 우측 잘림 완벽 방어
         // =========================================================
         async function exportPdfSafely(sourceElementId, filename) {
             const sourceElement = document.getElementById(sourceElementId);
             
-            // DOM 렌더링 값 반영 대기
+            // 1. 값 반영 대기
             await new Promise(resolve => setTimeout(resolve, 300));
             
-            // 화면 밖 고정 컨테이너 생성 (브라우저 스크롤 영향 0%)
+            // 2. 화면 밖 고정 컨테이너 생성 (브라우저 스크롤의 영향을 차단)
             const cloneContainer = document.createElement('div');
             cloneContainer.style.position = 'fixed';
             cloneContainer.style.top = '-9999px'; 
@@ -898,14 +883,15 @@
             cloneContainer.style.backgroundColor = '#ffffff';
             cloneContainer.style.boxSizing = 'border-box';
             
-            // 원본 복제
+            // 3. 원본 문서 노드 복제
             const clone = sourceElement.cloneNode(true);
             
-            // 복제본 강제 규격 락업 (왼쪽 쏠림, 우측 잘림 원천 방어)
+            // ★ 핵심: 복제본 강제 규격 락업 (우측 잘림, 좌측 쏠림 원천 방어)
+            // margin: 0 으로 설정하여 html2canvas가 캔버스를 임의로 중앙 정렬하느라 좌표계를 음수로 미는 것을 막습니다.
             clone.style.width = '800px';
             clone.style.minWidth = '800px';
             clone.style.maxWidth = '800px';
-            clone.style.margin = '0'; // 정중앙 쏠림 현상 방지의 핵심
+            clone.style.margin = '0'; 
             clone.style.padding = '40px 40px'; 
             clone.style.boxSizing = 'border-box';
             clone.style.overflow = 'hidden'; 
@@ -928,9 +914,10 @@
             cloneContainer.appendChild(clone);
             document.body.appendChild(cloneContainer);
 
-            // html2canvas 옵션 세팅 (x:0, y:0 강제 영점 조준 및 width 지정으로 센터링 완벽 보장)
+            // ★ html2canvas 옵션 세팅 
+            // x:0, y:0 강제 영점 조준 및 width: 800 지정으로 센터링이 완벽 보장됩니다.
             const opt = {
-                margin:       [15, 10, 15, 10], // 완벽한 좌우 밸런스를 위한 여백 조정
+                margin:       [15, 10, 15, 10], // 좌우 여백을 동일하게 주어 캔버스가 A4 정중앙에 안착하도록 설정
                 filename:     filename,
                 image:        { type: 'jpeg', quality: 1.0 },
                 html2canvas:  { 
@@ -941,7 +928,7 @@
                     scrollX: 0,
                     x: 0, // 강제 좌측 상단 영점 조준
                     y: 0,
-                    width: 800, // 캔버스 가로 폭 800 고정
+                    width: 800, // 캡처 가로 폭을 정확히 800px로 락업
                     windowWidth: 800
                 },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
@@ -952,11 +939,10 @@
             try {
                 // 가상 클론 문서를 타겟으로 스캔 
                 pdfBase64String = await html2pdf().set(opt).from(cloneContainer).outputPdf('datauristring');
-                
-                // 점주 PC 다운로드 실행
+                // 점주 PC 다운로드
                 html2pdf().set(opt).from(cloneContainer).save();
             } finally {
-                // 작업 완료 후 가상 컨테이너 삭제 (메모리 누수 방지)
+                // 작업 완료 후 메모리 누수 방지
                 document.body.removeChild(cloneContainer);
             }
             
@@ -996,7 +982,7 @@
             lockInputsToText('fdd-doc-content');
 
             try {
-                // 오프스크린 렌더링 호출
+                // 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('fdd-doc-content', `Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
                 
                 let ipAddress = 'Unknown';
@@ -1006,7 +992,7 @@
                     ipAddress = ipData.ip;
                 } catch(e) {}
 
-                // 대용량 전송을 위한 60초 타임아웃 릴레이 전송
+                // 대용량 전송 60초 타임아웃 락 해제
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 60000);
 
@@ -1025,7 +1011,7 @@
                 });
                 clearTimeout(timeoutId);
 
-                pdfBase64String = null; // 메모리 강제 해제
+                pdfBase64String = null; // 메모리 해제
 
                 checkStateAndRender();
                 showToast("정보공개서(FDD) 전자 서명이 완료되어 서버로 전송되었습니다.\n14일 락업 타이머가 가동됩니다.", "success");
@@ -1036,7 +1022,6 @@
                 console.error(err);
                 showToast("네트워크 지연 또는 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error");
                 try { localStorage.removeItem('sinjeon_fdd_timestamp'); } catch(e){}
-                setTimeout(() => location.reload(), 2000);
             } finally {
                 document.getElementById('global-loading-overlay').classList.remove('active');
                 isSubmitting = false;
@@ -1090,10 +1075,9 @@
             lockInputsToText('contract-doc-content');
 
             try {
-                // 오프스크린 렌더링 호출
+                // 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('contract-doc-content', `Sinjeon_Master_Agreement_${corpName.replace(/\s+/g, '_')}.pdf`);
 
-                // 60초 대용량 릴레이 전송
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 60000);
 
