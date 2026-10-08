@@ -12,6 +12,8 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600&display=swap" rel="stylesheet">
+    
+    <!-- HTML2PDF Library (For Secure Document Generation) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
@@ -21,8 +23,13 @@
         body { background-color: #f1f5f9; color: var(--text-dark); font-family: 'Outfit', 'Noto Sans KR', sans-serif; -webkit-font-smoothing: antialiased; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
         *, *::before, *::after { box-sizing: border-box; }
         input, textarea, select { -webkit-user-select: auto; -moz-user-select: auto; -ms-user-select: auto; user-select: auto; font-family: inherit; }
-        img { -webkit-user-drag: none; max-width: 100%; height: auto; display: block; }
-        @media print { body { display: none !important; } }
+        img { -webkit-user-drag: none; max-width: 100%; height: auto; display: block; object-fit: contain; }
+        
+        @media print { 
+            body * { display: none !important; } 
+            body::before { content: "SECURITY WARNING: Printing this confidential document is strictly prohibited."; display: block !important; text-align: center; font-size: 20px; font-weight: bold; margin-top: 50px; color: black; }
+        }
+        
         *:focus-visible { outline: 3px solid #D24B41; outline-offset: 4px; border-radius: 8px; }
 
         :root {
@@ -125,13 +132,59 @@
         .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
         .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.6;}
 
+        /* ==========================================================================
+           [새로운 핵심 개선] 인플레이스 리플로우(In-Place Reflow) 렌더링 클래스
+           (복제 노드 방식을 완전히 폐기하고, 원본 화면을 일시적으로 PDF 규격에 맞춥니다)
+           ========================================================================== */
+        .pdf-export-mode {
+            width: 800px !important;
+            max-width: 800px !important;
+            margin: 0 auto !important;
+            padding: 40px !important;
+            box-shadow: none !important;
+            border: none !important;
+            transform: none !important;
+            position: relative !important;
+            left: 0 !important;
+            top: 0 !important;
+            background: #ffffff !important;
+        }
+
+        .pdf-wrapper-override {
+            max-height: none !important;
+            height: auto !important;
+            overflow: visible !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            background: transparent !important;
+        }
+
+        /* -----------------------------------------
+           글로벌 로딩 오버레이 (PDF 생성 중 화면 보호)
+           ----------------------------------------- */
+        #global-loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease;
+        }
+        #global-loading-overlay.active {
+            opacity: 1; visibility: visible;
+        }
+        .spinner-icon { font-size: 4rem; color: var(--sj-red); margin-bottom: 20px; animation: fa-spin 2s infinite linear; }
+        .loading-text { font-size: 1.5rem; font-weight: 900; color: var(--text-dark); margin-bottom: 10px; }
+        .loading-subtext { font-size: 1rem; color: var(--text-gray); font-weight: 500; text-align: center; padding: 0 20px;}
+
+        /* -----------------------------------------
+           Dev Tools & Modals
+           ----------------------------------------- */
         .dev-tools { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 9999; }
         .dev-btn { background: #e2e8f0; border: 1px solid #cbd5e1; color: var(--text-gray); padding: 8px 14px; font-size: 0.8rem; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 700;}
         .dev-btn:hover { background: var(--text-dark); color: white;}
         .dev-btn.danger { color: var(--sj-red); border-color: var(--sj-red); background: white;}
         .dev-btn.danger:hover { background: var(--sj-red); color: white;}
 
-        /* ================= Success Modal ================= */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(8px); }
         .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
         .modal-content { background: white; width: 90%; max-width: 550px; border-radius: 24px; padding: 50px 40px; text-align: center; transform: translateY(30px); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 25px 60px rgba(0,0,0,0.5);}
@@ -153,7 +206,16 @@
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- =========================================
+         [초고속 전면 로딩 오버레이 (PDF 생성용)]
+         ========================================= -->
+    <div id="global-loading-overlay">
+        <div class="spinner-icon"><i class="fas fa-spinner"></i></div>
+        <div class="loading-text">보안 문서 생성 및 서버 전송 중...</div>
+        <div class="loading-subtext">창을 닫거나 새로고침하지 마십시오.<br><span style="font-size:0.85rem; color:#94a3b8;">Processing secure documents. Please do not close the window.</span></div>
+    </div>
+
+    <!-- Header (원본 유지) -->
     <header class="portal-header">
         <div style="display: flex; align-items: center; gap: 15px;">
             <a href="step3_nda.html" class="btn-back"><i class="fas fa-arrow-left"></i> <span>이전으로 (Back)</span></a>
@@ -354,7 +416,7 @@
         </div>
 
         <!-- ==========================================
-             PANEL 2: FINAL CONTRACT 
+             PANEL 2: FINAL CONTRACT (본계약서 내용 보존)
              ========================================== -->
         <div class="panel" id="signature-panel" style="margin-bottom: 0;">
             <div class="lock-overlay" id="lock-overlay">
@@ -554,9 +616,6 @@
         </div>
     </div>
 
-    <!-- =========================================
-         [Core Script Engine & Advanced Logic]
-         ========================================= -->
     <script>
         // ★ 통합 백엔드 URL 완벽 연동
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjqosY23kJFdwCAwZA36-zVOt_xL6xw9gfXtNEgyWXTMDcHz9VPm0H07ZR3u8jDhOowg/exec"; 
@@ -577,6 +636,7 @@
 
             if(cDateEl && !cDateEl.value) { cDateEl.value = todayKST; }
 
+            // 3년 계약일 자동 산출 엔진
             if(cStartEl && cEndEl) {
                 cStartEl.addEventListener('change', function(e) {
                     if(!e.target.value) return;
@@ -598,6 +658,7 @@
             }
         });
 
+        // 3중 보안 방어
         document.addEventListener('contextmenu', e => { 
             if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); alert("보안 정책상 우클릭이 차단되어 있습니다."); }
         });
@@ -618,7 +679,7 @@
             }
         }
 
-        // 입력 폼을 텍스트로 안전하게 고정 
+        // 입력 폼 텍스트 고정 
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -632,11 +693,8 @@
                 } else {
                     val = el.value || '';
                 }
-                
-                // 백지 방어: 빈 값이더라도 표시 (페일세이프)
                 span.innerText = val ? val : '[입력 대기 중]';
                 
-                // 폰트 스타일 강제 지정 (PDF 엔진 CSS 로딩 실패 대비)
                 if (el.classList.contains('type-signature')) {
                     span.className = 'locked-text type-signature';
                     span.style.fontFamily = "'Caveat', cursive";
@@ -666,9 +724,7 @@
                 savedProv = localStorage.getItem('sj_province') || '';
                 savedCorp = localStorage.getItem('sj_corp') || '';
                 targetCity = localStorage.getItem('sj_target_city') || '';
-            } catch(e) {
-                console.warn("로컬 스토리지가 비활성화되어 있습니다.", e);
-            }
+            } catch(e) {}
             
             if(sjName && !startTime) {
                 const fddName = document.getElementById('fdd_name');
@@ -766,41 +822,27 @@
         }
 
         // =========================================================
-        // ★ [핵심 개선] Off-Screen Clone 렌더링 방식 (백지화 및 좌측 잘림 100% 원천 차단)
-        // 화면의 CSS/구조를 파괴하지 않고 브라우저 바깥 좌표에 문서를 복제하여 안전하게 스캔합니다.
+        // ★ [핵심 픽스] In-Place Reflow 렌더링 엔진 
+        // 외부 Clone이나 숨겨진 Iframe을 쓰지 않고 화면의 원본을 
+        // 0.5초 동안만 폭 800px로 강제 고정하여 찍어내는 가장 완벽한 렌더링
         // =========================================================
         async function exportPdfSafely(sourceElementId, filename) {
             const sourceElement = document.getElementById(sourceElementId);
+            const parentWrapper = sourceElement.parentNode;
             
-            // 1. 값 반영 대기 (렌더링 동기화)
+            // 1. 값 반영 및 폰트 렌더링 동기화 대기
             await new Promise(resolve => setTimeout(resolve, 300));
             
-            // 2. 화면 밖 보이지 않는 영역에 컨테이너 생성 (좌측 잘림 원천 차단)
-            const cloneContainer = document.createElement('div');
-            cloneContainer.style.position = 'absolute';
-            cloneContainer.style.top = '0';
-            cloneContainer.style.left = '0';
-            cloneContainer.style.width = '800px'; 
-            cloneContainer.style.backgroundColor = '#ffffff';
-            cloneContainer.style.zIndex = '-9999'; // 화면 뒤로 숨김
-            cloneContainer.style.pointerEvents = 'none';
+            // 2. 전체 화면을 가려 사용자에게 화면 깨짐을 숨기는 글로벌 로딩막 작동
+            document.getElementById('global-loading-overlay').classList.add('active');
             
-            // 3. 원본 문서 노드 복제
-            const clone = sourceElement.cloneNode(true);
+            // 3. 캡처 직전, 문서의 CSS를 PDF 전용 사이즈로 강제 리플로우 (백지화, 잘림 원천 방어)
+            sourceElement.classList.add('pdf-export-mode');
+            parentWrapper.classList.add('pdf-wrapper-override');
             
-            // 4. 복제된 문서의 스크롤 및 여백 충돌 속성 락업
-            clone.style.margin = '0';
-            clone.style.padding = '40px'; 
-            clone.style.width = '800px';
-            clone.style.maxWidth = '800px';
-            clone.style.boxShadow = 'none';
-            clone.style.transform = 'none';
-            clone.style.overflow = 'visible'; // 내부 스크롤 해제
-            
-            cloneContainer.appendChild(clone);
-            document.body.appendChild(cloneContainer);
+            // CSS 적용 대기
+            await new Promise(resolve => setTimeout(resolve, 100));
 
-            // html2canvas 옵션 세팅 (CORS 유지, 스케일 최적화)
             const opt = {
                 margin:       [15, 15, 15, 15], 
                 filename:     filename,
@@ -812,23 +854,24 @@
 
             let pdfBase64String = null;
             try {
-                // 화면 밖 클론 컨테이너를 타겟으로 스캔 (기존 화면 틀어짐/백지화 유발 요인 제로)
-                pdfBase64String = await html2pdf().set(opt).from(cloneContainer).outputPdf('datauristring');
+                pdfBase64String = await html2pdf().set(opt).from(sourceElement).outputPdf('datauristring');
                 
-                // 점주 PC 다운로드 실행
-                html2pdf().set(opt).from(cloneContainer).save();
+                // 다운로드 실행
+                html2pdf().set(opt).from(sourceElement).save();
             } catch (err) {
                 throw err;
             } finally {
-                // 스캔 완료 후 가상 노드 삭제 (메모리 누수 방지)
-                document.body.removeChild(cloneContainer);
+                // 4. 캡처가 끝나면 즉시 CSS를 원상 복구하여 화면을 원래대로 되돌림
+                sourceElement.classList.remove('pdf-export-mode');
+                parentWrapper.classList.remove('pdf-wrapper-override');
+                document.getElementById('global-loading-overlay').classList.remove('active');
             }
             
             return pdfBase64String;
         }
 
         // ---------------------------------------------------------
-        // Action 1: FDD 문서 제출 (타임아웃 해제 완벽 적용)
+        // Action 1: FDD 문서 제출 
         // ---------------------------------------------------------
         async function signAndSubmitFDD() {
             if (isSubmitting) return;
@@ -847,9 +890,6 @@
             if (!confirm("FDD 문서를 완전히 확인하셨으며 서명을 진행하시겠습니까?\n동의 시 원본이 구글 드라이브에 안전하게 보관되며, 14일 락업이 시작됩니다.")) return;
 
             isSubmitting = true;
-            const btn = document.getElementById('btn-submit-fdd');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 서류 생성 및 구글 드라이브 전송 중...';
-            btn.disabled = true;
 
             try {
                 localStorage.setItem('sinjeon_fdd_timestamp', new Date().getTime());
@@ -862,7 +902,7 @@
             lockInputsToText('fdd-doc-content');
 
             try {
-                // 오프스크린 렌더링 호출
+                // 인플레이스 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('fdd-doc-content', `Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
                 
                 let ipAddress = 'Unknown';
@@ -872,7 +912,7 @@
                     ipAddress = ipData.ip;
                 } catch(e) {}
 
-                // 대용량 전송을 위한 15초 타임아웃 제한 해제
+                // 대용량 전송 15초 타임아웃 락 해제 완료
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     mode: "no-cors",
@@ -896,16 +936,16 @@
             } catch (err) {
                 console.error(err);
                 alert("네트워크 지연 또는 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-                btn.innerHTML = '<i class="fas fa-file-download"></i> 정보공개서 확인 및 FDD 수령본 서명';
-                btn.disabled = false;
+                document.getElementById('global-loading-overlay').classList.remove('active');
                 try { localStorage.removeItem('sinjeon_fdd_timestamp'); } catch(e){}
+                setTimeout(() => location.reload(), 1000);
             } finally {
                 isSubmitting = false;
             }
         }
 
         // ---------------------------------------------------------
-        // Action 2: 본계약서 제출 (타임아웃 해제 완벽 적용)
+        // Action 2: 본계약서 제출
         // ---------------------------------------------------------
         async function signAndSubmitContract() {
             if (isSubmitting) return;
@@ -939,9 +979,6 @@
             }
 
             isSubmitting = true;
-            const btn = document.getElementById('btn-submit-contract');
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> 최종 문서 생성 및 전송 중...';
-            btn.disabled = true;
 
             let corpName = 'Franchisee';
             let province = 'Canada';
@@ -953,10 +990,9 @@
             lockInputsToText('contract-doc-content');
 
             try {
-                // 오프스크린 렌더링 호출
+                // 인플레이스 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('contract-doc-content', `Sinjeon_Master_Agreement_${corpName.replace(/\s+/g, '_')}.pdf`);
 
-                // 대용량 전송을 위한 15초 타임아웃 제한 해제
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     mode: "no-cors",
@@ -971,7 +1007,7 @@
                 });
 
                 pdfBase64String = null; 
-                
+
                 const modal = document.getElementById('success-modal');
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -979,8 +1015,7 @@
             } catch (err) {
                 console.error(err);
                 alert("서버 연결이 지연되었거나 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 본계약 최종 전자 서명 및 서버 발송';
-                btn.disabled = false;
+                document.getElementById('global-loading-overlay').classList.remove('active');
             } finally {
                 isSubmitting = false;
             }
