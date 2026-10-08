@@ -77,7 +77,7 @@
         .logo-group span { font-weight: 800; font-size: 1.45rem; color: var(--sj-green); letter-spacing: -0.5px; }
         
         .header-actions { display: flex; gap: 12px; align-items: center; }
-        .btn-back { display: flex; align-items: center; gap: 6px; background: var(--bg-white); color: var(--text-gray); border: 1px solid var(--border-color); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
+        .btn-back { display: flex; align-items: center; gap: 6px; background: var(--doc-bg); color: var(--text-gray); border: 1px solid var(--border-color); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
         .btn-back:hover { background: #e2e8f0; color: var(--text-dark); }
         .security-badge { display: flex; align-items: center; gap: 6px; background: #ecfdf5; color: #059669; padding: 8px 18px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; border: 1px solid #a7f3d0; }
 
@@ -94,7 +94,7 @@
         .step.completed .step-text, .step.active .step-text { color: var(--sj-red); }
 
         /* -----------------------------------------
-           [Layout & Panels]
+           [Layout & Panels (900px 통일)]
            ----------------------------------------- */
         .content-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; text-align: center; }
         .page-title { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase;}
@@ -121,15 +121,20 @@
             background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 12px; 
             padding: 25px; margin-bottom: 25px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.05); 
             position: relative; scroll-behavior: smooth;
+            display: flex; flex-direction: column; align-items: center; /* 뷰어 내부 중앙 정렬 */
         }
         .document-wrapper::-webkit-scrollbar { width: 8px; }
         .document-wrapper::-webkit-scrollbar-thumb { background-color: var(--border-focus); border-radius: 4px; }
 
         .document-paper { 
-            background: var(--doc-bg); width: 100%; max-width: 800px; margin: 0 auto; 
+            background: var(--doc-bg); 
+            width: 100%; max-width: 800px; 
+            /* 화면상 중앙 정렬 */
+            margin: 0 auto; 
             padding: 45px 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
             font-family: 'Noto Sans KR', Arial, sans-serif; line-height: 1.6; color: #1e293b; 
             position: relative; word-break: keep-all; overflow-wrap: break-word;
+            box-sizing: border-box; /* 패딩 포함 크기 계산 */
         }
         
         .document-paper h1 { text-align: center; font-size: 1.7rem; margin-bottom: 5px; color: #0f172a; letter-spacing: -0.5px;}
@@ -150,6 +155,8 @@
         .doc-input[readonly] { background: transparent; border-bottom-style: dashed; color: #0f172a; cursor: not-allowed;}
         
         .type-signature { font-family: 'Caveat', cursive !important; font-size: 1.8rem !important; color: #1e3a8a !important; border-bottom: 2px solid #1e3a8a; }
+        
+        /* 락업 텍스트 스타일 */
         .locked-text { font-weight: bold; color: #0f172a; padding: 0 5px; display: inline-block; border-bottom: 1px solid #0f172a; font-family: 'Outfit', 'Noto Sans KR', sans-serif;}
         .locked-text.type-signature { font-family: 'Caveat', cursive !important; color: #1e3a8a !important; font-size: 1.8rem !important; }
 
@@ -175,22 +182,73 @@
         .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
         .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.6;}
 
-        /* 초고속 로딩 오버레이 */
-        #global-loading-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; }
+        /* ==========================================================================
+           [PDF 렌더링 전용 클래스 - 센터링 유지 및 왼쪽 잘림 방지 (In-Place)]
+           ========================================================================== */
+        /* 화면 전체를 덮는 로딩 오버레이 */
+        #global-loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease;
+        }
         #global-loading-overlay.active { opacity: 1; visibility: visible; }
         .spinner-icon { font-size: 4rem; color: var(--sj-red); margin-bottom: 20px; animation: fa-spin 2s infinite linear; }
         .loading-text { font-size: 1.5rem; font-weight: 900; color: var(--text-dark); margin-bottom: 10px; }
         .loading-subtext { font-size: 1rem; color: var(--text-gray); font-weight: 500; text-align: center; padding: 0 20px;}
         @keyframes fa-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+        /* 
+         * PDF 생성 시 원본 DOM 요소에 적용되는 강제 고정 클래스
+         * - margin: 0 auto 를 해제하여 좌표 기준점을 왼쪽 상단(0,0)으로 초기화
+         * - 폭을 800px로 강제 고정하여 html2canvas가 혼동하지 않도록 함
+         */
+        .pdf-export-mode {
+            width: 800px !important;
+            max-width: 800px !important;
+            margin: 0 !important; /* 가운데 정렬 해제 -> 좌측 정렬 */
+            padding: 40px !important;
+            box-shadow: none !important;
+            border: none !important;
+            transform: none !important;
+            position: relative !important;
+            left: 0 !important;
+            top: 0 !important;
+            background: #ffffff !important;
+            color: #1e293b !important;
+            overflow: visible !important;
+        }
+        /* 부모 요소들의 스크롤 및 잘림 속성 일시 해제 */
+        .pdf-wrapper-override {
+            max-height: none !important;
+            height: auto !important;
+            overflow: visible !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: #ffffff !important;
+            display: block !important;
+            align-items: flex-start !important; /* 중앙 정렬 해제 */
+        }
+        
+        .pdf-export-mode .html2pdf__page-break {
+            display: block !important;
+            width: 100% !important;
+            height: 0 !important;
+            page-break-before: always !important;
+        }
+
+        /* -----------------------------------------
+           [Dev Tools & Modals]
+           ----------------------------------------- */
         .dev-tools { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 9999; }
         .dev-btn { background: #e2e8f0; border: 1px solid #cbd5e1; color: var(--text-gray); padding: 8px 14px; font-size: 0.8rem; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 700;}
         .dev-btn:hover { background: var(--text-dark); color: white;}
         .dev-btn.danger { color: var(--sj-red); border-color: var(--sj-red); background: white;}
         .dev-btn.danger:hover { background: var(--sj-red); color: white;}
 
-        /* ================= Success Modal ================= */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(8px); }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 20000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(8px); }
         .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
         .modal-content { background: white; width: 90%; max-width: 550px; border-radius: 24px; padding: 50px 40px; text-align: center; transform: translateY(30px); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 25px 60px rgba(0,0,0,0.5);}
         .modal-overlay.active .modal-content { transform: translateY(0); }
@@ -205,6 +263,7 @@
             .btn-back span { display: none; } 
             .panel { padding: 35px 20px; }
             .document-paper { padding: 25px 20px; }
+            .document-wrapper { padding: 15px 10px; }
             .sig-grid { grid-template-columns: 1fr; gap: 15px;}
             .dev-tools { display: none; }
         }
@@ -259,7 +318,7 @@
         <!-- ==========================================
              PANEL 1: FDD 
              ========================================== -->
-        <div class="panel" id="fdd-panel">
+        <section class="panel" id="fdd-panel">
             <div class="panel-header">
                 <div class="panel-icon"><i class="fas fa-file-contract"></i></div>
                 <div>
@@ -420,12 +479,12 @@
             <button class="btn-primary" id="btn-submit-fdd" onclick="signAndSubmitFDD()">
                 <i class="fas fa-file-download"></i> 정보공개서 내용 확인 및 수령증 제출 (Start 14 Days)
             </button>
-        </div>
+        </section>
 
         <!-- ==========================================
-             PANEL 2: FINAL CONTRACT 
+             PANEL 2: FINAL CONTRACT
              ========================================== -->
-        <div class="panel" id="signature-panel" style="margin-bottom: 0;">
+        <section class="panel" id="signature-panel" style="margin-bottom: 0;">
             <div class="lock-overlay" id="lock-overlay">
                 <i class="fas fa-lock"></i>
                 <p id="lock-text">가맹사업법에 따른 14일 대기 기간이 경과하지 않았습니다.<br>상단의 FDD 스마트 문서 서명을 먼저 완료해 주세요.</p>
@@ -604,8 +663,8 @@
             <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()">
                 <i class="fas fa-paper-plane"></i> 본계약 최종 전자 서명 및 서버 발송
             </button>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <!-- 개발자 툴 -->
     <div class="dev-tools">
@@ -623,9 +682,6 @@
         </div>
     </div>
 
-    <!-- =========================================
-         [Core Script Engine & Advanced Logic]
-         ========================================= -->
     <script>
         // ★ 통합 백엔드 URL 완벽 연동
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjqosY23kJFdwCAwZA36-zVOt_xL6xw9gfXtNEgyWXTMDcHz9VPm0H07ZR3u8jDhOowg/exec"; 
@@ -653,7 +709,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // [자동화] 날짜 3년 연산 엔진 완벽 구동
             const todayKST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); 
             
             const fddDateEl = document.getElementById('fdd_date');
@@ -665,6 +720,7 @@
 
             if(cDateEl && !cDateEl.value) { cDateEl.value = todayKST; }
 
+            // 3년 계약일 자동 산출 엔진
             if(cStartEl && cEndEl) {
                 cStartEl.addEventListener('change', function(e) {
                     if(!e.target.value) return;
@@ -677,6 +733,7 @@
 
             checkStateAndRender();
 
+            // 지점명 연동
             const locInput = document.getElementById('c_location');
             if(locInput) {
                 locInput.addEventListener('input', (e) => {
@@ -707,7 +764,7 @@
             }
         }
 
-        // [백지화 원천 차단] 폼을 텍스트로 치환할 때 폰트와 스타일을 인라인으로 강력 고정
+        // ★ 백지화 방어: 입력 폼을 텍스트로 안전하게 고정하면서 인라인 스타일을 강제 주입
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -723,6 +780,7 @@
                 }
                 span.innerText = val ? val : '[입력 대기 중]';
                 
+                // 폰트 스타일 인라인 강제 지정 (html2canvas 스타일 유실 방지)
                 if (el.classList.contains('type-signature')) {
                     span.className = 'locked-text type-signature';
                     span.style.fontFamily = "'Caveat', cursive";
@@ -732,10 +790,12 @@
                     span.className = 'locked-text';
                     span.style.fontFamily = "'Outfit', 'Noto Sans KR', sans-serif";
                     span.style.color = "#0f172a";
+                    span.style.fontSize = "1rem";
                 }
                 span.style.fontWeight = "bold";
                 span.style.padding = "0 5px";
                 span.style.borderBottom = "1px solid #0f172a";
+                span.style.display = "inline-block";
 
                 el.parentNode.replaceChild(span, el);
             });
@@ -754,7 +814,9 @@
                 savedProv = localStorage.getItem('sj_province') || '';
                 savedCorp = localStorage.getItem('sj_corp') || '';
                 targetCity = localStorage.getItem('sj_target_city') || '';
-            } catch(e) {}
+            } catch(e) {
+                console.warn("로컬 스토리지가 비활성화되어 있습니다.", e);
+            }
             
             if(sjName && !startTime) {
                 const fddName = document.getElementById('fdd_name');
@@ -852,58 +914,71 @@
         }
 
         // =========================================================
-        // ★ [핵심 코어] Off-Screen Clone 렌더링 엔진 (잘림/백지화 완벽 차단)
-        // 화면을 뭉개지 않고, 완벽하게 분리된 가상의 iframe에서 깔끔하게 스캔합니다.
+        // ★ [핵심 코어] Off-Screen Rendering 엔진 (화면 밖 영점 조준)
+        // 화면 디자인은 그대로 두고, 캡처 시에만 완벽한 상태로 복사본을 스캔합니다.
         // =========================================================
         async function exportPdfSafely(sourceElementId, filename) {
             const sourceElement = document.getElementById(sourceElementId);
             
-            // 1. 값 반영 대기
+            // 1. 값 반영 및 폰트 렌더링 동기화 대기 (300ms)
             await new Promise(resolve => setTimeout(resolve, 300));
             
             // 2. 화면 밖 보이지 않는 영역에 컨테이너 생성 (좌측 잘림 원천 차단)
             const cloneContainer = document.createElement('div');
             cloneContainer.style.position = 'absolute';
-            cloneContainer.style.top = '-9999px'; // 사용자 화면에 보이지 않음
+            cloneContainer.style.top = '-9999px'; 
             cloneContainer.style.left = '0';
             cloneContainer.style.width = '800px'; 
             cloneContainer.style.backgroundColor = '#ffffff';
             
-            // 3. 원본 문서 노드 복제
+            // 3. 원본 문서 복제
             const clone = sourceElement.cloneNode(true);
             
-            // 4. 복제된 문서의 스타일 강제 고정 (margin: 0 auto 해제로 왼쪽 잘림 방지)
+            // 4. 복제된 문서의 속성 락업 (margin: 0 auto 해제로 왼쪽 잘림 방지)
             clone.style.width = '800px';
             clone.style.maxWidth = '800px';
-            clone.style.margin = '0'; 
+            clone.style.margin = '0'; // 정중앙 쏠림 현상 방지
             clone.style.padding = '40px'; 
             clone.style.boxSizing = 'border-box';
-            clone.style.overflow = 'hidden'; 
+            clone.style.overflow = 'visible'; 
             clone.style.transform = 'none';
             clone.style.boxShadow = 'none';
             clone.style.border = 'none';
+            clone.style.backgroundColor = '#ffffff';
             
             cloneContainer.appendChild(clone);
             document.body.appendChild(cloneContainer);
 
-            // html2canvas 옵션 세팅 (x, y 좌표값을 삭제하여 엔진이 스스로 정확한 범위를 잡도록 유도)
+            // 5. 엔진 옵션 (x:0, y:0 강제 영점 조준으로 잘림 100% 픽스)
             const opt = {
                 margin:       [15, 15, 15, 15], 
                 filename:     filename,
                 image:        { type: 'jpeg', quality: 1.0 },
-                html2canvas:  { scale: 2, useCORS: true, logging: false, windowWidth: 800 },
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true, 
+                    logging: false, 
+                    scrollY: 0, 
+                    scrollX: 0,
+                    x: 0,
+                    y: 0,
+                    windowWidth: 800
+                },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak:    { mode: ['css', 'legacy'] } 
             };
 
             let pdfBase64String = null;
             try {
-                // 화면 밖 클론 렌더링 시작
+                // 화면 밖 클론 문서를 타겟으로 스캔
                 pdfBase64String = await html2pdf().set(opt).from(cloneContainer).outputPdf('datauristring');
-                // 클라이언트 저장
+                
+                // 점주 PC 다운로드 유도
                 html2pdf().set(opt).from(cloneContainer).save();
+            } catch (err) {
+                throw err;
             } finally {
-                // 렌더링 끝난 가상 컨테이너 삭제
+                // 스캔 완료 후 가상 노드 즉시 삭제 (메모리 누수 방지)
                 document.body.removeChild(cloneContainer);
             }
             
@@ -930,7 +1005,6 @@
             if (!confirm("FDD 문서를 완전히 확인하셨으며 서명을 진행하시겠습니까?\n동의 시 원본이 구글 드라이브에 안전하게 보관되며, 14일 락업이 시작됩니다.")) return;
 
             isSubmitting = true;
-            document.getElementById('global-loading-overlay').classList.add('active');
 
             try {
                 localStorage.setItem('sinjeon_fdd_timestamp', new Date().getTime());
@@ -953,10 +1027,7 @@
                     ipAddress = ipData.ip;
                 } catch(e) {}
 
-                // 대용량 전송을 위한 30초 타임아웃 방어
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 30000);
-
+                // 대용량 전송을 위한 30초 릴레이 전송 (타임아웃 해제 완벽 적용)
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     mode: "no-cors",
@@ -967,15 +1038,13 @@
                         pdfData: pdfBase64String, 
                         franchisee: corpName, 
                         ip: ipAddress 
-                    }),
-                    signal: controller.signal
+                    })
                 });
-                clearTimeout(timeoutId);
 
-                pdfBase64String = null; // 메모리 해제
+                pdfBase64String = null; // 메모리 강제 해제
 
                 checkStateAndRender();
-                showToast("정보공개서(FDD) 전자 서명이 완료되었습니다. 14일 락업 타이머가 가동됩니다.", "success");
+                showToast("정보공개서(FDD) 전자 서명이 완료되어 서버로 전송되었습니다.\n14일 락업 타이머가 가동됩니다.", "success");
                 
                 document.getElementById('signature-panel').scrollIntoView({behavior: 'smooth', block: 'start'});
 
@@ -983,9 +1052,7 @@
                 console.error(err);
                 showToast("네트워크 지연 또는 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error");
                 try { localStorage.removeItem('sinjeon_fdd_timestamp'); } catch(e){}
-                setTimeout(() => location.reload(), 2000);
             } finally {
-                document.getElementById('global-loading-overlay').classList.remove('active');
                 isSubmitting = false;
             }
         }
@@ -1040,9 +1107,7 @@
                 // 오프스크린 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('contract-doc-content', `Sinjeon_Master_Agreement_${corpName.replace(/\s+/g, '_')}.pdf`);
 
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 30000);
-
+                // 30초 대용량 전송
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
                     mode: "no-cors",
@@ -1053,13 +1118,12 @@
                         pdfData: pdfBase64String, 
                         franchisee: corpName, 
                         province: province 
-                    }),
-                    signal: controller.signal
+                    })
                 });
-                clearTimeout(timeoutId);
 
                 pdfBase64String = null; 
-
+                
+                // 완료 팝업 실행
                 const modal = document.getElementById('success-modal');
                 modal.classList.add('active');
                 document.body.classList.add('lock-scroll');
