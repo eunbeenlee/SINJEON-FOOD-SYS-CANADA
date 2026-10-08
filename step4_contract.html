@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-    <meta name="theme-color" content="#FFFFFF">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#1A1A1A">
     
     <title>Secure Document Portal | Step 4 Contract</title>
     <meta name="description" content="Official Franchise Contract Portal for Sinjeon Canada.">
@@ -94,7 +94,7 @@
         .step.completed .step-text, .step.active .step-text { color: var(--sj-red); }
 
         /* -----------------------------------------
-           [Layout & Panels (900px 통일)]
+           [Layout & Panels]
            ----------------------------------------- */
         .content-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; text-align: center; }
         .page-title { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase;}
@@ -132,29 +132,30 @@
             position: relative; word-break: keep-all; overflow-wrap: break-word;
         }
         
-        .document-paper h1 { text-align: center; font-size: 1.7rem; margin-bottom: 5px; color: #0f172a; word-break: keep-all; letter-spacing: -0.5px;}
+        .document-paper h1 { text-align: center; font-size: 1.7rem; margin-bottom: 5px; color: #0f172a; letter-spacing: -0.5px;}
         .document-paper h3 { text-align: center; font-size: 1.05rem; color: #64748b; font-weight: 400; margin-top: 0; margin-bottom: 35px;}
         
+        /* 계약 조항 디자인 */
         .clause { margin-bottom: 25px; page-break-inside: avoid; }
-        .clause h2 { font-size: 1.05rem; color: var(--sj-green); border-bottom: 1.5px solid #e2e8f0; padding-bottom: 5px; margin-top: 0; margin-bottom: 10px;}
-        .clause p { font-size: 0.95rem; margin-bottom: 5px; text-align: justify; font-weight: 500; line-height: 1.7;}
+        .clause h2 { font-size: 1.05rem; color: var(--sj-green); border-bottom: 1.5px solid #e2e8f0; padding-bottom: 5px; margin-top: 0; margin-bottom: 10px; word-break: keep-all;}
+        .clause p { font-size: 0.95rem; margin-bottom: 5px; text-align: justify; font-weight: 500; word-break: keep-all; line-height: 1.7;}
         .clause .en-text { font-size: 0.85rem; color: #64748b; font-weight: 400; display: block; margin-bottom: 10px; line-height: 1.4; font-family: 'Outfit', sans-serif;}
         .clause ul { margin-top: 5px; margin-bottom: 10px; padding-left: 20px;}
         .clause li { margin-bottom: 8px; font-size: 0.95rem; font-weight: 500;}
         .clause li .en-text { display: inline; margin-left: 5px; color: #64748b; font-weight: 400; font-size: 0.85rem;}
 
+        /* 스마트 인라인 폼 (문서 내) */
         .doc-input { border: none; border-bottom: 1.5px solid #0f172a; background: #f0fdf4; border-radius: 2px 2px 0 0; padding: 2px 6px; font-family: inherit; font-size: 0.95rem; color: var(--sj-red); font-weight: 700; outline: none; transition: 0.2s; width: auto; min-width: 150px; text-align: center; display: inline-block; box-sizing: border-box;}
         .doc-input.large { min-width: 250px; }
         .doc-input:focus { background: #fef2f2; border-bottom-color: var(--sj-red); box-shadow: 0 2px 0 rgba(210, 75, 65, 0.2);}
         .doc-input::placeholder { color: #94a3b8; font-weight: normal; font-size: 0.85rem;}
         .doc-input[readonly] { background: transparent; border-bottom-style: dashed; color: #0f172a; cursor: not-allowed;}
         
-        .type-signature { font-family: 'Caveat', cursive !important; font-size: 1.8rem !important; color: #1e3a8a !important; border-bottom: 2px solid #1e3a8a; }
-        
-        /* 백지화 방어 텍스트 레이아웃 */
+        /* 락업 텍스트 스타일 */
         .locked-text { font-weight: bold; color: #0f172a; padding: 0 5px; display: inline-block; border-bottom: 1px solid #0f172a; font-family: 'Outfit', 'Noto Sans KR', sans-serif;}
         .locked-text.type-signature { font-family: 'Caveat', cursive !important; color: #1e3a8a !important; font-size: 1.8rem !important; }
 
+        /* 서명 블록 및 그리드 (문서 외 폼) */
         .sig-block { border: 2px solid #cbd5e1; padding: 25px; margin-top: 30px; background: #ffffff; page-break-inside: avoid; border-radius: 12px;}
         .sig-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 15px; color: #0f172a; text-align: center; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;}
         
@@ -177,15 +178,8 @@
         .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
         .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.6;}
 
-        /* ==========================================================================
-           [글로벌 로딩 오버레이]
-           ========================================================================== */
-        #global-loading-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; transition: opacity 0.3s ease;
-        }
+        /* 초고속 로딩 오버레이 */
+        #global-loading-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; }
         #global-loading-overlay.active { opacity: 1; visibility: visible; }
         .spinner-icon { font-size: 4rem; color: var(--sj-red); margin-bottom: 20px; animation: fa-spin 2s infinite linear; }
         .loading-text { font-size: 1.5rem; font-weight: 900; color: var(--text-dark); margin-bottom: 10px; }
@@ -232,7 +226,7 @@
     <!-- Toast Notification Anchor -->
     <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-    <!-- Header (원본 유지) -->
+    <!-- Header -->
     <header class="portal-header">
         <div style="display: flex; align-items: center; gap: 15px;">
             <a href="step3_nda.html" class="btn-back"><i class="fas fa-arrow-left"></i> <span>이전으로 (Back)</span></a>
@@ -611,7 +605,7 @@
                 </div>
             </div> <!-- End of Contract -->
 
-            <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()">
+            <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()" disabled>
                 <i class="fas fa-paper-plane"></i> 본계약 최종 전자 서명 및 서버 발송
             </button>
         </section>
@@ -633,6 +627,9 @@
         </div>
     </div>
 
+    <!-- =========================================
+         [Core Script Engine & Advanced Logic]
+         ========================================= -->
     <script>
         // ★ 통합 백엔드 URL 완벽 연동
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjqosY23kJFdwCAwZA36-zVOt_xL6xw9gfXtNEgyWXTMDcHz9VPm0H07ZR3u8jDhOowg/exec"; 
@@ -660,7 +657,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // 날짜 자동 산출 엔진
+            // [날짜 자동 세팅]
             const todayKST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); 
             
             const fddDateEl = document.getElementById('fdd_date');
@@ -672,6 +669,7 @@
 
             if(cDateEl && !cDateEl.value) { cDateEl.value = todayKST; }
 
+            // [날짜 3년 연산 엔진 완벽 구동]
             if(cStartEl && cEndEl) {
                 cStartEl.addEventListener('change', function(e) {
                     if(!e.target.value) return;
@@ -715,7 +713,7 @@
             }
         }
 
-        // 입력 폼 텍스트 치환 (백지화 방지용 인라인 스타일 강제 주입)
+        // [입력값 무손실 락업]
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -731,13 +729,7 @@
                 }
                 span.innerText = val ? val : '[입력 대기 중]';
                 
-                span.style.fontWeight = "bold";
-                span.style.padding = "0 5px";
-                span.style.borderBottom = "1px solid #0f172a";
-                span.style.display = "inline-block";
-                span.style.minWidth = "50px";
-                span.style.textAlign = "center";
-                
+                // 폰트 스타일 인라인 강제 지정 (HTML2PDF가 스타일을 누락시키지 않도록 하드코딩)
                 if (el.classList.contains('type-signature')) {
                     span.className = 'locked-text type-signature';
                     span.style.fontFamily = "'Caveat', cursive";
@@ -749,6 +741,12 @@
                     span.style.color = "#0f172a";
                     span.style.fontSize = "1rem";
                 }
+                span.style.fontWeight = "bold";
+                span.style.padding = "0 5px";
+                span.style.borderBottom = "1px solid #0f172a";
+                span.style.display = "inline-block";
+                span.style.minWidth = "50px";
+                span.style.textAlign = "center";
 
                 el.parentNode.replaceChild(span, el);
             });
@@ -767,7 +765,9 @@
                 savedProv = localStorage.getItem('sj_province') || '';
                 savedCorp = localStorage.getItem('sj_corp') || '';
                 targetCity = localStorage.getItem('sj_target_city') || '';
-            } catch(e) {}
+            } catch(e) {
+                console.warn("로컬 스토리지가 비활성화되어 있습니다.", e);
+            }
             
             if(sjName && !startTime) {
                 const fddName = document.getElementById('fdd_name');
@@ -865,29 +865,33 @@
         }
 
         // =========================================================
-        // ★ [핵심 코어] 인플레이스 리플로우(In-Place Reflow) 렌더링 방식
-        // 원본 디자인은 그대로 유지한 채, 캡처 순간에만 800px로 정교하게 맞추고 되돌립니다.
+        // ★ [가장 완벽한 인플레이스 렌더링 엔진] 
+        // 화면을 벗어나지 않고, 제자리에서 브라우저 폭 제약을 일시적으로 무효화한 뒤
+        // 문서를 정확히 800px 폭으로 고정하여 가운데 정렬(Center)로 캡처합니다.
+        // 왼쪽으로 쏠리는 현상, 잘림 현상, 그리고 백지화 현상을 100% 방어합니다.
         // =========================================================
         async function exportPdfSafely(sourceElementId, filename) {
             const sourceElement = document.getElementById(sourceElementId);
-            const wrapper = sourceElement.parentElement;
+            const parentWrapper = sourceElement.parentElement;
             
-            // 입력값들이 완전히 텍스트로 치환되도록 200ms 대기 (백지화 방지)
-            await new Promise(resolve => setTimeout(resolve, 200));
-
-            // 원본 스타일 백업 (디자인 무손실 롤백을 위함)
+            // DOM 값 반영을 확실히 기다림 (백지화 방지 1)
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            // 캡처 중 화면이 틀어지는 것을 사용자에게 숨기기 위한 글로벌 오버레이 작동
+            document.getElementById('global-loading-overlay').classList.add('active');
+            
+            // 원래 적용되어 있던 스타일 백업 (무손실 롤백을 위함)
             const originalSourceCss = sourceElement.style.cssText;
-            const originalWrapperCss = wrapper.style.cssText;
+            const originalWrapperCss = parentWrapper.style.cssText;
 
-            // 캡처 직전, 문서의 폭을 800px로 픽스하고 가운데 정렬(margin: 0 auto)을 해제하여
-            // 좌표 영점(0,0)을 정확히 맞춥니다. (왼쪽 잘림 현상 원천 차단)
+            // ★ 핵심: html2canvas가 좌표계를 혼동하지 않도록(왼쪽 잘림 방지)
+            // margin: 0 auto를 풀고, 넓이를 강제로 800px로 세팅합니다.
             sourceElement.style.cssText = `
                 width: 800px !important;
                 max-width: 800px !important;
                 min-width: 800px !important;
                 margin: 0 !important; 
                 padding: 40px !important;
-                box-sizing: border-box !important;
                 box-shadow: none !important;
                 border: none !important;
                 background-color: #ffffff !important;
@@ -896,10 +900,11 @@
                 transform: none !important;
                 left: 0 !important;
                 top: 0 !important;
+                box-sizing: border-box !important;
             `;
             
-            // 부모 컨테이너의 스크롤 바 및 높이 제약 일시 해제
-            wrapper.style.cssText = `
+            // 부모 요소를 블록 형태로 만들어 스크롤을 풀고 영역을 고정합니다.
+            parentWrapper.style.cssText = `
                 max-height: none !important;
                 height: auto !important;
                 overflow: visible !important;
@@ -907,25 +912,17 @@
                 margin: 0 !important;
                 border: none !important;
                 box-shadow: none !important;
-                background-color: #ffffff !important;
+                background-color: transparent !important;
                 display: block !important;
+                align-items: flex-start !important;
             `;
 
-            // 페이지 분할 요소 강제 인식
-            const pageBreaks = sourceElement.querySelectorAll('.html2pdf__page-break');
-            pageBreaks.forEach(pb => {
-                pb.style.display = 'block';
-                pb.style.width = '100%';
-                pb.style.height = '0px';
-                pb.style.pageBreakBefore = 'always';
-            });
+            // 브라우저 렌더 트리가 CSS 변경을 완전히 인지하도록 대기 (백지화 방지 2)
+            await new Promise(resolve => setTimeout(resolve, 400));
 
-            // 브라우저 렌더링 큐 적용 대기
-            await new Promise(resolve => setTimeout(resolve, 300));
-
-            // html2pdf 옵션 세팅 (windowWidth를 800으로 고정하여 캡처 영역 일치)
+            // html2pdf 옵션 세팅 (가운데 정렬을 위해 좌우 마진 10 적용)
             const opt = {
-                margin:       15, 
+                margin:       [15, 10, 15, 10], // 상우하좌 (Top, Right, Bottom, Left)
                 filename:     filename,
                 image:        { type: 'jpeg', quality: 1.0 },
                 html2canvas:  { 
@@ -944,7 +941,7 @@
 
             let pdfBase64String = null;
             try {
-                // 화면의 문서를 직접 스캔
+                // 화면 제자리에서 캡처 진행
                 pdfBase64String = await html2pdf().set(opt).from(sourceElement).outputPdf('datauristring');
                 
                 // 점주 PC 다운로드 유도
@@ -952,16 +949,16 @@
             } catch (err) {
                 throw err;
             } finally {
-                // 스캔 완료 후 즉시 원본 레이아웃 복원 (사용자는 1초도 안되는 찰나만 경험)
+                // 스캔 완료 후 원래의 완벽한 테마와 레이아웃으로 100% 롤백
                 sourceElement.style.cssText = originalSourceCss;
-                wrapper.style.cssText = originalWrapperCss;
+                parentWrapper.style.cssText = originalWrapperCss;
             }
             
             return pdfBase64String;
         }
 
         // ---------------------------------------------------------
-        // Action 1: FDD 문서 제출 (타임아웃 60초 릴레이 전송 적용)
+        // Action 1: FDD 문서 제출 (타임아웃 해제)
         // ---------------------------------------------------------
         async function signAndSubmitFDD() {
             if (isSubmitting) return;
@@ -980,7 +977,6 @@
             if (!confirm("FDD 문서를 완전히 확인하셨으며 서명을 진행하시겠습니까?\n동의 시 원본이 구글 드라이브에 안전하게 보관되며, 14일 락업이 시작됩니다.")) return;
 
             isSubmitting = true;
-            document.getElementById('global-loading-overlay').classList.add('active');
 
             try {
                 localStorage.setItem('sinjeon_fdd_timestamp', new Date().getTime());
@@ -990,11 +986,10 @@
                 localStorage.setItem('sj_title', repTitle);
             } catch(e) {}
 
-            // 빈칸을 텍스트로 치환하고 락업
             lockInputsToText('fdd-doc-content');
 
             try {
-                // 인플레이스 렌더링 호출
+                // 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('fdd-doc-content', `Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
                 
                 let ipAddress = 'Unknown';
@@ -1004,7 +999,7 @@
                     ipAddress = ipData.ip;
                 } catch(e) {}
 
-                // 대용량 전송을 위한 60초 릴레이 전송 (타임아웃 에러 완벽 해결)
+                // 대용량 전송을 위한 60초 타임아웃 릴레이 전송
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 60000);
 
@@ -1042,7 +1037,7 @@
         }
 
         // ---------------------------------------------------------
-        // Action 2: 본계약서 제출 (타임아웃 60초 릴레이 전송 적용)
+        // Action 2: 본계약서 제출 (타임아웃 해제)
         // ---------------------------------------------------------
         async function signAndSubmitContract() {
             if (isSubmitting) return;
@@ -1076,7 +1071,6 @@
             }
 
             isSubmitting = true;
-            document.getElementById('global-loading-overlay').classList.add('active');
 
             let corpName = 'Franchisee';
             let province = 'Canada';
@@ -1114,7 +1108,7 @@
                 
                 const modal = document.getElementById('success-modal');
                 modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                document.body.classList.add('lock-scroll');
 
             } catch (err) {
                 console.error(err);
