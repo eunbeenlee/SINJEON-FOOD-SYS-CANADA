@@ -1,1 +1,1 @@
-{"message":"You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https:\/\/rapidapi.com\/thetechguy32744\/api\/instagram-scraper-stable-api"}
+{"error":"Posts data not found. Received 429 Too Many Requests."}
