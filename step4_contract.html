@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="theme-color" content="#1A1A1A">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#FFFFFF">
     
     <title>Secure Document Portal | Step 4 Contract</title>
     <meta name="description" content="Official Franchise Contract Portal for Sinjeon Canada.">
@@ -11,11 +11,13 @@
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     
     <!-- HTML2PDF Library (For Secure Document Generation) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+
     <style>
         /* ================= 보안 및 레이아웃 일원화 (화면 틀어짐 방지 원본 유지) ================= */
         html { overflow-y: scroll; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -123,7 +125,7 @@
             position: relative; scroll-behavior: smooth;
         }
         .document-wrapper::-webkit-scrollbar { width: 8px; }
-        .document-wrapper::-webkit-scrollbar-thumb { background-color: #94a3b8; border-radius: 4px; }
+        .document-wrapper::-webkit-scrollbar-thumb { background-color: var(--border-focus); border-radius: 4px; }
 
         .document-paper { 
             background: var(--doc-bg); width: 100%; max-width: 800px; margin: 0 auto; 
@@ -604,7 +606,7 @@
                 </div>
             </div> <!-- End of Contract -->
 
-            <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()" disabled>
+            <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()">
                 <i class="fas fa-paper-plane"></i> 본계약 최종 전자 서명 및 서버 발송
             </button>
         </section>
@@ -656,7 +658,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // [자동화] 날짜 세팅
+            // [자동화] 날짜 3년 연산 엔진 완벽 복구
             const todayKST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); 
             
             const fddDateEl = document.getElementById('fdd_date');
@@ -668,7 +670,6 @@
 
             if(cDateEl && !cDateEl.value) { cDateEl.value = todayKST; }
 
-            // [자동화] 3년 계약일 자동 산출 엔진
             if(cStartEl && cEndEl) {
                 cStartEl.addEventListener('change', function(e) {
                     if(!e.target.value) return;
@@ -681,7 +682,6 @@
 
             checkStateAndRender();
 
-            // 지점명 연동
             const locInput = document.getElementById('c_location');
             if(locInput) {
                 locInput.addEventListener('input', (e) => {
@@ -712,7 +712,7 @@
             }
         }
 
-        // [입력값 무손실 락업] 서명 텍스트 정중앙 배치 보강
+        // [입력값 무손실 락업] 서명 텍스트 정중앙 배치 (센터링)
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -728,7 +728,7 @@
                 }
                 span.innerText = val ? val : '[입력 대기 중]';
                 
-                // 센터링을 위해 inline-block과 min-width, text-align 강제 주입
+                // 센터링 및 폰트 픽스 인라인 주입
                 span.style.display = "inline-block";
                 span.style.minWidth = "150px";
                 span.style.textAlign = "center";
@@ -765,9 +765,7 @@
                 savedProv = localStorage.getItem('sj_province') || '';
                 savedCorp = localStorage.getItem('sj_corp') || '';
                 targetCity = localStorage.getItem('sj_target_city') || '';
-            } catch(e) {
-                console.warn("로컬 스토리지가 비활성화되어 있습니다.", e);
-            }
+            } catch(e) {}
             
             if(sjName && !startTime) {
                 const fddName = document.getElementById('fdd_name');
@@ -890,7 +888,7 @@
             // 원본 복제
             const clone = sourceElement.cloneNode(true);
             
-            // 복제본 강제 규격 락업 (왼쪽 쏠림 원천 방어)
+            // 복제본 강제 규격 락업 (왼쪽 쏠림, 우측 잘림 원천 방어)
             clone.style.width = '800px';
             clone.style.minWidth = '800px';
             clone.style.maxWidth = '800px';
@@ -917,7 +915,7 @@
             cloneContainer.appendChild(clone);
             document.body.appendChild(cloneContainer);
 
-            // html2canvas 옵션 세팅 (x:0, y:0 강제 영점 조준 및 width 지정으로 잘림 100% 픽스)
+            // html2canvas 옵션 세팅 (x:0, y:0 강제 영점 조준 및 width 지정으로 센터링 완벽 보장)
             const opt = {
                 margin:       [15, 10, 15, 10], // 완벽한 좌우 밸런스를 위한 여백 조정
                 filename:     filename,
@@ -953,7 +951,7 @@
         }
 
         // ---------------------------------------------------------
-        // Action 1: FDD 문서 제출 (타임아웃 30초 릴레이 전송 적용)
+        // Action 1: FDD 문서 제출 (타임아웃 60초 릴레이 전송 적용)
         // ---------------------------------------------------------
         async function signAndSubmitFDD() {
             if (isSubmitting) return;
@@ -995,9 +993,9 @@
                     ipAddress = ipData.ip;
                 } catch(e) {}
 
-                // 대용량 전송을 위한 30초 타임아웃 릴레이 전송
+                // 대용량 전송을 위한 60초 타임아웃 릴레이 전송
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 30000);
+                const timeoutId = setTimeout(() => controller.abort(), 60000);
 
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
@@ -1082,9 +1080,9 @@
                 // 오프스크린 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('contract-doc-content', `Sinjeon_Master_Agreement_${corpName.replace(/\s+/g, '_')}.pdf`);
 
-                // 30초 대용량 릴레이 전송
+                // 60초 대용량 릴레이 전송
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 30000);
+                const timeoutId = setTimeout(() => controller.abort(), 60000);
 
                 await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: "POST",
@@ -1103,10 +1101,9 @@
 
                 pdfBase64String = null; 
                 
-                // 완료 팝업 실행
                 const modal = document.getElementById('success-modal');
                 modal.classList.add('active');
-                document.body.classList.add('lock-scroll');
+                document.body.style.overflow = 'hidden';
 
             } catch (err) {
                 console.error(err);
