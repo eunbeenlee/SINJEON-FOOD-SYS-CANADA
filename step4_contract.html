@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-    <meta name="theme-color" content="#FFFFFF">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#1A1A1A">
     
     <title>Secure Document Portal | Step 4 Contract</title>
     <meta name="description" content="Official Franchise Contract Portal for Sinjeon Canada.">
@@ -45,12 +45,6 @@
             --bg-light: #F8FAFC; --bg-white: #FFFFFF; --bg-dark: #111827;
             --border-color: #E2E8F0; --doc-bg: #ffffff;
             --toast-success: #10b981; --toast-error: #ef4444; --toast-warning: #f59e0b;
-        }
-
-        @font-face {
-            font-family: 'SinjeonCustom';
-            src: url('fonts/SinjeonFont.otf') format('opentype');
-            font-weight: normal; font-style: normal; font-display: swap;
         }
 
         /* -----------------------------------------
@@ -101,7 +95,7 @@
         .content-container { max-width: 900px; margin: 0 auto 100px; padding: 0 20px; text-align: center; }
         .page-title { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase;}
         .page-desc { font-size: 1.05rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 30px; font-weight: 500; }
-        .en-desc { font-size: 0.95rem; color: var(--text-light); display: block; font-weight: 400; margin-top: 5px; font-family: 'Outfit', sans-serif; }
+        .en-desc { font-size: 0.95rem; color: #94a3b8; display: block; font-weight: 400; margin-top: 5px; font-family: 'Outfit', sans-serif; }
 
         .panel { background: white; border: 1px solid var(--border-color); border-radius: 24px; padding: 45px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); margin-bottom: 35px; text-align: left; position: relative; }
         .panel-header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; border-bottom: 1px solid #f1f5f9; padding-bottom: 20px;}
@@ -127,22 +121,20 @@
         .document-wrapper::-webkit-scrollbar { width: 8px; }
         .document-wrapper::-webkit-scrollbar-thumb { background-color: var(--border-focus); border-radius: 4px; }
 
-        /* 문서 종이 설정 (box-sizing 속성 추가 및 패딩 간격 재조정) */
         .document-paper { 
             background: var(--doc-bg); width: 100%; max-width: 800px; margin: 0 auto; 
             padding: 45px 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
             font-family: 'Noto Sans KR', Arial, sans-serif; line-height: 1.6; color: #1e293b; 
-            position: relative; word-break: keep-all; overflow-wrap: break-word;
-            box-sizing: border-box; 
+            position: relative; word-break: keep-all; overflow-wrap: break-word; box-sizing: border-box; 
         }
         
-        .document-paper h1 { text-align: center; font-size: 1.7rem; margin-bottom: 5px; color: #0f172a; word-break: keep-all; letter-spacing: -0.5px;}
+        .document-paper h1 { text-align: center; font-size: 1.7rem; margin-bottom: 5px; color: #0f172a; letter-spacing: -0.5px;}
         .document-paper h3 { text-align: center; font-size: 1.05rem; color: #64748b; font-weight: 400; margin-top: 0; margin-bottom: 35px;}
         
         /* 계약 조항 디자인 */
         .clause { margin-bottom: 25px; page-break-inside: avoid; }
-        .clause h2 { font-size: 1.05rem; color: var(--sj-green); border-bottom: 1.5px solid #e2e8f0; padding-bottom: 5px; margin-top: 0; margin-bottom: 10px; word-break: keep-all;}
-        .clause p { font-size: 0.95rem; margin-bottom: 5px; text-align: justify; font-weight: 500; word-break: keep-all; line-height: 1.7;}
+        .clause h2 { font-size: 1.05rem; color: var(--sj-green); border-bottom: 1.5px solid #e2e8f0; padding-bottom: 5px; margin-top: 0; margin-bottom: 10px;}
+        .clause p { font-size: 0.95rem; margin-bottom: 5px; text-align: justify; font-weight: 500; line-height: 1.7;}
         .clause .en-text { font-size: 0.85rem; color: #64748b; font-weight: 400; display: block; margin-bottom: 10px; line-height: 1.4; font-family: 'Outfit', sans-serif;}
         .clause ul { margin-top: 5px; margin-bottom: 10px; padding-left: 20px;}
         .clause li { margin-bottom: 8px; font-size: 0.95rem; font-weight: 500;}
@@ -156,13 +148,7 @@
         .doc-input[readonly] { background: transparent; border-bottom-style: dashed; color: #0f172a; cursor: not-allowed;}
         
         .type-signature { font-family: 'Caveat', cursive !important; font-size: 1.8rem !important; color: #1e3a8a !important; border-bottom: 2px solid #1e3a8a; }
-        
-        /* 락업 텍스트 중앙 정렬 강화 */
-        .locked-text { 
-            font-weight: bold; color: #0f172a; padding: 0 5px; display: inline-block; 
-            border-bottom: 1px solid #0f172a; text-align: center; min-width: 150px;
-        }
-        .locked-text.type-signature { font-family: 'Caveat', cursive !important; color: #1e3a8a !important; font-size: 1.8rem !important; }
+        .locked-text { font-weight: bold; color: #0f172a; padding: 0 5px; display: inline-block; border-bottom: 1px solid #0f172a;}
 
         /* 서명 블록 및 그리드 (문서 외 폼) */
         .sig-block { border: 2px solid #cbd5e1; padding: 25px; margin-top: 30px; background: #ffffff; page-break-inside: avoid; border-radius: 12px; box-sizing: border-box;}
@@ -186,6 +172,38 @@
         .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(5px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; border-radius: 24px; }
         .lock-overlay i { font-size: 3.5rem; color: #94a3b8; margin-bottom: 20px; }
         .lock-overlay p { font-weight: 700; color: var(--text-dark); text-align: center; padding: 0 20px; font-size: 1.1rem; line-height: 1.6;}
+
+        /* ==========================================================================
+           [★핵심 패치★] PDF 렌더링 시 스크롤/마진 무력화 클래스 (백지화 & 쏠림 100% 방지)
+           - 화면 레이아웃은 그대로 유지하되, 캡처되는 순간에만 작동합니다.
+           ========================================================================== */
+        .pdf-exporting {
+            max-height: none !important;
+            height: auto !important;
+            overflow: visible !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important; /* 가운데 정렬(margin:0 auto)을 해제하여 좌측 영점 강제 고정 */
+            background: white !important;
+            border-radius: 0 !important;
+            display: block !important;
+            text-align: left !important;
+        }
+        .pdf-exporting .document-paper {
+            width: 800px !important;
+            max-width: 800px !important;
+            min-width: 800px !important;
+            margin: 0 !important; /* 문서의 x좌표를 강제로 0으로 만들어 왼쪽 잘림 방어 */
+            left: 0 !important;
+            top: 0 !important;
+            position: relative !important;
+            transform: none !important;
+            box-shadow: none !important;
+            border: none !important;
+            padding: 40px !important;
+            box-sizing: border-box !important;
+        }
 
         /* 초고속 로딩 오버레이 */
         #global-loading-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); z-index: 999999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; }
@@ -235,7 +253,7 @@
     <!-- Toast Notification Anchor -->
     <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-    <!-- Header -->
+    <!-- Header (원본 유지) -->
     <header class="portal-header">
         <div style="display: flex; align-items: center; gap: 15px;">
             <a href="step3_nda.html" class="btn-back"><i class="fas fa-arrow-left"></i> <span>이전으로 (Back)</span></a>
@@ -395,7 +413,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px;">
                             <div style="font-size: 1.1rem;"><strong>Y2C Holdings Inc.</strong></div>
                             <div style="text-align: center; position: relative;">
-                                <img src="y2c_director_sign.png" alt="Y2C Signature" style="height: 60px; display: block; margin: 0 auto; position: relative; z-index: 2;" onerror="this.style.display='none'">
+                                <img src="y2c_director_sign.png" alt="Y2C Signature" style="height: 60px; display: block; margin: 0 auto; position: relative; z-index: 2;" onerror="handleImgError(this)">
                                 <div style="position: relative; z-index: 1; margin-top: -15px;">
                                     <strong>By:</strong> Yoon-ji Lee <br> <strong>Title:</strong> Director
                                 </div>
@@ -520,7 +538,7 @@
                         </ul>
 
                         <p><strong>제 5 조 [경영지도 수수료 및 광고비 / Ongoing Fees & Ad Fee]</strong></p>
-                        <p>가맹점사업자는 가맹본부가 제공하는 실질 경영 자문 및 물류망 유지 대가로, 매월 순매출액(Net Sales)의 <strong>4%</strong>를 익월 5일까지 가맹본부에게 전액 입금하여야 한다. 가맹본부는 본사 차원의 별도 광고기금(Ad Fund)을 가맹점에게 청구하지 아니한다.</p>
+                        <p>가맹점사업자는 가맹본부가 제공하는 실질 경영 자문 및 물류망 유지 대가로, 매월 순매출액(Net Sales)의 <strong>4%</strong>를 익월 5일까지 가맹본부에게 전액 입금하여야 단다. 가맹본부는 본사 차원의 별도 광고기금(Ad Fund)을 가맹점에게 청구하지 아니한다.</p>
                         <span class="en-text">The Franchisee shall remit 4% of Monthly Net Sales to the Franchisor by the 5th day of the following month for management services. No national advertising fee will be charged.</span>
 
                         <p><strong>제 6 조 [환율 변동 및 세금 대납 강제 / Gross-up & Currency Protection]</strong></p>
@@ -584,7 +602,7 @@
                                 <strong>사업자번호:</strong> 216-86-02475
                             </div>
                             <div style="text-align: center; position: relative; color: #0f172a;">
-                                <img src="y2c_director_sign.png" alt="Y2C Signature" style="height: 60px; display: block; margin: 0 auto; position: relative; z-index: 2;" onerror="this.style.display='none'">
+                                <img src="y2c_director_sign.png" alt="Y2C Signature" style="height: 60px; display: block; margin: 0 auto; position: relative; z-index: 2;" onerror="handleImgError(this)">
                                 <div style="position: relative; z-index: 1; margin-top: -15px;">
                                     <strong>서명권자 (Director):</strong> 이 윤 지 (Yoon-ji Lee)
                                 </div>
@@ -636,6 +654,9 @@
         </div>
     </div>
 
+    <!-- =========================================
+         [Core Script Engine & Advanced Logic]
+         ========================================= -->
     <script>
         // ★ 통합 백엔드 URL 완벽 연동
         const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjqosY23kJFdwCAwZA36-zVOt_xL6xw9gfXtNEgyWXTMDcHz9VPm0H07ZR3u8jDhOowg/exec"; 
@@ -658,8 +679,11 @@
             setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 5000);
         }
 
+        function handleImgError(img) {
+            img.onerror = null; img.src = 'sinjeon_logo_canada.png'; img.style.objectFit = 'contain'; img.style.padding = '10px';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            // [자동화] 날짜 세팅 및 3년 계산기
             const todayKST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); 
             
             const fddDateEl = document.getElementById('fdd_date');
@@ -683,7 +707,6 @@
 
             checkStateAndRender();
 
-            // 지점명 연동
             const locInput = document.getElementById('c_location');
             if(locInput) {
                 locInput.addEventListener('input', (e) => {
@@ -714,7 +737,7 @@
             }
         }
 
-        // ★ [입력값 무손실 락업] 센터링을 위해 inline 속성 고정 및 크기 제한 적용
+        // ★ [입력 폼 무손실 락업] 서명 텍스트 정중앙 배치(센터링 보장)
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -730,6 +753,7 @@
                 }
                 span.innerText = val ? val : '[입력 대기 중]';
                 
+                // 서명 란 센터링 유지
                 span.style.display = "inline-block";
                 span.style.minWidth = "150px";
                 span.style.textAlign = "center";
@@ -766,7 +790,9 @@
                 savedProv = localStorage.getItem('sj_province') || '';
                 savedCorp = localStorage.getItem('sj_corp') || '';
                 targetCity = localStorage.getItem('sj_target_city') || '';
-            } catch(e) {}
+            } catch(e) {
+                console.warn("로컬 스토리지가 비활성화되어 있습니다.", e);
+            }
             
             if(sjName && !startTime) {
                 const fddName = document.getElementById('fdd_name');
@@ -864,71 +890,41 @@
         }
 
         // =========================================================
-        // ★ [PDF 렌더링 무결성 패치] 센터링 및 우측 잘림 완벽 방어
+        // ★ [핵심 코어] 인플레이스(In-Place) 렌더링 엔진 완벽 제어
+        // 복제 및 화면 밖 스캔을 사용하지 않고 화면에 직접 CSS 클래스(pdf-exporting)를 부여해
+        // 순간적으로 마진을 제거(x:0)하여 스크롤 쏠림과 백지화 버그를 100% 원천 차단합니다.
         // =========================================================
         async function exportPdfSafely(sourceElementId, filename) {
             const sourceElement = document.getElementById(sourceElementId);
+            const wrapper = sourceElement.parentElement;
             
-            // 1. 값 반영 대기
+            // 1. 값 반영 대기 (렌더링 동기화)
             await new Promise(resolve => setTimeout(resolve, 300));
             
-            // 2. 화면 밖 고정 컨테이너 생성 (브라우저 스크롤의 영향을 차단)
-            const cloneContainer = document.createElement('div');
-            cloneContainer.style.position = 'fixed';
-            cloneContainer.style.top = '-9999px'; 
-            cloneContainer.style.left = '0px';
-            cloneContainer.style.width = '800px'; 
-            cloneContainer.style.margin = '0px'; 
-            cloneContainer.style.padding = '0px';
-            cloneContainer.style.backgroundColor = '#ffffff';
-            cloneContainer.style.boxSizing = 'border-box';
+            // 2. 현재 스크롤 위치 저장 및 최상단 이동 (html2canvas 스크롤 쏠림 버그 방어의 핵심)
+            const originalScrollX = window.scrollX;
+            const originalScrollY = window.scrollY;
+            window.scrollTo(0, 0);
             
-            // 3. 원본 문서 노드 복제
-            const clone = sourceElement.cloneNode(true);
+            // 3. 인플레이스 렌더링 클래스 적용 (가운데 정렬 마진을 0으로 만들어 좌측 상단 강제 밀착)
+            wrapper.classList.add('pdf-exporting');
             
-            // ★ 핵심: 복제본 강제 규격 락업 (우측 잘림, 좌측 쏠림 원천 방어)
-            // margin: 0 으로 설정하여 html2canvas가 캔버스를 임의로 중앙 정렬하느라 좌표계를 음수로 미는 것을 막습니다.
-            clone.style.width = '800px';
-            clone.style.minWidth = '800px';
-            clone.style.maxWidth = '800px';
-            clone.style.margin = '0'; 
-            clone.style.padding = '40px 40px'; 
-            clone.style.boxSizing = 'border-box';
-            clone.style.overflow = 'hidden'; 
-            clone.style.transform = 'none';
-            clone.style.boxShadow = 'none';
-            clone.style.border = 'none';
-            clone.style.backgroundColor = '#ffffff';
-            clone.style.position = 'static'; 
+            // CSS 리플로우 대기
+            await new Promise(resolve => setTimeout(resolve, 300));
 
-            // 페이지 분리선 유지
-            const pageBreaks = clone.querySelectorAll('.html2pdf__page-break');
-            pageBreaks.forEach(pb => {
-                pb.style.display = 'block';
-                pb.style.width = '100%';
-                pb.style.height = '0px';
-                pb.style.margin = '0px';
-                pb.style.pageBreakBefore = 'always';
-            });
-            
-            cloneContainer.appendChild(clone);
-            document.body.appendChild(cloneContainer);
-
-            // ★ html2canvas 옵션 세팅 
-            // x:0, y:0 강제 영점 조준 및 width: 800 지정으로 센터링이 완벽 보장됩니다.
+            // 4. html2canvas 옵션 세팅 (x:0, y:0 적용)
             const opt = {
-                margin:       [15, 10, 15, 10], // 좌우 여백을 동일하게 주어 캔버스가 A4 정중앙에 안착하도록 설정
+                margin:       [15, 15, 15, 15], // 완벽한 좌우 대칭 센터링 여백
                 filename:     filename,
                 image:        { type: 'jpeg', quality: 1.0 },
                 html2canvas:  { 
                     scale: 2, 
                     useCORS: true, 
                     logging: false, 
-                    scrollY: 0, 
-                    scrollX: 0,
-                    x: 0, // 강제 좌측 상단 영점 조준
+                    scrollX: 0, 
+                    scrollY: 0,
+                    x: 0,
                     y: 0,
-                    width: 800, // 캡처 가로 폭을 정확히 800px로 락업
                     windowWidth: 800
                 },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
@@ -937,13 +933,15 @@
 
             let pdfBase64String = null;
             try {
-                // 가상 클론 문서를 타겟으로 스캔 
-                pdfBase64String = await html2pdf().set(opt).from(cloneContainer).outputPdf('datauristring');
-                // 점주 PC 다운로드
-                html2pdf().set(opt).from(cloneContainer).save();
+                // 원본을 타겟으로 스캔 (백지화, 쏠림 100% 방지)
+                pdfBase64String = await html2pdf().set(opt).from(sourceElement).outputPdf('datauristring');
+                
+                // 점주 PC 다운로드 유도
+                html2pdf().set(opt).from(sourceElement).save();
             } finally {
-                // 작업 완료 후 메모리 누수 방지
-                document.body.removeChild(cloneContainer);
+                // 5. 렌더링 완료 후 즉시 원본 레이아웃 및 스크롤 복원
+                wrapper.classList.remove('pdf-exporting');
+                window.scrollTo(originalScrollX, originalScrollY);
             }
             
             return pdfBase64String;
@@ -982,7 +980,7 @@
             lockInputsToText('fdd-doc-content');
 
             try {
-                // 렌더링 호출
+                // 인플레이스 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('fdd-doc-content', `Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
                 
                 let ipAddress = 'Unknown';
@@ -1011,7 +1009,7 @@
                 });
                 clearTimeout(timeoutId);
 
-                pdfBase64String = null; // 메모리 해제
+                pdfBase64String = null; // 메모리 강제 해제
 
                 checkStateAndRender();
                 showToast("정보공개서(FDD) 전자 서명이 완료되어 서버로 전송되었습니다.\n14일 락업 타이머가 가동됩니다.", "success");
@@ -1075,9 +1073,10 @@
             lockInputsToText('contract-doc-content');
 
             try {
-                // 렌더링 호출
+                // 인플레이스 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('contract-doc-content', `Sinjeon_Master_Agreement_${corpName.replace(/\s+/g, '_')}.pdf`);
 
+                // 60초 대용량 릴레이 전송
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 60000);
 
@@ -1100,7 +1099,7 @@
                 
                 const modal = document.getElementById('success-modal');
                 modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                document.body.classList.add('lock-scroll');
 
             } catch (err) {
                 console.error(err);
