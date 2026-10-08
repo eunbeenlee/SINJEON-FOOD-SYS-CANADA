@@ -79,7 +79,7 @@
         .logo-group span { font-weight: 800; font-size: 1.45rem; color: var(--sj-green); letter-spacing: -0.5px; }
         
         .header-actions { display: flex; gap: 12px; align-items: center; }
-        .btn-back { display: flex; align-items: center; gap: 6px; background: var(--doc-bg); color: var(--text-gray); border: 1px solid var(--border-color); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
+        .btn-back { display: flex; align-items: center; gap: 6px; background: var(--bg-white); color: var(--text-gray); border: 1px solid var(--border-color); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
         .btn-back:hover { background: #e2e8f0; color: var(--text-dark); }
         .security-badge { display: flex; align-items: center; gap: 6px; background: #ecfdf5; color: #059669; padding: 8px 18px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; border: 1px solid #a7f3d0; }
 
@@ -127,13 +127,11 @@
         .document-wrapper::-webkit-scrollbar { width: 8px; }
         .document-wrapper::-webkit-scrollbar-thumb { background-color: #94a3b8; border-radius: 4px; }
 
-        /* 문서 종이 설정 (box-sizing 속성 추가 및 패딩 간격 재조정) */
         .document-paper { 
             background: var(--doc-bg); width: 100%; max-width: 800px; margin: 0 auto; 
             padding: 45px 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
             font-family: 'Noto Sans KR', Arial, sans-serif; line-height: 1.6; color: #1e293b; 
-            position: relative; word-break: keep-all; overflow-wrap: break-word;
-            box-sizing: border-box; 
+            position: relative; word-break: keep-all; overflow-wrap: break-word; box-sizing: border-box; 
         }
         
         .document-paper h1 { text-align: center; font-size: 1.7rem; margin-bottom: 5px; color: #0f172a; word-break: keep-all; letter-spacing: -0.5px;}
@@ -235,7 +233,7 @@
     <!-- Toast Notification Anchor -->
     <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-    <!-- Header -->
+    <!-- Header (원본 유지) -->
     <header class="portal-header">
         <div style="display: flex; align-items: center; gap: 15px;">
             <a href="step3_nda.html" class="btn-back"><i class="fas fa-arrow-left"></i> <span>이전으로 (Back)</span></a>
@@ -614,7 +612,7 @@
                 </div>
             </div> <!-- End of Contract -->
 
-            <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()" disabled>
+            <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()">
                 <i class="fas fa-paper-plane"></i> 본계약 최종 전자 서명 및 서버 발송
             </button>
         </section>
@@ -666,7 +664,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // [자동화] 날짜 3년 연산 엔진 완벽 구동
+            // [자동화] 날짜 세팅 및 3년 계산기 엔진
             const todayKST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); 
             
             const fddDateEl = document.getElementById('fdd_date');
@@ -721,7 +719,7 @@
             }
         }
 
-        // [입력값 무손실 락업] 서명 텍스트 정중앙 배치 (센터링 보장)
+        // ★ [입력값 무손실 락업] 서명 텍스트 정중앙 배치 (센터링 보장)
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -737,7 +735,7 @@
                 }
                 span.innerText = val ? val : '[입력 대기 중]';
                 
-                // 센터링 보장을 위한 인라인 스타일 락업
+                // 센터링 픽스 (인라인 속성으로 강제 고정하여 html2canvas가 놓치지 않게 함)
                 span.style.display = "inline-block";
                 span.style.minWidth = "150px";
                 span.style.textAlign = "center";
@@ -774,9 +772,7 @@
                 savedProv = localStorage.getItem('sj_province') || '';
                 savedCorp = localStorage.getItem('sj_corp') || '';
                 targetCity = localStorage.getItem('sj_target_city') || '';
-            } catch(e) {
-                console.warn("로컬 스토리지가 비활성화되어 있습니다.", e);
-            }
+            } catch(e) {}
             
             if(sjName && !startTime) {
                 const fddName = document.getElementById('fdd_name');
@@ -875,21 +871,23 @@
 
         // =========================================================
         // ★ [백지화 0%, 센터링 100% 렌더링 엔진] 
-        // 문서를 화면 밖(-9999px)으로 보내지 않고, 화면 최상단(0,0)에 오버레이 뒤로 숨깁니다.
-        // 폭을 800px로 강제 고정하고 가운데 정렬 마진을 0으로 해제하여 완벽하게 중앙을 조준합니다.
+        // 화면을 밖으로(-9999px) 밀어내지 않고, 스크롤을 최상단으로 옮긴 후
+        // 오버레이 뒤쪽(0, 0 좌표)에 문서를 복제하여 스캔합니다.
+        // 폭 800px 강제 고정과 margin 0 속성을 통해 좌우 쏠림을 원천 차단합니다.
         // =========================================================
         async function exportPdfSafely(sourceElementId, filename) {
             const sourceElement = document.getElementById(sourceElementId);
             
-            // DOM 값 반영 대기
+            // 1. 값 반영 대기
             await new Promise(resolve => setTimeout(resolve, 300));
             
-            // 1. 스크롤을 최상단으로 옮겨 좌표계 쏠림을 원천 차단합니다.
+            // 2. 현재 스크롤 위치 저장 후 최상단 이동 (좌표계 쏠림 원천 차단)
             const originalScrollX = window.scrollX;
             const originalScrollY = window.scrollY;
             window.scrollTo(0, 0);
             
-            // 2. 화면 내 최상단(0,0)에 위치하지만, 오버레이(z-index: 999999)에 가려 보이지 않게 세팅
+            // 3. 브라우저 스크롤의 영향을 받지 않는 절대 위치(0,0)에 가상 컨테이너 생성
+            // 숨기지 않고 z-index로 덮어서 백지화 버그 방지
             const cloneContainer = document.createElement('div');
             cloneContainer.style.position = 'absolute';
             cloneContainer.style.top = '0px'; 
@@ -898,25 +896,20 @@
             cloneContainer.style.margin = '0px'; 
             cloneContainer.style.padding = '0px';
             cloneContainer.style.backgroundColor = '#ffffff';
-            cloneContainer.style.zIndex = '999998'; 
-            cloneContainer.style.overflow = 'hidden';
+            cloneContainer.style.zIndex = '999998'; // 오버레이(999999) 바로 아래
             
-            // 원본 복제
+            // 4. 원본 복제 및 800px 규격 강제 락업 (가운데 정렬 해제로 왼쪽 밀착)
             const clone = sourceElement.cloneNode(true);
-            
-            // 3. 복제본 강제 규격 락업 (우측 잘림, 좌측 쏠림 완전 방어)
-            clone.style.width = '800px';
-            clone.style.minWidth = '800px';
-            clone.style.maxWidth = '800px';
-            clone.style.margin = '0'; // html2canvas가 중앙 정렬 마진을 음수 좌표로 오해하는 것 차단
-            clone.style.padding = '40px 40px'; 
-            clone.style.boxSizing = 'border-box';
-            clone.style.overflow = 'visible'; 
-            clone.style.transform = 'none';
-            clone.style.boxShadow = 'none';
-            clone.style.border = 'none';
-            clone.style.backgroundColor = '#ffffff';
-            clone.style.position = 'static'; 
+            clone.style.setProperty('width', '800px', 'important');
+            clone.style.setProperty('min-width', '800px', 'important');
+            clone.style.setProperty('max-width', '800px', 'important');
+            clone.style.setProperty('margin', '0', 'important'); // 여백 해제가 핵심!
+            clone.style.setProperty('padding', '40px', 'important'); 
+            clone.style.setProperty('box-sizing', 'border-box', 'important');
+            clone.style.setProperty('transform', 'none', 'important');
+            clone.style.setProperty('box-shadow', 'none', 'important');
+            clone.style.setProperty('border', 'none', 'important');
+            clone.style.setProperty('position', 'relative', 'important'); 
 
             // 페이지 분리선 유지
             const pageBreaks = clone.querySelectorAll('.html2pdf__page-break');
@@ -932,20 +925,17 @@
             document.body.appendChild(cloneContainer);
 
             // CSS 렌더링 적용 찰나의 대기
-            await new Promise(resolve => setTimeout(resolve, 150));
+            await new Promise(resolve => setTimeout(resolve, 300));
 
-            // 4. html2canvas 옵션 세팅 
-            // margin을 사방 15mm로 주어 PDF 내에서 완벽한 정중앙 안착 유도
+            // 5. 엔진 설정: x, y, windowWidth 옵션을 배제하여 엔진이 스스로 800px을 인식하게 유도
             const opt = {
-                margin:       15, 
+                margin:       [15, 10, 15, 10], // 상우하좌 균일 마진을 통한 A4 내 센터링
                 filename:     filename,
                 image:        { type: 'jpeg', quality: 1.0 },
                 html2canvas:  { 
                     scale: 2, 
                     useCORS: true, 
-                    logging: false, 
-                    windowWidth: 800
-                    // 불필요한 x, y 좌표를 제거하여 엔진이 0,0 좌표를 자연스럽게 스캔하도록 유도
+                    logging: false
                 },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak:    { mode: ['css', 'legacy'] } 
@@ -953,13 +943,12 @@
 
             let pdfBase64String = null;
             try {
-                // 음수 좌표가 아니므로 하얗게 나오는 백지화 현상이 100% 발생하지 않음
-                pdfBase64String = await html2pdf().set(opt).from(clone).outputPdf('datauristring');
-                
-                // 점주 PC 다운로드 실행
-                html2pdf().set(opt).from(clone).save();
+                // 가상 컨테이너 스캔
+                pdfBase64String = await html2pdf().set(opt).from(cloneContainer).outputPdf('datauristring');
+                // 클라이언트 다운로드
+                html2pdf().set(opt).from(cloneContainer).save();
             } finally {
-                // 작업 완료 후 가상 컨테이너 삭제 및 스크롤 원복
+                // DOM 정리 및 스크롤 원래 위치로 복원
                 document.body.removeChild(cloneContainer);
                 window.scrollTo(originalScrollX, originalScrollY);
             }
@@ -1000,7 +989,7 @@
             lockInputsToText('fdd-doc-content');
 
             try {
-                // 렌더링 호출
+                // 오프스크린 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('fdd-doc-content', `Sinjeon_FDD_Signed_${corpName.replace(/\s+/g, '_')}.pdf`);
                 
                 let ipAddress = 'Unknown';
@@ -1040,6 +1029,7 @@
                 console.error(err);
                 showToast("네트워크 지연 또는 서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error");
                 try { localStorage.removeItem('sinjeon_fdd_timestamp'); } catch(e){}
+                setTimeout(() => location.reload(), 2000);
             } finally {
                 document.getElementById('global-loading-overlay').classList.remove('active');
                 isSubmitting = false;
@@ -1093,7 +1083,7 @@
             lockInputsToText('contract-doc-content');
 
             try {
-                // 렌더링 호출
+                // 오프스크린 렌더링 호출
                 let pdfBase64String = await exportPdfSafely('contract-doc-content', `Sinjeon_Master_Agreement_${corpName.replace(/\s+/g, '_')}.pdf`);
 
                 // 60초 대용량 릴레이 전송
