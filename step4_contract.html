@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-    <meta name="theme-color" content="#FFFFFF">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#1A1A1A">
     
     <title>Secure Document Portal | Step 4 Contract</title>
     <meta name="description" content="Official Franchise Contract Portal for Sinjeon Canada.">
@@ -11,13 +11,11 @@
     <link rel="icon" type="image/png" href="sinjeon_logo_canada.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     
     <!-- HTML2PDF Library (For Secure Document Generation) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-
+    
     <style>
         /* ================= 보안 및 레이아웃 일원화 (화면 틀어짐 방지 원본 유지) ================= */
         html { overflow-y: scroll; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -125,13 +123,18 @@
             position: relative; scroll-behavior: smooth;
         }
         .document-wrapper::-webkit-scrollbar { width: 8px; }
-        .document-wrapper::-webkit-scrollbar-thumb { background-color: var(--border-focus); border-radius: 4px; }
+        .document-wrapper::-webkit-scrollbar-thumb { background-color: #94a3b8; border-radius: 4px; }
 
+        /* 
+           * 문서 종이 설정
+           * box-sizing 속성 추가 및 패딩 간격 재조정 
+         */
         .document-paper { 
             background: var(--doc-bg); width: 100%; max-width: 800px; margin: 0 auto; 
             padding: 45px 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
             font-family: 'Noto Sans KR', Arial, sans-serif; line-height: 1.6; color: #1e293b; 
             position: relative; word-break: keep-all; overflow-wrap: break-word;
+            box-sizing: border-box; /* 추가: 패딩이 너비에 포함되도록 설정 */
         }
         
         .document-paper h1 { text-align: center; font-size: 1.7rem; margin-bottom: 5px; color: #0f172a; word-break: keep-all; letter-spacing: -0.5px;}
@@ -154,10 +157,16 @@
         .doc-input[readonly] { background: transparent; border-bottom-style: dashed; color: #0f172a; cursor: not-allowed;}
         
         .type-signature { font-family: 'Caveat', cursive !important; font-size: 1.8rem !important; color: #1e3a8a !important; border-bottom: 2px solid #1e3a8a; }
-        .locked-text { font-weight: bold; color: #0f172a; padding: 0 5px; display: inline-block; border-bottom: 1px solid #0f172a;}
+        
+        /* 락업 텍스트 중앙 정렬 강화 */
+        .locked-text { 
+            font-weight: bold; color: #0f172a; padding: 0 5px; 
+            display: inline-block; border-bottom: 1px solid #0f172a; 
+            text-align: center; min-width: 150px; white-space: nowrap;
+        }
 
         /* 서명 블록 및 그리드 (문서 외 폼) */
-        .sig-block { border: 2px solid #cbd5e1; padding: 25px; margin-top: 30px; background: #ffffff; page-break-inside: avoid; border-radius: 12px;}
+        .sig-block { border: 2px solid #cbd5e1; padding: 25px; margin-top: 30px; background: #ffffff; page-break-inside: avoid; border-radius: 12px; box-sizing: border-box;}
         .sig-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 15px; color: #0f172a; text-align: center; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;}
         
         .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; width: 100%;}
@@ -606,7 +615,7 @@
                 </div>
             </div> <!-- End of Contract -->
 
-            <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()">
+            <button class="btn-primary" id="btn-submit-contract" onclick="signAndSubmitContract()" disabled>
                 <i class="fas fa-paper-plane"></i> 본계약 최종 전자 서명 및 서버 발송
             </button>
         </section>
@@ -658,7 +667,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // [자동화] 날짜 3년 연산 엔진 완벽 복구
+            // [자동화] 날짜 3년 연산 엔진 완벽 구동
             const todayKST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); 
             
             const fddDateEl = document.getElementById('fdd_date');
@@ -682,6 +691,7 @@
 
             checkStateAndRender();
 
+            // 지점명 연동
             const locInput = document.getElementById('c_location');
             if(locInput) {
                 locInput.addEventListener('input', (e) => {
@@ -712,7 +722,7 @@
             }
         }
 
-        // [입력값 무손실 락업] 서명 텍스트 정중앙 배치 (센터링)
+        // [입력값 무손실 락업] 서명 텍스트 정중앙 배치(Center) 및 끊김 방지
         function lockInputsToText(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -728,13 +738,14 @@
                 }
                 span.innerText = val ? val : '[입력 대기 중]';
                 
-                // 센터링 및 폰트 픽스 인라인 주입
+                // 센터링을 위해 inline-block과 min-width, text-align 강제 주입
                 span.style.display = "inline-block";
                 span.style.minWidth = "150px";
                 span.style.textAlign = "center";
                 span.style.fontWeight = "bold";
                 span.style.padding = "0 5px";
                 span.style.borderBottom = "1px solid #0f172a";
+                span.style.whiteSpace = "nowrap"; // 긴 서명이 줄바꿈되지 않게 락업
 
                 if (el.classList.contains('type-signature')) {
                     span.className = 'locked-text type-signature';
@@ -765,7 +776,9 @@
                 savedProv = localStorage.getItem('sj_province') || '';
                 savedCorp = localStorage.getItem('sj_corp') || '';
                 targetCity = localStorage.getItem('sj_target_city') || '';
-            } catch(e) {}
+            } catch(e) {
+                console.warn("로컬 스토리지가 비활성화되어 있습니다.", e);
+            }
             
             if(sjName && !startTime) {
                 const fddName = document.getElementById('fdd_name');
